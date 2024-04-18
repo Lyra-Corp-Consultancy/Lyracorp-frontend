@@ -1,0 +1,32 @@
+@font-face {
+    font-family: roboto-bold;
+    src: url(./assets/fonts/Roboto/Roboto-Bold.ttf);
+}
+.roboto-bold{
+    font-family: roboto-bold;
+}
+
+.shadow-custom{
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.685);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background:rgba(255, 0, 0, 0);
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #5970F5;
+    border-radius: 20px; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
