@@ -8,6 +8,8 @@ import PaymentType from './Pages/Master/TypeMaster/PaymentType/PaymentType'
 import DiscountType from './Pages/Master/TypeMaster/DiscountType/DiscountType'
 import DocumentType from './Pages/Master/TypeMaster/DocumentType/DocumentType'
 import UOMType from './Pages/Master/TypeMaster/UOMType/UOMType'
+import TaxType from './Pages/Master/TypeMaster/TaxType/TaxType'
+import CertificationType from './Pages/Master/TypeMaster/CertificationType/CertificationType'
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
         <Route path='/master/type-master/discount-type' element={<DiscountType />} />
         <Route path='/master/type-master/document-type' element={<DocumentType />} />
         <Route path='/master/type-master/uom-type' element={<UOMType />} />
+        <Route path='/master/type-master/tax-type' element={<TaxType />} />
+        <Route path='/master/type-master/certification-type' element={<CertificationType />} />
       </Routes>
     </div>
   )

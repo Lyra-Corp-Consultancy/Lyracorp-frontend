@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
 
 
-type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" |"uom";
+type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" |"uom"|"tax";
 
 export const postType = createAsyncThunk("user/postType", async ({value,type}:{value:string | {name:string,des:string},type:Type}, { rejectWithValue }) => {
     try {

@@ -67,7 +67,7 @@ function NavigationBar() {
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/document-type")}>Document Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/certification-type")}>Certification Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/uom-type")}>UOM Type</li>
-                        <li className="text-start ms-5">Tax Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/tax-type")}>Tax Type</li>
                         <li className="text-start ms-5">Margin Setting Type</li>
                         <li className="text-start ms-5">Vendor Type</li>
                     </ul> : <button onClick={() => setTypeMaster(!typeMaster)} className='flex justify-between text-[#5970F5]'>Type Master <span>+</span></button>}
