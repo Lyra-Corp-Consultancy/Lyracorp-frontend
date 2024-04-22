@@ -62,9 +62,9 @@ function NavigationBar() {
                         <dl onClick={() => setTypeMaster(!typeMaster)} className='flex justify-between text-[#5970F5]'>Type Master <span>-</span></dl>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/customer-type")}>Customer Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/account-type")}>Account Type</li>
-                        <li className="text-start ms-5">Payment Type</li>
-                        <li className="text-start ms-5">Discount Type</li>
-                        <li className="text-start ms-5">Document Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/payment-type")}>Payment Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/discount-type")}>Discount Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/document-type")}>Document Type</li>
                         <li className="text-start ms-5">Certification Type</li>
                         <li className="text-start ms-5">UOM Type</li>
                         <li className="text-start ms-5">Tax Type</li>

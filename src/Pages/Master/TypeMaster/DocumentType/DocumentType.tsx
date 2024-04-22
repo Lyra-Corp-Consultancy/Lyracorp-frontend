@@ -4,7 +4,7 @@ import NavigationBar from '../../../../components/NavigationBar'
 import { useDispatch } from 'react-redux'
 import { deleteTypeMaster, getType, postType, updateType } from '../../../../utils/redux/actions'
 
-function CustomerType() {
+function DocumentType() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch: any = useDispatch()
     const [input, setInput] = useState("")
@@ -13,16 +13,16 @@ function CustomerType() {
     const [search, setSearch] = useState<any[]>()
     const [deleteType, setDelete] = useState<string[]>([])
 
-    const fetchCustomerType = () => {
-        const res = dispatch(getType("customer"))
+    const fetchDocumentType = () => {
+        const res = dispatch(getType("document"))
         res.then((res: any) => {
-            setValues(res.payload[0].customerType)
-            setSearch(res.payload[0].customerType)
+            setValues(res.payload[0].documentType)
+            setSearch(res.payload[0].documentType)
             setInput("")
         })
     }
     useEffect(() => {
-        fetchCustomerType()
+        fetchDocumentType()
     }, [])
 
     useEffect(() => {
@@ -33,29 +33,29 @@ function CustomerType() {
         }
     }, [deleteType])
 
-    const removeCustomerType = () => {
-        const res = dispatch(deleteTypeMaster({values:deleteType,type:"customer"}))
+    const removeDocumentType = () => {
+        const res = dispatch(deleteTypeMaster({values:deleteType,type:"document"}))
         res.then(() => {
             setDelete([])
-            fetchCustomerType()
+            fetchDocumentType()
         })
         setConfirmation("")
     }
 
-    const addCustomerType = () => {
-        const res = dispatch(postType({type:'customer',value:input}))
+    const addDocumentType = () => {
+        const res = dispatch(postType({value:input,type:"document" }))
         res.then(() => {
-            fetchCustomerType()
+            fetchDocumentType()
         })
         setConfirmation("")
     }
 
-    const editCustomerType = () => {
-        const res = dispatch(updateType({ id: deleteType[0], val: input,type:"customer" }))
+    const editDocumentType = () => {
+        const res = dispatch(updateType({ id: deleteType[0], val: input,type:"document"}))
         res.then(() => {
             setDelete([])
             setInput(" ")
-            fetchCustomerType()
+            fetchDocumentType()
         })
         setConfirmation("")
     }
@@ -63,11 +63,11 @@ function CustomerType() {
         <div className='min-h-screen'>
             <NavigationBar />
             <div className='px-10 pt-4'>
-                <h1 className='text-[20px] roboto-bold'>Customer Type Master</h1>
+                <h1 className='text-[20px] roboto-bold'>Document Type Master</h1>
                 <div className='w-full  justify-between rounded-lg shadow-md shadow-[#00000055] pt-2 px-5 pb-16 bg-[#F1F3FF] h-[60vh]'>
                     <div className='bg-[#ffffff] w-full flex justify-between  shadow-md shadow-[#00000055] h-full rounded-lg '>
                         <div className='w-1/2 h-full px-5 py-2'>
-                            <h2 className='text-black font-semibold'>Customer Type List</h2>
+                            <h2 className='text-black font-semibold'>Document Type List</h2>
                             <div className='w-full rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex justify-between px-3 py-2 items-center'>
                                     <label className='flex px-3 w-3/5 rounded-md py-1 shadow-md shadow-[#00000055] items-center gap-3' htmlFor="">
@@ -96,7 +96,7 @@ function CustomerType() {
                                     }
                                 </div>
                                 <div className='flex gap-5 items-center bg-[#5970F5] px-2 py-1'>
-                                    {deleteType.length === values?.length ? <div onClick={() => {
+                                    {deleteType.length === values?.length && deleteType.length>0  ? <div onClick={() => {
                                         setDelete([])
                                     }} className='h-3 w-3 border cursor-pointer border-white bg-none'> <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 5.19048L4.66667 8.85714L12 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -108,7 +108,7 @@ function CustomerType() {
                                                 setDelete([...allValues])
                                             }
                                         }} className='h-3 cursor-pointer w-3 border border-white bg-none'></div>}
-                                    <p className='text-white '>Customer Type</p>
+                                    <p className='text-white '>Document Type</p>
                                 </div>
                                 <div className='overflow-auto h-[70%] rounded-[0_0_10px_10px]'>
 
@@ -132,7 +132,7 @@ function CustomerType() {
                         </div>
 
                         <div className='w-1/2 h-full px-5 py-2'>
-                            <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Customer Type</h2>
+                            <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Document Type</h2>
                             <div className='w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex gap-28 px-5 pt-5 items-center'>
                                     <label htmlFor="" className='font-semibold text-[14px]'>
@@ -160,7 +160,7 @@ function CustomerType() {
                     <p className='font-semibold text-lg'>Are You sure Want to Save?</p>
                     <div className="flex gap-8">
                         <button className='border border-[#5970F5]  text-[#5970F5] px-5 py-1 rounded-md font-semibold' onClick={() => setConfirmation("")}>Cancel</button>
-                        <button className=' bg-[#5970F5]  text-white px-5 py-1 rounded-md font-semibold ' onClick={addCustomerType}>Save</button>
+                        <button className=' bg-[#5970F5]  text-white px-5 py-1 rounded-md font-semibold ' onClick={addDocumentType}>Save</button>
                     </div>
                 </div>
             </div>}
@@ -174,7 +174,7 @@ function CustomerType() {
                     <p className='font-semibold text-lg'>Are You sure Want to Change?</p>
                     <div className="flex gap-8">
                         <button className='border border-[#5970F5]  text-[#5970F5] px-5 py-1 rounded-md font-semibold' onClick={() => setConfirmation("")}>No</button>
-                        <button className=' bg-[#5970F5]  text-white px-5 py-1 rounded-md font-semibold ' onClick={editCustomerType}>Yes</button>
+                        <button className=' bg-[#5970F5]  text-white px-5 py-1 rounded-md font-semibold ' onClick={editDocumentType}>Yes</button>
                     </div>
                 </div>
             </div>}
@@ -188,7 +188,7 @@ function CustomerType() {
                     <p className='font-semibold text-lg'>Are You sure Want to delete?</p>
                     <div className="flex gap-8">
                         <button className='border border-[#5970F5]  text-[#5970F5] px-5 py-1 rounded-md font-semibold' onClick={() => setConfirmation("")}>Cancel</button>
-                        <button className=' bg-[#FF0000]  text-white px-5 py-1 rounded-md font-semibold ' onClick={removeCustomerType}>Delete</button>
+                        <button className=' bg-[#FF0000]  text-white px-5 py-1 rounded-md font-semibold ' onClick={removeDocumentType}>Delete</button>
                     </div>
                 </div>
             </div>}
@@ -196,4 +196,4 @@ function CustomerType() {
     )
 }
 
-export default CustomerType
+export default DocumentType

@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import NavigationBar from '../../../../components/NavigationBar'
 import { useDispatch } from 'react-redux'
-import { deleteAccountType, getAccountType, postAccountType, updateAccountType } from '../../../../utils/redux/actions'
+import { deleteTypeMaster, getType, postType, updateType } from '../../../../utils/redux/actions'
 
 function AccountType() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +14,7 @@ function AccountType() {
     const [deleteType, setDelete] = useState<string[]>([])
 
     const fetchAccountType = () => {
-        const res = dispatch(getAccountType())
+        const res = dispatch(getType("account"))
         res.then((res: any) => {
             setValues(res.payload[0].accountType)
             setSearch(res.payload[0].accountType)
@@ -34,7 +34,7 @@ function AccountType() {
     },[deleteType])
 
     const removeAccountType = () => {
-        const res = dispatch(deleteAccountType(deleteType))
+        const res = dispatch(deleteTypeMaster({values:deleteType,type:"account"}))
         res.then(() => {
             setDelete([])
             fetchAccountType()
@@ -43,7 +43,7 @@ function AccountType() {
     }
 
     const addAccountType = () => {
-        const res = dispatch(postAccountType(input))
+        const res = dispatch(postType({type:'account',value:input}))
         res.then(() => {
             fetchAccountType()
         })
@@ -51,7 +51,7 @@ function AccountType() {
     }
 
     const editAccountType = () => {
-        const res = dispatch(updateAccountType({id:deleteType[0],val:input}))
+        const res = dispatch(updateType({id:deleteType[0],val:input,type:"account"}))
         res.then(() => {
             setDelete([])
             setInput(" ")
