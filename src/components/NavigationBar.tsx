@@ -65,8 +65,8 @@ function NavigationBar() {
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/payment-type")}>Payment Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/discount-type")}>Discount Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/document-type")}>Document Type</li>
-                        <li className="text-start ms-5">Certification Type</li>
-                        <li className="text-start ms-5">UOM Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/certification-type")}>Certification Type</li>
+                        <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/uom-type")}>UOM Type</li>
                         <li className="text-start ms-5">Tax Type</li>
                         <li className="text-start ms-5">Margin Setting Type</li>
                         <li className="text-start ms-5">Vendor Type</li>

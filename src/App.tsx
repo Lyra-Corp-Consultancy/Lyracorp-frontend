@@ -7,6 +7,7 @@ import AccountType from './Pages/Master/TypeMaster/AccountType/AccountType'
 import PaymentType from './Pages/Master/TypeMaster/PaymentType/PaymentType'
 import DiscountType from './Pages/Master/TypeMaster/DiscountType/DiscountType'
 import DocumentType from './Pages/Master/TypeMaster/DocumentType/DocumentType'
+import UOMType from './Pages/Master/TypeMaster/UOMType/UOMType'
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/master/type-master/payment-type' element={<PaymentType />} />
         <Route path='/master/type-master/discount-type' element={<DiscountType />} />
         <Route path='/master/type-master/document-type' element={<DocumentType />} />
+        <Route path='/master/type-master/uom-type' element={<UOMType />} />
       </Routes>
     </div>
   )

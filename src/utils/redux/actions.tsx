@@ -2,9 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
 
 
-type Type = "customer" | "payment" | "account" | "discount" | "document";
+type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" |"uom";
 
-export const postType = createAsyncThunk("user/postType", async ({value,type}:{value:string,type:Type}, { rejectWithValue }) => {
+export const postType = createAsyncThunk("user/postType", async ({value,type}:{value:string | {name:string,des:string},type:Type}, { rejectWithValue }) => {
     try {
         await instance.post("/master/type-master", { value,type })
         return
@@ -33,7 +33,7 @@ export const deleteTypeMaster = createAsyncThunk("user/deleteType", async ({valu
     }
 })
 
-export const updateType = createAsyncThunk("user/editType", async (value:{id:string,val:string,type:Type}, { rejectWithValue })=>{
+export const updateType = createAsyncThunk("user/editType", async (value:{id:string,val:string | {name:string,des:string},type:Type}, { rejectWithValue })=>{
     try {
          await instance.patch("/master/type-master/"+value.id, { val:value.val,type:value.type })
     } catch (err) {
