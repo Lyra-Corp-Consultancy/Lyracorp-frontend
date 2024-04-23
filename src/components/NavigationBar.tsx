@@ -56,8 +56,8 @@ function NavigationBar() {
             </div>
             {/* navigation bar */}
             <div className='flex w-full mt-3'>
-                <button className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] ' + (location.pathname === "/dashboard" ? " bg-white" : " bg-[#C3CBFF]")+" "}>Dashboard</button>
-                <button id='dropMaster' className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold  transition-all duration-100 text-[15px]  relative' + (location.pathname.includes("/master/") ? " bg-white" : " bg-[#C3CBFF]")} ><p onClick={() => setDropDown(dropDown === "master" ? "" : "master")}>Master</p> {dropDown==="master" && <div  className={'flex p-1 flex-col absolute shadow-md bg-white left-0 w-[150px] bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal '}>
+                <button onClick={()=>navigate("/dashboard")} className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] ' + (location.pathname.includes("/dashboard") ? " bg-white" : " bg-[#C3CBFF]")+" "}>Dashboard</button>
+                <button id='dropMaster' className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold  transition-all duration-100 text-[15px] z-[10]  relative' + (location.pathname.includes("/master") ? " bg-white" : " bg-[#C3CBFF]")} ><p onClick={() => setDropDown(dropDown === "master" ? "" : "master")}>Master</p> {dropDown==="master" && <div  className={'flex p-1 flex-col absolute shadow-md bg-white left-0 w-[150px] bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal '}>
                     {typeMaster ? <ul className='list-item'>
                         <dl onClick={() => setTypeMaster(!typeMaster)} className='flex justify-between text-[#5970F5]'>Type Master <span>-</span></dl>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/customer-type")}>Customer Type</li>
@@ -71,7 +71,7 @@ function NavigationBar() {
                         <li className="text-start ms-5 text-xs" onClick={()=>navigate("/master/type-master/margin-setting-type")}>Margin Setting Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/vendor-type")}>Vendor Type</li>
                     </ul> : <button onClick={() => setTypeMaster(!typeMaster)} className='flex justify-between text-[#5970F5]'>Type Master <span>+</span></button>}
-                    <button className='text-start'>Customer Master</button>
+                    <button className='text-start' onClick={()=>navigate("/master/customer-master")}>Customer Master</button>
                     <button className='text-start'>Vendor Master</button>
                     <button className='text-start'>Product Master</button>
                 </div>}</button>
