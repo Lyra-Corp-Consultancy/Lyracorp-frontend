@@ -6,7 +6,7 @@ import { deleteTypeMaster, getType, postType, updateType } from '../../../../uti
 import ConfirmationBox from '../../../../components/ConfirmationBox'
 import DeleteConfirmationBox from '../../../../components/DeleteConfirmationBox'
 
-function DocumentType() {
+function VendorType() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const dispatch: any = useDispatch()
     const [input, setInput] = useState("")
@@ -15,16 +15,16 @@ function DocumentType() {
     const [search, setSearch] = useState<any[]>()
     const [deleteType, setDelete] = useState<string[]>([])
 
-    const fetchDocumentType = () => {
-        const res = dispatch(getType("document"))
+    const fetchVendorType = () => {
+        const res = dispatch(getType("vendor"))
         res.then((res: any) => {
-            setValues(res.payload[0].documentType)
-            setSearch(res.payload[0].documentType)
+            setValues(res.payload[0].vendorType)
+            setSearch(res.payload[0].vendorType)
             setInput("")
         })
     }
     useEffect(() => {
-        fetchDocumentType()
+        fetchVendorType()
     }, [])
 
     useEffect(() => {
@@ -35,29 +35,29 @@ function DocumentType() {
         }
     }, [deleteType])
 
-    const removeDocumentType = () => {
-        const res = dispatch(deleteTypeMaster({ values: deleteType, type: "document" }))
+    const removeVendorType = () => {
+        const res = dispatch(deleteTypeMaster({ values: deleteType, type: "vendor" }))
         res.then(() => {
             setDelete([])
-            fetchDocumentType()
+            fetchVendorType()
         })
         setConfirmation("")
     }
 
-    const addDocumentType = () => {
-        const res = dispatch(postType({ value: input, type: "document" }))
+    const addVendorType = () => {
+        const res = dispatch(postType({ value: input, type: "vendor" }))
         res.then(() => {
-            fetchDocumentType()
+            fetchVendorType()
         })
         setConfirmation("")
     }
 
-    const editDocumentType = () => {
-        const res = dispatch(updateType({ id: deleteType[0], val: input, type: "document" }))
+    const editVendorType = () => {
+        const res = dispatch(updateType({ id: deleteType[0], val: input, type: "vendor" }))
         res.then(() => {
             setDelete([])
             setInput(" ")
-            fetchDocumentType()
+            fetchVendorType()
         })
         setConfirmation("")
     }
@@ -65,11 +65,11 @@ function DocumentType() {
         <div className='min-h-screen'>
             <NavigationBar />
             <div className='px-10 pt-4'>
-                <h1 className='text-[20px] roboto-bold'>Document Type Master</h1>
+                <h1 className='text-[20px] roboto-bold'>Vendor Type Master</h1>
                 <div className='w-full  justify-between rounded-lg shadow-md shadow-[#00000055] pt-2 px-5 pb-16 bg-[#F1F3FF] h-[60vh]'>
                     <div className='bg-[#ffffff] w-full flex justify-between  shadow-md shadow-[#00000055] h-full rounded-lg '>
                         <div className='w-1/2 h-full px-5 py-2'>
-                            <h2 className='text-black font-semibold'>Document Type List</h2>
+                            <h2 className='text-black font-semibold'>Vendor Type List</h2>
                             <div className='w-full rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex justify-between px-3 py-2 items-center'>
                                     <label className='flex px-3 w-3/5 rounded-md py-1 shadow-md shadow-[#00000055] items-center gap-3' htmlFor="">
@@ -110,7 +110,7 @@ function DocumentType() {
                                                 setDelete([...allValues])
                                             }
                                         }} className='h-3 cursor-pointer w-3 border border-white bg-none'></div>}
-                                    <p className='text-white '>Document Type</p>
+                                    <p className='text-white '>Vendor Type</p>
                                 </div>
                                 <div className='overflow-auto h-[70%] rounded-[0_0_10px_10px]'>
 
@@ -134,7 +134,7 @@ function DocumentType() {
                         </div>
 
                         <div className='w-1/2 h-full px-5 py-2'>
-                            <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Document Type</h2>
+                            <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Vendor Type</h2>
                             <div className='w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex gap-28 px-5 pt-5 items-center'>
                                     <label htmlFor="" className='font-semibold text-[14px]'>
@@ -157,13 +157,13 @@ function DocumentType() {
                     </div>
                 </div>
             </div>
-            {confirmation === "add" && <ConfirmationBox RejectButtonText='Cancel' RejectFunction={() => setConfirmation("")} ResolveButtonText='Save' ResolveFunction={addDocumentType} message='Are You sure want to save?' />}
+            {confirmation === "add" && <ConfirmationBox RejectButtonText='Cancel' RejectFunction={() => setConfirmation("")} ResolveButtonText='Save' ResolveFunction={addVendorType} message='Are You sure want to save?' />}
 
-            {confirmation === "edit" && <ConfirmationBox RejectButtonText='No' RejectFunction={() => setConfirmation("")} ResolveButtonText='Yes' ResolveFunction={editDocumentType} message='Are You sure want to change?' />}
+            {confirmation === "edit" && <ConfirmationBox RejectButtonText='No' RejectFunction={() => setConfirmation("")} ResolveButtonText='Yes' ResolveFunction={editVendorType} message='Are You sure want to change?' />}
 
-            {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removeDocumentType} message='Are you sure want to delete?' />}
+            {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removeVendorType} message='Are you sure want to delete?' />}
         </div>
     )
 }
 
-export default DocumentType
+export default VendorType

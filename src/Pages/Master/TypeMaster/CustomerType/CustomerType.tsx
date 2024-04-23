@@ -36,7 +36,7 @@ function CustomerType() {
     }, [deleteType])
 
     const removeCustomerType = () => {
-        const res = dispatch(deleteTypeMaster({values:deleteType,type:"customer"}))
+        const res = dispatch(deleteTypeMaster({ values: deleteType, type: "customer" }))
         res.then(() => {
             setDelete([])
             fetchCustomerType()
@@ -45,7 +45,7 @@ function CustomerType() {
     }
 
     const addCustomerType = () => {
-        const res = dispatch(postType({type:'customer',value:input}))
+        const res = dispatch(postType({ type: 'customer', value: input }))
         res.then(() => {
             fetchCustomerType()
         })
@@ -53,7 +53,7 @@ function CustomerType() {
     }
 
     const editCustomerType = () => {
-        const res = dispatch(updateType({ id: deleteType[0], val: input,type:"customer" }))
+        const res = dispatch(updateType({ id: deleteType[0], val: input, type: "customer" }))
         res.then(() => {
             setDelete([])
             setInput(" ")
@@ -87,7 +87,7 @@ function CustomerType() {
                                         }} className='placeholder:text-black outline-none border-none' />
                                     </label>
                                     {deleteType.length > 0 ?
-                                        <svg onClick={() => setConfirmation("delete")} width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <svg onClick={() => setConfirmation("delete")} className='cursor-pointer' width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M2.58722 13.4234C2.19566 13.4234 1.8688 13.2923 1.60663 13.0302C1.3439 12.7674 1.21253 12.4403 1.21253 12.0487V1.50662H0.361328V0.655424H3.76613V0H8.87333V0.655424H12.2781V1.50662H11.4269V12.0487C11.4269 12.4403 11.2958 12.7671 11.0337 13.0293C10.7709 13.2921 10.4438 13.4234 10.0522 13.4234H2.58722ZM4.4539 10.8698H5.3051V3.20902H4.4539V10.8698ZM7.33436 10.8698H8.18556V3.20902H7.33436V10.8698Z" fill="#5970F5" />
                                         </svg>
 
@@ -98,7 +98,7 @@ function CustomerType() {
                                     }
                                 </div>
                                 <div className='flex gap-5 items-center bg-[#5970F5] px-2 py-1'>
-                                    {deleteType.length === values?.length && deleteType.length>0 ? <div onClick={() => {
+                                    {deleteType.length === values?.length && deleteType.length > 0 ? <div onClick={() => {
                                         setDelete([])
                                     }} className='h-3 w-3 border cursor-pointer border-white bg-none'> <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M1 5.19048L4.66667 8.85714L12 1" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -146,18 +146,22 @@ function CustomerType() {
                                     <button className='border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold' onClick={() => {
                                         setInput("")
                                     }}>Reset</button>
-                                    <button className=' bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold' onClick={() => setConfirmation(deleteType.length === 1 ? "edit" : "add")}>{deleteType.length === 1 ? "Update" : "Save"}</button>
+                                    <button className=' bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold' onClick={() => {
+                                        if (input.length > 0) {
+                                            setConfirmation(deleteType.length === 1 ? "edit" : "add")
+                                        }
+                                    }}>{deleteType.length === 1 ? "Update" : "Save"}</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {confirmation === "add" && <ConfirmationBox RejectButtonText='Cancel' RejectFunction={() => setConfirmation("")} ResolveButtonText='Save' ResolveFunction={addCustomerType} message='Are You sure want to save?'/>}
+            {confirmation === "add" && <ConfirmationBox RejectButtonText='Cancel' RejectFunction={() => setConfirmation("")} ResolveButtonText='Save' ResolveFunction={addCustomerType} message='Are You sure want to save?' />}
 
-            {confirmation === "edit" && <ConfirmationBox RejectButtonText='No' RejectFunction={() => setConfirmation("")} ResolveButtonText='Yes' ResolveFunction={editCustomerType} message='Are You sure want to change?'/>}
+            {confirmation === "edit" && <ConfirmationBox RejectButtonText='No' RejectFunction={() => setConfirmation("")} ResolveButtonText='Yes' ResolveFunction={editCustomerType} message='Are You sure want to change?' />}
 
-            {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removeCustomerType} message='Are you sure want to delete?'/>}
+            {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removeCustomerType} message='Are you sure want to delete?' />}
         </div>
     )
 }

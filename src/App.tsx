@@ -10,6 +10,8 @@ import DocumentType from './Pages/Master/TypeMaster/DocumentType/DocumentType'
 import UOMType from './Pages/Master/TypeMaster/UOMType/UOMType'
 import TaxType from './Pages/Master/TypeMaster/TaxType/TaxType'
 import CertificationType from './Pages/Master/TypeMaster/CertificationType/CertificationType'
+import MarginSettingType from './Pages/Master/TypeMaster/MarginSettingType/MarginSettingType'
+import VendorType from './Pages/Master/TypeMaster/VendorType/VendorType'
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
         <Route path='/master/type-master/uom-type' element={<UOMType />} />
         <Route path='/master/type-master/tax-type' element={<TaxType />} />
         <Route path='/master/type-master/certification-type' element={<CertificationType />} />
+        <Route path='/master/type-master/margin-setting-type' element={<MarginSettingType />} />
+        <Route path='/master/type-master/vendor-type' element={<VendorType />} />
       </Routes>
     </div>
   )
