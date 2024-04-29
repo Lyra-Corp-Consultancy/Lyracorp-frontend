@@ -26,6 +26,28 @@ interface CustomerMasterData {
   fileUrls?: string[];
 }
 
+interface VendorMasterData {
+  vendorName?: string;
+  vendorType?: string;
+  contactPerson?: string;
+  email?: string;
+  primaryNumber?: string;
+  secondaryNumber?: string;
+  country?: string;
+  state?: string;
+  district?: string;
+  city?: string;
+  zone?: string;
+  address?: string;
+  pincode?: string;
+  bankAccNo?: string;
+  accountBranch?: string;
+  ifscCode?: string;
+  paymentTerms?: string;
+  bussinessDocument?: string;
+  fileUrls?: string[];
+}
+
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { name: string; des: string }; type: Type }, { rejectWithValue }) => {
   try {
     await instance.post("/master/type-master", { value, type });
@@ -70,6 +92,8 @@ export const addCustomerMaster = createAsyncThunk("user/addCustomerMaster", asyn
   }
 });
 
+
+
 export const editCustomerMaster = createAsyncThunk("user/edit   CustomerMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
     try {
       await instance.patch("/master/customer-master/"+id, { data });
@@ -105,3 +129,54 @@ export const getCustomerMasterById = createAsyncThunk("user/getCustomerMasterByI
         rejectWithValue(err);
     }
 })
+
+
+export const addVendorMaster = createAsyncThunk("user/addVendorMaster", async (data: VendorMasterData, { rejectWithValue }) => {
+  try {
+    console.log(data)
+    const res = await instance.post("/master/vendor-master", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
+export const getAllVendorMaster = createAsyncThunk("user/getAllVendorMaster", async (_, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/master/vendor-master/all");
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const activeAndDeactiveVendorMaster = createAsyncThunk("user/inactiveVendorMaster", async (id: string[], { rejectWithValue }) => {
+  try {
+    await instance.delete("/master/vendor-master",{params:{id}});
+    return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
+export const getVendorMasterById = createAsyncThunk("user/getVendorMasterById", async(id:string,{rejectWithValue})=>{
+  try{
+      const res = await instance.get("/master/vendor-master/individual",{params:{id}});
+      return res.data;
+  }catch(err){
+      rejectWithValue(err);
+  }
+})
+
+
+
+export const editVendorMaster = createAsyncThunk("user/editVendorMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
+  try {
+    await instance.patch("/master/vendor-master/"+id, { data });
+    return 
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});

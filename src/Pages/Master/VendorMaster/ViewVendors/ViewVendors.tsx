@@ -3,88 +3,67 @@
 import React, { useEffect, useState } from "react";
 // import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import {  getCustomerMasterById, getType } from "../../../../utils/redux/actions";
+import { getType, getVendorMasterById } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
 
-function ViewCustomer() {
-//   const fileServer = "http://192.168.1.42:3000/upload";
+function ViewVendors() {
+  //   const fileServer = "http://192.168.1.42:3000/upload";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
-//   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  //   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  //   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
   const [dropDowns, setDropDown] = useState<{
-    customer: any[];
+    vendor: any[];
     account: any[];
     discount: any[];
     payment: any[];
     document: any[];
-  }>({ customer: [], account: [], discount: [], payment: [], document: [] });
+  }>({ vendor: [], account: [], discount: [], payment: [], document: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
-//   const [files, setFiles] = useState<any[]>([]);
-  const [data, setData] = useState({
-    customerName: "",
-    customerType: "",
-    accountType: "",
-    contactPerson: "",
-    email: "",
-    primaryNumber: "",
-    secondaryNumber: "",
-    country: "",
-    state: "",
-    district: "",
-    city: "",
-    zone: "",
-    address: "",
-    pincode: "",
-    purchaseResitriction: "",
-    discountType: "",
-    paymentTerms: "",
-    bussinessDocument: "",
-    fileUrls: [""],
-    customerId:"",
-  });
-  const params:any = useParams()
+  //   const [files, setFiles] = useState<any[]>([]);
+  const [data, setData] = useState<any>({});
+  const params: any = useParams();
 
   const navigate = useNavigate();
 
-//   const handleSave = async () => {
-//     const urls: string[] = [];
-//     for (let i = 0; i < files.length; i++) {
-//       const x = files[i];
-//       const file = new FormData();
-//       file.append("file", x);
-//       const res = await axios.post(fileServer, file);
-//       urls.push(res.data);
-//     }
-//     setData({ ...data, fileUrls: urls });
+  //   const handleSave = async () => {
+  //     const urls: string[] = [];
+  //     for (let i = 0; i < files.length; i++) {
+  //       const x = files[i];
+  //       const file = new FormData();
+  //       file.append("file", x);
+  //       const res = await axios.post(fileServer, file);
+  //       urls.push(res.data);
+  //     }
+  //     setData({ ...data, fileUrls: urls });
 
-//     dispatch(addCustomerMaster(data)).then(() => {
-//       navigate(-1);
-//     });
-//   };
+  //     dispatch(addCustomerMaster(data)).then(() => {
+  //       navigate(-1);
+  //     });
+  //   };
 
-//   const handleFileSelect = (e: any) => {
-//     const selectedFiles = Array.from(e.target.files);
+  //   const handleFileSelect = (e: any) => {
+  //     const selectedFiles = Array.from(e.target.files);
 
-//     setFiles([...files, ...selectedFiles]);
-//   };
+  //     setFiles([...files, ...selectedFiles]);
+  //   };
   useEffect(() => {
-    const res1 = dispatch(getType("customer"));
+    const res1 = dispatch(getType("vendor"));
 
     res1.then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          customer: res.payload[0].customerType,
+          vendor: res.payload[0].vendorType,
         };
       });
     });
 
-    dispatch(getCustomerMasterById(params.id)).then((res:any)=>{
-        setData(res.payload)
-    })
+    dispatch(getVendorMasterById(params.id)).then((res: any) => {
+      setData(res.payload);
+    });
 
     const res2 = dispatch(getType("account"));
 
@@ -134,94 +113,96 @@ function ViewCustomer() {
     // });
   }, []);
 
-//   const handleDrop = (e: any) => {
-//     e.preventDefault();
-//     // setDragging(false);
-//     const droppedFiles = Array.from(e.dataTransfer.files);
-//     setFiles([...files, ...droppedFiles]);
-//   };
+  //   const handleDrop = (e: any) => {
+  //     e.preventDefault();
+  //     // setDragging(false);
+  //     const droppedFiles = Array.from(e.dataTransfer.files);
+  //     setFiles([...files, ...droppedFiles]);
+  //   };
   return (
     <div className="h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Customer Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <div className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
-          <h1 className="roboto-medium mt-1">Customer Type</h1>
+          <h1 className="roboto-medium mt-1">Vendor Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Customer Acc No</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]">{data.customerId}</label>
-            <label>Customer Name</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.customerName}</label>
-            <label>Customer Type</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}</label>
-
-            <label>Account Type</label>
-
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}</label>
+            <label>Vendor Name</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.VendorName}</label>
+            <label>Vendor Type</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{dropDowns?.vendor?.filter((x) => x?._id === data?.vendorType)[0]?.value}</label>
           </div>
           <h1 className="roboto-medium mt-1">Contact Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.contactPerson}</label>
-
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.contactPerson}</label>
             <label>Email Id</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.email}</label>
-
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.email}</label>
             <label>Primary Number</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.primaryNumber}</label>
-
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.primaryNumber}</label>
             <label>Secondary</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.secondaryNumber}</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.secondaryNumber}</label>
           </div>
           <h1 className="roboto-medium mt-1">Contact Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.country}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.country}</label>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>State</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.state}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.state}</label>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>District</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.district}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.district}</label>
             </div>
             <div className="w-[22%] z-10 flex gap-3 items-center">
               <label>City/Village</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.city}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.city}</label>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Zone</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.zone}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.zone}</label>
             </div>
             <div className="w-[50%] flex gap-3 items-center">
               <label>Address</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.address}</label>
+              <label className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.address}</label>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.pincode}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.pincode}</label>
             </div>
           </div>
 
-          <h1 className="roboto-medium mt-1">Other Details</h1>
-          <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Purchase Restriction</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{data.purchaseResitriction}</label>
-
-            <label>Discount Type</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}</label>
-
-            <label>Payment Terms</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full truncate">{dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}</label>
+          <h1 className="roboto-medium mt-1">Payment Details</h1>
+          <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+            <div className="flex gap-2 items-center">
+              <label>Bank Account No</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.bankAccNo}</label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Account Branch</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.accountBranch}</label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>IFSC Code</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.ifscCode}</label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Payment Terms</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}</label>
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Currency</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{data?.currency}</label>
+            </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] min-w-[200px] truncate">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
-
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[20px] w-[200px]">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
             {/* <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
@@ -239,7 +220,6 @@ function ViewCustomer() {
                 </svg>
                 <p
                   onClick={() => {
-                    // const url = URL.createObjectURL(x);
                     window.open(x);
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"
@@ -251,13 +231,13 @@ function ViewCustomer() {
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
-            <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
+            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Back
             </button>
-            <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/customer-master/edit-customers/"+params?.id)}>
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/vendor-master/edit-vendors/"+params?.id)}>
               Edit
             </button>
-            <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" >
+            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
               Print
             </button>
           </div>
@@ -267,4 +247,4 @@ function ViewCustomer() {
   );
 }
 
-export default ViewCustomer;
+export default ViewVendors;

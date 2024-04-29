@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { addCustomerMaster } from './actions'
+import { addCustomerMaster, addVendorMaster } from './actions'
 
 export interface CounterState {
   msg: string|number,
@@ -25,6 +25,12 @@ export const counterSlice = createSlice({
     builder.addCase(addCustomerMaster.fulfilled,(state,action)=>{
       state.msg = `Customer Account Number Create as ${action.payload}`
       state.submsg = `Your Customer Account has been Successfully Created`
+      state.toaster = true
+    })
+
+    builder.addCase(addVendorMaster.fulfilled,(state)=>{
+      state.msg = `Vendor Account Create `
+      state.submsg = `Your Vendor Account has been Successfully Created`
       state.toaster = true
     })
   },

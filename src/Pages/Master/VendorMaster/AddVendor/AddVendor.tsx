@@ -3,69 +3,47 @@
 import React, { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { editCustomerMaster, getCustomerMasterById, getType } from "../../../../utils/redux/actions";
-import { useNavigate, useParams } from "react-router-dom";
+import {  addVendorMaster, getType } from "../../../../utils/redux/actions";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
 
-function EditCustomer() {
+function AddVendor() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
   const [dropDowns, setDropDown] = useState<{
-    customer: any[];
+    vendor: any[];
     account: any[];
     discount: any[];
     payment: any[];
     document: any[];
-  }>({ customer: [], account: [], discount: [], payment: [], document: [] });
+  }>({ vendor: [], account: [], discount: [], payment: [], document: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
   const [data, setData] = useState<any>({
-    customerName: "",
-    customerType: "",
-    accountType: "",
-    contactPerson: "",
-    email: "",
-    primaryNumber: "",
-    secondaryNumber: "",
-    country: "",
-    state: "",
-    district: "",
-    city: "",
-    zone: "",
-    address: "",
-    pincode: "",
-    purchaseResitriction: "",
-    discountType: "",
-    paymentTerms: "",
-    bussinessDocument: "",
-    fileUrls: [],
+   fileUrls:[]
   });
 
   const navigate = useNavigate();
-  const params: any = useParams();
 
   const handleSave = async () => {
-    try {
-      const urls: string[] = [];
-      for (let i = 0; i < files.length; i++) {
-        const x = files[i];
-        const file = new FormData();
-        file.append("file", x);
-        const res = await axios.post(fileServer, file);
-        urls.push(res.data);
-      }
-      setData({ ...data, fileUrls: [...data.fileUrls, ...urls] });
-
-      dispatch(editCustomerMaster({ data, id: params.id })).then(() => {
-        navigate(-1);
-      });
-    } catch (err) {
-      console.log(err);
+    const urls: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const x = files[i];
+      const file = new FormData();
+      file.append("file", x);
+      const res = await axios.post(fileServer, file);
+      urls.push(res.data);
     }
+    console.log(urls)
+    setData({ ...data, fileUrls: urls });
+
+    dispatch(addVendorMaster({ ...data, fileUrls: urls })).then(() => {
+      navigate(-1);
+    });
   };
 
   const handleFileSelect = (e: any) => {
@@ -74,27 +52,14 @@ function EditCustomer() {
     setFiles([...files, ...selectedFiles]);
   };
   useEffect(() => {
-    const res1 = dispatch(getType("customer"));
+    const res1 = dispatch(getType("vendor"));
 
     res1.then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          customer: res.payload[0].customerType,
+          vendor: res.payload[0].vendorType,
         };
-      });
-    });
-
-    dispatch(getCustomerMasterById(params.id)).then((res: any) => {
-      setData(res.payload);
-    //   setFiles([...res.payload.fileUrls]);
-      axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: res?.payload?.country }).then((res) => {
-        setPlaces({ ...places, state: res.data.data.states });
-        setSearch({ ...search, state: res.data.data.states });
-      });
-      axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: res?.payload?.country, state: res?.payload?.state }).then((res) => {
-        setPlaces({ ...places, city: res.data.data });
-        setSearch({ ...search, city: res.data.data });
       });
     });
 
@@ -153,38 +118,26 @@ function EditCustomer() {
     setFiles([...files, ...droppedFiles]);
   };
   return (
-    <div className="h-[86vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Customer Master</h1>
+    <div className="h-[90vh] w-screen px-4 pt-3 shadow-md">
+      <h1 className="roboto-bold text-lg">Add Vendor Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
-        <form onSubmit={(e)=>{
-          e.preventDefault()
-          handleSave()
-        }} className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
-          <h1 className="roboto-medium mt-1">Customer Type</h1>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSave();
+          }}
+          className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
+        >
+          <h1 className="roboto-medium mt-1">Vendor Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Customer Acc No</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"></label>
-            <label>Customer Name</label>
-            <input value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-            <label>Customer Type</label>
-            <Select value={dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}>
-              {dropDowns?.customer?.map((x) => (
+            <label>Vendor Name</label>
+            <input value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <label>Vendor Type</label>
+            <Select value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendorType)[0]?.value}>
+              {dropDowns?.vendor?.map((x) => (
                 <li
                   onClick={() => {
-                    setData({ ...data, customerType: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
-            </Select>
-            <label>Account Type</label>
-            <Select value={dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}>
-              {dropDowns?.account?.map((x) => (
-                <li
-                  onClick={() => {
-                    setData({ ...data, accountType: x?._id });
+                    setData({ ...data, vendorType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                 >
@@ -251,6 +204,7 @@ function EditCustomer() {
                     onClick={() => {
                       setData({ ...data, state: x?.name });
                       axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
+                        console.log(res.data);
                         setPlaces({ ...places, city: res.data.data });
                         setSearch({ ...search, city: res.data.data });
                       });
@@ -309,37 +263,39 @@ function EditCustomer() {
             </div>
           </div>
 
-          <h1 className="roboto-medium mt-1">Other Details</h1>
-          <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Purchase Restriction</label>
-            <input value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-
-            <label>Discount Type</label>
-            <Select value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
-              {dropDowns?.discount?.map((x) => (
-                <li
-                  onClick={() => {
-                    setData({ ...data, discountType: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
-            </Select>
-            <label>Payment Terms</label>
-            <Select value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
-              {dropDowns?.payment?.map((x) => (
-                <li
-                  onClick={() => {
-                    setData({ ...data, paymentTerms: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
-            </Select>
+          <h1 className="roboto-medium mt-1">Payment Details</h1>
+          <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+            <div className="flex gap-2 items-center">
+              <label>Bank Account No</label>
+              <input value={data.bankAccNo} onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Account Branch</label>
+              <input value={data.accountBranch} onChange={(e) => setData({ ...data, accountBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>IFSC Code</label>
+              <input value={data.ifscCode} onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Payment Terms</label>
+              <Select value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
+                {dropDowns?.payment?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, paymentTerms: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
+              </Select>
+            </div>
+            <div className="flex gap-2 items-center">
+              <label>Currency</label>
+              <input value={data.currency} onChange={(e) => setData({ ...data, currency: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Document Details</h1>
@@ -365,7 +321,7 @@ function EditCustomer() {
               <p className="text-xs text-center">Upload Document or Drag the file</p>
               <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
-            {[...files,...data.fileUrls].map((x: any, i: number) => (
+            {files.map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -375,12 +331,8 @@ function EditCustomer() {
                 </svg>
                 <p
                   onClick={() => {
-                    if(x.includes("http")){
-                      window.open(x)
-                  }else{
-                      const url = URL.createObjectURL(x);
-                      window.open(url);
-                  } 
+                    const url = URL.createObjectURL(x);
+                    window.open(url);
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"
                 >
@@ -391,11 +343,14 @@ function EditCustomer() {
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ accountType: "", address: "", bussinessDocument: "", city: "", contactPerson: "", country: "", VendorName: "", vendorType: "", discountType: "", district: "", email: "", fileUrls: [], paymentTerms: "", pincode: "", primaryNumber: "", purchaseResitriction: "", secondaryNumber: "", state: "", zone: "" })}>
+              Reset
+            </button>
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" type="submit">
-              Update
+            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+              Save
             </button>
           </div>
         </form>
@@ -404,4 +359,4 @@ function EditCustomer() {
   );
 }
 
-export default EditCustomer;
+export default AddVendor;

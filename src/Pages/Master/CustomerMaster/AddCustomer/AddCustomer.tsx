@@ -6,9 +6,9 @@ import { useDispatch } from "react-redux";
 import { addCustomerMaster, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { fileServer } from "../../../../utils/values/publicValues";
 
 function AddCustomer() {
-  const fileServer = "http://192.168.1.42:3000/upload";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -58,7 +58,7 @@ function AddCustomer() {
     }
     setData({ ...data, fileUrls: urls });
 
-    dispatch(addCustomerMaster(data)).then(() => {
+    dispatch(addCustomerMaster({ ...data, fileUrls: urls })).then(() => {
       navigate(-1);
     });
   };
