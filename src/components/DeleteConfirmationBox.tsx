@@ -4,8 +4,11 @@ interface Prop {
     RejectFunction: () => void,
     ResolveFunction: () => void,
     message: string,
+    pos?:string,
+    neg?:string,
+    posColor?:string
 }
-function DeleteConfirmationBox({RejectFunction,ResolveFunction,message}:Prop) {
+function DeleteConfirmationBox({RejectFunction,ResolveFunction,message,pos,neg,posColor}:Prop) {
   return (
     <div className='fixed h-screen w-screen bg-[#00000077] z-50 top-0 left-0 flex justify-center items-center'>
                 <div className='bg-white relative w-[400px] h-[200px] rounded-[20px_0_0_0] flex flex-col justify-center items-center gap-10'>
@@ -15,8 +18,8 @@ function DeleteConfirmationBox({RejectFunction,ResolveFunction,message}:Prop) {
                     </button>
                     <p className='font-semibold text-lg'>{message}</p>
                     <div className="flex gap-8">
-                        <button className='border border-[#5970F5]  text-[#5970F5] px-5 py-1 rounded-md font-semibold' onClick={RejectFunction}>Cancel</button>
-                        <button className=' bg-[#FF0000]  text-white px-5 py-1 rounded-md font-semibold ' onClick={ResolveFunction}>Delete</button>
+                        <button className='border border-[#5970F5]  text-[#5970F5] px-5 py-1 rounded-md font-semibold' onClick={RejectFunction}>{neg ||"Cancel"}</button>
+                        <button className={'   text-white px-5 py-1 rounded-md font-semibold '+(posColor || "bg-[#FF0000]")} onClick={ResolveFunction}>{pos || "Delete"}</button>
                     </div>
                 </div>
             </div>

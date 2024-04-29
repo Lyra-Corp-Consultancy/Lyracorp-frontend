@@ -3,11 +3,11 @@
 import React, { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { addCustomerMaster, getType } from "../../../../utils/redux/actions";
-import { useNavigate } from "react-router-dom";
+import { editCustomerMaster, getCustomerMasterById, getType } from "../../../../utils/redux/actions";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-function AddCustomer() {
+function EditCustomer() {
   const fileServer = "http://192.168.1.42:3000/upload";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -46,21 +46,26 @@ function AddCustomer() {
   });
 
   const navigate = useNavigate();
+  const params: any = useParams();
 
   const handleSave = async () => {
-    const urls: string[] = [];
-    for (let i = 0; i < files.length; i++) {
-      const x = files[i];
-      const file = new FormData();
-      file.append("file", x);
-      const res = await axios.post(fileServer, file);
-      urls.push(res.data);
-    }
-    setData({ ...data, fileUrls: urls });
+    try {
+      const urls: string[] = [];
+      for (let i = 0; i < files.length; i++) {
+        const x = files[i];
+        const file = new FormData();
+        file.append("file", x);
+        const res = await axios.post(fileServer, file);
+        urls.push(res.data);
+      }
+      setData({ ...data, fileUrls: [...data.fileUrls, ...urls] });
 
-    dispatch(addCustomerMaster(data)).then(() => {
-      navigate(-1);
-    });
+      dispatch(editCustomerMaster({ data, id: params.id })).then(() => {
+        navigate(-1);
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleFileSelect = (e: any) => {
@@ -77,6 +82,19 @@ function AddCustomer() {
           ...prev,
           customer: res.payload[0].customerType,
         };
+      });
+    });
+
+    dispatch(getCustomerMasterById(params.id)).then((res: any) => {
+      setData(res.payload);
+    //   setFiles([...res.payload.fileUrls]);
+      axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: res?.payload?.country }).then((res) => {
+        setPlaces({ ...places, state: res.data.data.states });
+        setSearch({ ...search, state: res.data.data.states });
+      });
+      axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: res?.payload?.country, state: res?.payload?.state }).then((res) => {
+        setPlaces({ ...places, city: res.data.data });
+        setSearch({ ...search, city: res.data.data });
       });
     });
 
@@ -138,10 +156,7 @@ function AddCustomer() {
     <div className="h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Customer Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
-        <form onSubmit={(e)=>{
-          e.preventDefault()
-          handleSave()
-          }} className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
+        <div className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Customer Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Customer Acc No</label>
@@ -233,7 +248,6 @@ function AddCustomer() {
                     onClick={() => {
                       setData({ ...data, state: x?.name });
                       axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
-                        console.log(res.data);
                         setPlaces({ ...places, city: res.data.data });
                         setSearch({ ...search, city: res.data.data });
                       });
@@ -348,7 +362,7 @@ function AddCustomer() {
               <p className="text-xs text-center">Upload Document or Drag the file</p>
               <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
-            {files.map((x: any, i: number) => (
+            {[...files,...data.fileUrls].map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -370,20 +384,17 @@ function AddCustomer() {
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
-            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ accountType: "", address: "", bussinessDocument: "", city: "", contactPerson: "", country: "", customerName: "", customerType: "", discountType: "", district: "", email: "", fileUrls: [], paymentTerms: "", pincode: "", primaryNumber: "", purchaseResitriction: "", secondaryNumber: "", state: "", zone: "" })}>
-              Reset
-            </button>
-            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
+            <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" >
-              Save
+            <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" onClick={handleSave}>
+              Update
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
 }
 
-export default AddCustomer;
+export default EditCustomer;
