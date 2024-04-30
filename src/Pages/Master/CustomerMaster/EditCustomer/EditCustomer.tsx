@@ -204,7 +204,7 @@ function EditCustomer() {
             <label>Secondary</label>
             <input value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
           </div>
-          <h1 className="roboto-medium mt-1">Contact Details</h1>
+          <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>

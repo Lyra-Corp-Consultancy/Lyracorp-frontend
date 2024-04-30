@@ -2,12 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { activeAndDeactiveVendorMaster, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+import { activeAndDeactiveProductMaster, getAllProductMaster, getType } from "../../../utils/redux/actions";
 import ActiveUsers from "./ActiveUsers";
 import DeactiveUsers from "./DeactiveUsers";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
 
-function VendorMaster() {
+function ProductMaster() {
   const [data, setData] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
   const [filtered, setFiltered] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
   const dispatch: any = useDispatch();
@@ -15,44 +15,35 @@ function VendorMaster() {
   const [InactiveSelectUsers, setInactiveSelectedUsers] = useState<any[]>([]);
   const [confirmation, setConfirmation] = useState(false);
   const [dropDowns, setDropDown] = useState<{
-    vendor: any[];
+    uom: any[];
     account: any[];
     discount: any[];
     payment: any[];
     document: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [] });
+  }>({ uom: [], account: [], discount: [], payment: [], document: [] });
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
-    const vendor = dropDowns.vendor
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+    const uom = dropDowns.uom
+      .filter((x) => x?.value?.name?.toLowerCase()?.startsWith(lowerVal))
       .map((x) => {
         return x?._id;
       });
-    const account = dropDowns.account
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
+
     const discount = dropDowns.discount
       .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
       .map((x) => {
         return x?._id;
       });
-    const payment = dropDowns.payment
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
-    console.log(vendor);
+  
 
     const active = data.active.filter((x) => {
-      if (x?.vendorName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal) || vendor.includes(x?.vendorType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms)) {
+      if (x?.productName?.toLowerCase()?.startsWith(lowerVal) || x?.productCode?.toLowerCase()?.startsWith(lowerVal) || x?.productDes?.toLowerCase()?.startsWith(lowerVal) || x?.mrp?.toLowerCase()?.startsWith(lowerVal) || x?.pricingDate?.toLowerCase()?.startsWith(lowerVal) || x?.netPrice?.toLowerCase()?.startsWith(lowerVal) ||x?.weight?.toLowerCase()?.startsWith(lowerVal) ||x?.eanNumber?.toLowerCase()?.startsWith(lowerVal) ||x?.eccn?.toLowerCase()?.startsWith(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (x?.vendorName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal)) {
+      if (x?.productName?.toLowerCase()?.startsWith(lowerVal) || x?.productCode?.toLowerCase()?.startsWith(lowerVal) || x?.productDes?.toLowerCase()?.startsWith(lowerVal) || x?.mrp?.toLowerCase()?.startsWith(lowerVal) || x?.pricingDate?.toLowerCase()?.startsWith(lowerVal) || x?.netPrice?.toLowerCase()?.startsWith(lowerVal) ||x?.weight?.toLowerCase()?.startsWith(lowerVal) ||x?.eanNumber?.toLowerCase()?.startsWith(lowerVal) ||x?.eccn?.toLowerCase()?.startsWith(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
         return x;
       }
     });
@@ -63,18 +54,18 @@ function VendorMaster() {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllVendorMaster()).then((res: any) => {
+    dispatch(getAllProductMaster()).then((res: any) => {
       setData(res.payload);
       setFiltered(res.payload);
     });
 
-    const res1 = dispatch(getType("vendor"));
+    const res1 = dispatch(getType("uom"));
 
     res1.then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          vendor: res?.payload[0]?.vendorType,
+          uom: res?.payload[0]?.uomType,
         };
       });
     });
@@ -120,33 +111,41 @@ function VendorMaster() {
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
-        <h1 className="text-xl roboto-bold">Vendor Master</h1>
+        <h1 className="text-xl roboto-bold">Product Master</h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="flex gap-4">
             <button onClick={() => setActive(true)} className={"flex flex-col  rounded-md px-4 py-2 " + (active ? "bg-[#5970F5] text-white" : "bg-[#C3CBFF] text-black ")}>
               <div className="flex items-center gap-3">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill={active ? "white" : "black"} xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14.9231 14.4225C14.8724 14.5102 14.7996 14.5831 14.7118 14.6337C14.6241 14.6844 14.5246 14.711 14.4233 14.711H0.576363C0.475137 14.7109 0.375719 14.6841 0.288093 14.6335C0.200467 14.5828 0.127718 14.5099 0.0771494 14.4222C0.0265811 14.3346 -2.59689e-05 14.2351 1.90191e-08 14.1339C2.60069e-05 14.0327 0.0266841 13.9332 0.0772974 13.8456C1.17567 11.9466 2.86832 10.585 4.84366 9.93957C3.86657 9.3579 3.10742 8.47156 2.68282 7.41669C2.25821 6.36181 2.19161 5.19671 2.49325 4.10032C2.79489 3.00393 3.4481 2.03687 4.35255 1.34765C5.257 0.658429 6.36269 0.285156 7.49982 0.285156C8.63695 0.285156 9.74264 0.658429 10.6471 1.34765C11.5515 2.03687 12.2047 3.00393 12.5064 4.10032C12.808 5.19671 12.7414 6.36181 12.3168 7.41669C11.8922 8.47156 11.1331 9.3579 10.156 9.93957C12.1313 10.585 13.824 11.9466 14.9223 13.8456C14.9731 13.9332 14.9999 14.0327 15 14.1339C15.0001 14.2352 14.9736 14.3347 14.9231 14.4225Z" />
+              <svg width="24" height="24" viewBox="0 0 24 24"   fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.4 7.1L12.2 2L2 7.1V17.3L12.2 22.4L22.4 17.3V7.1Z" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linejoin="round" />
+                  <path d="M2 7.09766L12.2 12.1977" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12.1602 22.3992V12.1992" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M22.3602 7.09766L12.1602 12.1977" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M17.3797 4.55078L7.17969 9.65078" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                <p className=" roboto-regular text-[15px]">Active Vendors</p>
+                <p className=" roboto-regular text-[15px]">Active Products</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.active?.length}</p>
             </button>
 
             <button onClick={() => setActive(false)} className={"flex flex-col  rounded-md px-4 py-2 " + (!active ? "bg-[#5970F5] text-white" : "bg-[#C3CBFF] text-black ")}>
               <div className="flex items-center gap-3">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill={!active ? "white" : "black"} xmlns="http://www.w3.org/2000/svg">
-                  <path d="M14.9231 14.4225C14.8724 14.5102 14.7996 14.5831 14.7118 14.6337C14.6241 14.6844 14.5246 14.711 14.4233 14.711H0.576363C0.475137 14.7109 0.375719 14.6841 0.288093 14.6335C0.200467 14.5828 0.127718 14.5099 0.0771494 14.4222C0.0265811 14.3346 -2.59689e-05 14.2351 1.90191e-08 14.1339C2.60069e-05 14.0327 0.0266841 13.9332 0.0772974 13.8456C1.17567 11.9466 2.86832 10.585 4.84366 9.93957C3.86657 9.3579 3.10742 8.47156 2.68282 7.41669C2.25821 6.36181 2.19161 5.19671 2.49325 4.10032C2.79489 3.00393 3.4481 2.03687 4.35255 1.34765C5.257 0.658429 6.36269 0.285156 7.49982 0.285156C8.63695 0.285156 9.74264 0.658429 10.6471 1.34765C11.5515 2.03687 12.2047 3.00393 12.5064 4.10032C12.808 5.19671 12.7414 6.36181 12.3168 7.41669C11.8922 8.47156 11.1331 9.3579 10.156 9.93957C12.1313 10.585 13.824 11.9466 14.9223 13.8456C14.9731 13.9332 14.9999 14.0327 15 14.1339C15.0001 14.2352 14.9736 14.3347 14.9231 14.4225Z" />
+                <svg width="24" height="24" viewBox="0 0 24 24"   fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M22.4 7.1L12.2 2L2 7.1V17.3L12.2 22.4L22.4 17.3V7.1Z" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linejoin="round" />
+                  <path d="M2 7.09766L12.2 12.1977" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12.1602 22.3992V12.1992" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M22.3602 7.09766L12.1602 12.1977" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M17.3797 4.55078L7.17969 9.65078" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
 
-                <p className=" roboto-regular text-[15px]">Inactive Vendors</p>
+                <p className=" roboto-regular text-[15px]">Inactive Products</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.deactive?.length}</p>
             </button>
           </div>
 
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-4">
-            <h2 className="roboto-bold ms-3 text-[20px]">Vendor List</h2>
+            <h2 className="roboto-bold ms-3 text-[20px]">Product List</h2>
             <div className="px-4 flex justify-between">
               <label className="flex px-3 w-2/5 rounded-md py-1 mt-2 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] items-center gap-3" htmlFor="">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -203,11 +202,11 @@ function VendorMaster() {
                   </svg>
                 )}
 
-                <Link to={"/master/vendor-master/add-vendor"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
+                <Link to={"/master/product-master/add-product"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
                   <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.0714 7.92857H7.42857V12.5714C7.42857 12.8177 7.33074 13.0539 7.1566 13.228C6.98246 13.4022 6.74627 13.5 6.5 13.5C6.25373 13.5 6.01754 13.4022 5.8434 13.228C5.66926 13.0539 5.57143 12.8177 5.57143 12.5714V7.92857H0.928571C0.682299 7.92857 0.446113 7.83074 0.271972 7.6566C0.0978315 7.48246 0 7.24627 0 7C0 6.75373 0.0978315 6.51754 0.271972 6.3434C0.446113 6.16926 0.682299 6.07143 0.928571 6.07143H5.57143V1.42857C5.57143 1.1823 5.66926 0.946113 5.8434 0.771972C6.01754 0.597831 6.25373 0.5 6.5 0.5C6.74627 0.5 6.98246 0.597831 7.1566 0.771972C7.33074 0.946113 7.42857 1.1823 7.42857 1.42857V6.07143H12.0714C12.3177 6.07143 12.5539 6.16926 12.728 6.3434C12.9022 6.51754 13 6.75373 13 7C13 7.24627 12.9022 7.48246 12.728 7.6566C12.5539 7.83074 12.3177 7.92857 12.0714 7.92857Z" fill="white" />
                   </svg>
-                  Add Vendor
+                  Add Product
                 </Link>
               </div>
             </div>
@@ -216,7 +215,7 @@ function VendorMaster() {
                 setSelected={setActiveSelectedUsers}
                 selected={ActiveSelectUsers}
                 inActiveCustomer={() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                  dispatch(getAllProductMaster()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -231,7 +230,7 @@ function VendorMaster() {
                 data={filtered?.deactive}
                 dropDowns={dropDowns}
                 ActiveCustomer={() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                  dispatch(getAllProductMaster()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -243,15 +242,15 @@ function VendorMaster() {
       </div>
       {confirmation && (
         <DeleteConfirmationBox
-          message={active ? "Do you want to inactive this vendor?" : "Do you want to active this vendor?"}
+          message={active ? "Do you want to inactive this product?" : "Do you want to active this product?"}
           pos={active ? "Inactive" : "Active"}
           posColor={!active ? "bg-[#196000]" : ""}
           RejectFunction={() => setConfirmation(false)}
           ResolveFunction={() => {
             if (active) {
               if (ActiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveVendorMaster(ActiveSelectUsers)).then(() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                dispatch(activeAndDeactiveProductMaster(ActiveSelectUsers)).then(() => {
+                  dispatch(getAllProductMaster()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -260,8 +259,8 @@ function VendorMaster() {
               setActiveSelectedUsers([]);
             } else {
               if (InactiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveVendorMaster(InactiveSelectUsers)).then(() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                dispatch(activeAndDeactiveProductMaster(InactiveSelectUsers)).then(() => {
+                  dispatch(getAllProductMaster()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -277,4 +276,4 @@ function VendorMaster() {
   );
 }
 
-export default VendorMaster;
+export default ProductMaster;

@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import TypeMasterRoutes from './TypeMaster/TypeMasterRoutes'
 import CustomerMasterRoute from './CustomerMaster/CustomerMasterRoute'
 import VendorMasterRoute from './VendorMaster/VendorMasterRoute'
+import ProductMasterRoute from './ProductMaster/ProductMasterRoute'
 
 function MasterRoutes() {
     return (
@@ -11,6 +12,7 @@ function MasterRoutes() {
                 <Route path='/type-master/*' element={<TypeMasterRoutes/>}/>
                 <Route path='/customer-master/*' element={<CustomerMasterRoute/>}/>
                 <Route path='/vendor-master/*' element={<VendorMasterRoute/>}/>
+                <Route path='/product-master/*' element={<ProductMasterRoute/>}/>
             </Routes>
         </>
     )
