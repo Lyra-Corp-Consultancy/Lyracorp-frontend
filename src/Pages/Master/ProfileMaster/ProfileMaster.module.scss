@@ -1,0 +1,32 @@
+.isChecked:checked + .toggler {
+  left: 90%;
+  transform: translateX(-100%);
+}
+
+.isChecked {
+  display: none;
+}
+.togglerContainer {
+  background: #C3CBFF;
+  width: 50px;
+  height: 23px;
+  border-radius: 13px;
+  position: relative;
+  transition: 0.3s;
+}
+.isChecked:checked {
+  .togglerContainer {
+    background: red;
+  }
+}
+
+.toggler {
+  aspect-ratio: 1/1;
+  height: 80%;
+  background-color: white;
+  border-radius: 100%;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transition: 0.3s;
+}

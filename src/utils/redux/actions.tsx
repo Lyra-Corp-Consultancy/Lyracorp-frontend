@@ -26,6 +26,30 @@ interface CustomerMasterData {
   fileUrls?: string[];
 }
 
+
+interface ProfileMaster {
+  fileUrls: string[];
+  logo?: string;
+  companyName?: string;
+  businessType?: string;
+  contactNumber?: string;
+  country?: string;
+  state?: string;
+  district?: string;
+  city?: string;
+  zone?: string;
+  address?: string;
+  pincode?: string;
+  aadharNumber?: string;
+  panNumber?: string;
+  regNumber?: string;
+  gstinNumber?: string;
+  bankAccNo?: string;
+  accBranch?: string;
+  ifscCode?: string;
+  bussinessDocument?: string;
+}
+
 interface VendorMasterData {
   vendorName?: string;
   vendorType?: string;
@@ -113,6 +137,16 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
     }
   });
 
+
+  export const editProfileMaster = createAsyncThunk("user/editProfileMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
+    try {
+      await instance.patch("/master/profile-master/"+id, { data });
+      return 
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+
 export const getAllCustomerMaster = createAsyncThunk("user/getAllCustomerMaster", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/master/customer-master/all");
@@ -150,6 +184,15 @@ export const getProductMasterById = createAsyncThunk("user/getProductMasterById"
   }
 })
 
+export const getProfileMasterById = createAsyncThunk("user/getProfileMasterById", async(id:string,{rejectWithValue})=>{
+  try{
+      const res = await instance.get("/master/profile-master/individual",{params:{id}});
+      return res.data;
+  }catch(err){
+      rejectWithValue(err);
+  }
+})
+
 export const addVendorMaster = createAsyncThunk("user/addVendorMaster", async (data: VendorMasterData, { rejectWithValue }) => {
   try {
     console.log(data)
@@ -172,6 +215,17 @@ export const addProductMaster = createAsyncThunk("user/addProductMaster", async 
 });
 
 
+export const addProfileMaster = createAsyncThunk("user/addProductMaster", async (data: ProfileMaster, { rejectWithValue }) => {
+  try {
+    console.log(data)
+    const res = await instance.post("/master/profile-master", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
 export const getAllVendorMaster = createAsyncThunk("user/getAllVendorMaster", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/master/vendor-master/all");
@@ -181,9 +235,27 @@ export const getAllVendorMaster = createAsyncThunk("user/getAllVendorMaster", as
   }
 });
 
+export const getAllProfileMaster = createAsyncThunk("user/getAllProfileMaster", async (_, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/master/profile-master/all");
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const activeAndDeactiveVendorMaster = createAsyncThunk("user/inactiveVendorMaster", async (id: string[], { rejectWithValue }) => {
   try {
     await instance.delete("/master/vendor-master",{params:{id}});
+    return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const activeAndDeactiveProfileMaster = createAsyncThunk("user/inactiveVendorMaster", async (id: string, { rejectWithValue }) => {
+  try {
+    await instance.delete("/master/profile-master",{params:{id}});
     return
   } catch (err) {
     rejectWithValue(err);

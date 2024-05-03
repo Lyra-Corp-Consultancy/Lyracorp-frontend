@@ -15,7 +15,6 @@ function VendorMasterRoute() {
         <Route path='/add-vendor' index element={<AddVendor/>} />
         <Route path='/view-vendors/:id' element={<ViewVendors/>}/>
         <Route path='/edit-vendors/:id' element={<EditVendors/>}/>
-    <Route path='/'/>
     </Routes>
     </div>
   )

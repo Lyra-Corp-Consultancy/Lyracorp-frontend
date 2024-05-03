@@ -74,11 +74,12 @@ function NavigationBar() {
                     <button className='text-start' onClick={()=>navigate("/master/customer-master")}>Customer Master</button>
                     <button className='text-start' onClick={()=>navigate("/master/vendor-master")}>Vendor Master</button>
                     <button className='text-start'  onClick={()=>navigate("/master/product-master")}>Product Master</button>
+                    <button className='text-start'  onClick={()=>navigate("/master/profile-master")}>Profile Master</button>
                 </div>}</button>
 
                 
-                <button className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative ' + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}><p onClick={() => setDropDown(dropDown === "inventory" ? "" : "inventory")}>Inventory Management</p>{dropDown==="inventory" && <div  className={'flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal '}>
-                    <button className='text-start'>Purchase Order</button>
+                <button className={' rounded-[20px_0_0_0]  px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative ' + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}><p onClick={() => setDropDown(dropDown === "inventory" ? "" : "inventory")}>Inventory Management</p>{dropDown==="inventory" && <div  className={'flex p-1 z-[10] bg-white flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal '}>
+                    <button className='text-start'  onClick={()=>navigate("/inventory/purchase-order")}>Purchase Order</button>
                     <button className='text-start'>Purchase Inward</button>
                     <button className='text-start'>Stock Check</button>
                     <button className='text-start'>Raw Material - Outward</button>
