@@ -41,19 +41,19 @@ function EditProfile() {
       const res = await axios.post(fileServer, file);
       urls.push(res.data);
     }
-    let logo:string
-if(files1[0]){
-    const x = files1[0];
-    const file = new FormData();
-    file.append("file", x);
-    const res = await axios.post(fileServer, file);
-     logo = res.data;
-}else{
-    logo = data.logo
-}
+    let logo: string;
+    if (files1[0]) {
+      const x = files1[0];
+      const file = new FormData();
+      file.append("file", x);
+      const res = await axios.post(fileServer, file);
+      logo = res.data;
+    } else {
+      logo = data.logo;
+    }
     console.log(urls);
-    setData({ ...data, fileUrls: [...urls,...data.fileUrls], logo });
-    dispatch(editProfileMaster({data:{ ...data, fileUrls: [...urls,...data.fileUrls], logo },id:params.id})).then(() => {
+    setData({ ...data, fileUrls: [...urls, ...data.fileUrls], logo });
+    dispatch(editProfileMaster({ data: { ...data, fileUrls: [...urls, ...data.fileUrls], logo }, id: params.id })).then(() => {
       navigate(-1);
     });
   };
@@ -182,29 +182,29 @@ if(files1[0]){
               </label>
               <input type="file" id="file" onChange={handleFileSelect2} className="hidden" />
 
-                <div className="  flex flex-col justify-center items-center">
-                  <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M0 0H8.07901L11.7144 3.63536V6.83338H10.4128V5.20639H6.50798V1.3016H1.3016V13.016H6.18259V14.3176H0V0ZM7.80958 1.57103V3.90479H10.1433L7.80958 1.57103ZM9.27388 8.78578C8.79922 8.78578 8.344 8.97434 8.00837 9.30997C7.67274 9.6456 7.48418 10.1008 7.48418 10.5755C7.48418 11.0501 7.67274 11.5053 8.00837 11.841C8.344 12.1766 8.79922 12.3652 9.27388 12.3652C9.74853 12.3652 10.2038 12.1766 10.5394 11.841C10.875 11.5053 11.0636 11.0501 11.0636 10.5755C11.0636 10.1008 10.875 9.6456 10.5394 9.30997C10.2038 8.97434 9.74853 8.78578 9.27388 8.78578ZM6.18259 10.5755C6.18266 10.0948 6.29482 9.62079 6.51015 9.19106C6.72548 8.76133 7.03806 8.38774 7.42305 8.09995C7.80804 7.81217 8.25483 7.61813 8.72794 7.53324C9.20104 7.44835 9.68743 7.47496 10.1484 7.61094C10.6095 7.74693 11.0324 7.98855 11.3837 8.31661C11.735 8.64467 12.005 9.05013 12.1722 9.50078C12.3393 9.95144 12.3991 10.4349 12.3468 10.9127C12.2944 11.3905 12.1314 11.8495 11.8706 12.2532L12.96 13.3407L12.0404 14.2616L10.9503 13.1728C10.4835 13.4741 9.94407 13.6441 9.3888 13.6647C8.83354 13.6854 8.28297 13.556 7.79503 13.2902C7.30709 13.0244 6.89982 12.632 6.61607 12.1542C6.33231 11.6765 6.18257 11.1311 6.18259 10.5755Z"
-                      fill="#5970F5"
-                    />
-                  </svg>
-                  <p
-                    onClick={() => {    
-                      const link = files1?.[0] || data?.logo;
+              <div className="  flex flex-col justify-center items-center">
+                <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M0 0H8.07901L11.7144 3.63536V6.83338H10.4128V5.20639H6.50798V1.3016H1.3016V13.016H6.18259V14.3176H0V0ZM7.80958 1.57103V3.90479H10.1433L7.80958 1.57103ZM9.27388 8.78578C8.79922 8.78578 8.344 8.97434 8.00837 9.30997C7.67274 9.6456 7.48418 10.1008 7.48418 10.5755C7.48418 11.0501 7.67274 11.5053 8.00837 11.841C8.344 12.1766 8.79922 12.3652 9.27388 12.3652C9.74853 12.3652 10.2038 12.1766 10.5394 11.841C10.875 11.5053 11.0636 11.0501 11.0636 10.5755C11.0636 10.1008 10.875 9.6456 10.5394 9.30997C10.2038 8.97434 9.74853 8.78578 9.27388 8.78578ZM6.18259 10.5755C6.18266 10.0948 6.29482 9.62079 6.51015 9.19106C6.72548 8.76133 7.03806 8.38774 7.42305 8.09995C7.80804 7.81217 8.25483 7.61813 8.72794 7.53324C9.20104 7.44835 9.68743 7.47496 10.1484 7.61094C10.6095 7.74693 11.0324 7.98855 11.3837 8.31661C11.735 8.64467 12.005 9.05013 12.1722 9.50078C12.3393 9.95144 12.3991 10.4349 12.3468 10.9127C12.2944 11.3905 12.1314 11.8495 11.8706 12.2532L12.96 13.3407L12.0404 14.2616L10.9503 13.1728C10.4835 13.4741 9.94407 13.6441 9.3888 13.6647C8.83354 13.6854 8.28297 13.556 7.79503 13.2902C7.30709 13.0244 6.89982 12.632 6.61607 12.1542C6.33231 11.6765 6.18257 11.1311 6.18259 10.5755Z"
+                    fill="#5970F5"
+                  />
+                </svg>
+                <p
+                  onClick={() => {
+                    const link = files1?.[0] || data?.logo;
 
-                      if ((link + "")?.startsWith("http")) {
-                        window.open(data?.logo);
-                      } else {
-                        const url = URL.createObjectURL(files1?.[0]);
-                        window.open(url);
-                      }
-                    }}
-                    className="text-[9px] cursor-pointer text-[#5970F5] underline"
-                  >
-                    preview 1
-                  </p>
-                </div>
+                    if ((link + "")?.startsWith("http")) {
+                      window.open(data?.logo);
+                    } else {
+                      const url = URL.createObjectURL(files1?.[0]);
+                      window.open(url);
+                    }
+                  }}
+                  className="text-[9px] cursor-pointer text-[#5970F5] underline"
+                >
+                  preview 1
+                </p>
+              </div>
             </div>
             <label>Company Name</label>
             <input value={data.companyName} name="companyName" onChange={(e) => setData({ ...data, companyName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
@@ -392,7 +392,7 @@ if(files1[0]){
               <p className="text-xs text-center">Upload Document or Drag the file</p>
               <input type="file" id="document" onChange={handleFileSelect} className="hidden" />
             </label>
-            {[...files,...data.fileUrls].map((x: any, i: number) => (
+            {[...files, ...data.fileUrls].map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -402,11 +402,11 @@ if(files1[0]){
                 </svg>
                 <p
                   onClick={() => {
-                    if(x?.startsWith("http")){
-                        window.open(x)
-                    }else{
-                        const url = URL.createObjectURL(x);
-                        window.open(url);
+                    if (x?.startsWith("http")) {
+                      window.open(x);
+                    } else {
+                      const url = URL.createObjectURL(x);
+                      window.open(url);
                     }
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"

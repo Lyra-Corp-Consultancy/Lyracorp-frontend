@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
 
-type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" | "uom" | "tax" | "marginSetting" | "vendor";
+type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" | "uom" | "tax" | "marginSetting" | "vendor" | "department" | "role";
 
 interface CustomerMasterData {
   customerId?: string;
@@ -72,7 +72,7 @@ interface VendorMasterData {
   fileUrls?: string[];
 }
 
-export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { name: string; des: string }; type: Type }, { rejectWithValue }) => {
+export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
     await instance.post("/master/type-master", { value, type });
     return;
@@ -99,7 +99,7 @@ export const deleteTypeMaster = createAsyncThunk("user/deleteType", async ({ val
   }
 });
 
-export const updateType = createAsyncThunk("user/editType", async (value: { id: string; val: string | { name: string; des: string }; type: Type }, { rejectWithValue }) => {
+export const updateType = createAsyncThunk("user/editType", async (value: { id: string; val: string | { [key:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
     await instance.patch("/master/type-master/" + value.id, { val: value.val, type: value.type });
   } catch (err) {

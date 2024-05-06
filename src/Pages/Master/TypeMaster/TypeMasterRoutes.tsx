@@ -10,6 +10,8 @@ import CertificationType from './CertificationType/CertificationType'
 import MarginSettingType from './MarginSettingType/MarginSettingType'
 import VendorType from './VendorType/VendorType'
 import DocumentType from './DocumentType/DocumentType'
+import DepartmentType from './DepartmentType/DepartmentType'
+import RoleType from './RoleType/RoleType'
 
 function TypeMasterRoutes() {
     return (
@@ -25,6 +27,8 @@ function TypeMasterRoutes() {
                 <Route path='/certification-type' element={<CertificationType />} />
                 <Route path='/margin-setting-type' element={<MarginSettingType />} />
                 <Route path='/vendor-type' element={<VendorType />} />
+                <Route path='/department-type' element={<DepartmentType />} />
+                <Route path='/role-type' element={<RoleType />} />
             </Routes>
         </>
     )

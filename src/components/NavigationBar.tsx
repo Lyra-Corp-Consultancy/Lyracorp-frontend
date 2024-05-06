@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import demoprofile from "../assets/images/demoprofilepic.png"
 import { useLocation, useNavigate } from 'react-router-dom'
-import styles from "./NavigationBarStyle.module.scss"
 
 function NavigationBar() {
     const location = useLocation()
@@ -9,7 +8,6 @@ function NavigationBar() {
     const [typeMaster, setTypeMaster] = useState(false)
     const navigate = useNavigate()
 
-    console.log(styles)
     return (
         <div className='bg-[#5970F5] w-full px-10'>
             <div className='flex justify-between py-1 items-center'>
@@ -69,6 +67,8 @@ function NavigationBar() {
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/uom-type")}>UOM Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/tax-type")}>Tax Type</li>
                         <li className="text-start ms-5 text-xs" onClick={()=>navigate("/master/type-master/margin-setting-type")}>Margin Setting Type</li>
+                        <li className="text-start ms-5 text-xs" onClick={()=>navigate("/master/type-master/department-type")}>Department Type</li>
+                        <li className="text-start ms-5 text-xs" onClick={()=>navigate("/master/type-master/role-type")}>Role Type</li>
                         <li className="text-start ms-5" onClick={()=>navigate("/master/type-master/vendor-type")}>Vendor Type</li>
                     </ul> : <button onClick={() => setTypeMaster(!typeMaster)} className='flex justify-between text-[#5970F5]'>Type Master <span>+</span></button>}
                     <button className='text-start' onClick={()=>navigate("/master/customer-master")}>Customer Master</button>
