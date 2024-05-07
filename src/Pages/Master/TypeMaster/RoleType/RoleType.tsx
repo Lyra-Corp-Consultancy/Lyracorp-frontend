@@ -10,7 +10,7 @@ import Select from "../../../../components/Select";
 function RoleType() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch: any = useDispatch();
-  const [input, setInput] = useState<{department:string,value:string}>({department:"",value:""});
+  const [input, setInput] = useState<{ department: string; value: string }>({ department: "", value: "" });
   const [confirmation, setConfirmation] = useState("");
   const [values, setValues] = useState<any[]>();
   const [search, setSearch] = useState<any[]>();
@@ -22,7 +22,7 @@ function RoleType() {
     res.then((res: any) => {
       setValues(res.payload[0].roleType);
       setSearch(res.payload[0].roleType);
-      setInput({department:"",value:""});
+      setInput({ department: "", value: "" });
     });
   };
   useEffect(() => {
@@ -33,7 +33,7 @@ function RoleType() {
     if (deleteType.length === 1) {
       setInput(values?.filter((x) => x._id === deleteType[0])[0].value);
     } else {
-      setInput({department:"",value:""});
+      setInput({ department: "", value: "" });
     }
   }, [deleteType]);
 
@@ -65,7 +65,7 @@ function RoleType() {
     const res = dispatch(updateType({ id: deleteType[0], val: input, type: "role" }));
     res.then(() => {
       setDelete([]);
-      setInput({department:"",value:""});
+      setInput({ department: "", value: "" });
       fetchRoleType();
     });
     setConfirmation("");
@@ -133,32 +133,40 @@ function RoleType() {
                       className="h-3 cursor-pointer w-3 border border-white bg-none"
                     ></div>
                   )}
-                  <p className="text-white ">Role Type</p>
+                  <div className="grid grid-cols-2 w-1/2 items-center">
+                    <p className="text-white ">Department</p>
+                    <p className="text-white">Role</p>
+                  </div>
                 </div>
                 <div className="overflow-auto h-[70%] rounded-[0_0_10px_10px]">
-                  {search?.map((x: any) => (
-                    <div className="flex gap-5 items-center bg-white px-2 py-1">
-                      {deleteType.includes(x?._id) ? (
-                        <div
-                          onClick={() => {
-                            const filter = [...deleteType];
-                            const index = filter.indexOf(x?._id);
-                            filter.splice(index, 1);
-                            setDelete([...filter]);
-                          }}
-                          className="h-3 w-3 border cursor-pointer border-[#5970f5] bg-none"
-                        >
-                          {" "}
-                          <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 5.19048L4.66667 8.85714L12 1" stroke="#5970F5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                          </svg>
+                  <div className="overflow-auto h-[70%] rounded-[0_0_10px_10px]">
+                    {search?.map((x: any) => (
+                      <div className="flex gap-5 items-center bg-white px-2 py-1">
+                        {deleteType.includes(x?._id) ? (
+                          <div
+                            onClick={() => {
+                              const filter = [...deleteType];
+                              const index = filter.indexOf(x?._id);
+                              filter.splice(index, 1);
+                              setDelete([...filter]);
+                            }}
+                            className="h-3 w-3 border cursor-pointer border-[#5970f5] bg-none"
+                          >
+                            {" "}
+                            <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M1 5.19048L4.66667 8.85714L12 1" stroke="#5970F5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                          </div>
+                        ) : (
+                          <div onClick={() => setDelete((prev) => [...prev, x?._id])} className="h-3 cursor-pointer w-3 border border-[#5970f5] bg-none"></div>
+                        )}
+                        <div className=" grid grid-cols-2 w-1/2  items-center">
+                          <p className="text-black ">{department?.filter((y) => y?._id === x?.value?.department)[0]?.value}</p>
+                          <p>{x?.value?.value}</p>
                         </div>
-                      ) : (
-                        <div onClick={() => setDelete((prev) => [...prev, x?._id])} className="h-3 cursor-pointer w-3 border border-[#5970f5] bg-none"></div>
-                      )}
-                      <p className="text-black ">{x?.value?.value}</p>
-                    </div>
-                  ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -171,25 +179,29 @@ function RoleType() {
                     <label htmlFor="" className="font-semibold text-[14px]">
                       Department Name
                     </label>
-                    <Select value={department?.filter((x)=>x?._id===input.department)[0]?.value || ""} onChange={(e)=>setInput({...input,department:e.target.value})} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
-                      {department?.filter((x)=>x?.value?.toLowerCase()?.includes(input.department||""))?.map((x) => (
-                        <li onClick={()=>setInput({...input,department:x?._id})} className="px-3 hover:bg-slate-200 py-1 transition-all duration-100">{x?.value}</li>
-                      ))}
+                    <Select value={department?.filter((x) => x?._id === input.department)[0]?.value || ""} onChange={(e) => setInput({ ...input, department: e.target.value })} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
+                      {department
+                        ?.filter((x) => x?.value?.toLowerCase()?.includes(input.department || ""))
+                        ?.map((x) => (
+                          <li onClick={() => setInput({ ...input, department: x?._id })} className="px-3 hover:bg-slate-200 py-1 transition-all duration-100">
+                            {x?.value}
+                          </li>
+                        ))}
                     </Select>
                   </div>
 
                   <div className="flex gap-28 px-5 pt-5 items-center">
                     <label htmlFor="" className="font-semibold text-[14px]">
-                      Type Name
+                      Role Name
                     </label>
-                    <input type="text" onChange={(e) => setInput({...input,value:e.target.value})} value={input.value} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
+                    <input type="text" onChange={(e) => setInput({ ...input, value: e.target.value })} value={input.value} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
                   </div>
                 </div>
                 <div className="flex gap-3 items-center justify-end px-3 py-5">
                   <button
                     className="border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold"
                     onClick={() => {
-                      setInput({department:"",value:""});
+                      setInput({ department: "", value: "" });
                     }}
                   >
                     Reset

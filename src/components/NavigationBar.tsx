@@ -94,6 +94,7 @@ function NavigationBar() {
                     <button className='text-start'>Finished Goods Outward</button>
                 </div>}</button>
                 <button onClick={()=>navigate("/order-management")} className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] ' + (location.pathname === "/order-management" ? " bg-white" : " bg-[#C3CBFF]")}>Order Management</button>
+                <button onClick={()=>navigate("/user-management")} className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] ' + (location.pathname === "/user-management" ? " bg-white" : " bg-[#C3CBFF]")}>User Management</button>
                 <button className={' rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] ' + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>More</button>
 
             </div>

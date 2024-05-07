@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { makeToastFalse } from "./utils/redux/slice";
 import InventoryRoutes from "./Pages/Inventory/InventoryRoutes";
+import UserManagementRoute from "./Pages/UserManagement/UserManagementRoute";
 
 function App() {
   const data = useSelector((state: any) => state.user);
@@ -47,6 +48,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/master/*" element={<MasterRoutes />} />
         <Route path="/inventory/*" element={<InventoryRoutes/>}/>
+        <Route path="/user-management/*" element={<UserManagementRoute/>}/>
       </Routes>
     </div>
   );

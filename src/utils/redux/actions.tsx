@@ -1,76 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-
-type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" | "uom" | "tax" | "marginSetting" | "vendor" | "department" | "role";
-
-interface CustomerMasterData {
-  customerId?: string;
-  customerName?: string;
-  customerType?: string;
-  accountType?: string;
-  contactPerson?: string;
-  email?: string;
-  primaryNumber?: string;
-  secondaryNumber?: string;
-  country?: string;
-  state?: string;
-  district?: string;
-  city?: string;
-  zone?: string;
-  address?: string;
-  pincode?: string;
-  purchaseResitriction?: string;
-  discountType?: string;
-  paymentTerms?: string;
-  bussinessDocument?: string;
-  fileUrls?: string[];
-}
-
-
-interface ProfileMaster {
-  fileUrls: string[];
-  logo?: string;
-  companyName?: string;
-  businessType?: string;
-  contactNumber?: string;
-  country?: string;
-  state?: string;
-  district?: string;
-  city?: string;
-  zone?: string;
-  address?: string;
-  pincode?: string;
-  aadharNumber?: string;
-  panNumber?: string;
-  regNumber?: string;
-  gstinNumber?: string;
-  bankAccNo?: string;
-  accBranch?: string;
-  ifscCode?: string;
-  bussinessDocument?: string;
-}
-
-interface VendorMasterData {
-  vendorName?: string;
-  vendorType?: string;
-  contactPerson?: string;
-  email?: string;
-  primaryNumber?: string;
-  secondaryNumber?: string;
-  country?: string;
-  state?: string;
-  district?: string;
-  city?: string;
-  zone?: string;
-  address?: string;
-  pincode?: string;
-  bankAccNo?: string;
-  accountBranch?: string;
-  ifscCode?: string;
-  paymentTerms?: string;
-  bussinessDocument?: string;
-  fileUrls?: string[];
-}
+import { CustomerMasterData, ProfileMaster, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -116,6 +46,15 @@ export const addCustomerMaster = createAsyncThunk("user/addCustomerMaster", asyn
   }
 });
 
+export const addUser = createAsyncThunk("user/addUser", async (data: UserData, { rejectWithValue }) => {
+  try {
+    const res = await instance.post("/user-management", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 
 
 export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
@@ -150,6 +89,15 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
 export const getAllCustomerMaster = createAsyncThunk("user/getAllCustomerMaster", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/master/customer-master/all");
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getAllUserManagement = createAsyncThunk("user/getAllUserManagement", async (_, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/user-management/all");
     return res.data;
   } catch (err) {
     rejectWithValue(err);
