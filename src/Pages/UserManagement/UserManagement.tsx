@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { activeAndDeactiveCustomerMaster, getAllUserManagement, getType } from "../../utils/redux/actions";
+import { activeAndDeactiveUser, getAllUserManagement, getType } from "../../utils/redux/actions";
 import DeleteConfirmationBox from "../../components/DeleteConfirmationBox";
 import ActiveUsers from "./ActiveUsers";
 import DeactiveUsers from "./DeactiveUsers";
@@ -253,7 +253,7 @@ function UserManagement() {
           ResolveFunction={() => {
             if (active) {
               if (ActiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveCustomerMaster(ActiveSelectUsers)).then(() => {
+                dispatch(activeAndDeactiveUser(ActiveSelectUsers)).then(() => {
                   dispatch(getAllUserManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
@@ -263,7 +263,7 @@ function UserManagement() {
               setActiveSelectedUsers([]);
             } else {
               if (InactiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveCustomerMaster(InactiveSelectUsers)).then(() => {
+                dispatch(activeAndDeactiveUser(InactiveSelectUsers)).then(() => {
                   dispatch(getAllUserManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);

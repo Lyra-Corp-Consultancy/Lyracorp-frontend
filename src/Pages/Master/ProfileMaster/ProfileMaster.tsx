@@ -35,7 +35,7 @@ function ProfileMaster() {
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
-        <h1 className="text-xl roboto-bold">Profile Master</h1>
+        <h1 className="text-xl roboto-bold">Line Of Business</h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-4">
             <h2 className="roboto-bold ms-3 text-[20px]">Profile List</h2>

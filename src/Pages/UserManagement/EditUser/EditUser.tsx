@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from "react";
 import Select from "../../../components/Select";
 import { useDispatch } from "react-redux";
-import {  addUser, getAllProfileMaster, getType } from "../../../utils/redux/actions";
-import { useNavigate } from "react-router-dom";
+import {  editUser, getAllProfileMaster, getType, getUser } from "../../../utils/redux/actions";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../utils/values/publicValues";
 import { UserData } from "../../../utils/Type/types";
 
-function AddUser() {
+function EditUser() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -26,6 +26,7 @@ function AddUser() {
 
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<UserData>({department:"",email:"",role:"",employeeId:"",password:"",phoneNumber:"",username:"",userPhoto:""});
+  const params:any = useParams()
 
   const navigate = useNavigate();
 
@@ -42,17 +43,17 @@ function AddUser() {
   };
 
   const handleSave = async () => {
-    let userPhoto
+   let userPhoto:any
     if(files1[0]){
-      const x = files1[0];
-      const file = new FormData();
-      file.append("file", x);
-      const res = await axios.post(fileServer, file);
-       userPhoto = res.data
+        const x = files1[0];
+        const file = new FormData();
+        file.append("file", x);
+        const res = await axios.post(fileServer, file);
+         userPhoto = res.data
     }
     setData({ ...data,userPhoto });
 
-    dispatch(addUser({ ...data, userPhoto })).then(() => {
+    dispatch(editUser({data:{ ...data, userPhoto },id:params.id})).then(() => {
       navigate(-1);
     });
   };
@@ -81,6 +82,12 @@ function AddUser() {
       });
     });
 
+    dispatch(getUser(params.id)).then((res:any)=>{
+        if(res?.payload?.permissions){
+            delete res.payload.permissions
+        }
+        setData(res.payload)
+    })
     dispatch(getType("department")).then((res: any) => {
       setDropDown((prev) => {
         return {
@@ -146,7 +153,7 @@ function AddUser() {
                 <input type="file" id="file" onChange={handleFileSelect2} className="hidden" />
               </div>
 
-              {files1.map((x: any, i: number) => (
+              {(files1[0] || data?.userPhoto ) &&
                 <div className="  flex flex-col justify-center items-center">
                   <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -156,15 +163,20 @@ function AddUser() {
                   </svg>
                   <p
                     onClick={() => {
-                      const url = URL.createObjectURL(x);
-                      window.open(url);
+                        if(files1[0] ){
+                            const url = URL.createObjectURL(files1[0]);
+                            window.open(url);
+                        }else{
+                            window.open(data?.userPhoto);
+
+                        }
                     }}
                     className="text-[9px] cursor-pointer text-[#5970F5] underline"
                   >
-                    Preview {i + 1}
+                    Preview 
                   </p>
                 </div>
-              ))}
+              }
             </div>
             <div className="flex gap-2 items-center">
               <label>Username</label>
@@ -222,10 +234,9 @@ function AddUser() {
                   ))}
               </Select>
             </div>
-
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
-              <Select className="z-[999]" value={dropDowns?.lineOfBusiness?.filter((x) => x?._id === data?.company)[0]?.companyName}>
+              <Select className="z-[999]" value={dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}>
                 {dropDowns?.lineOfBusiness
                   ?.map((x) => (
                     <li
@@ -243,14 +254,11 @@ function AddUser() {
 
        
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
-            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ department:"",email:"",employeeId:"",password:"",phoneNumber:"",role:"",username:"",userPhoto:""})}>
-              Reset
-            </button>
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
             <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Save
+              Update
             </button>
           </div>
         </form>
@@ -259,4 +267,4 @@ function AddUser() {
   );
 }
 
-export default AddUser;
+export default EditUser;

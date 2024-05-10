@@ -66,6 +66,15 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
     }
   });
 
+  export const editUser = createAsyncThunk("user/editUser", async ({data,id}:{data:UserData,id:string}, { rejectWithValue }) => {
+    try {
+      await instance.patch("/user-management/"+id, { data });
+      return 
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+
 
   export const editProductMaster = createAsyncThunk("user/editProductMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
     try {
@@ -98,6 +107,25 @@ export const getAllCustomerMaster = createAsyncThunk("user/getAllCustomerMaster"
 export const getAllUserManagement = createAsyncThunk("user/getAllUserManagement", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/user-management/all");
+    console.log(res.data)
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getUser = createAsyncThunk("user/getUser", async (id:string, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/user-management/individual",{params: { id}});
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const userPermission = createAsyncThunk("user/userPermission", async ({data,id}:{data:{ view: string[]; edit: string[]; delete: string[]; add: string[] },id:string}, { rejectWithValue }) => {
+  try {
+    const res = await instance.patch("/user-management/permissions",{data,id});
     return res.data;
   } catch (err) {
     rejectWithValue(err);
@@ -107,6 +135,15 @@ export const getAllUserManagement = createAsyncThunk("user/getAllUserManagement"
 export const activeAndDeactiveCustomerMaster = createAsyncThunk("user/inactiveCustomerMaster", async (id: string[], { rejectWithValue }) => {
   try {
     await instance.delete("/master/customer-master",{params:{id}});
+    return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const activeAndDeactiveUser = createAsyncThunk("user/inactiveUser", async (id: string[], { rejectWithValue }) => {
+  try {
+    await instance.delete("/user-management",{params:{id}});
     return
   } catch (err) {
     rejectWithValue(err);
@@ -246,6 +283,16 @@ export const activeAndDeactiveProductMaster = createAsyncThunk("user/inactivePro
   try {
     await instance.delete("/master/product-master",{params:{id}});
     return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getMyDetails = createAsyncThunk("user/getMyDetails", async (_,{ rejectWithValue,fulfillWithValue }) => {
+  try {
+    const res = await instance.get("/get-my-details");
+    fulfillWithValue(res.data)
+    return res.data
   } catch (err) {
     rejectWithValue(err);
   }

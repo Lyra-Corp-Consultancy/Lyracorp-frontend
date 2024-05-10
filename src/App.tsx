@@ -1,19 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
 import Login from "./Pages/Login/Login";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import MasterRoutes from "./Pages/Master/MasterRoutes";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { makeToastFalse } from "./utils/redux/slice";
+import { addPathToGo, makeToastFalse } from "./utils/redux/slice";
 import InventoryRoutes from "./Pages/Inventory/InventoryRoutes";
 import UserManagementRoute from "./Pages/UserManagement/UserManagementRoute";
+import Cookies from "js-cookie";
 
 function App() {
-  const data = useSelector((state: any) => state.user);
-
+  const data = useSelector((state: any) => state.data);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(location.pathname!=="/"){
+      const token = Cookies.get("token");
+      if (!token) {
+        dispatch(addPathToGo(location.pathname));
+        navigate("/", { replace: true });
+      }
+    }
+  }, [data]);
+
   useEffect(() => {
     if (data?.toaster) {
       const elem = document.getElementById("toaster");
@@ -23,7 +35,7 @@ function App() {
           elem.style.transform = "translateX(100%)";
         }, 3000);
       }
-      dispatch(makeToastFalse())
+      dispatch(makeToastFalse());
     }
   }, [data]);
   return (
@@ -47,8 +59,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/master/*" element={<MasterRoutes />} />
-        <Route path="/inventory/*" element={<InventoryRoutes/>}/>
-        <Route path="/user-management/*" element={<UserManagementRoute/>}/>
+        <Route path="/inventory/*" element={<InventoryRoutes />} />
+        <Route path="/user-management/*" element={<UserManagementRoute />} />
       </Routes>
     </div>
   );

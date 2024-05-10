@@ -32,6 +32,7 @@ export interface UserData {
   password: string;
   department: string;
   role: string;
+  company?:string;
   userPhoto?: string; 
 }
 
