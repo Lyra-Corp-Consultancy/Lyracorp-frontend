@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProfileMasterById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -20,6 +20,8 @@ function ViewProfile() {
     document: any[];
   }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [] });
   const dispatch: any = useDispatch();
+  const permissions = useSelector((state: any) => state.data?.user?.permissions);
+
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<any>({
     fileUrls: [],
@@ -246,9 +248,9 @@ function ViewProfile() {
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button onClick={()=>navigate("/master/profile-master/edit-profile/"+params.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Update
-            </button>
+           {permissions?.edit?.includes("profile master") && <button onClick={()=>navigate("/master/profile-master/edit-profile/"+params.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+              Edit
+            </button>}
           </div>
         </div>
       </div>

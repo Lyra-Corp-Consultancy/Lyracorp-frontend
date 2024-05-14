@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 // import Select from "../../../../components/Select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getProductMasterById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
@@ -25,6 +25,7 @@ function ViewProduct() {
   //   const [files, setFiles] = useState<any[]>([]);
   const [data, setData] = useState<any>({});
   const params: any = useParams();
+  const permissions = useSelector((state: any) => state.data?.user?.permissions);
 
   const navigate = useNavigate();
 
@@ -284,9 +285,9 @@ function ViewProduct() {
           <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Back
             </button>
-            <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/product-master/edit-products/"+params?.id)}>
+            {permissions?.edit?.includes("product master") &&<button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/product-master/edit-products/"+params?.id)}>
               Edit
-            </button>
+            </button>}
             <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" >
               Print
             </button>

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 // import Select from "../../../../components/Select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getType, getVendorMasterById } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
@@ -21,6 +21,8 @@ function ViewVendors() {
     document: any[];
   }>({ vendor: [], account: [], discount: [], payment: [], document: [] });
   const dispatch: any = useDispatch();
+  const permissions = useSelector((state: any) => state.data?.user?.permissions);
+
   // const [dragging, setDragging] = useState(false);
   //   const [files, setFiles] = useState<any[]>([]);
   const [data, setData] = useState<any>({});
@@ -234,9 +236,9 @@ function ViewVendors() {
             <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Back
             </button>
-            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/vendor-master/edit-vendors/"+params?.id)}>
+           {permissions?.edit?.includes("vendor master") && <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/vendor-master/edit-vendors/"+params?.id)}>
               Edit
-            </button>
+            </button>}
             <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
               Print
             </button>
