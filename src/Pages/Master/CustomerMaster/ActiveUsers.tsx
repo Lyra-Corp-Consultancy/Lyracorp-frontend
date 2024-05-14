@@ -119,7 +119,7 @@ function ActiveUsers({ data, dropDowns, inActiveCustomer,selected,setSelected }:
                   </svg>
                 </button>
                 <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 " + styles.option}>
-                 {permissions?.delete?.includes("department type") && <button
+                 {permissions?.delete?.includes("customer master") && <button
                     onClick={() => {
                       setInactive(x?._id);
                     }}

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { activeAndDeactiveProductMaster, getAllProductMaster, getType } from "../../../utils/redux/actions";
 import ActiveUsers from "./ActiveUsers";
@@ -12,7 +12,8 @@ function ProductMaster() {
   const [filtered, setFiltered] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
   const dispatch: any = useDispatch();
   const [ActiveSelectUsers, setActiveSelectedUsers] = useState<any[]>([]);
-  const [InactiveSelectUsers, setInactiveSelectedUsers] = useState<any[]>([]);
+  const [InactiveSelectUsers, setInactiveSelectedUsers] = useState<any[]>([]);    
+  const permissions = useSelector((state: any) => state.data?.user?.permissions);
   const [confirmation, setConfirmation] = useState(false);
   const [dropDowns, setDropDown] = useState<{
     uom: any[];
@@ -202,12 +203,12 @@ function ProductMaster() {
                   </svg>
                 )}
 
-                <Link to={"/master/product-master/add-product"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
+                {permissions?.add?.includes("product master") && <Link to={"/master/product-master/add-product"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
                   <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.0714 7.92857H7.42857V12.5714C7.42857 12.8177 7.33074 13.0539 7.1566 13.228C6.98246 13.4022 6.74627 13.5 6.5 13.5C6.25373 13.5 6.01754 13.4022 5.8434 13.228C5.66926 13.0539 5.57143 12.8177 5.57143 12.5714V7.92857H0.928571C0.682299 7.92857 0.446113 7.83074 0.271972 7.6566C0.0978315 7.48246 0 7.24627 0 7C0 6.75373 0.0978315 6.51754 0.271972 6.3434C0.446113 6.16926 0.682299 6.07143 0.928571 6.07143H5.57143V1.42857C5.57143 1.1823 5.66926 0.946113 5.8434 0.771972C6.01754 0.597831 6.25373 0.5 6.5 0.5C6.74627 0.5 6.98246 0.597831 7.1566 0.771972C7.33074 0.946113 7.42857 1.1823 7.42857 1.42857V6.07143H12.0714C12.3177 6.07143 12.5539 6.16926 12.728 6.3434C12.9022 6.51754 13 6.75373 13 7C13 7.24627 12.9022 7.48246 12.728 7.6566C12.5539 7.83074 12.3177 7.92857 12.0714 7.92857Z" fill="white" />
                   </svg>
                   Add Product
-                </Link>
+                </Link>}
               </div>
             </div>
             {active ? (

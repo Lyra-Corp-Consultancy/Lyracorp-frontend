@@ -120,7 +120,7 @@ function DeactiveUsers({ data, dropDowns, ActiveCustomer, selected, setSelected 
                   </svg>
                 </button>
                 <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 " + styles.option}>
-                  {permissions?.delete?.includes("department type") && (
+                  {permissions?.delete?.includes("customer master") && (
                     <button
                       onClick={() => {
                         setInactive(x?._id);
@@ -143,7 +143,7 @@ function DeactiveUsers({ data, dropDowns, ActiveCustomer, selected, setSelected 
                     </svg>
                     View
                   </button>
-                  {permissions?.edit?.includes("department type") && (
+                  {permissions?.edit?.includes("customer master") && (
                     <button onClick={() => navigate("/master/customer-master/edit-customers/" + x?._id)} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
                       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
