@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react'
 import NavigationBar from '../../../../components/NavigationBar'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { deleteTypeMaster, getType, postType, updateType } from '../../../../utils/redux/actions'
 import ConfirmationBox from '../../../../components/ConfirmationBox'
 import DeleteConfirmationBox from '../../../../components/DeleteConfirmationBox'
@@ -14,6 +14,7 @@ function VendorType() {
     const [values, setValues] = useState<any[]>()
     const [search, setSearch] = useState<any[]>()
     const [deleteType, setDelete] = useState<string[]>([])
+    const permissions = useSelector((state: any) => state.data?.user?.permissions);
 
     const fetchVendorType = () => {
         const res = dispatch(getType("vendor"))
@@ -133,7 +134,7 @@ function VendorType() {
                             </div>
                         </div>
 
-                        <div className='w-1/2 h-full px-5 py-2'>
+                       {((deleteType?.length===1 && permissions?.edit?.includes("vendor type")) ||  permissions?.add?.includes("vendor type")) && <div className='w-1/2 h-full px-5 py-2'>
                             <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Vendor Type</h2>
                             <div className='w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex gap-28 px-5 pt-5 items-center'>
@@ -153,7 +154,7 @@ function VendorType() {
                                     }}>{deleteType.length === 1 ? "Update" : "Save"}</button>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import NavigationBar from "../../../../components/NavigationBar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTypeMaster, getType, postType, updateType } from "../../../../utils/redux/actions";
 import ConfirmationBox from "../../../../components/ConfirmationBox";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
@@ -16,6 +16,7 @@ function RoleType() {
   const [search, setSearch] = useState<any[]>();
   const [deleteType, setDelete] = useState<string[]>([]);
   const [department, setDepartment] = useState<any[]>([]);
+  const permissions = useSelector((state: any) => state.data?.user?.permissions);
 
   const fetchRoleType = () => {
     const res = dispatch(getType("role"));
@@ -190,12 +191,12 @@ function RoleType() {
                     </Select>
                   </div>
 
-                  <div className="flex gap-28 px-5 pt-5 items-center">
+                {((deleteType?.length===1 && permissions?.edit?.includes("role type")) ||  permissions?.add?.includes("role type")) &&  <div className="flex gap-28 px-5 pt-5 items-center">
                     <label htmlFor="" className="font-semibold text-[14px]">
                       Role Name
                     </label>
                     <input type="text" onChange={(e) => setInput({ ...input, value: e.target.value })} value={input.value} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
-                  </div>
+                  </div>}
                 </div>
                 <div className="flex gap-3 items-center justify-end px-3 py-5">
                   <button
