@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export type Type = "customer" | "payment" | "account" | "discount" | "document" | "certification" | "uom" | "tax" | "marginSetting" | "vendor" | "department" | "role";
 
@@ -59,6 +60,8 @@ export interface UserData {
   accBranch?: string;
   ifscCode?: string;
   bussinessDocument?: string;
+  billingAddress?: any[];
+  shippingAddress?: any[];
 }
 
 export interface VendorMasterData {

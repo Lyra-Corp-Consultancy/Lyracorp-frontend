@@ -7,7 +7,8 @@ export interface CounterState {
   submsg: string|number,
   toaster:boolean,
   user?:any,
-  pathToGo?:string
+  pathToGo?:string,
+  superAdminCompany?:any,
 }
 
 const initialState: CounterState = {
@@ -26,6 +27,9 @@ export const counterSlice = createSlice({
     addPathToGo:(state,{payload})=>{
       state.pathToGo = payload
     },
+    setCompany:(state,{payload})=>{
+      state.superAdminCompany = payload
+    }
   },
   extraReducers(builder) {
     builder.addCase(addCustomerMaster.fulfilled,(state,action)=>{
@@ -47,6 +51,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {  makeToastFalse,addPathToGo} = counterSlice.actions
+export const {  makeToastFalse,addPathToGo,setCompany} = counterSlice.actions
 
 export default counterSlice.reducer

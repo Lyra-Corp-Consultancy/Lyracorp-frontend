@@ -29,13 +29,7 @@ function ViewProfile() {
 
   const navigate = useNavigate();
 
-
-
-
-
   const params: any = useParams();
-
-
 
   useEffect(() => {
     dispatch(getProfileMasterById(params.id)).then((res: any) => {
@@ -110,14 +104,11 @@ function ViewProfile() {
     });
   }, []);
 
-
   return (
     <div className="h-[100vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Product Master</h1>
       <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full h-[90%]">
-        <div
-          className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
-        >
+        <div className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Company Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Company Logo</label>
@@ -147,6 +138,7 @@ function ViewProfile() {
             <label>Contact Number</label>
             <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{data.contactNumber}</label>
           </div>
+
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
@@ -178,6 +170,74 @@ function ViewProfile() {
               <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{data.pincode}</label>
             </div>
           </div>
+
+          {data?.billingAddress?.length>0 && <h1 className="roboto-medium mt-1">Billing Address Details</h1>}
+          {data?.billingAddress?.map((x: any) => (
+            <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Country</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.country}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.state}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.district}</label>
+              </div>
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.city}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Zone</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.zone}</label>
+              </div>
+              <div className="w-[50%] flex gap-3 items-center">
+                <label>Address</label>
+                <label className="px-2 py-1 w-[77%]  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{x.address}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Pin code</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pincode}</label>
+              </div>
+            </div>
+          ))}
+
+         {data?.shippingAddress?.length>0&& <h1 className="roboto-medium mt-1">Shipping Address Details</h1>}
+          {data?.shippingAddress?.map((x: any) => (
+            <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Country</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.country}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.state}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.district}</label>
+              </div>
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.city}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Zone</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.zone}</label>
+              </div>
+              <div className="w-[50%] flex gap-3 items-center">
+                <label>Address</label>
+                <label className="px-2 py-1 w-[77%]  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{x.address}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Pin code</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pincode}</label>
+              </div>
+            </div>
+          ))}
 
           <h1 className="roboto-medium mt-1">Identity Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
@@ -248,9 +308,11 @@ function ViewProfile() {
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-           {permissions?.edit?.includes("profile master") && <button onClick={()=>navigate("/master/profile-master/edit-profile/"+params.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Edit
-            </button>}
+            {permissions?.edit?.includes("profile master") && (
+              <button onClick={() => navigate("/master/profile-master/edit-profile/" + params.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+                Edit
+              </button>
+            )}
           </div>
         </div>
       </div>

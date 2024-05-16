@@ -10,9 +10,11 @@ import { addPathToGo, makeToastFalse } from "./utils/redux/slice";
 import InventoryRoutes from "./Pages/Inventory/InventoryRoutes";
 import UserManagementRoute from "./Pages/UserManagement/UserManagementRoute";
 import Cookies from "js-cookie";
+import SelectCompany from "./Pages/SelectCompany/SelectCompany";
 
 function App() {
   const data = useSelector((state: any) => state.data);
+  const user = useSelector((state: any) => state.data?.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -25,6 +27,15 @@ function App() {
       }
     }
   }, [data]);
+
+  useEffect(()=>{
+    if(user?.superAdmin && location.pathname!=="/"){
+      if(!data?.superAdminCompany){
+        dispatch(addPathToGo(location.pathname));
+        navigate("/select-company");
+      }
+    }
+  },[user])
 
   useEffect(() => {
     if (data?.toaster) {
@@ -57,6 +68,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/" element={<Login />} />
+        <Route path="/select-company" element={<SelectCompany />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/master/*" element={<MasterRoutes />} />
         <Route path="/inventory/*" element={<InventoryRoutes />} />

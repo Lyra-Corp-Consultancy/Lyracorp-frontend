@@ -28,6 +28,8 @@ function EditProfile() {
   const [files1, setFiles1] = useState<any[]>([]);
   const [data, setData] = useState<any>({
     fileUrls: [],
+    billingAddress: [],
+    shippingAddress: [],
   });
 
   const navigate = useNavigate();
@@ -72,7 +74,7 @@ function EditProfile() {
 
   useEffect(() => {
     dispatch(getProfileMasterById(params.id)).then((res: any) => {
-      setData(res.payload);
+      setData({...data,...res.payload});
     });
 
     const res1 = dispatch(getType("marginSetting"));
@@ -157,15 +159,15 @@ function EditProfile() {
     setFiles1(droppedFiles);
   };
   return (
-    <div className="h-[100vh] w-screen px-4 pt-3 shadow-md">
+    <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Product Master</h1>
-      <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full ">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSave();
           }}
-          className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
+          className="shadow-md bg-white px-4 pb-[200px] h-full z-[0] relative rounded-lg pt-1 w-full"
         >
           <h1 className="roboto-medium mt-1">Company Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -330,6 +332,338 @@ function EditProfile() {
             </div>
           </div>
 
+          <h1 className="roboto-medium mt-1">Billing Address Details</h1>
+          {data?.billingAddress?.map((x: any, i: number) => (
+            <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Country</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.country.filter((x) => {
+                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], country: e.target.value };
+                    setSearch({ ...search, country: filtered });
+                    setData({ ...data, billingAddress });
+                  }}
+                  value={x.country}
+                >
+                  {search?.country?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const billingAddress = data?.billingAddress;
+                        billingAddress[i] = { ...billingAddress[i], country: x?.country };
+                        setData({ ...data, billingAddress });
+                        axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
+                          setPlaces({ ...places, state: res.data.data.states });
+                          setSearch({ ...search, state: res.data.data.states });
+                        });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.country}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.state.filter((x) => {
+                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], state: e.target.value };
+                    setSearch({ ...search, state: filtered });
+                    setData({ ...data, billingAddress });
+                  }}
+                  value={x.state}
+                >
+                  {search?.state?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const billingAddress = data?.billingAddress;
+                        billingAddress[i] = { ...billingAddress[i], state: x?.name };
+                        setData({ ...data, billingAddress });
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
+                          console.log(res.data);
+                          setPlaces({ ...places, city: res.data.data });
+                          setSearch({ ...search, city: res.data.data });
+                        });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.name}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <input
+                  value={x.district}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], district: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.city.filter((x) => {
+                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    setSearch({ ...search, city: filtered });
+                    setData({ ...data, city: e.target.value });
+                  }}
+                  value={x.city}
+                >
+                  {search?.city?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const billingAddress = data?.billingAddress;
+                        billingAddress[i] = { ...billingAddress[i], city: x };
+                        setData({ ...data, billingAddress });
+                        // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
+                        //   console.log(res.data)
+                        //   setPlaces({ ...places, city: res.data.data})
+                        //   setSearch({ ...search, city: res.data.data})
+                        // });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Zone</label>
+                <input
+                  value={x.zone}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], zone: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+              <div className="w-[50%] flex gap-3 items-center">
+                <label>Address</label>
+                <textarea
+                  value={x.address}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], address: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                ></textarea>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Pin code</label>
+                <input
+                  value={x.pincode}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    billingAddress[i] = { ...billingAddress[i], pinCode: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="number"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+            </div>
+          ))}
+
+          <div className="flex mt-3 w-full items-end justify-end">
+            <button type="button" onClick={() => setData({ ...data, billingAddress: [...data.billingAddress, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
+          </div>
+
+          <h1 className="roboto-medium mt-1 flex items-center">
+            Shipping Address Details{" "}
+            <p
+              className="text-[12px] cursor-pointer ms-2 items-center text-[#5970F5] flex"
+              onClick={() => {
+                setData({ ...data, shippingAddress: [...data.billingAddress] });
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width={11} height={11} viewBox="0 0 24 24">
+                <g>
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path fill="#5970F5" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z" />
+                </g>
+              </svg>
+              Copy the Billing Address
+            </p>
+          </h1>
+          {data?.shippingAddress?.map((x: any, i: number) => (
+            <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Country</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.country.filter((x) => {
+                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
+                    setSearch({ ...search, country: filtered });
+                    setData({ ...data, shippingAddress });
+                  }}
+                  value={x.country}
+                >
+                  {search?.country?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const shippingAddress = data?.shippingAddress;
+                        shippingAddress[i] = { ...shippingAddress[i], country: x?.country };
+                        setData({ ...data, shippingAddress });
+                        axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
+                          setPlaces({ ...places, state: res.data.data.states });
+                          setSearch({ ...search, state: res.data.data.states });
+                        });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.country}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.state.filter((x) => {
+                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
+                    setSearch({ ...search, state: filtered });
+                    setData({ ...data, shippingAddress });
+                  }}
+                  value={x.state}
+                >
+                  {search?.state?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const shippingAddress = data?.shippingAddress;
+                        shippingAddress[i] = { ...shippingAddress[i], state: x?.name };
+                        setData({ ...data, shippingAddress });
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: x?.name }).then((res) => {
+                          console.log(res.data);
+                          setPlaces({ ...places, city: res.data.data });
+                          setSearch({ ...search, city: res.data.data });
+                        });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.name}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <input
+                  value={x.district}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], district: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <Select
+                  onChange={(e) => {
+                    const filtered = places.city.filter((x) => {
+                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    });
+                    setSearch({ ...search, city: filtered });
+                    setData({ ...data, city: e.target.value });
+                  }}
+                  value={x.city}
+                >
+                  {search?.city?.map((x) => (
+                    <li
+                      onClick={() => {
+                        const shippingAddress = data?.shippingAddress;
+                        shippingAddress[i] = { ...shippingAddress[i], city: x };
+                        setData({ ...data, shippingAddress });
+                        // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
+                        //   console.log(res.data)
+                        //   setPlaces({ ...places, city: res.data.data})
+                        //   setSearch({ ...search, city: res.data.data})
+                        // });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Zone</label>
+                <input
+                  value={x.zone}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], zone: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+              <div className="w-[50%] flex gap-3 items-center">
+                <label>Address</label>
+                <textarea
+                  value={x.address}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], address: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                ></textarea>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Pin code</label>
+                <input
+                  value={x.pincode}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="number"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+            </div>
+          ))}
+          <div className="flex mt-3 w-full items-end justify-end">
+            <button type="button" onClick={() => setData({ ...data, shippingAddress: [...data.shippingAddress, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
+          </div>
           <h1 className="roboto-medium mt-1">Identity Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">

@@ -10,8 +10,8 @@ interface Prop {
 
 function Select({ className,children,value,onChange }: Prop) {
     return (
-        <label className={'relative z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
-            <input onChange={onChange} value={value}  type="text" className={'w-full outline-none border-none '+styles.inputBox} />
+        <label className={'relative  z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
+            <input onChange={onChange} value={value}  type="text" className={'w-full bg-transparent outline-none border-none '+styles.inputBox} />
             <ul  className={'absolute z-20 max-h-[150px] overflow-auto hidden left-0 bg-white shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  w-full bottom-0 translate-y-[100%]  '+styles.dropDown}>
                 {children}
             </ul>
