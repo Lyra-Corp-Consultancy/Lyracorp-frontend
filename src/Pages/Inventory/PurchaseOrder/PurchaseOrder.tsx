@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { activeAndDeactiveVendorMaster, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+import { activeAndDeactivePurchaseOrder, getAllPurchaseOrder, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
 import Active from "./Active";
 import Inactive from "./Inactive";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
@@ -16,11 +16,14 @@ function PurchaseOrder() {
   const [confirmation, setConfirmation] = useState(false);
   const [dropDowns, setDropDown] = useState<{
     vendor: any[];
+    vendorType: any[];
     account: any[];
+    users:any[];
     discount: any[];
     payment: any[];
     document: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [] });
+    shippingMethods: any[];
+  }>({ vendor: [], account: [], discount: [], payment: [], document: [],vendorType:[],users:[],shippingMethods:[] });
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
@@ -63,7 +66,7 @@ function PurchaseOrder() {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllVendorMaster()).then((res: any) => {
+    dispatch(getAllPurchaseOrder()).then((res: any) => {
       setData(res.payload);
       setFiltered(res.payload);
     });
@@ -74,11 +77,21 @@ function PurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          vendor: res?.payload[0]?.vendorType,
+          vendorType: res?.payload[0]?.vendorType,
         };
       });
     });
 
+
+    dispatch(getAllUserManagement()).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          users: res?.payload?.active,
+        };
+      });
+      console.log(res.payload);
+    });
     const res2 = dispatch(getType("account"));
 
     res2.then((res: any) => {
@@ -90,11 +103,31 @@ function PurchaseOrder() {
       });
     });
 
+    dispatch(getAllVendorMaster()).then((res: any) => {
+      console.log(res?.payload?.active);
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          vendor: res?.payload?.active,
+        };
+      });
+    });
+
     dispatch(getType("discount")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
           discount: res.payload[0].discountType,
+        };
+      });
+    });
+
+    
+    dispatch(getType("shipping")).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          shippingMethods: res.payload[0].shippingType,
         };
       });
     });
@@ -223,7 +256,7 @@ function PurchaseOrder() {
                 setSelected={setActiveSelectedUsers}
                 selected={ActiveSelectUsers}
                 inActiveCustomer={() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                  dispatch(getAllPurchaseOrder()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -238,7 +271,7 @@ function PurchaseOrder() {
                 data={filtered?.deactive}
                 dropDowns={dropDowns}
                 ActiveCustomer={() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                  dispatch(getAllPurchaseOrder()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -257,8 +290,8 @@ function PurchaseOrder() {
           ResolveFunction={() => {
             if (active) {
               if (ActiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveVendorMaster(ActiveSelectUsers)).then(() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                dispatch(activeAndDeactivePurchaseOrder(ActiveSelectUsers)).then(() => {
+                  dispatch(getAllPurchaseOrder()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -267,8 +300,8 @@ function PurchaseOrder() {
               setActiveSelectedUsers([]);
             } else {
               if (InactiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveVendorMaster(InactiveSelectUsers)).then(() => {
-                  dispatch(getAllVendorMaster()).then((res: any) => {
+                dispatch(activeAndDeactivePurchaseOrder(InactiveSelectUsers)).then(() => {
+                  dispatch(getAllPurchaseOrder()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });

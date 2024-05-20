@@ -10,10 +10,13 @@ interface Prop {
   data: any[];
   dropDowns: {
     vendor: any[];
+    vendorType: any[];
     account: any[];
+    users:any[];
     discount: any[];
     payment: any[];
     document: any[];
+    shippingMethods: any[];
   };
   inActiveCustomer: () => void;
   selected:any[];
@@ -23,12 +26,13 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
   const [inactive, setInactive] = useState("");
   const dispatch: any = useDispatch();
     const navigate = useNavigate()
+
   return (
     <div className="h-[80%] overflow-auto w-full">
       <table className="w-full mt-3 overflow-auto">
         <thead className="border w-full top-0 left-0  text-xs text-center bg-[#5970F5] text-white roboto-thin">
           <tr className="w-full">
-            <th>
+            <th className="ps-1">
               {selected?.length === data?.length && data?.length > 0 ? (
                 <div
                   onClick={() => {
@@ -55,22 +59,19 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
             </th>
             <th>S No</th>
             <th>Vendor Name</th>
-            <th>Vendor Type</th>
-            <th>Contact Person</th>
-            <th>Primary Number</th>
-            <th>Address</th>
-            <th>Bank Acc No</th>
-            <th>Email ID</th>
-            <th>IFSC Code</th>
+            <th>Contact Name</th>
+            <th>Delivery Date</th>
+            <th>Shipping Method</th>
+            <th>Billing Address</th>
+            <th>Payment Type</th>
             <th>Payment Terms</th>
-            <th>Currency</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody className="overflow-auto text-xs text-center  text-[#5970F5] roboto-thin">
           {data?.map((x: any, i: number) => (
             <tr className="border relative">
-              <th>
+              <th className="ps-1">
                 {selected.includes(x?._id) ? (
                   <div
                     onClick={() => {
@@ -96,16 +97,13 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
                 )}
               </th>
               <th>{i + 1}</th>
-              <th>{x?.VendorName}</th>
-              <th>{dropDowns?.vendor?.filter((y) => y?._id === x?.vendorType)[0]?.value}</th>
-              <th>{x?.contactPerson}</th>
-              <th>{x?.primaryNumber}</th>
-              <th className="truncate">{x?.address}</th>
-              <th className="truncate">{x?.bankAccNo}</th>
-              <th>{x?.email}</th>
-              <th>{x?.ifscCode}</th>
-              <th>{dropDowns?.payment?.filter((y) => y?._id === x?.paymentTerms)[0]?.value}</th>
-              <th>{x?.currency}</th>
+              <th>{dropDowns?.vendor?.filter((y) => y?._id === x?.vendor)[0]?.VendorName  }</th>
+              <th>{dropDowns?.users?.filter((y) => y?._id === x?.contact)[0]?.username  }</th>
+              <th>{x?.deliveryDate}</th>
+              <th>{dropDowns?.shippingMethods?.filter((y) => y?._id === x?.shippingMethod)[0]?.value  }</th>
+              <th className="truncate">{x?.billingAddress?.address}</th>
+              <th>{x?.paymentType}</th>
+              <th>{dropDowns?.payment?.filter((y) => y?._id === x?.paymentTerm)[0]?.value}</th>
               <th className="relative ">
                 <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                   <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +127,7 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
                     </svg>
                     Inactive
                   </button>
-                  <button onClick={()=>navigate("/master/vendor-master/view-vendors/"+x?._id)} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
+                  <button onClick={()=>navigate("/inventory/purchase-order/view-purchase-order/"+x?._id)} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
                     <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7.0039 7.49999C8.32636 7.49999 9.39843 6.42792 9.39843 5.10546C9.39843 3.783 8.32636 2.71094 7.0039 2.71094C5.68144 2.71094 4.60938 3.783 4.60938 5.10546C4.60938 6.42792 5.68144 7.49999 7.0039 7.49999Z" stroke="black" />
                       <path d="M12.6018 4.3756C12.8673 4.69852 13 4.85929 13 5.1049C13 5.35051 12.8673 5.51129 12.6018 5.83421C11.6303 7.01368 9.48757 9.2098 7 9.2098C4.51243 9.2098 2.36967 7.01368 1.39818 5.83421C1.13273 5.51129 1 5.35051 1 5.1049C1 4.85929 1.13273 4.69852 1.39818 4.3756C2.36967 3.19612 4.51243 1 7 1C9.48757 1 11.6303 3.19612 12.6018 4.3756Z" stroke="black" />

@@ -85,3 +85,27 @@ export interface VendorMasterData {
   bussinessDocument?: string;
   fileUrls?: string[];
 }
+
+
+export interface Product {
+  productId?: string;
+  orderQuantity?: string;
+  uom?: string;
+  packing?: string;
+  certificate?: string;
+}
+
+export interface PurchaseOrder {
+  fileUrls: string[];
+  products: Product[];
+  deliveryDate?: string;
+  deliveryTo?: string;
+  shippingMethod?: string;
+  shippingAddress?: any;
+  billingAddress?: any;
+  paymentTerm?: string;
+  paymentType?: string;
+  bussinessDocument?: string;
+  vendor:string;
+  lineOfBusiness:string;
+}
