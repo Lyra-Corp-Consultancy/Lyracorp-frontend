@@ -12,6 +12,8 @@ import VendorType from './VendorType/VendorType'
 import DocumentType from './DocumentType/DocumentType'
 import DepartmentType from './DepartmentType/DepartmentType'
 import RoleType from './RoleType/RoleType'
+import PackingType from './PackingType/PackingType'
+import ShippingType from './ShippingType/ShippingType'
 
 function TypeMasterRoutes() {
     return (
@@ -29,6 +31,8 @@ function TypeMasterRoutes() {
                 <Route path='/vendor-type' element={<VendorType />} />
                 <Route path='/department-type' element={<DepartmentType />} />
                 <Route path='/role-type' element={<RoleType />} />
+                <Route path='/packing-type' element={<PackingType />} />
+                <Route path='/shipping-type' element={<ShippingType />} />
             </Routes>
         </>
     )

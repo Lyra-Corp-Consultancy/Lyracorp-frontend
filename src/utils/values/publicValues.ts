@@ -16,7 +16,9 @@ export const createdModules = [
                                             ["margin setting type"], 
                                             ["department type"], 
                                             ["role type"], 
-                                            ["vendor type"]
+                                            ["vendor type"],
+                                            ["packing type"],
+                                            ["shipping type"]
                                         ]],
                                         ["customer master"], 
                                         ["vendor master"], 

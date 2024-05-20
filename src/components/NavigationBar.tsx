@@ -163,6 +163,16 @@ function NavigationBar() {
                             Vendor Type
                           </li>
                         )}
+                          {permissions?.view?.includes("packing type") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/packing-type")}>
+                            Packing Type
+                          </li>
+                        )} 
+                          {permissions?.view?.includes("shipping type") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/shipping-type")}>
+                            Shipping Type
+                          </li>
+                        )} 
                       </ul>
                     ) : (
                       <button onClick={() => setTypeMaster(!typeMaster)} className="flex justify-between text-[#5970F5]">
