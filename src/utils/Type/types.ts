@@ -38,32 +38,6 @@ export interface UserData {
 }
 
 
-
- export interface ProfileMaster {
-  fileUrls: string[];
-  logo?: string;
-  companyName?: string;
-  businessType?: string;
-  contactNumber?: string;
-  country?: string;
-  state?: string;
-  district?: string;
-  city?: string;
-  zone?: string;
-  address?: string;
-  pincode?: string;
-  aadharNumber?: string;
-  panNumber?: string;
-  regNumber?: string;
-  gstinNumber?: string;
-  bankAccNo?: string;
-  accBranch?: string;
-  ifscCode?: string;
-  bussinessDocument?: string;
-  billingAddress?: any[];
-  shippingAddress?: any[];
-}
-
 export interface VendorMasterData {
   vendorName?: string;
   vendorType?: string;
@@ -108,4 +82,66 @@ export interface PurchaseOrder {
   bussinessDocument?: string;
   vendor:string;
   lineOfBusiness:string;
+}
+
+
+
+
+export interface PurchaseInward {
+  vendor?: string;
+  products?: {
+    productId?: string;
+    productDetails?: any;
+    recievedQuantity?: string;
+    orderQuantity?: string;
+    uom?: string;
+    batchNumber?: string;
+    expDate?: string;
+    remarks?: string;
+    certificate?: string;
+    image?: File;
+  }[]
+  inwardDate?: string;
+  invoiceNumber?: string;
+  invoiceDate?: string;
+  dcNumber?: string;
+  transporter?: string;
+  vehicleNumber?: string;
+}
+
+
+interface PrefixSeq {
+  prefix?: string;
+  seq?: number; // Adjusted to `string` if the input value is treated as a string
+}
+
+export interface ProfileMaster {
+  fileUrls: string[];
+  logo?: string;
+  companyName?: string;
+  businessType?: string;
+  contactNumber?: string;
+  country?: string;
+  state?: string;
+  district?: string;
+  city?: string;
+  zone?: string;
+  address?: string;
+  pincode?: string;
+  aadharNumber?: string;
+  panNumber?: string;
+  regNumber?: string;
+  gstinNumber?: string;
+  bankAccNo?: string;
+  accBranch?: string;
+  ifscCode?: string;
+  bussinessDocument?: string;
+  billingAddress?: any[];
+  shippingAddress?: any[];
+  purchaseOrder?: PrefixSeq;
+  performInvoice?: PrefixSeq;
+  invoice?: PrefixSeq;
+  gatePass?: PrefixSeq;
+  deliveryChallan?: PrefixSeq;
+  grn?: PrefixSeq;
 }

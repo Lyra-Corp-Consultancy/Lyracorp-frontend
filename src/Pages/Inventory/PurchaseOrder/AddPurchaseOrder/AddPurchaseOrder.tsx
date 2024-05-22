@@ -209,7 +209,7 @@ function AddPurchaseOrder() {
   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Purchase Order</h1>
+      <h1 className="roboto-bold text-lg">Add Purchase Order</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <form
           onSubmit={(e) => {
@@ -316,7 +316,7 @@ function AddPurchaseOrder() {
               </Select>
             </div>
 
-            <div className="flex gap-3 z-[99] items-center">
+            <div className="flex gap-3 z-[96] items-center">
               <label>Shipping Address</label>
               <Select value={data?.shippingAddress?.address}>
                 {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x:any) => (
@@ -367,7 +367,7 @@ function AddPurchaseOrder() {
             </div>
 
             <div className="flex gap-3 items-center">
-              <label>Payment Terms</label>
+              <label>Payment Type</label>
               <Select value={data?.paymentType}>
                 {["Cash", "Credit"]?.map((x) => (
                   <li
@@ -427,7 +427,7 @@ function AddPurchaseOrder() {
             ))}
           </div>
 
-          <h1 className="roboto-medium mt-1">Vendor Details</h1>
+          <h1 className="roboto-medium mt-1">Product Details</h1>
 
           <table className="w-full border-collapse rounded border">
             <thead className="bg-[#5970F5]">
@@ -569,7 +569,7 @@ function AddPurchaseOrder() {
         posColor="bg-[#196000]"
           RejectFunction={() => setConfirmation(false)}
           ResolveFunction={handleSave}
-          message="Do you save?"
+          message="Do you want to save?"
           pos="save"
         />}
     </div>

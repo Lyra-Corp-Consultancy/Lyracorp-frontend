@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, ProfileMaster, PurchaseOrder, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, ProfileMaster, PurchaseInward, PurchaseOrder, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -87,7 +87,7 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
   });
 
 
-  export const editProfileMaster = createAsyncThunk("user/editProfileMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
+  export const editProfileMaster = createAsyncThunk("user/editProfileMaster", async ({data,id}:{data:ProfileMaster,id:string}, { rejectWithValue }) => {
     try {
       await instance.patch("/master/profile-master/"+id, { data });
       return 
@@ -255,6 +255,22 @@ export const activeAndDeactivePurchaseOrder = createAsyncThunk("user/activeAndDe
   }
 });
 
+export const activeAndDeactivePurchaseInward = createAsyncThunk("user/activeAndDeactivePurchaseInward", async (id: string[], { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    await instance.delete("/inventory/purchase-inward",{params:{id,lineOfBusiness}});
+    return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const activeAndDeactiveProfileMaster = createAsyncThunk("user/inactiveVendorMaster", async (id: string, { rejectWithValue }) => {
   try {
     await instance.delete("/master/profile-master",{params:{id}});
@@ -324,6 +340,15 @@ export const addPurchaseOrder = createAsyncThunk("user/add-purchase-order", asyn
   }
 });
 
+export const addPurchaseInward = createAsyncThunk("user/add-purchase-inward", async (data: PurchaseInward, { rejectWithValue }) => {
+  try {
+    const res = await instance.post("/inventory/purchase-inward", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const getAllPurchaseOrder = createAsyncThunk("user/getAllPurchaseOrder", async (_, { rejectWithValue,getState }) => {
   try {
     const state:any = getState()
@@ -341,11 +366,66 @@ export const getAllPurchaseOrder = createAsyncThunk("user/getAllPurchaseOrder", 
 });
 
 
+export const getAllPurchaseInward = createAsyncThunk("user/getAllPurchaseInward", async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/inventory/purchase-inward/all",{params:{lineOfBusiness}});
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
 export const getPurchaseOrderById = createAsyncThunk("user/getPurchaseOrderById", async(id:string,{rejectWithValue})=>{
   try{
-      const res = await instance.get("/inventroy/purchase-order/individual",{params:{id}});
+      const res = await instance.get("/inventory/purchase-order/individual",{params:{id}});
       return res.data;
   }catch(err){
       rejectWithValue(err);
   }
 })
+
+export const getPurchaseInwardById = createAsyncThunk("user/getPurchaseInwardById", async(id:string,{rejectWithValue})=>{
+  try{
+      const res = await instance.get("/inventory/purchase-inward/individual",{params:{id}});
+      return res.data;
+  }catch(err){
+      rejectWithValue(err);
+  }
+})
+
+
+export const editPurchaseOrder = createAsyncThunk("user/editPurchaseOrder", async ({data,id}:{data:PurchaseOrder,id:string}, { rejectWithValue }) => {
+  try {
+    await instance.patch("/inventory/purchase-order/"+id, { data });
+    return 
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const editPurchaseInward = createAsyncThunk("user/editPurchaseInward", async ({data,id}:{data:PurchaseInward,id:string}, { rejectWithValue }) => {
+  try {
+    await instance.patch("/inventory/purchase-inward/"+id, { data });
+    return 
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getPurchaseOrdeBySerialNumber = createAsyncThunk("user/getPurchaseOrdeBySerialNumber", async (seqNumber:string, { rejectWithValue }) => {
+  try {
+    
+   const res =  await instance.get("/inventory/purchase-order/getBySerialNumber", { params:{serialNumber:seqNumber} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});

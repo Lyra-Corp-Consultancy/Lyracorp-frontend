@@ -1,16 +1,25 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseOrderById, getType } from "../../../../utils/redux/actions";
+import Select from "../../../../components/Select";
+import { useDispatch, useSelector } from "react-redux";
+import { editPurchaseOrder, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseOrderById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { fileServer } from "../../../../utils/values/publicValues";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import styles from "./EditPurchaseOrder.module.scss";
+import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 // import styles from "../PurchaseOrder.module.scss"
 
-function ViewPurchaseOrder() {
+function EditPurchaseOrder() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  const [confirmation,setConfirmation] = useState(false)
+  const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
+  const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -21,22 +30,45 @@ function ViewPurchaseOrder() {
     certificate: any[];
     products: any[];
     users: any[];
-    vendor: any[];
-    packing: any[];
-    shipping: any[];
-  }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
+    vendor:any[]; 
+    packing:any[];
+    shipping:any[];
+  }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [], products: [],vendor:[] ,certificate: [], users: [],packing:[],shipping:[] });
   const dispatch: any = useDispatch();
-  const params: any = useParams();
   // const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
   const [data, setData] = useState<any>({
     fileUrls: [],
     products: [{}],
   });
+  const params: any = useParams();
 
   const navigate = useNavigate();
 
+  const handleSave = async () => {
+    const urls: string[] = [];
+    for (let i = 0; i < files.length; i++) {
+      const x = files[i];
+      const file = new FormData();
+      file.append("file", x);
+      const res = await axios.post(fileServer, file);
+      urls.push(res.data);
+    }
+    setData({ ...data, fileUrls: [...urls,...data.fileUrls] });
 
+  
+
+
+    dispatch(editPurchaseOrder({data:{ ...data, fileUrls: [...urls,...data.fileUrls] },id:params.id})).then(() => {
+      navigate(-1);
+    });
+  };
+
+  const handleFileSelect = (e: any) => {
+    const selectedFiles = Array.from(e.target.files);
+
+    setFiles([...files, ...selectedFiles]);
+  };
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
 
@@ -68,10 +100,6 @@ function ViewPurchaseOrder() {
         };
       });
       console.log(res.payload);
-    });
-
-    dispatch(getPurchaseOrderById(params.id)).then((res: any) => {
-      setData(res.payload);
     });
 
     dispatch(getAllVendorMaster()).then((res: any) => {
@@ -140,6 +168,10 @@ function ViewPurchaseOrder() {
       });
     });
 
+    dispatch(getPurchaseOrderById(params.id)).then((res: any) => {
+        setData(res.payload);
+      });
+
     dispatch(getType("payment")).then((res: any) => {
       setDropDown((prev) => {
         return {
@@ -176,24 +208,46 @@ function ViewPurchaseOrder() {
   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">View Purchase Order</h1>
+      <h1 className="roboto-bold text-lg">Edit Purchase Order</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
-        <div
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            setConfirmation(true)
+          }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Details</h1>
+          <h1 className="roboto-medium mt-1">Vendor Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-          <div className="flex  items-center gap-3">
-              <label>Serial Number</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.seq}</label>
-            </div>
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}</label>
+              <Select className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
             </div>
             <div className="flex  items-center gap-3">
               <label>Contact Name</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}</label>
+              <Select className="bg-white z-[100]" value={dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}>
+                {dropDowns?.users?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, contact: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.username}
+                  </li>
+                ))}
+              </Select>
             </div>
             <div className="flex items-center gap-3">
               <label>Contact Number</label>
@@ -207,16 +261,34 @@ function ViewPurchaseOrder() {
               <label>Delivery Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.deliveryDate}</p>
-                <button type="button">
+                <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
                   </svg>
                 </button>
+                
+                <Calendar
+                  onChange={(e) => {
+                    setData({ ...data, deliveryDate: e?.toLocaleString().split(",")[0] });
+                  }}
+                  className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
+                />
               </label>
             </div>
             <div className="flex gap-3 items-center">
               <label>Delivery to Name</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}</label>
+              <Select className="z-[99]" value={dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}>
+                {dropDowns?.users?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, deliveryTo: x?._id });
+                    }}
+                    className="px-3 truncate  hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.username}
+                  </li>
+                ))}
+              </Select>
             </div>
 
             <div className="flex gap-3  z-[999] items-center">
@@ -228,29 +300,84 @@ function ViewPurchaseOrder() {
 
             <div className="flex gap-3 z-[999] items-center">
               <label>Shipping Method</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}</label>
+              <Select value={dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}>
+                {dropDowns?.shipping?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, shippingMethod: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
+              </Select>
             </div>
 
-            <div className="flex gap-3 z-[99] items-center">
+            <div className="flex gap-3 z-[96] items-center">
               <label>Shipping Address</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.shippingAddress?.address}</label>
+              <Select value={data?.shippingAddress?.address}>
+                {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x:any) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, shippingAddress: x });
+                    }}
+                    className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.address}
+                  </li>
+                ))}
+              </Select>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Billing Address</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.billingAddress?.address}</label>
+              <Select value={data?.billingAddress?.address}>
+                {(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.map((x:any) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, billingAddress: x });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.address}
+                  </li>
+                ))}
+              </Select>
             </div>
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Payment Terms</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}</label>
+              <Select value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}>
+                {dropDowns?.payment?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, paymentTerm: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
+              </Select>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.paymentType}</label>
+              <Select value={data?.paymentType}>
+                {["Cash", "Credit"]?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, paymentType: x });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x}
+                  </li>
+                ))}
+              </Select>
             </div>
           </div>
 
@@ -258,15 +385,26 @@ function ViewPurchaseOrder() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
+            <Select value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+              {dropDowns?.document?.map((x) => (
+                <li
+                  onClick={() => {
+                    setData({ ...data, bussinessDocument: x?._id });
+                  }}
+                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                >
+                  {x?.value}
+                </li>
+              ))}
+            </Select>
             <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
               <p className="text-xs text-center">Upload Document or Drag the file</p>
-              {/* <input type="file" id="file" onChange={handleFileSelect} className="hidden" /> */}
+              <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
-            {data?.fileUrls?.map((x: any, i: number) => (
+            {files.map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -276,7 +414,8 @@ function ViewPurchaseOrder() {
                 </svg>
                 <p
                   onClick={() => {
-                    window.open(x);
+                    const url = URL.createObjectURL(x);
+                    window.open(url);
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"
                 >
@@ -303,48 +442,133 @@ function ViewPurchaseOrder() {
                 <tr className="">
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                    <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.productName}</label>
+                      <Select className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.products?.filter((x) => x?._id === data?.products[i]?.productId)[0]?.productName}>
+                        {dropDowns?.products?.map((x: any) => (
+                          <li
+                            onClick={() => {
+                              const product = data?.products;
+                              product[i] = { ...product[i], productId: x?._id };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.productName || "No Name"}
+                          </li>
+                        ))}
+                      </Select>
+                    </div>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <input
+                      type="text"
+                      value={data?.products[i].orderQuantity}
+                      onChange={(e) => {
+                        const product = data?.products;
+                        product[i] = { ...product[i], orderQuantity: e.target.value };
+                        setData({ ...data, products: product });
+                      }}
+                      className="px-2 py-1 w-[60%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                    />
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <Select className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((x) => x?._id === data?.products[i]?.uom)[0]?.value?.name}>
+                        {dropDowns?.uom?.map((x: any) => (
+                          <li
+                            onClick={() => {
+                              const product = data?.products;
+                              product[i] = { ...product[i], uom: x?._id };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.value?.name}
+                          </li>
+                        ))}
+                      </Select>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x.orderQuantity}</label>
+                    <Select className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.packing?.filter((x) => x?._id === data?.products[i]?.packing)[0]?.value}>
+                        {dropDowns?.packing?.map((x: any) => (
+                          <li
+                            onClick={() => {
+                              const product = data?.products;
+                              product[i] = { ...product[i], packing: x?._id };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.value}
+                          </li>
+                        ))}
+                      </Select>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.uom?.filter((x) => x?._id === data?.products[i]?.uom)[0]?.value?.name}</label>
+                    <Select className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
+                        {dropDowns?.certificate?.map((x: any) => (
+                          <li
+                            onClick={() => {
+                              const product = data?.products;
+                              product[i] = { ...product[i], certificate: x?._id };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.value}
+                          </li>
+                        ))}
+                      </Select>
                     </div>
                   </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.packing?.filter((x) => x?._id === data?.products[i]?.packing)[0]?.value}</label>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}</label>
-                    </div>
-                  </td>
+                  {i > 0 && (
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const product = data.products;
+                          product.splice(i, 1);
+                          setData({ ...data, products: product });
+                        }}
+                        className=" rounded-full bg-[#5970F5] text-white h-5 w-5 flex justify-center items-center"
+                      >
+                        {" "}
+                        -{" "}
+                      </button>
+                    </td>
+                  )}
                 </tr>
               ))}
             </tbody>
           </table>
-          
+          <div className="flex mt-3 w-full items-end justify-end">
+            <button type="button" onClick={() => setData({ ...data, products: [...data.products, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
+          </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button onClick={() => navigate("/inventory/purchase-order/edit-purchase-order/"+params?.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Edit
+            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+              Update
             </button>
           </div>
-        </div>
+        </form>
       </div>
-      {/* {confirmation && <DeleteConfirmationBox posColor="bg-[#196000]" RejectFunction={() => setConfirmation(false)} ResolveFunction={handleSave} message="Do you save?" pos="save" />} */}
+      {confirmation && <DeleteConfirmationBox
+        posColor="bg-[#196000]"
+          RejectFunction={() => setConfirmation(false)}
+          ResolveFunction={handleSave}
+          message="Do you want to update?"
+          pos="Update"
+        />}
     </div>
   );
 }
 
-export default ViewPurchaseOrder;
+export default EditPurchaseOrder;

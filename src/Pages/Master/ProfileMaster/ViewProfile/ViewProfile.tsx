@@ -105,10 +105,10 @@ function ViewProfile() {
   }, []);
 
   return (
-    <div className="h-[100vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Product Master</h1>
-      <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full h-[90%]">
-        <div className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
+    <div className=" w-screen px-4 pt-3 shadow-md">
+      <h1 className="roboto-bold text-lg">View Profile Master</h1>
+      <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full ">
+        <div className="shadow-md bg-white px-4 pb-[200px] h-full z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Company Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Company Logo</label>
@@ -171,7 +171,7 @@ function ViewProfile() {
             </div>
           </div>
 
-          {data?.billingAddress?.length>0 && <h1 className="roboto-medium mt-1">Billing Address Details</h1>}
+          {data?.billingAddress?.length > 0 && <h1 className="roboto-medium mt-1">Billing Address Details</h1>}
           {data?.billingAddress?.map((x: any) => (
             <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex gap-3 items-center">
@@ -205,7 +205,7 @@ function ViewProfile() {
             </div>
           ))}
 
-         {data?.shippingAddress?.length>0&& <h1 className="roboto-medium mt-1">Shipping Address Details</h1>}
+          {data?.shippingAddress?.length > 0 && <h1 className="roboto-medium mt-1">Shipping Address Details</h1>}
           {data?.shippingAddress?.map((x: any) => (
             <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex gap-3 items-center">
@@ -302,6 +302,77 @@ function ViewProfile() {
                 </p>
               </div>
             ))}
+          </div>
+          <h1 className="roboto-medium mt-1">Create Order Code</h1>
+          <div className="grid gap-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Purchase Order</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Purchase Order</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.grn?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.grn?.seq}</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Perform Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.performInvoice?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.performInvoice?.seq}</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.invoice?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.invoice?.seq}</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Gate Pass</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.gatePass?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.gatePass?.seq}</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Delivery Challan</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.deliveryChallan?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.deliveryChallan?.seq}</span>
+              </div>
+            </div>
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">

@@ -751,6 +751,88 @@ function EditProfile() {
             ))}
           </div>
 
+          <h1 className="roboto-medium mt-1">Create Order Code</h1>
+          <div className="grid gap-4  items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Purchase Order</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>GRN</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.grn?.prefix} name="grnPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.grn?.seq} name="grnSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Perform Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Gate Pass</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Delivery Challan</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+          </div>
+
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel

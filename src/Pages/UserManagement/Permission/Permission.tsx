@@ -124,16 +124,16 @@ function Permission() {
       } else {
         setPermissions({
           ...givedPermissions,
-          edit: givedPermissions.edit.filter((x) => {
+          edit: givedPermissions?.edit.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
-          add: givedPermissions.add.filter((x) => {
+          add: givedPermissions?.add.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
-          delete: givedPermissions.delete.filter((x) => {
+          delete: givedPermissions?.delete.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
-          view: givedPermissions.view.filter((x) => {
+          view: givedPermissions?.view.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
         });
@@ -155,7 +155,7 @@ function Permission() {
       } else {
         setPermissions({
           ...givedPermissions,
-          edit: givedPermissions.edit.filter((x) => {
+          edit: givedPermissions?.edit.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
         });
@@ -177,7 +177,7 @@ function Permission() {
       } else {
         setPermissions({
           ...givedPermissions,
-          add: givedPermissions.add.filter((x) => {
+          add: givedPermissions?.add.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
         });
@@ -199,7 +199,7 @@ function Permission() {
       } else {
         setPermissions({
           ...givedPermissions,
-          view: givedPermissions.view.filter((x) => {
+          view: givedPermissions?.view.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
         });
@@ -221,7 +221,7 @@ function Permission() {
       } else {
         setPermissions({
           ...givedPermissions,
-          delete: givedPermissions.delete.filter((x) => {
+          delete: givedPermissions?.delete.filter((x) => {
             return ![...temp, ...path].includes(x);
           }),
         });
@@ -233,7 +233,7 @@ function Permission() {
         <React.Fragment key={index}>
           <tr id={module[0]?.split(" ").join("-")} className="border transition-all duration-1000 bg-white">
             <td>
-              <input type="checkbox" checked={givedPermissions.view.includes(module[0]) && givedPermissions.add.includes(module[0]) && givedPermissions.delete.includes(module[0]) && givedPermissions.edit.includes(module[0]) ? true : false} onChange={(e) => allCheckBox(module, e)} />
+              <input type="checkbox" checked={givedPermissions?.view.includes(module[0]) && givedPermissions?.add.includes(module[0]) && givedPermissions?.delete.includes(module[0]) && givedPermissions?.edit.includes(module[0]) ? true : false} onChange={(e) => allCheckBox(module, e)} />
             </td>
             <td className={"text-start flex " + (module[1] && "text-[#5970F5] underline")} style={{ paddingLeft: k + "px", cursor: module[1] && "pointer" }} onClick={() => handleModuleClick(prefix + index)}>
               {module[0]}
@@ -241,7 +241,7 @@ function Permission() {
             <td className=" text-center">
               <input
                 type="checkbox"
-                checked={givedPermissions.view.includes(module[0]) ? true : false}
+                checked={givedPermissions?.view.includes(module[0]) ? true : false}
                 onChange={(e) => {
                   viewCheckBox(module, e);
                 }}
@@ -250,7 +250,7 @@ function Permission() {
             <td className=" text-center">
               <input
                 type="checkbox"
-                checked={givedPermissions.add.includes(module[0]) ? true : false}
+                checked={givedPermissions?.add.includes(module[0]) ? true : false}
                 onChange={(e) => {
                   addCheckBox(module, e);
                 }}
@@ -259,7 +259,7 @@ function Permission() {
             <td className=" text-center">
               <input
                 type="checkbox"
-                checked={givedPermissions.edit.includes(module[0]) ? true : false}
+                checked={givedPermissions?.edit.includes(module[0]) ? true : false}
                 onChange={(e) => {
                   editCheckBox(module, e);
                 }}
@@ -268,7 +268,7 @@ function Permission() {
             <td className=" text-center">
               <input
                 type="checkbox"
-                checked={givedPermissions.delete.includes(module[0]) ? true : false}
+                checked={givedPermissions?.delete.includes(module[0]) ? true : false}
                 onChange={(e) => {
                   deleteCheckBox(module, e);
                 }}
@@ -293,15 +293,15 @@ function Permission() {
             <div className="grid grid-cols-4 gap-3 px-2 py-4">
               <label className="flex gap-2">
                 Department
-                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{department?.filter((x) => x?._id === user.department)[0]?.value}</div>
+                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{department?.filter((x) => x?._id === user?.department)[0]?.value}</div>
               </label>
               <label className="flex gap-2">
                 Role
-                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{role?.filter((x) => x?._id === user.role)[0]?.value?.value}</div>
+                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{role?.filter((x) => x?._id === user?.role)[0]?.value?.value}</div>
               </label>
               <label className="flex gap-2">
                 Username
-                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{user?.username}</div>
+                <div className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] truncate min-w-[200px] rounded-md">{user?.username}</div>
               </label>
             </div>
             <label className="flex gap-3 relative w-[50%] items-center ms-2 mb-2 rounded-md px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)]">
@@ -342,7 +342,7 @@ function Permission() {
                         type="checkbox"
                         name=""
                         id=""
-                        checked={createdModules.map((x) => x[0]).every((child) => givedPermissions.add.includes(child)) && createdModules.map((x) => x[0]).every((child) => givedPermissions.delete.includes(child)) && createdModules.map((x) => x[0]).every((child) => givedPermissions.edit.includes(child)) && createdModules.map((x) => x[0]).every((child) => givedPermissions.view.includes(child)) ? true : false}
+                        checked={createdModules?.map((x) => x[0]).every((child) => givedPermissions?.add?.includes(child)) && createdModules?.map((x) => x[0]).every((child) => givedPermissions?.delete.includes(child)) && createdModules.map((x) => x[0]).every((child) => givedPermissions?.edit.includes(child)) && createdModules.map((x) => x[0]).every((child) => givedPermissions?.view.includes(child)) ? true : false}
                         onChange={(e) => {
                           if (e.target.checked) {
                             const data: string[] = [];

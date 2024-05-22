@@ -7,6 +7,7 @@ import { addProfileMaster, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
+import { ProfileMaster } from "../../../../utils/Type/types";
 
 function AddProfile() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,10 +26,10 @@ function AddProfile() {
   // const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
   const [files1, setFiles1] = useState<any[]>([]);
-  const [data, setData] = useState<any>({
+  const [data, setData] = useState<ProfileMaster>({
     fileUrls: [],
-    billingAddress:[{}],
-    shippingAddress:[{}]
+    billingAddress: [{}],
+    shippingAddress: [{}],
   });
 
   const navigate = useNavigate();
@@ -320,7 +321,7 @@ function AddProfile() {
           </div>
 
           <h1 className="roboto-medium mt-1">Billing Address Details</h1>
-          {data?.billingAddress?.map((x:any,i:number) => (
+          {data?.billingAddress?.map((x: any, i: number) => (
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Country</label>
@@ -329,8 +330,8 @@ function AddProfile() {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const billingAddress = data?.billingAddress
-                    billingAddress[i] = {...billingAddress[i],country:e.target.value}
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], country: e.target.value };
                     setSearch({ ...search, country: filtered });
                     setData({ ...data, billingAddress });
                   }}
@@ -339,9 +340,9 @@ function AddProfile() {
                   {search?.country?.map((x) => (
                     <li
                       onClick={() => {
-                        const billingAddress = data?.billingAddress
-                        billingAddress[i] = {...billingAddress[i],country:x?.country}
-                        setData({ ...data, billingAddress});
+                        const billingAddress = data?.billingAddress;
+                        if (billingAddress) billingAddress[i] = { ...billingAddress[i], country: x?.country };
+                        setData({ ...data, billingAddress });
                         axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
                           setPlaces({ ...places, state: res.data.data.states });
                           setSearch({ ...search, state: res.data.data.states });
@@ -361,8 +362,8 @@ function AddProfile() {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const billingAddress = data?.billingAddress
-                    billingAddress[i] = {...billingAddress[i],state:e.target.value}
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], state: e.target.value };
                     setSearch({ ...search, state: filtered });
                     setData({ ...data, billingAddress });
                   }}
@@ -371,8 +372,8 @@ function AddProfile() {
                   {search?.state?.map((x) => (
                     <li
                       onClick={() => {
-                        const billingAddress = data?.billingAddress
-                        billingAddress[i] = {...billingAddress[i],state:x?.name}
+                        const billingAddress = data?.billingAddress;
+                        if (billingAddress) billingAddress[i] = { ...billingAddress[i], state: x?.name };
                         setData({ ...data, billingAddress });
                         axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
                           console.log(res.data);
@@ -389,11 +390,16 @@ function AddProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>District</label>
-                <input value={x.district} onChange={(e) =>{
-                   const billingAddress = data?.billingAddress
-                   billingAddress[i] = {...billingAddress[i],district:e.target.value}
-                   setData({ ...data, billingAddress })
-                   }} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.district}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], district: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
               <div className="w-[22%] z-10 flex gap-3 items-center">
                 <label>City/Village</label>
@@ -410,9 +416,9 @@ function AddProfile() {
                   {search?.city?.map((x) => (
                     <li
                       onClick={() => {
-                        const billingAddress = data?.billingAddress
-                        billingAddress[i] = {...billingAddress[i],city:x}
-                        setData({ ...data, billingAddress});
+                        const billingAddress = data?.billingAddress;
+                        if (billingAddress) billingAddress[i] = { ...billingAddress[i], city: x };
+                        setData({ ...data, billingAddress });
                         // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
                         //   console.log(res.data)
                         //   setPlaces({ ...places, city: res.data.data})
@@ -428,45 +434,69 @@ function AddProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Zone</label>
-                <input value={x.zone} onChange={(e) =>{
-                   const billingAddress = data?.billingAddress
-                   billingAddress[i] = {...billingAddress[i],zone:e.target.value}
-                   setData({ ...data,billingAddress })
-                   }} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.zone}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], zone: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
               <div className="w-[50%] flex gap-3 items-center">
                 <label>Address</label>
-                <textarea value={x.address} onChange={(e) =>{
-                   const billingAddress = data?.billingAddress
-                   billingAddress[i] = {...billingAddress[i],address:e.target.value}
-                   setData({ ...data,billingAddress })
-                   }} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+                <textarea
+                  value={x.address}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], address: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                ></textarea>
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Pin code</label>
-                <input value={x.pincode} onChange={(e) =>{
-                   const billingAddress = data?.billingAddress
-                   billingAddress[i] = {...billingAddress[i],pinCode:e.target.value}
-                   setData({ ...data,billingAddress })
-                   }} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.pincode}
+                  onChange={(e) => {
+                    const billingAddress = data?.billingAddress;
+                    if (billingAddress) billingAddress[i] = { ...billingAddress[i], pinCode: e.target.value };
+                    setData({ ...data, billingAddress });
+                  }}
+                  type="number"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
             </div>
           ))}
 
           <div className="flex mt-3 w-full items-end justify-end">
-            <button onClick={()=>setData({...data,billingAddress:[...data.billingAddress,{}]})} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">+ Add </button>
+            <button onClick={() => setData({ ...data, billingAddress: [...(data.billingAddress || []), {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
           </div>
 
-
-          <h1 className="roboto-medium mt-1 flex items-center">Shipping Address Details <p className="text-[12px] cursor-pointer ms-2 items-center text-[#5970F5] flex" onClick={()=>{
-            setData({...data,shippingAddress:[...data.billingAddress]})
-          }}><svg xmlns="http://www.w3.org/2000/svg" width={11} height={11} viewBox="0 0 24 24">
-          <g>
-            <path fill="none" d="M0 0h24v24H0z"/>
-            <path fill="#5970F5" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z"/>
-          </g>
-        </svg>Copy the Billing Address</p></h1>
-          {data?.shippingAddress?.map((x:any,i:number) => (
+          <h1 className="roboto-medium mt-1 flex items-center">
+            Shipping Address Details{" "}
+            <p
+              className="text-[12px] cursor-pointer ms-2 items-center text-[#5970F5] flex"
+              onClick={() => {
+                setData({ ...data, shippingAddress: [...(data.billingAddress || [])] });
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width={11} height={11} viewBox="0 0 24 24">
+                <g>
+                  <path fill="none" d="M0 0h24v24H0z" />
+                  <path fill="#5970F5" d="M7 6V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1h-3v3c0 .552-.45 1-1.007 1H4.007A1.001 1.001 0 0 1 3 21l.003-14c0-.552.45-1 1.007-1H7zM5.003 8L5 20h10V8H5.003zM9 6h8v10h2V4H9v2z" />
+                </g>
+              </svg>
+              Copy the Billing Address
+            </p>
+          </h1>
+          {data?.shippingAddress?.map((x: any, i: number) => (
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Country</label>
@@ -475,8 +505,8 @@ function AddProfile() {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const shippingAddress = data?.shippingAddress
-                    shippingAddress[i] = {...shippingAddress[i],country:e.target.value}
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
                     setSearch({ ...search, country: filtered });
                     setData({ ...data, shippingAddress });
                   }}
@@ -485,9 +515,9 @@ function AddProfile() {
                   {search?.country?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress
-                        shippingAddress[i] = {...shippingAddress[i],country:x?.country}
-                        setData({ ...data, shippingAddress});
+                        const shippingAddress = data?.shippingAddress;
+                        if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], country: x?.country };
+                        setData({ ...data, shippingAddress });
                         axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
                           setPlaces({ ...places, state: res.data.data.states });
                           setSearch({ ...search, state: res.data.data.states });
@@ -507,8 +537,8 @@ function AddProfile() {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const shippingAddress = data?.shippingAddress
-                    shippingAddress[i] = {...shippingAddress[i],state:e.target.value}
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
                     setSearch({ ...search, state: filtered });
                     setData({ ...data, shippingAddress });
                   }}
@@ -517,8 +547,8 @@ function AddProfile() {
                   {search?.state?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress
-                        shippingAddress[i] = {...shippingAddress[i],state:x?.name}
+                        const shippingAddress = data?.shippingAddress;
+                        if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], state: x?.name };
                         setData({ ...data, shippingAddress });
                         axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: x?.name }).then((res) => {
                           console.log(res.data);
@@ -535,11 +565,16 @@ function AddProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>District</label>
-                <input value={x.district} onChange={(e) =>{
-                   const shippingAddress = data?.shippingAddress
-                   shippingAddress[i] = {...shippingAddress[i],district:e.target.value}
-                   setData({ ...data, shippingAddress })
-                   }} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.district}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], district: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
               <div className="w-[22%] z-10 flex gap-3 items-center">
                 <label>City/Village</label>
@@ -556,9 +591,9 @@ function AddProfile() {
                   {search?.city?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress
-                        shippingAddress[i] = {...shippingAddress[i],city:x}
-                        setData({ ...data, shippingAddress});
+                        const shippingAddress = data?.shippingAddress;
+                        if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], city: x };
+                        setData({ ...data, shippingAddress });
                         // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
                         //   console.log(res.data)
                         //   setPlaces({ ...places, city: res.data.data})
@@ -574,33 +609,49 @@ function AddProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Zone</label>
-                <input value={x.zone} onChange={(e) =>{
-                   const shippingAddress = data?.shippingAddress
-                   shippingAddress[i] = {...shippingAddress[i],zone:e.target.value}
-                   setData({ ...data,shippingAddress })
-                   }} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.zone}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], zone: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
               <div className="w-[50%] flex gap-3 items-center">
                 <label>Address</label>
-                <textarea value={x.address} onChange={(e) =>{
-                   const shippingAddress = data?.shippingAddress
-                   shippingAddress[i] = {...shippingAddress[i],address:e.target.value}
-                   setData({ ...data,shippingAddress })
-                   }} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+                <textarea
+                  value={x.address}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], address: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                ></textarea>
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Pin code</label>
-                <input value={x.pincode} onChange={(e) =>{
-                   const shippingAddress = data?.shippingAddress
-                   shippingAddress[i] = {...shippingAddress[i],pinCode:e.target.value}
-                   setData({ ...data,shippingAddress })
-                   }} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input
+                  value={x.pincode}
+                  onChange={(e) => {
+                    const shippingAddress = data?.shippingAddress;
+                    if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
+                    setData({ ...data, shippingAddress });
+                  }}
+                  type="number"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
               </div>
             </div>
           ))}
 
           <div className="flex mt-3 w-full items-end justify-end">
-            <button onClick={()=>setData({...data,shippingAddress:[...data.shippingAddress,{}]})} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">+ Add </button>
+            <button onClick={() => setData({ ...data, shippingAddress: [...(data.shippingAddress || []), {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
           </div>
 
           <h1 className="roboto-medium mt-1">Identity Details</h1>
@@ -686,8 +737,80 @@ function AddProfile() {
             ))}
           </div>
 
+          <h1 className="roboto-medium mt-1">Create Order Code</h1>
+          <div className="grid gap-4  items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Purchase Order</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>GRN</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.grn?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.grn?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Perform Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Invoice</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Gate Pass</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
+              <div className="flex gap-3 items-center">
+                <label>Delivery Challan</label>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+          </div>
+
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
-            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ accountType: "", address: "", bussinessDocument: "", city: "", contactPerson: "", country: "", VendorName: "", vendorType: "", discountType: "", district: "", email: "", fileUrls: [], paymentTerms: "", pincode: "", primaryNumber: "", purchaseResitriction: "", secondaryNumber: "", state: "", zone: "" })}>
+            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ fileUrls: [] })}>
               Reset
             </button>
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
