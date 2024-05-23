@@ -42,7 +42,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res.payload[0].marginSettingType,
+          margin: res?.payload[0]?.marginSettingType,
         };
       });
     });
@@ -53,7 +53,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res.payload[0].uomType,
+          uom: res?.payload[0]?.uomType,
         };
       });
     });
@@ -62,7 +62,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -71,7 +71,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -80,7 +80,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -89,7 +89,7 @@ function ViewProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

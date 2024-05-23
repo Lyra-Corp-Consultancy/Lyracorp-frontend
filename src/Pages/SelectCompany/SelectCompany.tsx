@@ -19,7 +19,7 @@ function SelectCompany() {
     <div className="flex flex-col justify-center items-center min-h-screen gap-5 bg-select-company-gradient">
       <h1 className="text-[36px] text-center mt-5">Choose your Line of Business</h1>
       <div className="grid grid-cols-5 gap-4 px-[100px] w-full">
-        {companies.map((x) => (
+       {companies?.length > 0 ?<> {companies?.map((x) => (
           <button onClick={()=>{
             dispatch(setCompany(x))
             navigate(-1)
@@ -29,7 +29,11 @@ function SelectCompany() {
             </svg>
             {x?.companyName}
           </button>
-        ))}
+        ))}</> :<button onClick={()=>{
+          navigate("/master/profile-master/add-profile")
+        }} className="bg-[#5970F5] hover:bg-[#4a5dcb] transition-all duration-150 flex justify-center rounded-md items-center flex-col gap-5 text-white font-bold aspect-square">
+          Create
+        </button> }
       </div>
     </div>
   );

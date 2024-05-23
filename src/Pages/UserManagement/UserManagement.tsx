@@ -81,7 +81,7 @@ function UserManagement() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -90,7 +90,7 @@ function UserManagement() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -99,7 +99,7 @@ function UserManagement() {
       setDropDown((prev) => {
         return {
           ...prev,
-          role: res.payload[0].roleType,
+          role: res?.payload[0]?.roleType,
         };
       });
     });
@@ -108,7 +108,7 @@ function UserManagement() {
       setDropDown((prev) => {
         return {
           ...prev,
-          department: res.payload[0].departmentType,
+          department: res?.payload[0]?.departmentType,
         };
       });
     });

@@ -19,8 +19,8 @@ function UOMType() {
     const fetchUOMType = () => {
         const res = dispatch(getType("uom"))
         res.then((res: any) => {
-            setValues(res.payload[0].uomType)
-            setSearch(res.payload[0].uomType)
+            setValues(res?.payload[0]?.uomType)
+            setSearch(res?.payload[0]?.uomType)
             setInput({ name: "", des: "" })
         })
     }

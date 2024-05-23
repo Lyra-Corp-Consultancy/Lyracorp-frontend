@@ -21,8 +21,8 @@ function AccountType() {
     const fetchAccountType = () => {
         const res = dispatch(getType("account"))
         res.then((res: any) => {
-            setValues(res.payload[0].accountType)
-            setSearch(res.payload[0].accountType)
+            setValues(res?.payload[0]?.accountType)
+            setSearch(res?.payload[0]?.accountType)
             setInput("")
         })
     }

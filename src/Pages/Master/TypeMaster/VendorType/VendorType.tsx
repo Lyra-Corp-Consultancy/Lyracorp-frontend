@@ -19,8 +19,8 @@ function VendorType() {
     const fetchVendorType = () => {
         const res = dispatch(getType("vendor"))
         res.then((res: any) => {
-            setValues(res.payload[0].vendorType)
-            setSearch(res.payload[0].vendorType)
+            setValues(res?.payload[0]?.vendorType)
+            setSearch(res?.payload[0]?.vendorType)
             setInput("")
         })
     }

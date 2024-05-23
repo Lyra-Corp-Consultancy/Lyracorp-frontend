@@ -20,8 +20,8 @@ function PackingType() {
     const fetchPackingType = () => {
         const res = dispatch(getType("packing"))
         res.then((res: any) => {
-            setValues(res.payload[0].packingType)
-            setSearch(res.payload[0].packingType)
+            setValues(res?.payload[0]?.packingType)
+            setSearch(res?.payload[0]?.packingType)
             setInput("")
         })
     }

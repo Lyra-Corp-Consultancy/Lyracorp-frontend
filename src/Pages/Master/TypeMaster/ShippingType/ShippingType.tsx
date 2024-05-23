@@ -20,8 +20,8 @@ function ShippingType() {
     const fetchShippingType = () => {
         const res = dispatch(getType("shipping"))
         res.then((res: any) => {
-            setValues(res.payload[0].shippingType)
-            setSearch(res.payload[0].shippingType)
+            setValues(res?.payload[0]?.shippingType)
+            setSearch(res?.payload[0]?.shippingType)
             setInput("")
         })
     }

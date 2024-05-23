@@ -80,7 +80,7 @@ function EditVendors() {
       setDropDown((prev) => {
         return {
           ...prev,
-          vendor: res.payload[0].vendorType,
+          vendor: res?.payload[0]?.vendorType,
         };
       });
     });
@@ -91,7 +91,7 @@ function EditVendors() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -100,7 +100,7 @@ function EditVendors() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -109,7 +109,7 @@ function EditVendors() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -118,7 +118,7 @@ function EditVendors() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

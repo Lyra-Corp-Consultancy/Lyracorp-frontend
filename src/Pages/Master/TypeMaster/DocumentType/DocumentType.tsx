@@ -19,8 +19,8 @@ function DocumentType() {
     const fetchDocumentType = () => {
         const res = dispatch(getType("document"))
         res.then((res: any) => {
-            setValues(res.payload[0].documentType)
-            setSearch(res.payload[0].documentType)
+            setValues(res?.payload[0]?.documentType)
+            setSearch(res?.payload[0]?.documentType)
             setInput("")
         })
     }

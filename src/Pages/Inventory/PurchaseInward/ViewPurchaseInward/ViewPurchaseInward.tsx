@@ -49,7 +49,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res.payload[0].marginSettingType,
+          margin: res?.payload[0]?.marginSettingType,
         };
       });
     });
@@ -63,7 +63,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res.payload[0].uomType,
+          uom: res?.payload[0]?.uomType,
         };
       });
     });
@@ -92,7 +92,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -101,7 +101,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          packing: res.payload[0].packingType,
+          packing: res?.payload[0]?.packingType,
         };
       });
     });
@@ -119,7 +119,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          certificate: res.payload[0].certificationType,
+          certificate: res?.payload[0]?.certificationType,
         };
       });
       console.log(res.payload);
@@ -129,7 +129,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          shipping: res.payload[0].shippingType,
+          shipping: res?.payload[0]?.shippingType,
         };
       });
       console.log(res.payload);
@@ -148,7 +148,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -157,7 +157,7 @@ function ViewPurchaseInward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

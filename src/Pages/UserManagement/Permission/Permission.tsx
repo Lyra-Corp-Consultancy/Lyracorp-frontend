@@ -55,12 +55,12 @@ function Permission() {
       setPermissions(res.payload.permissions)
     });
     dispatch(getType("department")).then((res: any) => {
-      setDepartment(res.payload[0].departmentType);
-      console.log(res.payload[0].departmentType);
+      setDepartment(res?.payload[0]?.departmentType);
+      console.log(res?.payload[0]?.departmentType);
     });
     dispatch(getType("role")).then((res: any) => {
-      setRole(res.payload[0].roleType);
-      console.log(res.payload[0].departmentType);
+      setRole(res?.payload[0]?.roleType);
+      console.log(res?.payload[0]?.departmentType);
     });
   }, []);
 

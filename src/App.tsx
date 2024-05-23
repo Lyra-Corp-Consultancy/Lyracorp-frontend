@@ -11,6 +11,7 @@ import InventoryRoutes from "./Pages/Inventory/InventoryRoutes";
 import UserManagementRoute from "./Pages/UserManagement/UserManagementRoute";
 import Cookies from "js-cookie";
 import SelectCompany from "./Pages/SelectCompany/SelectCompany";
+import QCRoute from "./Pages/QC/QCRoute";
 
 function App() {
   const data = useSelector((state: any) => state.data);
@@ -29,7 +30,7 @@ function App() {
   }, [data]);
 
   useEffect(()=>{
-    if(user?.superAdmin && location.pathname!=="/"){
+    if(user?.superAdmin && location.pathname!=="/" && !location.pathname.includes("/master")){
       if(!data?.superAdminCompany){
         dispatch(addPathToGo(location.pathname));
         navigate("/select-company");
@@ -73,6 +74,7 @@ function App() {
         <Route path="/master/*" element={<MasterRoutes />} />
         <Route path="/inventory/*" element={<InventoryRoutes />} />
         <Route path="/user-management/*" element={<UserManagementRoute />} />
+        <Route path="/qc/*" element={<QCRoute />} />
       </Routes>
     </div>
   );

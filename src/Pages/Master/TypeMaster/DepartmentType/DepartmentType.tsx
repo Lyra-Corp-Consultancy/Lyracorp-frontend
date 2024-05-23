@@ -19,8 +19,8 @@ function DepartmentType() {
     const fetchDepartmentType = () => {
         const res = dispatch(getType("department"))
         res.then((res: any) => {
-            setValues(res.payload[0].departmentType)
-            setSearch(res.payload[0].departmentType)
+            setValues(res?.payload[0]?.departmentType)
+            setSearch(res?.payload[0]?.departmentType)
             setInput("")
         })
     }

@@ -19,8 +19,8 @@ function MarginSettingType() {
   const fetchMarginSettingType = () => {
     const res = dispatch(getType("marginSetting"))
     res.then((res: any) => {
-      setValues(res.payload[0].marginSettingType)
-      setSearch(res.payload[0].marginSettingType)
+      setValues(res?.payload[0]?.marginSettingType)
+      setSearch(res?.payload[0]?.marginSettingType)
       setInput("")
     })
   }

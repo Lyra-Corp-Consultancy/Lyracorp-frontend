@@ -58,7 +58,7 @@ function AddVendor() {
       setDropDown((prev) => {
         return {
           ...prev,
-          vendor: res.payload[0].vendorType,
+          vendor: res?.payload[0]?.vendorType,
         };
       });
     });
@@ -69,7 +69,7 @@ function AddVendor() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -78,7 +78,7 @@ function AddVendor() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -87,7 +87,7 @@ function AddVendor() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -96,7 +96,7 @@ function AddVendor() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

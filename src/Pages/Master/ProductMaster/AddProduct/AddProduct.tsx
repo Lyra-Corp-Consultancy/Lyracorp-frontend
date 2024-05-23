@@ -59,7 +59,7 @@ function AddProduct() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res.payload[0].marginSettingType,
+          margin: res?.payload[0]?.marginSettingType,
         };
       });
     });
@@ -70,7 +70,7 @@ function AddProduct() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res.payload[0].uomType,
+          uom: res?.payload[0]?.uomType,
         };
       });
     });
@@ -79,7 +79,7 @@ function AddProduct() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -88,7 +88,7 @@ function AddProduct() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -97,7 +97,7 @@ function AddProduct() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

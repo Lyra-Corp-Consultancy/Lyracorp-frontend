@@ -43,12 +43,15 @@ function AddProfile() {
       const res = await axios.post(fileServer, file);
       urls.push(res.data);
     }
+    let logo = "https://static.vecteezy.com/system/resources/thumbnails/022/014/063/small/missing-picture-page-for-website-design-or-mobile-app-design-no-image-available-icon-vector.jpg"
+if(files1[0]){
 
-    const x = files1[0];
-    const file = new FormData();
-    file.append("file", x);
-    const res = await axios.post(fileServer, file);
-    const logo = res.data;
+  const x = files1[0];
+  const file = new FormData();
+  file.append("file", x);
+  const res = await axios.post(fileServer, file);
+   logo = res.data;
+}
     console.log(urls);
     setData({ ...data, fileUrls: urls, logo });
     console.log({ ...data, fileUrls: urls, logo });
@@ -75,7 +78,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res.payload[0].marginSettingType,
+          margin: res?.payload[0]?.marginSettingType,
         };
       });
     });
@@ -86,7 +89,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res.payload[0].uomType,
+          uom: res?.payload[0]?.uomType,
         };
       });
     });
@@ -95,7 +98,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -104,7 +107,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -113,7 +116,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -122,7 +125,7 @@ function AddProfile() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });
@@ -743,6 +746,16 @@ function AddProfile() {
               <div className="flex gap-3 items-center">
                 <label>Purchase Order</label>
               </div>
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <input value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <input value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              </div>
+            </div>
+            <div className="grid grid-cols-4  gap-8">
               <div className="flex gap-3 items-center">
                 <label>GRN</label>
               </div>

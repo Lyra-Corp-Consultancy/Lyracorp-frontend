@@ -75,7 +75,7 @@ function AddCustomer() {
       setDropDown((prev) => {
         return {
           ...prev,
-          customer: res.payload[0].customerType,
+          customer: res?.payload[0]?.customerType,
         };
       });
     });
@@ -86,7 +86,7 @@ function AddCustomer() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -95,7 +95,7 @@ function AddCustomer() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res.payload[0].discountType,
+          discount: res?.payload[0]?.discountType,
         };
       });
     });
@@ -104,7 +104,7 @@ function AddCustomer() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res.payload[0].paymentType,
+          payment: res?.payload[0]?.paymentType,
         };
       });
     });
@@ -113,7 +113,7 @@ function AddCustomer() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

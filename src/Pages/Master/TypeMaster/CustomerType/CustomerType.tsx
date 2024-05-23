@@ -19,8 +19,8 @@ function CustomerType() {
     const fetchCustomerType = () => {
         const res = dispatch(getType("customer"))
         res.then((res: any) => {
-            setValues(res.payload[0].customerType)
-            setSearch(res.payload[0].customerType)
+            setValues(res?.payload[0]?.customerType)
+            setSearch(res?.payload[0]?.customerType)
             setInput("")
         })
     }

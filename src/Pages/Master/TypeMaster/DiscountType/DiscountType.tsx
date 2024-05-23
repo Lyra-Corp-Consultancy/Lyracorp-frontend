@@ -21,8 +21,8 @@ function DiscountType() {
     const fetchDiscountType = () => {
         const res = dispatch(getType("discount"))
         res.then((res: any) => {
-            setValues(res.payload[0].discountType)
-            setSearch(res.payload[0].discountType)
+            setValues(res?.payload[0]?.discountType)
+            setSearch(res?.payload[0]?.discountType)
             setInput("")
         })
     }

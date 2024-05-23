@@ -20,8 +20,8 @@ function PaymentType() {
     const fetchPaymentType = () => {
         const res = dispatch(getType("payment"))
         res.then((res: any) => {
-            setValues(res.payload[0].paymentType)
-            setSearch(res.payload[0].paymentType)
+            setValues(res?.payload[0]?.paymentType)
+            setSearch(res?.payload[0]?.paymentType)
             setInput("")
         })
     }

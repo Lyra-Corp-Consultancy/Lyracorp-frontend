@@ -77,7 +77,7 @@ function EditUser() {
       setDropDown((prev) => {
         return {
           ...prev,
-          account: res.payload[0].accountType,
+          account: res?.payload[0]?.accountType,
         };
       });
     });
@@ -92,7 +92,7 @@ function EditUser() {
       setDropDown((prev) => {
         return {
           ...prev,
-          department: res.payload[0].departmentType,
+          department: res?.payload[0]?.departmentType,
         };
       });
     });
@@ -101,7 +101,7 @@ function EditUser() {
       setDropDown((prev) => {
         return {
           ...prev,
-          role: res.payload[0].roleType,
+          role: res?.payload[0]?.roleType,
         };
       });
     });
@@ -110,7 +110,7 @@ function EditUser() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res.payload[0].documentType,
+          document: res?.payload[0]?.documentType,
         };
       });
     });

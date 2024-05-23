@@ -223,6 +223,7 @@ export const getAllVendorMaster = createAsyncThunk("user/getAllVendorMaster", as
 export const getAllProfileMaster = createAsyncThunk("user/getAllProfileMaster", async (_, { rejectWithValue }) => {
   try {
     const res = await instance.get("/master/profile-master/all");
+    console.log(res)
     return res.data;
   } catch (err) {
     rejectWithValue(err);
@@ -376,6 +377,22 @@ export const getAllPurchaseInward = createAsyncThunk("user/getAllPurchaseInward"
       lineOfBusiness = state.data?.user?.company
     }
     const res = await instance.get("/inventory/purchase-inward/all",{params:{lineOfBusiness}});
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getAllQCPO = createAsyncThunk("user/getAllQCPO", async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/qc/qc-po/all",{params:{lineOfBusiness}});
     return res.data;
   } catch (err) {
     rejectWithValue(err);

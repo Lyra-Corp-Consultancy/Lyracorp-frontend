@@ -21,8 +21,8 @@ function RoleType() {
   const fetchRoleType = () => {
     const res = dispatch(getType("role"));
     res.then((res: any) => {
-      setValues(res.payload[0].roleType);
-      setSearch(res.payload[0].roleType);
+      setValues(res?.payload[0]?.roleType);
+      setSearch(res?.payload[0]?.roleType);
       setInput({ department: "", value: "" });
     });
   };
@@ -49,8 +49,8 @@ function RoleType() {
 
   useEffect(() => {
     dispatch(getType("department")).then((res: any) => {
-      setDepartment(res.payload[0].departmentType);
-      console.log(res.payload[0].departmentType);
+      setDepartment(res?.payload[0]?.departmentType);
+      console.log(res?.payload[0]?.departmentType);
     });
   }, []);
 

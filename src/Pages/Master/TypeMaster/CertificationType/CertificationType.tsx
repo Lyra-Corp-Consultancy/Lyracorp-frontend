@@ -21,8 +21,8 @@ function CertificationType() {
     const fetchCertificationType = () => {
         const res = dispatch(getType("certification"))
         res.then((res: any) => {
-            setValues(res.payload[0].certificationType)
-            setSearch(res.payload[0].certificationType)
+            setValues(res?.payload[0]?.certificationType)
+            setSearch(res?.payload[0]?.certificationType)
             setInput("")
         })
     }

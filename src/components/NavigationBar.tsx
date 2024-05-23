@@ -230,8 +230,8 @@ function NavigationBar() {
             <p onClick={() => setDropDown(dropDown === "quality" ? "" : "quality")}>Quality Management</p>
             {dropDown === "quality" && (
               <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
-               {permissions?.view?.includes("quality check - po") &&  <button className="text-start">Quality Check - PO</button>}
-               {permissions?.view?.includes("quality check - fg") &&<button className="text-start">Quality Check - FG</button>}
+               {permissions?.view?.includes("quality check - PO") &&  <button className="text-start" onClick={() => navigate("/qc/qc-po")}>Quality Check - PO</button>}
+               {permissions?.view?.includes("quality check - FG") &&<button className="text-start">Quality Check - FG</button>}
               </div>
             )}
           </button>

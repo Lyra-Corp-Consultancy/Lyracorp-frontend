@@ -19,8 +19,8 @@ function TaxType() {
     const fetchTaxType = () => {
         const res = dispatch(getType("tax"))
         res.then((res: any) => {
-            setValues(res.payload[0].taxType)
-            setSearch(res.payload[0].taxType)
+            setValues(res?.payload[0]?.taxType)
+            setSearch(res?.payload[0]?.taxType)
             setInput("")
         })
     }
