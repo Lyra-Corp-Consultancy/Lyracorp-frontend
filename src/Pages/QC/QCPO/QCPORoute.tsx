@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import QCPO from "./QCPO";
 import NavigationBar from "../../../components/NavigationBar";
+import CheckQCPO from "./CheckQCPO/CheckQCPO";
 
 function QCPORoute() {
   return (
@@ -9,6 +10,7 @@ function QCPORoute() {
       <NavigationBar />
       <Routes>
         <Route path="/" index element={<QCPO />} />
+        <Route path="/check/:id" index element={<CheckQCPO />} />
       </Routes>
     </div>
   );
