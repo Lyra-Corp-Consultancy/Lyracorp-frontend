@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import PurchaseInward from "./PurchaseInward";
 import NavigationBar from "../../../components/NavigationBar";

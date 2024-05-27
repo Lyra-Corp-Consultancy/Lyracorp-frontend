@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import  { useState } from "react";
 import styles from "./PurchaseInward.module.scss";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
 import { useDispatch } from "react-redux";

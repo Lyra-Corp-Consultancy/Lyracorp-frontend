@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Route, Routes } from 'react-router-dom'
 import CustomerType from './CustomerType/CustomerType'
 import AccountType from './AccountType/AccountType'

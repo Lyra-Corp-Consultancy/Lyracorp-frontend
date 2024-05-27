@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Route, Routes } from 'react-router-dom'
 import TypeMasterRoutes from './TypeMaster/TypeMasterRoutes'
 import CustomerMasterRoute from './CustomerMaster/CustomerMasterRoute'

@@ -1,7 +1,7 @@
 /* eslint-disable no-unsafe-optional-chaining */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
 import {editVendorMaster, getType, getVendorMasterById } from "../../../../utils/redux/actions";

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { createdModules } from "../../../utils/values/publicValues";
 import styles from "./Permission.module.scss";
 import { useNavigate, useParams } from "react-router-dom";

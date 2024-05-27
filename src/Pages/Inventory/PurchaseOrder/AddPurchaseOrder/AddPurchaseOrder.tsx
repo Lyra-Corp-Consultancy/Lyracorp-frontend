@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import  { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
 import {  addPurchaseOrder, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
@@ -440,7 +443,7 @@ function AddPurchaseOrder() {
               </tr>
             </thead>
             <tbody>
-              {data?.products?.map((x: any, i: number) => (
+              {data?.products?.map((_x: any, i: number) => (
                 <tr className="">
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">

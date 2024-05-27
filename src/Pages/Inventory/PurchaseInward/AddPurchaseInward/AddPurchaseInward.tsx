@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
 import { addPurchaseInward, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseOrdeBySerialNumber, getType } from "../../../../utils/redux/actions";
