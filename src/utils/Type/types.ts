@@ -106,6 +106,7 @@ export interface PurchaseInward {
   invoiceDate?: string;
   dcNumber?: string;
   transporter?: string;
+  warehouse?:any;
   vehicleNumber?: string;
 }
 
@@ -138,6 +139,7 @@ export interface ProfileMaster {
   bussinessDocument?: string;
   billingAddress?: any[];
   shippingAddress?: any[];
+  warehouse?: any[];
   purchaseOrder?: PrefixSeq;
   performInvoice?: PrefixSeq;
   invoice?: PrefixSeq;

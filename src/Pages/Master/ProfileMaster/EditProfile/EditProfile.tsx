@@ -30,6 +30,7 @@ function EditProfile() {
     fileUrls: [],
     billingAddress: [],
     shippingAddress: [],
+    warehouse: [],
   });
 
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ function EditProfile() {
 
   useEffect(() => {
     dispatch(getProfileMasterById(params.id)).then((res: any) => {
-      setData({...data,...res.payload});
+      setData({ ...data, ...res.payload });
     });
 
     const res1 = dispatch(getType("marginSetting"));
@@ -160,7 +161,7 @@ function EditProfile() {
   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Product Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
       <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full ">
         <form
           onSubmit={(e) => {
@@ -209,9 +210,9 @@ function EditProfile() {
               </div>
             </div>
             <label>Company Name</label>
-            <input value={data.companyName} name="companyName" onChange={(e) => setData({ ...data, companyName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input value={data.companyName} name="companyName" onChange={(e) => setData({ ...data, companyName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
             <label>Business Type</label>
-            <Select value={dropDowns?.account?.filter((x) => x?._id === data?.businessType)[0]?.value}>
+            <Select className="w-[200px]" value={dropDowns?.account?.filter((x) => x?._id === data?.businessType)[0]?.value}>
               {dropDowns?.account?.map((x) => (
                 <li
                   onClick={() => {
@@ -224,13 +225,13 @@ function EditProfile() {
               ))}
             </Select>
             <label>Contact Number</label>
-            <input value={data.contactNumber} name="contactNumber" onChange={(e) => setData({ ...data, contactNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input value={data.contactNumber} name="contactNumber" onChange={(e) => setData({ ...data, contactNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <div className="w-[22%] flex gap-3 items-center">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Country</label>
-              <Select
+              <Select className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -256,9 +257,9 @@ function EditProfile() {
                 ))}
               </Select>
             </div>
-            <div className="w-[22%] flex gap-3 items-center">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>State</label>
-              <Select
+              <Select className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
                     return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -285,13 +286,13 @@ function EditProfile() {
                 ))}
               </Select>
             </div>
-            <div className="w-[22%] flex gap-3 items-center">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>District</label>
-              <input value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
-            <div className="w-[22%] z-10 flex gap-3 items-center">
+            <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
               <label>City/Village</label>
-              <Select
+              <Select className="w-[200px]" 
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
                     return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -318,26 +319,27 @@ function EditProfile() {
                 ))}
               </Select>
             </div>
-            <div className="w-[22%] flex gap-3 items-center">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Zone</label>
-              <input value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
             </div>
-            <div className="w-[50%] flex gap-3 items-center">
+            <div className="w-[48%] justify-between flex gap-3 items-center">
               <label>Address</label>
-              <textarea value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+              <textarea value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[83%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
             </div>
-            <div className="w-[22%] flex gap-3 items-center">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Pin code</label>
-              <input value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
             </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Billing Address Details</h1>
           {data?.billingAddress?.map((x: any, i: number) => (
+            <div className="flex items-center">
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Country</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -367,9 +369,9 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>State</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -400,7 +402,7 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>District</label>
                 <input
                   value={x.district}
@@ -410,12 +412,12 @@ function EditProfile() {
                     setData({ ...data, billingAddress });
                   }}
                   type="text"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
                 />
               </div>
-              <div className="w-[22%] z-10 flex gap-3 items-center">
+              <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                 <label>City/Village</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -444,7 +446,7 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Zone</label>
                 <input
                   value={x.zone}
@@ -454,10 +456,10 @@ function EditProfile() {
                     setData({ ...data, billingAddress });
                   }}
                   type="text"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
                 />
               </div>
-              <div className="w-[50%] flex gap-3 items-center">
+              <div className="w-[48%] justify-between  flex gap-3 items-center">
                 <label>Address</label>
                 <textarea
                   value={x.address}
@@ -466,10 +468,10 @@ function EditProfile() {
                     billingAddress[i] = { ...billingAddress[i], address: e.target.value };
                     setData({ ...data, billingAddress });
                   }}
-                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 w-[83%] justify-between  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
                 ></textarea>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input
                   value={x.pincode}
@@ -479,9 +481,15 @@ function EditProfile() {
                     setData({ ...data, billingAddress });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
                 />
               </div>
+            </div>
+            {i > 0 && <button type="button" onClick={()=>{
+                const billingAddress = data?.billingAddress;
+                billingAddress.splice(i, 1);
+                setData({ ...data, billingAddress });
+              }} className="bg-red-500 rounded-full h-5 flex items-center justify-center text-white w-5">-</button>}
             </div>
           ))}
 
@@ -509,27 +517,193 @@ function EditProfile() {
             </p>
           </h1>
           {data?.shippingAddress?.map((x: any, i: number) => (
+            <div className="flex items-center gap-1">
+              <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+                <div className="w-[22%] flex justify-between  gap-3 items-center">
+                  <label>Country</label>
+                  <Select className="w-[200px]"
+                    onChange={(e) => {
+                      const filtered = places.country.filter((x) => {
+                        return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      });
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
+                      setSearch({ ...search, country: filtered });
+                      setData({ ...data, shippingAddress });
+                    }}
+                    value={x.country}
+                  >
+                    {search?.country?.map((x) => (
+                      <li
+                        onClick={() => {
+                          const shippingAddress = data?.shippingAddress;
+                          shippingAddress[i] = { ...shippingAddress[i], country: x?.country };
+                          setData({ ...data, shippingAddress });
+                          axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
+                            setPlaces({ ...places, state: res.data.data.states });
+                            setSearch({ ...search, state: res.data.data.states });
+                          });
+                        }}
+                        className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                      >
+                        {x?.country}
+                      </li>
+                    ))}
+                  </Select>
+                </div>
+                <div className="w-[22%] flex justify-between  gap-3 items-center">
+                  <label>State</label>
+                  <Select className="w-[200px]"
+                    onChange={(e) => {
+                      const filtered = places.state.filter((x) => {
+                        return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      });
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
+                      setSearch({ ...search, state: filtered });
+                      setData({ ...data, shippingAddress });
+                    }}
+                    value={x.state}
+                  >
+                    {search?.state?.map((x) => (
+                      <li
+                        onClick={() => {
+                          const shippingAddress = data?.shippingAddress;
+                          shippingAddress[i] = { ...shippingAddress[i], state: x?.name };
+                          setData({ ...data, shippingAddress });
+                          axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: x?.name }).then((res) => {
+                            console.log(res.data);
+                            setPlaces({ ...places, city: res.data.data });
+                            setSearch({ ...search, city: res.data.data });
+                          });
+                        }}
+                        className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                      >
+                        {x?.name}
+                      </li>
+                    ))}
+                  </Select>
+                </div>
+                <div className="w-[22%] flex justify-between  gap-3 items-center">
+                  <label>District</label>
+                  <input
+                    value={x.district}
+                    onChange={(e) => {
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], district: e.target.value };
+                      setData({ ...data, shippingAddress });
+                    }}
+                    type="text"
+                    className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
+                  />
+                </div>
+                <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
+                  <label>City/Village</label>
+                  <Select className="w-[200px]"
+                    onChange={(e) => {
+                      const filtered = places.city.filter((x) => {
+                        return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      });
+                      setSearch({ ...search, city: filtered });
+                      setData({ ...data, city: e.target.value });
+                    }}
+                    value={x.city}
+                  >
+                    {search?.city?.map((x) => (
+                      <li
+                        onClick={() => {
+                          const shippingAddress = data?.shippingAddress;
+                          shippingAddress[i] = { ...shippingAddress[i], city: x };
+                          setData({ ...data, shippingAddress });
+                          // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
+                          //   console.log(res.data)
+                          //   setPlaces({ ...places, city: res.data.data})
+                          //   setSearch({ ...search, city: res.data.data})
+                          // });
+                        }}
+                        className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                      >
+                        {x}
+                      </li>
+                    ))}
+                  </Select>
+                </div>
+                <div className="w-[22%] flex justify-between  gap-3 items-center">
+                  <label>Zone</label>
+                  <input
+                    value={x.zone}
+                    onChange={(e) => {
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], zone: e.target.value };
+                      setData({ ...data, shippingAddress });
+                    }}
+                    type="text"
+                    className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
+                  />
+                </div>
+                <div className="w-[48%] justify-between flex gap-3 items-center">
+                  <label>Address</label>
+                  <textarea
+                    value={x.address}
+                    onChange={(e) => {
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], address: e.target.value };
+                      setData({ ...data, shippingAddress });
+                    }}
+                    className="px-2 py-1 w-[83%] justify-between  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  ></textarea>
+                </div>
+                <div className="w-[22%] flex justify-between  gap-3 items-center">
+                  <label>Pin code</label>
+                  <input
+                    value={x.pincode}
+                    onChange={(e) => {
+                      const shippingAddress = data?.shippingAddress;
+                      shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
+                      setData({ ...data, shippingAddress });
+                    }}
+                    type="number"
+                    className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
+                  />
+                </div>
+              </div>
+              {i > 0 && <button onClick={()=>{
+                const shippingAddress = data?.shippingAddress;
+                shippingAddress.splice(i, 1);
+                setData({ ...data, shippingAddress });
+              }} className="bg-red-500 rounded-full h-5 flex items-center justify-center text-white w-5" type="button">-</button>}
+            </div>
+          ))}
+          <div className="flex mt-3 w-full items-end justify-end">
+            <button type="button" onClick={() => setData({ ...data, shippingAddress: [...data.shippingAddress, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
+          </div>
+
+          <h1 className="roboto-medium mt-1">Warehouse Address Details</h1>
+          {data?.warehouse?.map((x: any, i: number) => (
+            <div className="flex items-center">
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Country</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], country: e.target.value };
                     setSearch({ ...search, country: filtered });
-                    setData({ ...data, shippingAddress });
+                    setData({ ...data, warehouse });
                   }}
                   value={x.country}
                 >
                   {search?.country?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress;
-                        shippingAddress[i] = { ...shippingAddress[i], country: x?.country };
-                        setData({ ...data, shippingAddress });
+                        const warehouse = data?.warehouse;
+                        warehouse[i] = { ...warehouse[i], country: x?.country };
+                        setData({ ...data, warehouse });
                         axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
                           setPlaces({ ...places, state: res.data.data.states });
                           setSearch({ ...search, state: res.data.data.states });
@@ -542,27 +716,27 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>State</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
                     });
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], state: e.target.value };
                     setSearch({ ...search, state: filtered });
-                    setData({ ...data, shippingAddress });
+                    setData({ ...data, warehouse });
                   }}
                   value={x.state}
                 >
                   {search?.state?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress;
-                        shippingAddress[i] = { ...shippingAddress[i], state: x?.name };
-                        setData({ ...data, shippingAddress });
-                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: x?.name }).then((res) => {
+                        const warehouse = data?.warehouse;
+                        warehouse[i] = { ...warehouse[i], state: x?.name };
+                        setData({ ...data, warehouse });
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
                           console.log(res.data);
                           setPlaces({ ...places, city: res.data.data });
                           setSearch({ ...search, city: res.data.data });
@@ -575,22 +749,22 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>District</label>
                 <input
                   value={x.district}
                   onChange={(e) => {
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], district: e.target.value };
-                    setData({ ...data, shippingAddress });
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], district: e.target.value };
+                    setData({ ...data, warehouse });
                   }}
                   type="text"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]"
                 />
               </div>
-              <div className="w-[22%] z-10 flex gap-3 items-center">
+              <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                 <label>City/Village</label>
-                <Select
+                <Select className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -603,9 +777,9 @@ function EditProfile() {
                   {search?.city?.map((x) => (
                     <li
                       onClick={() => {
-                        const shippingAddress = data?.shippingAddress;
-                        shippingAddress[i] = { ...shippingAddress[i], city: x };
-                        setData({ ...data, shippingAddress });
+                        const warehouse = data?.warehouse;
+                        warehouse[i] = { ...warehouse[i], city: x };
+                        setData({ ...data, warehouse });
                         // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
                         //   console.log(res.data)
                         //   setPlaces({ ...places, city: res.data.data})
@@ -619,70 +793,78 @@ function EditProfile() {
                   ))}
                 </Select>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Zone</label>
                 <input
                   value={x.zone}
                   onChange={(e) => {
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], zone: e.target.value };
-                    setData({ ...data, shippingAddress });
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], zone: e.target.value };
+                    setData({ ...data, warehouse });
                   }}
                   type="text"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]"
                 />
               </div>
-              <div className="w-[50%] flex gap-3 items-center">
+              <div className="w-[48%] justify-between  flex gap-3 items-center">
                 <label>Address</label>
                 <textarea
                   value={x.address}
                   onChange={(e) => {
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], address: e.target.value };
-                    setData({ ...data, shippingAddress });
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], address: e.target.value };
+                    setData({ ...data, warehouse });
                   }}
-                  className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 w-[83%] justify-between  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
                 ></textarea>
               </div>
-              <div className="w-[22%] flex gap-3 items-center">
+              <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input
                   value={x.pincode}
                   onChange={(e) => {
-                    const shippingAddress = data?.shippingAddress;
-                    shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
-                    setData({ ...data, shippingAddress });
+                    const warehouse = data?.warehouse;
+                    warehouse[i] = { ...warehouse[i], pinCode: e.target.value };
+                    setData({ ...data, warehouse });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]"
                 />
               </div>
             </div>
+            {i > 0 && <button type="button" onClick={()=>{
+                const warehouse = data?.warehouse;
+                warehouse.splice(i, 1);
+                setData({ ...data, warehouse });
+              }} className="bg-red-500 rounded-full h-5 flex items-center justify-center text-white w-5">-</button>}
+            </div>
           ))}
+
           <div className="flex mt-3 w-full items-end justify-end">
-            <button type="button" onClick={() => setData({ ...data, shippingAddress: [...data.shippingAddress, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+            <button type="button" onClick={() => setData({ ...data, warehouse: [...data.warehouse, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
               + Add{" "}
             </button>
           </div>
+
           <h1 className="roboto-medium mt-1">Identity Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Aadhar Number</label>
-              <input value={data.aadharNumber} name="aadharNumber" onChange={(e) => setData({ ...data, aadharNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.aadharNumber} name="aadharNumber" onChange={(e) => setData({ ...data, aadharNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pan Number</label>
-              <input value={data.panNumber} name="panNumber" onChange={(e) => setData({ ...data, panNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.panNumber} name="panNumber" onChange={(e) => setData({ ...data, panNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Registration No</label>
-              <input value={data.regNumber} name="regNumber" onChange={(e) => setData({ ...data, regNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.regNumber} name="regNumber" onChange={(e) => setData({ ...data, regNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>GSTIN No</label>
-              <input value={data.gstinNumber} name="gstinNumber" onChange={(e) => setData({ ...data, gstinNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.gstinNumber} name="gstinNumber" onChange={(e) => setData({ ...data, gstinNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
           </div>
 
@@ -690,16 +872,16 @@ function EditProfile() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Bank Account No</label>
-              <input value={data.bankAccNo} name="bankAccNo" onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.bankAccNo} name="bankAccNo" onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Account Branch</label>
-              <input value={data.accBranch} name="accBranch" onChange={(e) => setData({ ...data, accBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.accBranch} name="accBranch" onChange={(e) => setData({ ...data, accBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>IFSC Code</label>
-              <input value={data.ifscCode} name="ifscCode" onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input value={data.ifscCode} name="ifscCode" onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
           </div>
 
@@ -707,7 +889,7 @@ function EditProfile() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+            <Select className="w-[200px]" value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
               {dropDowns?.document?.map((x) => (
                 <li
                   onClick={() => {
@@ -759,11 +941,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -772,11 +954,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.grn?.prefix} name="grnPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.grn?.prefix} name="grnPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.grn?.seq} name="grnSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.grn?.seq} name="grnSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -785,11 +967,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -798,11 +980,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -811,11 +993,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -824,11 +1006,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value)  } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
           </div>

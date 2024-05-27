@@ -308,6 +308,21 @@ function AddPurchaseInward() {
               <label>Vehicle Number</label>
               <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
+            <div className="flex gap-3 items-center">
+              <label>Warehouse</label>
+              <Select value={data?.warehouse?.address}>
+                {(user?.companyDetails[0]?.warehouse || superAdminCompany?.warehouse)?.map((x:any) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, warehouse: x });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.address}
+                  </li>
+                ))}
+              </Select>
+            </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>
