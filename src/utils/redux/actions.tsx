@@ -455,3 +455,30 @@ export const getPurchaseOrdeBySerialNumber = createAsyncThunk("user/getPurchaseO
     rejectWithValue(err);
   }
 });
+
+export const getPurchaseInwardByGRNNumber = createAsyncThunk("user/getPurchaseInwardByGRNNumber", async (grn:string, { rejectWithValue }) => {
+  try {
+    
+   const res =  await instance.get("/inventory/purchase-inward/getByGRN", { params:{grn} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getProductFromPurchaseOrderByGRNAndQuantity = createAsyncThunk("user/getProductFromPurchaseOrderByGRNAndQuantity",async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    
+   const res =  await instance.get("/inventory/purchase-inward/get-products-with-quantity-and-grn", { params:{lineOfBusiness} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})

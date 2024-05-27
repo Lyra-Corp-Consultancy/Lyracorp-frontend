@@ -172,6 +172,11 @@ function NavigationBar() {
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/shipping-type")}>
                             Shipping Type
                           </li>
+                        )}
+                          {permissions?.view?.includes("transport type") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/transport-type")}>
+                            Transport Type
+                          </li>
                         )} 
                       </ul>
                     ) : (
@@ -218,7 +223,7 @@ function NavigationBar() {
                 )}
                 {permissions?.view?.includes("purchase inward") && <button className="text-start" onClick={() => navigate("/inventory/purchase-inward")}>Purchase Inward</button>}
                 {permissions?.view?.includes("stock check") && <button className="text-start">Stock Check</button>}
-                {permissions?.view?.includes("raw material - outward") && <button className="text-start">Raw Material - Outward</button>}
+                {permissions?.view?.includes("raw material - outward") && <button className="text-start" onClick={() => navigate("/inventory/raw-material-outward")}>Raw Material - Outward</button>}
                 {permissions?.view?.includes("finished good - inward") && <button className="text-start">Finished Goods - Inward</button>}
               </div>
             )}

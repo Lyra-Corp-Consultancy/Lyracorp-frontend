@@ -3,22 +3,22 @@
 import React, { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { addPurchaseInward, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseOrdeBySerialNumber, getType } from "../../../../utils/redux/actions";
+import { addPurchaseInward, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import styles from "./AddPurchaseInward.module.scss";
+import styles from "./AddRawMaterialOutward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 // import styles from "../PurchaseOrder.module.scss"
 
-function AddPurchaseInward() {
+function AddRawMaterialOutward() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const [serialNumber, setSerialNumber] = useState<string>("");
+  const [products,setProducts] = useState<any[]>()
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
@@ -42,19 +42,20 @@ function AddPurchaseInward() {
     products: [{}],
   });
 
+  const [selectedProduct,setSelectedProduct] = useState<any[]>([])
+
   const navigate = useNavigate();
 
   const handleSave = async () => {
-    const val = data
+    const val = data;
     for (let i = 0; i < val?.products?.length; i++) {
-    if(val?.products[i]?.image){
-
+      if (val?.products[i]?.image) {
         const x = val?.products[i]?.image;
         const file = new FormData();
         file.append("file", x);
         const res = await axios.post(fileServer, file);
-        val.products[i].image = res.data
-    }
+        val.products[i].image = res.data;
+      }
     }
 
     let lineOfBusiness: string | null;
@@ -85,7 +86,9 @@ function AddPurchaseInward() {
         };
       });
     });
-
+    dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
+        setProducts(res?.payload)
+    })
     const res2 = dispatch(getType("uom"));
 
     res2.then((res: any) => {
@@ -209,25 +212,10 @@ function AddPurchaseInward() {
   //   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
+      <h1 className="roboto-bold text-lg">Add Raw Material Outward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
-        <div className="flex items-center mb-5 gap-3">
-          <label className="font-bold">Purchase Order Serial No</label>
-          <input onChange={(e) => setSerialNumber(e.target.value)} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
-          <button
-            type="button"
-            onClick={() => {
-              dispatch(getPurchaseOrdeBySerialNumber(serialNumber)).then((res: any) => {
-                console.log(res.payload);
-                setData({ vendor: res.payload.vendor, products: res.payload.products });
-              });
-            }}
-            className="bg-[#5970F5] h-[30px] flex justify-center items-center text-white px-4 py-2 rounded-md"
-          >
-            Fetch
-          </button>
-        </div>
+                
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -235,25 +223,10 @@ function AddPurchaseInward() {
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Vendor Details</h1>
+          <h1 className="roboto-medium mt-1">Transportation Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <div className="flex  items-center gap-3">
-              <label>Vendor Name</label>
-              <Select className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
-                {dropDowns?.vendor?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, vendor: x?._id });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.VendorName}
-                  </li>
-                ))}
-              </Select>
-            </div>
-            <div className="flex  items-center gap-3">
-              <label>Inward Date</label>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Outward Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.inwardDate}</p>
                 <button type="button" className={styles.calendar}>
@@ -272,12 +245,81 @@ function AddPurchaseInward() {
                 />
               </label>
             </div>
-            <div className="flex items-center gap-3">
-              <label>Invoice Number</label>
-              <input value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Sender</label>
+              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
             </div>
-            <div className="flex  items-center gap-3">
-              <label>Invoice Date</label>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Supply Chain</label>
+              <label className="w-[200px] flex items-center">
+                <input type="radio" name="supplyChain" id="" onChange={() => setData({ ...data, supplyChain: "own" })} />
+                <label className="ms-1">Own</label>
+                <input type="radio" className="ms-3" name="supplyChain" onChange={() => setData({ ...data, supplyChain: "job work" })} id="" />
+                <label className="ms-1">Job Work</label>
+              </label>
+            </div>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Receiver</label>
+              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
+            </div>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Transporter</label>
+              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
+            </div>
+            <div className="flex items-center gap-3 justify-between">
+              <label>Vehicle Number</label>
+              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+            </div>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Transportation Mode</label>
+              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
+            </div>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Transportation Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.invoiceDate}</p>
                 <button type="button" className={styles.calendar}>
@@ -296,32 +338,40 @@ function AddPurchaseInward() {
                 />
               </label>
             </div>
-            <div className="flex items-center gap-3">
-              <label>DC Number</label>
-              <input value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
-            </div>
-            <div className="flex items-center gap-3">
-              <label>Transporter</label>
-              <input value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
-            </div>
-            <div className="flex items-center gap-3">
-              <label>Vehicle Number</label>
-              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
-            </div>
-            <div className="flex gap-3 items-center">
-              <label>Warehouse</label>
-              <Select value={data?.warehouse?.address}>
-                {(user?.companyDetails[0]?.warehouse || superAdminCompany?.warehouse)?.map((x:any) => (
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Transportation Distance</label>
+              <Select className="bg-white w-[150px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
                   <li
                     onClick={() => {
-                      setData({ ...data, warehouse: x });
+                      setData({ ...data, vendor: x?._id });
                     }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
                   >
-                    {x?.address}
+                    {x?.VendorName}
                   </li>
                 ))}
               </Select>
+              <Select className="bg-white w-[50px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+                {dropDowns?.vendor?.map((x) => (
+                  <li
+                    onClick={() => {
+                      setData({ ...data, vendor: x?._id });
+                    }}
+                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.VendorName}
+                  </li>
+                ))}
+              </Select>
+            </div>
+            <div className="flex items-center gap-3 justify-between">
+              <label>Remarks</label>
+              <input value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+            </div>
+            <div className="flex items-center gap-3 justify-between">
+              <label>Bill of Lading</label>
+              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
           </div>
 
@@ -330,18 +380,11 @@ function AddPurchaseInward() {
           <table className="w-full text-[14px] border-collapse rounded border">
             <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className=" border-r w-1/12">Product Name</th>
-                <th className="border-r w-1/12">Received Quantity</th>
-                <th className="border-r w-1/12">Billed Quantity</th>
-                <th className="border-r w-1/12">UOM</th>
-                <th className="border-r w-1/12">Batch Number</th>
-                <th className="border-r w-1/12">Expire Date</th>
-                <th className="border-r w-1/12">Shortage</th>
-                <th className="border-r w-1/12">Unit Price</th>
-                <th className="border-r w-1/12">Total Value</th>
-                <th className="border-r w-1/12">Remarks</th>
-                <th className="border-r w-1/12">Certification</th>
-                <th className="w-1/12">Upload</th>
+                <th className=" border-r w-1/5">Product Name</th>
+                <th className=" border-r w-1/5">GRN Number</th>
+                <th className="border-r w-1/5">Outward Quantity</th>
+                <th className="border-r w-1/5">UOM</th>
+                <th className="border-r w-1/5">Remarks</th>
               </tr>
             </thead>
             <tbody>
@@ -349,45 +392,58 @@ function AddPurchaseInward() {
                 <tr className="text-center">
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns.products?.filter((y)=>y?._id===x?.productId)[0]?.productName || x?.productDetails?.productName}>
-                        {dropDowns?.products?.map((x: any) => (
+                      <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)[0]?.name}>
+                        {products?.map((x: any) => (
                           <li
                             onClick={() => {
                               const product = data?.products;
                               product[i] = { ...product[i], productId: x?._id };
                               setData({ ...data, products: product });
+                              const temp = selectedProduct
+                              temp[i] = x
+                              setSelectedProduct(temp)
                             }}
                             className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
                           >
-                            {x?.productName || "No Name"}
+                            {x?.name || "No Name"}
                           </li>
                         ))}
                       </Select>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
+                    <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={x?.grn}>
+                      {selectedProduct[i]?.qnGrn?.map((x: any) => (
+                        <li
+                          onClick={() => {
+                            const product = data?.products;
+                            product[i] = { ...product[i], grn: x?.grn };
+                            setData({ ...data, products: product });
+                          }}
+                          className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                        >
+                          {x?.grn || "No Name"}
+                        </li>
+                      ))}
+                    </Select>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                      <div className="w-full flex">
                     <input
                       type="number"
                       value={x.recievedQuantity}
                       onChange={(e) => {
-                        const product = data?.products;
-                        product[i] = { ...x, recievedQuantity: e.target.value };
-                        setData({ ...data, products: product });
+                        console.log(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0].qn,x?.grn)
+                        if(parseInt(e.target.value || "0")<=parseInt(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0].qn)){
+                            const product = data?.products;
+                            product[i] = { ...x, recievedQuantity: e.target.value };
+                            setData({ ...data, products: product });
+                        }
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[73%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <input
-                      type="text"
-                      value={x.orderQuantity}
-                      onChange={(e) => {
-                        const product = data?.products;
-                        product[i] = { ...x, orderQuantity: e.target.value };
-                        setData({ ...data, products: product });
-                      }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
-                    />
+                    <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0]?.qn}</label>
+                    </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)[0]?.value?.name}>
@@ -408,96 +464,16 @@ function AddPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
                       type="text"
-                      value={x?.batchNumber}
+                      value={x?.remark}
                       onChange={(e) => {
                         const product = data?.products;
-                        product[i] = { ...x, batchNumber: e.target.value };
+                        product[i] = { ...x, remark: e.target.value };
                         setData({ ...data, products: product });
                       }}
                       className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
                   </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <input
-                      type="date"
-                      value={x.expDate}
-                      onChange={(e) => {
-                        const product = data?.products;
-                        console.log(e.target.value);
-                        product[i] = { ...x, expDate: e.target.value };
-                        setData({ ...data, products: product });
-                      }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
-                    />
-                  </td>
-                  <td className="text-center border w-[100px] justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) || 0}</span>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{x?.productDetails?.mrp}</span>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{parseFloat(x?.productDetails?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <input
-                        type="text"
-                        value={x.remarks}
-                        onChange={(e) => {
-                          const product = data?.products;
-                          product[i] = { ...x, remarks: e.target.value };
-                          setData({ ...data, products: product });
-                        }}
-                        className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
-                      />
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select className="w-[90%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
-                        {dropDowns?.certificate?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = { ...product[i], certificate: x?._id };
-                              setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.value}
-                          </li>
-                        ))}
-                      </Select>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <label>
-                        <svg width="13" height="13" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M3.5 6V1.925L2.2 3.225L1.5 2.5L4 0L6.5 2.5L5.8 3.225L4.5 1.925V6H3.5ZM1 8C0.725 8 0.489667 7.90217 0.294 7.7065C0.0983332 7.51083 0.000333333 7.27533 0 7V5.5H1V7H7V5.5H8V7C8 7.275 7.90217 7.5105 7.7065 7.7065C7.51083 7.9025 7.27533 8.00033 7 8H1Z" fill="#5970F5" />
-                        </svg>
-
-                        <input
-                          type="file"
-                          className="hidden"
-                          onChange={(e) => {
-                            if (e?.target?.files?.[0]) {
-                              const product = data?.products;
-                              product[i] = { ...x, image: e.target.files[0] };
-                              setData({ ...data, products: product });
-                            }
-                          }}
-                        />
-                      </label>
-                    </div>
-                  </td>
+                 
                   {i > 0 && (
                     <td>
                       <button
@@ -524,7 +500,7 @@ function AddPurchaseInward() {
             </button>
           </div>
 
-          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+          <div className="w-full absolute bottom-4 justify-center items-center  gap-3 flex mt-5">
             <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ accountType: "", address: "", bussinessDocument: "", city: "", contactPerson: "", country: "", VendorName: "", vendorType: "", discountType: "", district: "", email: "", fileUrls: [], paymentTerms: "", pincode: "", primaryNumber: "", purchaseResitriction: "", secondaryNumber: "", state: "", zone: "" })}>
               Reset
             </button>
@@ -542,4 +518,4 @@ function AddPurchaseInward() {
   );
 }
 
-export default AddPurchaseInward;
+export default AddRawMaterialOutward;
