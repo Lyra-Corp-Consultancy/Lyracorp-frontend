@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from "react";
+import  { useState } from "react";
 import styles from "./ProductMaster.module.scss";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
 import { useDispatch, useSelector } from "react-redux";

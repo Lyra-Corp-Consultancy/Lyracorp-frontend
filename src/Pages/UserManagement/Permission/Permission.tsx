@@ -230,7 +230,7 @@ function Permission() {
 
     const renderModules = (modules: any[], prefix: number) => {
       return modules.map((module, index) => (
-        <React.Fragment key={index}>
+        <>
           <tr id={module[0]?.split(" ").join("-")} className="border transition-all duration-1000 bg-white">
             <td>
               <input type="checkbox" checked={givedPermissions?.view.includes(module[0]) && givedPermissions?.add.includes(module[0]) && givedPermissions?.delete.includes(module[0]) && givedPermissions?.edit.includes(module[0]) ? true : false} onChange={(e) => allCheckBox(module, e)} />
@@ -276,7 +276,7 @@ function Permission() {
             </td>
           </tr>
           {expandedModules.includes(prefix + index) && module[1]?.length > 0 && <PermissionTable modules={module[1]} path={[...path, module[0]]} k={k + 20} />}
-        </React.Fragment>
+        </>
       ));
     };
 
