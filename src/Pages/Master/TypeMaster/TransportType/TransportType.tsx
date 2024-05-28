@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import NavigationBar from '../../../../components/NavigationBar'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteTypeMaster, getType, postType, updateType } from '../../../../utils/redux/actions'
