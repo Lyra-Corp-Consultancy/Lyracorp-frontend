@@ -118,15 +118,15 @@ function AddVendor() {
     setFiles([...files, ...droppedFiles]);
   };
   return (
-    <div className="h-[90vh] w-screen px-4 pt-3 shadow-md">
+    <div className="min-h-[90vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Vendor Master</h1>
-      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full min-h-[90%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSave();
           }}
-          className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
+          className="shadow-md bg-white px-4 h-full z-[0] pb-[100px] relative rounded-lg pt-1 w-full"
         >
           <h1 className="roboto-medium mt-1">Vendor Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">

@@ -140,18 +140,18 @@ function EditVendors() {
     setFiles([...files, ...droppedFiles]);
   };
   return (
-    <div className="h-[90vh] w-screen px-4 pt-3 shadow-md">
+    <div className="min-h-[90vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Vendor Master</h1>
-      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full min-h-[90%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSave();
           }}
-          className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
+          className="shadow-md bg-white px-4 h-full z-[0] relative pb-[100px] rounded-lg pt-1 w-full"
         >
           <h1 className="roboto-medium mt-1">Vendor Type</h1>
-          <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+          <div className="grid grid-flow-col items-center gap-4  roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Vendor Name</label>
             <input value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Vendor Type</label>
