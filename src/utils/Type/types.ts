@@ -147,3 +147,26 @@ export interface ProfileMaster {
   deliveryChallan?: PrefixSeq;
   grn?: PrefixSeq;
 }
+
+export interface RawMaterialOutward {
+  transportationDistance?:string;
+  outwardDate?: string;
+  sender?: {
+    address?: string;
+    [key: string]: any; // Additional properties can be added if necessary
+  };
+  supplyChain?: string;
+  receiver?: {
+    address?: string;
+    [key: string]: any; // Additional properties can be added if necessary
+  };
+  transporter?: string;
+  vehicleNumber?: string;
+  transporterMode?: string;
+  transpotationDate?: string;
+  transportationDistanceUnit?: string;
+  remarks?: string;
+  billOfLading?: string;
+  products: any[];
+  lineOfBusiness?:string
+}

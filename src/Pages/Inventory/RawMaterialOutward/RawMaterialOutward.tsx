@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./RawMaterialOutward.module.scss";
-import { getAllQCPO, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+import { getAllRawMaterialOutward, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
 
 function RawMaterialOutward() {
   const [data, setData] = useState<any[]>([]);
@@ -42,7 +42,7 @@ function RawMaterialOutward() {
   };
 
   useEffect(() => {
-    dispatch(getAllQCPO()).then((res: any) => {
+    dispatch(getAllRawMaterialOutward()).then((res: any) => {
       setData(res.payload);
       setFiltered(res.payload);
     });
@@ -162,13 +162,12 @@ function RawMaterialOutward() {
                   <tr className="w-full">
                     
                     <th>S No</th>
-                    <th>Serial No.</th>
-                    <th>Vendor Name</th>
-                    <th>Inward Date</th>
-                    <th>Invoice Number</th>
-                    <th>DC Number</th>
+                    <th>DC No</th>
+                    <th>Outward Date</th>
+                    <th>Sender</th>
                     <th>Transporter</th>
                     <th>Vehicle Number</th>
+                    <th>Supply Type</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -177,12 +176,11 @@ function RawMaterialOutward() {
                     <tr className="border relative">
                       <th>{i + 1}</th>
                       <th>{x?.seq}</th>
-                      <th>{dropDowns?.vendor?.filter((y) => y?._id === x?.vendor)[0]?.VendorName}</th>
-                      <th>{x?.inwardDate}</th>
-                      <th>{x?.invoiceNumber}</th>
-                      <th>{x?.dcNumber}</th>
+                      <th>{x?.outwardDate}</th>
+                      <th>{x?.sender?.address}</th>
                       <th>{x?.transporter}</th>
                       <th>{x?.vehicleNumber}</th>
+                      <th>{x?.supplyChain}</th>
                       <th className="relative ">
                         <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                           <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -192,12 +190,12 @@ function RawMaterialOutward() {
                           </svg>
                         </button>
                         <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 " + styles.option}>
-                          <button onClick={() => navigate("/qc/qc-po/check/" + x?._id)} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
+                          <button onClick={() => navigate("/inventory/raw-material-outward/view/" + x?._id)} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
                             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M7.0039 7.49999C8.32636 7.49999 9.39843 6.42792 9.39843 5.10546C9.39843 3.783 8.32636 2.71094 7.0039 2.71094C5.68144 2.71094 4.60938 3.783 4.60938 5.10546C4.60938 6.42792 5.68144 7.49999 7.0039 7.49999Z" stroke="black" />
                               <path d="M12.6018 4.3756C12.8673 4.69852 13 4.85929 13 5.1049C13 5.35051 12.8673 5.51129 12.6018 5.83421C11.6303 7.01368 9.48757 9.2098 7 9.2098C4.51243 9.2098 2.36967 7.01368 1.39818 5.83421C1.13273 5.51129 1 5.35051 1 5.1049C1 4.85929 1.13273 4.69852 1.39818 4.3756C2.36967 3.19612 4.51243 1 7 1C9.48757 1 11.6303 3.19612 12.6018 4.3756Z" stroke="black" />
                             </svg>
-                            Check
+                            View
                           </button>
                         </div>
                       </th>
