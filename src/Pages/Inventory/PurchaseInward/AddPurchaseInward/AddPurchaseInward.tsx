@@ -350,7 +350,7 @@ function AddPurchaseInward() {
                 <tr className="text-center">
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={x?.productDetails?.productName}>
+                      <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns.products?.filter((y)=>y?._id===x?.productId)[0]?.productName || x?.productDetails?.productName}>
                         {dropDowns?.products?.map((x: any) => (
                           <li
                             onClick={() => {

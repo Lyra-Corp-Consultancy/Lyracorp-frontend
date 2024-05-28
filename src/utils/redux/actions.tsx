@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, ProfileMaster, PurchaseInward, PurchaseOrder, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -350,6 +350,16 @@ export const addPurchaseInward = createAsyncThunk("user/add-purchase-inward", as
   }
 });
 
+
+export const addRawMaterialOutward = createAsyncThunk("user/addRawMaterialOutward", async (data: RawMaterialOutward, { rejectWithValue }) => {
+  try {
+    const res = await instance.post("/inventory/raw-material-outward", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const getAllPurchaseOrder = createAsyncThunk("user/getAllPurchaseOrder", async (_, { rejectWithValue,getState }) => {
   try {
     const state:any = getState()
@@ -393,6 +403,22 @@ export const getAllQCPO = createAsyncThunk("user/getAllQCPO", async (_, { reject
       lineOfBusiness = state.data?.user?.company
     }
     const res = await instance.get("/qc/qc-po/all",{params:{lineOfBusiness}});
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getAllRawMaterialOutward = createAsyncThunk("user/getAllRawMaterialOutward", async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/inventory/raw-material-outward/all",{params:{lineOfBusiness}});
     return res.data;
   } catch (err) {
     rejectWithValue(err);
@@ -451,6 +477,42 @@ export const getPurchaseOrdeBySerialNumber = createAsyncThunk("user/getPurchaseO
     
    const res =  await instance.get("/inventory/purchase-order/getBySerialNumber", { params:{serialNumber:seqNumber} });
     return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getPurchaseInwardByGRNNumber = createAsyncThunk("user/getPurchaseInwardByGRNNumber", async (grn:string, { rejectWithValue }) => {
+  try {
+    
+   const res =  await instance.get("/inventory/purchase-inward/getByGRN", { params:{grn} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getProductFromPurchaseOrderByGRNAndQuantity = createAsyncThunk("user/getProductFromPurchaseOrderByGRNAndQuantity",async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    
+   const res =  await instance.get("/inventory/purchase-inward/get-products-with-quantity-and-grn", { params:{lineOfBusiness} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})
+
+export const getRawMaterialOutwardById = createAsyncThunk("user/getRawMaterialOutwardById", async (id:string, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/inventory/raw-material-outward/individual",{params: { id}});
+    return res.data;
   } catch (err) {
     rejectWithValue(err);
   }

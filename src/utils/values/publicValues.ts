@@ -18,6 +18,7 @@ export const createdModules = [
                                             ["role type"], 
                                             ["vendor type"],
                                             ["packing type"],
+                                            ["transport type"],
                                             ["shipping type"]
                                         ]],
                                         ["customer master"], 
