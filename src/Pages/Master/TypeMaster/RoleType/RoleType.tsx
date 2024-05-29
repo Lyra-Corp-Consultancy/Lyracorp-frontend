@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NavigationBar from "../../../../components/NavigationBar";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteTypeMaster, getType, postType, updateType } from "../../../../utils/redux/actions";
@@ -174,51 +174,53 @@ function RoleType() {
 
             <div className="w-1/2 h-full px-5 py-2">
               <h2 className="text-black font-semibold">{deleteType.length === 1 ? "Edit" : "Add"} Role Type</h2>
-              <div className="w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]">
-                <div>
-                  <div className="flex gap-16 px-5 pt-5 items-center">
-                    <label htmlFor="" className="font-semibold text-[14px]">
-                      Department Name
-                    </label>
-                    <Select value={department?.filter((x) => x?._id === input.department)[0]?.value || ""} onChange={(e) => setInput({ ...input, department: e.target.value })} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
-                      {department
-                        ?.filter((x) => x?.value?.toLowerCase()?.includes(input.department || ""))
-                        ?.map((x) => (
-                          <li onClick={() => setInput({ ...input, department: x?._id })} className="px-3 hover:bg-slate-200 py-1 transition-all duration-100">
-                            {x?.value}
-                          </li>
-                        ))}
-                    </Select>
-                  </div>
+              {((deleteType?.length === 1 && permissions?.edit?.includes("role type")) || permissions?.add?.includes("role type")) && (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    if (input?.value?.length > 0) {
+                      setConfirmation(deleteType.length === 1 ? "edit" : "add");
+                    }
+                  }}
+                  className="w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]"
+                >
+                  <div>
+                    <div className="flex gap-16 px-5 pt-5 items-center">
+                      <label htmlFor="" className="font-semibold text-[14px]">
+                        Department Name
+                      </label>
+                      <Select required value={department?.filter((x) => x?._id === input.department)[0]?.value || ""} onChange={(e) => setInput({ ...input, department: e.target.value })} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
+                        {department
+                          ?.filter((x) => x?.value?.toLowerCase()?.includes(input.department || ""))
+                          ?.map((x) => (
+                            <li onClick={() => setInput({ ...input, department: x?._id })} className="px-3 hover:bg-slate-200 py-1 transition-all duration-100">
+                              {x?.value}
+                            </li>
+                          ))}
+                      </Select>
+                    </div>
 
-                {((deleteType?.length===1 && permissions?.edit?.includes("role type")) ||  permissions?.add?.includes("role type")) &&  <div className="flex gap-28 px-5 pt-5 items-center">
-                    <label htmlFor="" className="font-semibold text-[14px]">
-                      Role Name
-                    </label>
-                    <input type="text" onChange={(e) => setInput({ ...input, value: e.target.value })} value={input.value} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
-                  </div>}
-                </div>
-                <div className="flex gap-3 items-center justify-end px-3 py-5">
-                  <button
-                    className="border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold"
-                    onClick={() => {
-                      setInput({ department: "", value: "" });
-                    }}
-                  >
-                    Reset
-                  </button>
-                  <button
-                    className=" bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold"
-                    onClick={() => {
-                      if (input?.value?.length > 0) {
-                        setConfirmation(deleteType.length === 1 ? "edit" : "add");
-                      }
-                    }}
-                  >
-                    {deleteType.length === 1 ? "Update" : "Save"}
-                  </button>
-                </div>
-              </div>
+                    <div className="flex gap-28 px-5 pt-5 items-center">
+                      <label htmlFor="" className="font-semibold text-[14px]">
+                        Role Name
+                      </label>
+                      <input required type="text" onChange={(e) => setInput({ ...input, value: e.target.value })} value={input.value} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
+                    </div>
+                  </div>
+                  <div className="flex gap-3 items-center justify-end px-3 py-5">
+                    <button
+                      type="reset"
+                      className="border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold"
+                      onClick={() => {
+                        setInput({ department: "", value: "" });
+                      }}
+                    >
+                      Reset
+                    </button>
+                    <button className=" bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold">{deleteType.length === 1 ? "Update" : "Save"}</button>
+                  </div>
+                </form>
+              )}
             </div>
           </div>
         </div>

@@ -137,24 +137,25 @@ function AccountType() {
 
                        {((deleteType?.length===1 && permissions?.edit?.includes("account type")) ||  permissions?.add?.includes("account type")) &&  <div className='w-1/2 h-full px-5 py-2'>
                             <h2 className='text-black font-semibold'>{deleteType.length === 1 ? "Edit" : "Add"} Account Type</h2>
-                            <div className='w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
+                            <form  onSubmit={(e) => {
+                                e.preventDefault()
+                                        if (input.length > 0) {
+                                            setConfirmation(deleteType.length === 1 ? "edit" : "add")
+                                        }
+                                    }} className='w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]'>
                                 <div className='flex gap-28 px-5 pt-5 items-center'>
                                     <label htmlFor="" className='font-semibold text-[14px]'>
                                         Type Name
                                     </label>
-                                    <input type="text" onChange={(e) => setInput(e.target.value)} value={input} className='rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]' />
+                                    <input type="text" required onChange={(e) => setInput(e.target.value)} value={input} className='rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]' />
                                 </div>
                                 <div className='flex gap-3 items-center justify-end px-3 py-5'>
-                                    <button className='border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold' onClick={() => {
+                                    <button type='reset' className='border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold' onClick={() => {
                                         setInput("")
                                     }}>Reset</button>
-                                    <button className=' bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold' onClick={() => {
-                                        if (input.length > 0) {
-                                            setConfirmation(deleteType.length === 1 ? "edit" : "add")
-                                        }
-                                    }}>{deleteType.length === 1 ? "Update" : "Save"}</button>
+                                    <button className=' bg-[#5970F5] text-white px-4 py-2 rounded-md font-semibold'>{deleteType.length === 1 ? "Update" : "Save"}</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>}
                     </div>
                 </div>
