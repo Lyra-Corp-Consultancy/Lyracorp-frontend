@@ -346,7 +346,7 @@ function AddRawMaterialOutward() {
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Distance</label>
               <input type="text" value={data.transportationDistance} onChange={(e)=>setData({...data,transportationDistance:e.target.value})} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md"/>
-              <Select className="bg-white w-[50px] z-[99]" value={data?.transportationDistanceUnit}>
+              <Select className="bg-white w-[50px] z-[509]" value={data?.transportationDistanceUnit}>
                 {dropDowns?.uom?.map((x) => (
                   <li
                     onClick={() => {
