@@ -75,7 +75,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res?.payload[0]?.marginSettingType,
+          margin: res?.payload?.[0]?.marginSettingType,
         };
       });
     });
@@ -88,7 +88,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res?.payload[0]?.uomType,
+          uom: res?.payload?.[0]?.uomType,
         };
       });
     });
@@ -98,7 +98,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          transporter: res?.payload[0]?.transportType,
+          transporter: res?.payload?.[0]?.transportType,
         };
       });
     })
@@ -127,7 +127,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res?.payload[0]?.discountType,
+          discount: res?.payload?.[0]?.discountType,
         };
       });
     });
@@ -136,7 +136,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          packing: res?.payload[0]?.packingType,
+          packing: res?.payload?.[0]?.packingType,
         };
       });
     });
@@ -154,7 +154,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          certificate: res?.payload[0]?.certificationType,
+          certificate: res?.payload?.[0]?.certificationType,
         };
       });
       console.log(res.payload);
@@ -164,7 +164,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          shipping: res?.payload[0]?.shippingType,
+          shipping: res?.payload?.[0]?.shippingType,
         };
       });
       console.log(res.payload);
@@ -183,7 +183,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          payment: res?.payload?.[0]?.paymentType,
         };
       });
     });
@@ -192,7 +192,7 @@ function AddRawMaterialOutward() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res?.payload[0]?.documentType,
+          document: res?.payload?.[0]?.documentType,
         };
       });
     });
@@ -242,7 +242,7 @@ function AddRawMaterialOutward() {
                   value={data.outwardDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = date.toISOString().split("T")?.[0]; // Extract the date in yyyy-mm-dd format
                     setData({ ...data, outwardDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
@@ -310,7 +310,7 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Mode</label>
-              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)[0]?.value}>
+              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
                 {dropDowns?.transporter?.map((x) => (
                   <li
                     onClick={() => {
@@ -336,7 +336,7 @@ function AddRawMaterialOutward() {
                   value={data.transpotationDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = date.toISOString().split("T")?.[0]; // Extract the date in yyyy-mm-dd format
                     setData({ ...data, transpotationDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
@@ -386,7 +386,7 @@ function AddRawMaterialOutward() {
                 <tr className={`text-center relative `} style={{zIndex:500-i}}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)[0]?.name}>
+                      <Select className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)?.[0]?.name}>
                         {products?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -428,8 +428,8 @@ function AddRawMaterialOutward() {
                       value={x.recievedQuantity}
                       onChange={(e) => {
                         console.log(`z-[${990-i}]`)
-                        console.log(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0].qn,x?.grn)
-                        if(parseInt(e.target.value || "0")<=parseInt(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0].qn)){
+                        console.log(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0].qn,x?.grn)
+                        if(parseInt(e.target.value || "0")<=parseInt(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0].qn)){
                             const product = data?.products;
                             product[i] = { ...x, recievedQuantity: parseInt(e.target.value) };
                             setData({ ...data, products: product });
@@ -437,11 +437,11 @@ function AddRawMaterialOutward() {
                       }}
                       className="px-2 py-1 w-[73%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
-                    <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)[0]?.qn}</label>
+                    <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0]?.qn}</label>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)[0]?.value?.name}>
+                    <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
                       {dropDowns?.uom?.map((x: any) => (
                         <li
                           onClick={() => {
