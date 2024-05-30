@@ -147,9 +147,9 @@ function AddCustomer() {
             <label>Customer Acc No</label>
             <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"></label>
             <label>Customer Name</label>
-            <input value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required  value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Customer Type</label>
-            <Select value={dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}>
+            <Select required  value={dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}>
               {dropDowns?.customer?.map((x) => (
                 <li
                   onClick={() => {
@@ -162,7 +162,7 @@ function AddCustomer() {
               ))}
             </Select>
             <label>Account Type</label>
-            <Select value={dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}>
+            <Select required value={dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}>
               {dropDowns?.account?.map((x) => (
                 <li
                   onClick={() => {
@@ -178,19 +178,19 @@ function AddCustomer() {
           <h1 className="roboto-medium mt-1">Contact Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
-            <input value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Email Id</label>
-            <input value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Primary Number</label>
-            <input value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Secondary</label>
-            <input value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>
-              <Select
+              <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -218,7 +218,7 @@ function AddCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>State</label>
-              <Select
+              <Select required
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
                     return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -247,11 +247,11 @@ function AddCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>District</label>
-              <input value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+             <input required value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[22%] z-10 flex gap-3 items-center">
               <label>City/Village</label>
-              <Select
+              <Select required
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
                     return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -280,7 +280,7 @@ function AddCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Zone</label>
-              <input value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+             <input required value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[50%] flex gap-3 items-center">
               <label>Address</label>
@@ -288,17 +288,17 @@ function AddCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <input value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+             <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Other Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Purchase Restriction</label>
-            <input value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
 
             <label>Discount Type</label>
-            <Select value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
+            <Select required value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
               {dropDowns?.discount?.map((x) => (
                 <li
                   onClick={() => {
@@ -311,7 +311,7 @@ function AddCustomer() {
               ))}
             </Select>
             <label>Payment Terms</label>
-            <Select value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
+            <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
               {dropDowns?.payment?.map((x) => (
                 <li
                   onClick={() => {
@@ -329,7 +329,7 @@ function AddCustomer() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+            <Select required value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
               {dropDowns?.document?.map((x) => (
                 <li
                   onClick={() => {
@@ -346,7 +346,7 @@ function AddCustomer() {
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
               <p className="text-xs text-center">Upload Document or Drag the file</p>
-              <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
+             <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
             {files.map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
