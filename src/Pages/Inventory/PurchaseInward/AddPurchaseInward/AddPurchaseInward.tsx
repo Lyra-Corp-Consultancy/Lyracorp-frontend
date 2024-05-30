@@ -240,7 +240,7 @@ function AddPurchaseInward() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-              <Select className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+              <Select required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
                 {dropDowns?.vendor?.map((x) => (
                   <li
                     onClick={() => {
@@ -275,7 +275,7 @@ function AddPurchaseInward() {
             </div>
             <div className="flex items-center gap-3">
               <label>Invoice Number</label>
-              <input value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
@@ -299,19 +299,19 @@ function AddPurchaseInward() {
             </div>
             <div className="flex items-center gap-3">
               <label>DC Number</label>
-              <input value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Transporter</label>
-              <input value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Vehicle Number</label>
-              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Warehouse</label>
-              <Select value={data?.warehouse?.address}>
+              <Select required value={data?.warehouse?.address}>
                 {(user?.companyDetails[0]?.warehouse || superAdminCompany?.warehouse)?.map((x:any) => (
                   <li
                     onClick={() => {
@@ -350,7 +350,7 @@ function AddPurchaseInward() {
                 <tr className="text-center">
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns.products?.filter((y)=>y?._id===x?.productId)[0]?.productName || x?.productDetails?.productName}>
+                      <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns.products?.filter((y)=>y?._id===x?.productId)[0]?.productName || x?.productDetails?.productName}>
                         {dropDowns?.products?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -367,7 +367,7 @@ function AddPurchaseInward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input
+                    <input required
                       type="number"
                       value={x.recievedQuantity}
                       onChange={(e) => {
@@ -379,7 +379,7 @@ function AddPurchaseInward() {
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input
+                    <input required
                       type="text"
                       value={x.orderQuantity}
                       onChange={(e) => {
@@ -391,7 +391,7 @@ function AddPurchaseInward() {
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)[0]?.value?.name}>
+                    <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)[0]?.value?.name}>
                       {dropDowns?.uom?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -407,7 +407,7 @@ function AddPurchaseInward() {
                     </Select>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input
+                    <input required
                       type="text"
                       value={x?.batchNumber}
                       onChange={(e) => {
@@ -419,7 +419,7 @@ function AddPurchaseInward() {
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input
+                    <input required
                       type="date"
                       value={x.expDate}
                       onChange={(e) => {
@@ -448,7 +448,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <input
+                      <input required
                         type="text"
                         value={x.remarks}
                         onChange={(e) => {
@@ -462,7 +462,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
+                      <Select required className="w-[90%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
                         {dropDowns?.certificate?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -485,7 +485,7 @@ function AddPurchaseInward() {
                           <path d="M3.5 6V1.925L2.2 3.225L1.5 2.5L4 0L6.5 2.5L5.8 3.225L4.5 1.925V6H3.5ZM1 8C0.725 8 0.489667 7.90217 0.294 7.7065C0.0983332 7.51083 0.000333333 7.27533 0 7V5.5H1V7H7V5.5H8V7C8 7.275 7.90217 7.5105 7.7065 7.7065C7.51083 7.9025 7.27533 8.00033 7 8H1Z" fill="#5970F5" />
                         </svg>
 
-                        <input
+                        <input 
                           type="file"
                           className="hidden"
                           onChange={(e) => {
