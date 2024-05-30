@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
@@ -301,7 +302,7 @@ function EditCustomer() {
             </div>
             <div className="w-[50%] flex gap-3 items-center">
               <label>Address</label>
-              <textarea value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+              <textarea required value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
