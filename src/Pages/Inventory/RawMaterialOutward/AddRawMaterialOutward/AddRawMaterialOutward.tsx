@@ -251,7 +251,7 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Sender</label>
-              <Select className="bg-white w-[200px] z-[990]" value={data?.sender?.address}>
+              <Select required className="bg-white w-[200px] z-[990]" value={data?.sender?.address}>
                 {(user?.superAdmin ? superAdminCompany?.warehouse : user?.company)?.map((x:any) => (
                   <li
                     onClick={() => {
@@ -267,15 +267,15 @@ function AddRawMaterialOutward() {
             <div className="flex  items-center gap-3 justify-between">
               <label>Supply Chain</label>
               <label className="w-[200px] flex items-center">
-                <input type="radio" name="supplyChain" id="" onChange={() => setData({ ...data, supplyChain: "own" })} />
+                <input required type="radio" name="supplyChain" id="" onChange={() => setData({ ...data, supplyChain: "own" })} />
                 <label className="ms-1">Own</label>
-                <input type="radio" className="ms-3" name="supplyChain" onChange={() => setData({ ...data, supplyChain: "job work" })} id="" />
+                <input required type="radio" className="ms-3" name="supplyChain" onChange={() => setData({ ...data, supplyChain: "job work" })} id="" />
                 <label className="ms-1">Job Work</label>
               </label>
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Receiver</label>
-              <Select className="bg-white w-[200px] z-[990]" value={data?.receiver?.address}>
+              <Select required className="bg-white w-[200px] z-[990]" value={data?.receiver?.address}>
                 {(data?.supplyChain==="own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)?.map((x:any) => (
                   <li
                     onClick={() => {
@@ -290,8 +290,8 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transporter</label>
-            <input type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e)=>setData({...data,transporter:e.target.value})}/>
-              {/* <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+            <input required type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e)=>setData({...data,transporter:e.target.value})}/>
+              {/* <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
                 {dropDowns?.vendor?.map((x) => (
                   <li
                     onClick={() => {
@@ -306,11 +306,11 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Vehicle Number</label>
-              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Mode</label>
-              <Select className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
+              <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
                 {dropDowns?.transporter?.map((x) => (
                   <li
                     onClick={() => {
@@ -345,8 +345,8 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Distance</label>
-              <input type="text" value={data.transportationDistance} onChange={(e)=>setData({...data,transportationDistance:e.target.value})} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md"/>
-              <Select className="bg-white w-[50px] z-[509]" value={data?.transportationDistanceUnit}>
+              <input required type="text" value={data.transportationDistance} onChange={(e)=>setData({...data,transportationDistance:e.target.value})} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md"/>
+              <Select required className="bg-white w-[50px] z-[509]" value={data?.transportationDistanceUnit}>
                 {dropDowns?.uom?.map((x) => (
                   <li
                     onClick={() => {
@@ -361,11 +361,11 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Remarks</label>
-              <input value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Bill of Lading</label>
-              <input value={data.billOfLading} onChange={(e) => setData({ ...data, billOfLading: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.billOfLading} onChange={(e) => setData({ ...data, billOfLading: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
           </div>
 
@@ -386,7 +386,7 @@ function AddRawMaterialOutward() {
                 <tr className={`text-center relative `} style={{zIndex:500-i}}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)?.[0]?.name}>
+                      <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)?.[0]?.name}>
                         {products?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -406,7 +406,7 @@ function AddRawMaterialOutward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
+                    <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
                       {selectedProduct[i]?.qnGrn?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -423,7 +423,7 @@ function AddRawMaterialOutward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                       <div className="w-full flex">
-                    <input
+                    <input required
                       type="number"
                       value={x.recievedQuantity}
                       onChange={(e) => {
@@ -441,7 +441,7 @@ function AddRawMaterialOutward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
+                    <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
                       {dropDowns?.uom?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -457,7 +457,7 @@ function AddRawMaterialOutward() {
                     </Select>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input
+                    <input required
                       type="text"
                       value={x?.remark}
                       onChange={(e) => {
