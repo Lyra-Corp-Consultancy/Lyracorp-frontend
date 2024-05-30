@@ -183,7 +183,7 @@ function EditProfile() {
                   />
                 </svg>
               </label>
-              <input type="file" id="file" onChange={handleFileSelect2} className="hidden" />
+              <input  type="file" id="file" onChange={handleFileSelect2} className="hidden" />
 
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -210,9 +210,9 @@ function EditProfile() {
               </div>
             </div>
             <label>Company Name</label>
-            <input value={data.companyName} name="companyName" onChange={(e) => setData({ ...data, companyName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
+            <input required value={data.companyName} name="companyName" onChange={(e) => setData({ ...data, companyName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
             <label>Business Type</label>
-            <Select className="w-[200px]" value={dropDowns?.account?.filter((x) => x?._id === data?.businessType)[0]?.value}>
+            <Select required className="w-[200px]" value={dropDowns?.account?.filter((x) => x?._id === data?.businessType)[0]?.value}>
               {dropDowns?.account?.map((x) => (
                 <li
                   onClick={() => {
@@ -225,13 +225,13 @@ function EditProfile() {
               ))}
             </Select>
             <label>Contact Number</label>
-            <input value={data.contactNumber} name="contactNumber" onChange={(e) => setData({ ...data, contactNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
+            <input required value={data.contactNumber} name="contactNumber" onChange={(e) => setData({ ...data, contactNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] " />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Country</label>
-              <Select className="w-[200px]"
+              <Select required className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -259,7 +259,7 @@ function EditProfile() {
             </div>
             <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>State</label>
-              <Select className="w-[200px]"
+              <Select required className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
                     return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -288,11 +288,11 @@ function EditProfile() {
             </div>
             <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>District</label>
-              <input value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
             <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
               <label>City/Village</label>
-              <Select className="w-[200px]" 
+              <Select required className="w-[200px]" 
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
                     return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -321,15 +321,15 @@ function EditProfile() {
             </div>
             <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Zone</label>
-              <input value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
+              <input required value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
             </div>
             <div className="w-[48%] justify-between flex gap-3 items-center">
               <label>Address</label>
-              <textarea value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[83%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+              <textarea required value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[83%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
             </div>
             <div className="w-[22%] flex justify-between gap-3 items-center">
               <label>Pin code</label>
-              <input value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
+              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]" />
             </div>
           </div>
 
@@ -339,7 +339,7 @@ function EditProfile() {
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Country</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -371,7 +371,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>State</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -404,7 +404,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>District</label>
-                <input
+                <input required
                   value={x.district}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
@@ -417,7 +417,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                 <label>City/Village</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -448,7 +448,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Zone</label>
-                <input
+                <input required
                   value={x.zone}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
@@ -461,7 +461,7 @@ function EditProfile() {
               </div>
               <div className="w-[48%] justify-between  flex gap-3 items-center">
                 <label>Address</label>
-                <textarea
+                <textarea required
                   value={x.address}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
@@ -473,7 +473,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
-                <input
+                <input required
                   value={x.pincode}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
@@ -521,7 +521,7 @@ function EditProfile() {
               <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Country</label>
-                  <Select className="w-[200px]"
+                  <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.country.filter((x) => {
                         return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -553,7 +553,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>State</label>
-                  <Select className="w-[200px]"
+                  <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.state.filter((x) => {
                         return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -586,7 +586,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>District</label>
-                  <input
+                  <input required
                     value={x.district}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -599,7 +599,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                   <label>City/Village</label>
-                  <Select className="w-[200px]"
+                  <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.city.filter((x) => {
                         return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -630,7 +630,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Zone</label>
-                  <input
+                  <input required
                     value={x.zone}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -643,7 +643,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[48%] justify-between flex gap-3 items-center">
                   <label>Address</label>
-                  <textarea
+                  <textarea required
                     value={x.address}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -655,7 +655,7 @@ function EditProfile() {
                 </div>
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Pin code</label>
-                  <input
+                  <input required
                     value={x.pincode}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -686,7 +686,7 @@ function EditProfile() {
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Country</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
                       return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -718,7 +718,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>State</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -751,7 +751,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>District</label>
-                <input
+                <input required
                   value={x.district}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
@@ -764,7 +764,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                 <label>City/Village</label>
-                <Select className="w-[200px]"
+                <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -795,7 +795,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Zone</label>
-                <input
+                <input required
                   value={x.zone}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
@@ -808,7 +808,7 @@ function EditProfile() {
               </div>
               <div className="w-[48%] justify-between  flex gap-3 items-center">
                 <label>Address</label>
-                <textarea
+                <textarea required
                   value={x.address}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
@@ -820,7 +820,7 @@ function EditProfile() {
               </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
-                <input
+                <input required
                   value={x.pincode}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
@@ -850,21 +850,21 @@ function EditProfile() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Aadhar Number</label>
-              <input value={data.aadharNumber} name="aadharNumber" onChange={(e) => setData({ ...data, aadharNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.aadharNumber} name="aadharNumber" onChange={(e) => setData({ ...data, aadharNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pan Number</label>
-              <input value={data.panNumber} name="panNumber" onChange={(e) => setData({ ...data, panNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.panNumber} name="panNumber" onChange={(e) => setData({ ...data, panNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Registration No</label>
-              <input value={data.regNumber} name="regNumber" onChange={(e) => setData({ ...data, regNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.regNumber} name="regNumber" onChange={(e) => setData({ ...data, regNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>GSTIN No</label>
-              <input value={data.gstinNumber} name="gstinNumber" onChange={(e) => setData({ ...data, gstinNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.gstinNumber} name="gstinNumber" onChange={(e) => setData({ ...data, gstinNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
           </div>
 
@@ -872,16 +872,16 @@ function EditProfile() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Bank Account No</label>
-              <input value={data.bankAccNo} name="bankAccNo" onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.bankAccNo} name="bankAccNo" onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Account Branch</label>
-              <input value={data.accBranch} name="accBranch" onChange={(e) => setData({ ...data, accBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.accBranch} name="accBranch" onChange={(e) => setData({ ...data, accBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>IFSC Code</label>
-              <input value={data.ifscCode} name="ifscCode" onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+              <input required value={data.ifscCode} name="ifscCode" onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
             </div>
           </div>
 
@@ -889,7 +889,7 @@ function EditProfile() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select className="w-[200px]" value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+            <Select  className="w-[200px]" value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
               {dropDowns?.document?.map((x) => (
                 <li
                   onClick={() => {
@@ -906,7 +906,7 @@ function EditProfile() {
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
               <p className="text-xs text-center">Upload Document or Drag the file</p>
-              <input type="file" id="document" onChange={handleFileSelect} className="hidden" />
+              <input  type="file" id="document" onChange={handleFileSelect} className="hidden" />
             </label>
             {[...files, ...data.fileUrls].map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
@@ -941,11 +941,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.purchaseOrder?.prefix} name="purchaseOrderPrefix" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.purchaseOrder?.seq} name="purchaseOrderSeq" onChange={(e) => setData({ ...data, purchaseOrder: { ...data?.purchaseOrder, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -954,11 +954,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.grn?.prefix} name="grnPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.grn?.prefix} name="grnPrefix" onChange={(e) => setData({ ...data, grn: { ...data?.grn, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.grn?.seq} name="grnSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.grn?.seq} name="grnSeq" onChange={(e) => setData({ ...data, grn: { ...data?.grn, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -967,11 +967,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.performInvoice?.prefix} name="performInvoicePrefix" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.performInvoice?.seq} name="performInvoiceSeq" onChange={(e) => setData({ ...data, performInvoice: { ...data?.performInvoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -980,11 +980,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.invoice?.prefix} name="invoicePrefix" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.invoice?.seq} name="invoiceSeq" onChange={(e) => setData({ ...data, invoice: { ...data?.invoice, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -993,11 +993,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.gatePass?.prefix} name="gatePassPrefix" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.gatePass?.seq} name="gatePassSeq" onChange={(e) => setData({ ...data, gatePass: { ...data?.gatePass, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
             <div className="grid grid-cols-4  gap-8">
@@ -1006,11 +1006,11 @@ function EditProfile() {
               </div>
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
-                <input value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.deliveryChallan?.prefix} name="deliveryChallanPrefix" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, prefix: e.target.value } })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
-                <input value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
+                <input required value={data?.deliveryChallan?.seq} name="deliveryChallanSeq" onChange={(e) => setData({ ...data, deliveryChallan: { ...data?.deliveryChallan, seq: parseInt(e.target.value) } })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md  w-[200px]" />
               </div>
             </div>
           </div>
