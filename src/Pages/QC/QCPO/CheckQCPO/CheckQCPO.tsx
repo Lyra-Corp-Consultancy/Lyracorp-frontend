@@ -13,7 +13,7 @@ function CheckQCPO() {
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const [rejected, setRejected] = useState<number>(0);
+  const [rejected, setRejected] = useState<{productId:string,rejected:number}[]>([]);
   const params:any = useParams()
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
@@ -265,10 +265,14 @@ function CheckQCPO() {
                   <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x.orderQuantity}</label>
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">
-                    <input onChange={(e)=>setRejected(parseInt(e.target.value || "0"))}  className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md" type="number" />
+                    <input required onChange={(e)=>{
+                      const temp = rejected
+                      temp[i] ={ rejected:parseInt(e.target.value || "0"),productId:x?.productId}
+                      setRejected([...temp])
+                      }}  className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md" type="number" />
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">
-                  <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{parseInt(x.recievedQuantity)-(rejected||0)}</label>
+                  <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{parseInt(x?.recievedQuantity)-(rejected?.[i]?.rejected||0)}</label>
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">
                   <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.uom?.filter((y) => y?._id === x?.uom)[0]?.value?.name}</label>

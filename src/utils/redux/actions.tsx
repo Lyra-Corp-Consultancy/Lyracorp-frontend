@@ -463,7 +463,7 @@ export const editPurchaseInward = createAsyncThunk("user/editPurchaseInward", as
   }
 });
 
-export const saveQCPO = createAsyncThunk("user/saveQCPO", async ({data,id}:{data:string | number,id:string}, { rejectWithValue }) => {
+export const saveQCPO = createAsyncThunk("user/saveQCPO", async ({data,id}:{data:{productId:string,rejected:number}[],id:string}, { rejectWithValue }) => {
   try {
     await instance.patch("/qc/qc-po/"+id, { data });
     return 
