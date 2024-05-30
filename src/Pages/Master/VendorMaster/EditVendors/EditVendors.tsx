@@ -324,7 +324,7 @@ function EditVendors() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select required value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
               {dropDowns?.document?.map((x) => (
                 <li
                   onClick={() => {
