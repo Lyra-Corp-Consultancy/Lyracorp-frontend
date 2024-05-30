@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import  { useCallback, useEffect, useState } from "react";
 import demoprofile from "../assets/images/demoprofilepic.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,8 +29,23 @@ function NavigationBar() {
     return datas;
   };
 
+  const handleClick = useCallback(() => {
+    setDropDown("");
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      document.removeEventListener("click", handleClick);
+    };
+  }, [handleClick]);
+
   return (
-    <div className="bg-[#5970F5] w-full px-10">
+    <div className="bg-[#5970F5] w-full px-10" onMouseOut={()=>{
+      document.addEventListener("click",handleClick)
+    }} onMouseOver={()=>{
+      document.removeEventListener("click",handleClick)
+    }}>
       <div className="flex justify-between py-1 items-center">
         <h1 className="text-[30px] text-white font-semibold ">Logo</h1>
 
