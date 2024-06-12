@@ -148,6 +148,23 @@ export interface ProfileMaster {
   grn?: PrefixSeq;
 }
 
+interface ProductSubModule {
+  name: string;
+  rawMaterial: string;
+  uom: string;
+  quantity?: number;
+  productionFloor: string;
+  timeDuration?: number;
+  department: string;
+  order: number;
+}
+
+export interface ProductProcess {
+  moduleName: string;
+  submodule: ProductSubModule[];
+  order: number;
+}
+
 export interface RawMaterialOutward {
   transportationDistance?:string;
   outwardDate?: string;

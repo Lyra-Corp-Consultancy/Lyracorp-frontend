@@ -9,7 +9,7 @@ function RawMaterialOutwardRoute() {
     <div className="overflow-x-hidden">
       <NavigationBar />
       <Routes>
-        <Route path="/" element={<RawMaterialOutward />} />
+        <Route path="/" element={<RawMaterialOutward/>} />
         <Route path="/add" element={<AddRawMaterialOutward />} />
         <Route path="/view/:id" element={<ViewRawMaterialOutward />} />
       </Routes>

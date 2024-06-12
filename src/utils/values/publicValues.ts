@@ -42,6 +42,12 @@ export const createdModules = [
                                         ["quality check - FG"]
                                     ]
                                 ],
+                                ["product management",
+                                    [
+                                        ["production management master"],
+                                        ["production sop"]
+                                    ]
+                                ],
                                 ["supply chain management",
                                     [
                                         ["finished goods outwards"]

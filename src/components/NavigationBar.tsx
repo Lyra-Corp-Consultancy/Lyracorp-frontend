@@ -107,7 +107,7 @@ function NavigationBar() {
           </button>
         )}
         {getAllChildrens(createdModules[1]).some((child) => permissions?.view?.includes(child)) && (
-          <button id="dropMaster" className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold  transition-all duration-100 text-[15px] z-[10]  relative" + (location.pathname.includes("/master") ? " bg-white" : " bg-[#C3CBFF]")}>
+          <button id="dropMaster" className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold  transition-all duration-100 text-[15px] z-[10]  relative" + (location.pathname.includes("/master/") ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "master" ? "" : "master")}>Master</p>{" "}
             {dropDown === "master" && (
               <div className={"flex p-1 flex-col absolute shadow-md bg-white left-0 w-[150px] bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
@@ -257,7 +257,17 @@ function NavigationBar() {
             )}
           </button>
         )}
-        {permissions?.view?.includes("production management") && <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>Production Management</button>}
+        {getAllChildrens(createdModules[4]).some((child) => permissions?.view?.includes(child)) && (
+          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname?.includes("/production") ? " bg-white" : " bg-[#C3CBFF]")}>
+            <p onClick={() => setDropDown(dropDown === "production" ? "" : "production")}>Production Management</p>
+            {dropDown === "production" && (
+              <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
+               {permissions?.view?.includes("production management master") &&  <button className="text-start" onClick={() => navigate("/production/master-settings")}>Production Master Settings</button>}
+               {permissions?.view?.includes("production sop") &&<button className="text-start" onClick={() => navigate("/production/sop")}>Production SOP</button>}
+              </div>
+            )}
+          </button>
+        )}
         {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative" + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p>{" "}

@@ -12,6 +12,7 @@ import UserManagementRoute from "./Pages/UserManagement/UserManagementRoute";
 import Cookies from "js-cookie";
 import SelectCompany from "./Pages/SelectCompany/SelectCompany";
 import QCRoute from "./Pages/QC/QCRoute";
+import ProductionRoute from "./Pages/Production/ProductionRoute";
 
 function App() {
   const data = useSelector((state: any) => state.data);
@@ -75,6 +76,7 @@ function App() {
         <Route path="/inventory/*" element={<InventoryRoutes />} />
         <Route path="/user-management/*" element={<UserManagementRoute />} />
         <Route path="/qc/*" element={<QCRoute />} />
+        <Route path="/production/*" element={<ProductionRoute />} />
       </Routes>
     </div>
   );

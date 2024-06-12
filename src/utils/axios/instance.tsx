@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
+
 instance.interceptors.request.use(
   (config) => {
     const token = Cookies.get("token"); // Assuming the token is stored in localStorage
