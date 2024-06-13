@@ -64,7 +64,7 @@ function ProductionMaster() {
 
               {permissions?.delete?.includes("production management master") && (
                 <button className="text-white bg-[#5970F5] px-4 py-2 rounded-md" onClick={() => navigate("/production/master-settings/new/" + selectedProduct._id)}>
-                  Create New SOP
+                  Edit SOP
                 </button>
               )}
             </div>

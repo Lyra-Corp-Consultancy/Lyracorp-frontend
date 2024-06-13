@@ -187,3 +187,17 @@ export interface RawMaterialOutward {
   products: any[];
   lineOfBusiness?:string
 }
+
+export interface ProductionSOPSub extends ProductSubModule{
+  start?: Date;
+  end?: Date;
+  workedTime?:number;
+  user:string;
+  remarks?:string
+}
+
+export interface ProductionSOPTypes extends ProductProcess{
+  submodule: ProductionSOPSub[];
+  moduleName: string;
+  order: number;
+}

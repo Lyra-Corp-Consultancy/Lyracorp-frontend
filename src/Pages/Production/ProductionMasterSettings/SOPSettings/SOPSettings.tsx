@@ -178,7 +178,7 @@ function SOPSettings() {
                 </thead>
                 <tbody className="flex flex-col w-full ">
                   {productProcess?.map((x, pi) => (
-                    <tr className="flex w-full transition-all duration-150" style={{ order: x.order }}>
+                    <tr  className="flex w-full transition-all duration-150" style={{ order: x.order,zIndex:999-pi }}>
                       <td className="border relative w-[18%] flex justify-center items-center" onMouseUp={onMouseUpMain} onMouseEnter={(e) => onMouseEnterMain(e, pi, x.order)}>
                         <div className="flex w-full justify-between px-2 py-5 items-center ">
                           <button
@@ -197,7 +197,7 @@ function SOPSettings() {
                         </div>
                       </td>
                       <td colSpan={7} className="border  py-3 w-[82%]">
-                        <div className=" flex flex-col  w-full">
+                        <div  className=" flex flex-col  w-full">
                           {x.submodule.map((y, i) => (
                             <div onMouseUp={onMouseUp} onClick={onMouseUp} onMouseEnter={(e) => onMouseEnter(e, y.order, i, pi)} className="flex pt-2 transition-all duration-100" style={{ order: y.order }}>
                               <button type="button" className="w-[3%]" onMouseDown={(e) => onMouseDown(e, y.order, i, pi)}>
@@ -227,10 +227,10 @@ function SOPSettings() {
                               <label className=" w-[12.5%] px-2  ">
                                 <input required placeholder="Time Duration" value={y.timeDuration} onChange={(e) => handleChangeSub(e, pi, i)} name="timeDuration" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[80%] rounded-md" type="number" />
                               </label>
-                              <label className=" w-[16.5%] px-2  flex items-center gap-2">
+                              <label className=" w-[16.5%] px-2  flex items-center gap-2" style={{zIndex:999-i}}>
                                 <Select placeholder="Department" value={departments?.filter((z) => z?._id === y?.department)[0]?.value} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[90%] rounded-md">
                                   {departments.map((x) => (
-                                    <li className="ps-2 truncate hover:bg-slate-300" onClick={() => handleChangeSub({ target: { value: x?._id, name: "department" } }, pi, i)}>
+                                    <li className="ps-2 truncate bg-white hover:bg-slate-300" onClick={() => handleChangeSub({ target: { value: x?._id, name: "department" } }, pi, i)}>
                                       {x?.value}
                                     </li>
                                   ))}

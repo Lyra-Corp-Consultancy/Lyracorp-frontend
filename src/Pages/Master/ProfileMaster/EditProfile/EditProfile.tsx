@@ -161,7 +161,7 @@ function EditProfile() {
   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Profile Master</h1>
       <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full ">
         <form
           onSubmit={(e) => {
