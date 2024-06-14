@@ -320,7 +320,7 @@ if(files1[0]){
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
@@ -472,7 +472,7 @@ if(files1[0]){
                     setData({ ...data, billingAddress });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
                 />
               </div>
             </div>
@@ -655,7 +655,7 @@ if(files1[0]){
                     setData({ ...data, shippingAddress });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] remove-spin-wheel rounded-md"
                   />
               </div>
               
@@ -822,7 +822,7 @@ if(files1[0]){
                     setData({ ...data, warehouse });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] w-[200px] w-[200px]"
+                  className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] w-[200px] w-[200px]"
                 />
               </div>
             </div>
