@@ -65,7 +65,7 @@ function ProductionSOP() {
               }}
               className="bg-white rounded-lg w-full p-3 min-h-[80%] shadow-md mt-0"
             >
-              <h2 className="roboto-bold  text-[20px] text-start">Production SOP Settings</h2>
+              <h2 className="roboto-bold  text-[20px] text-start"> SOP Process</h2>
               <div className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-full items-center justify-between flex px-5 py-3">
                 <div className="grid grid-cols-4 gap-5 items-center w-full ">
                   <div className="flex gap-3 items-center ">
@@ -89,7 +89,7 @@ function ProductionSOP() {
                   </div>
                   <div className="flex gap-3 items-center ">
                     <label className="text-[14px]">Batch Number</label>
-                    <input type="text" placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
+                    <input type="text" placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} value={selectedProduct?.batchNumber || ""} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
                   </div>
                   <div className="flex gap-3 items-center">
                     <label className="text-[14px] ">Production Date</label>
@@ -267,7 +267,7 @@ function ProductionSOP() {
                         setProcess([]);
                       }}
                     >
-                      Clear
+                      Reset
                     </button>
                     <button type="submit" className="bg-[#5970F5] px-3 py-2 rounded-md text-white">
                       Save

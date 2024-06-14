@@ -160,17 +160,17 @@ function NavigationBar() {
                           </li>
                         )}
                         {permissions?.view?.includes("margin setting type") && (
-                          <li className="text-start ms-5 text-xs" onClick={() => navigate("/master/type-master/margin-setting-type")}>
+                          <li className="text-start ms-5 text-[13px]" onClick={() => navigate("/master/type-master/margin-setting-type")}>
                             Margin Setting Type
                           </li>
                         )}
                         {permissions?.view?.includes("department type") && (
-                          <li className="text-start ms-5 text-xs" onClick={() => navigate("/master/type-master/department-type")}>
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/department-type")}>
                             Department Type
                           </li>
                         )}
                         {permissions?.view?.includes("role type") && (
-                          <li className="text-start ms-5 text-xs" onClick={() => navigate("/master/type-master/role-type")}>
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/role-type")}>
                             Role Type
                           </li>
                         )}

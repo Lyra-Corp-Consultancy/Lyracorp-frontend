@@ -2,12 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { createOrUpdateProductionSOP, getAllProductMaster, getProductionSOP, getType } from "../../../../utils/redux/actions";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { useParams } from "react-router-dom";
 import Select from "../../../../components/Select";
 import { ProductProcess } from "../../../../utils/Type/types";
+import { useQuery } from "../../../../utils/hooks/hooks";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
 function SOPSettings() {
@@ -20,7 +21,7 @@ function SOPSettings() {
   const params = useParams();
   const navigate = useNavigate();
   const [productProcess, setProcess] = useState<ProductProcess[]>([]);
-
+  const location = useQuery()
   useEffect(() => {
     dispatch(getAllProductMaster()).then((res: any) => {
       setData(res.payload.active);
@@ -260,7 +261,7 @@ function SOPSettings() {
               <button type="button" className="border-[#5970F5] border px-3 py-2 rounded-md text-[#5970F5]" onClick={() => navigate(-1)}>
                 Back
               </button>
-              <button type="submit" className="bg-[#5970F5] px-3 py-2 rounded-md text-white">Save</button>
+              <button type="submit" className="bg-[#5970F5] px-3 py-2 rounded-md text-white">{location.get("type")}</button>
             </div>
           </form>
         </div>
