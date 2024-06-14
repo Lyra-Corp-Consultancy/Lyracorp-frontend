@@ -127,7 +127,7 @@ function SOPSettings() {
     setProcess([...procc]);
   };
 
-  const handleAdd = (pi: number, i: number, order: number) => {
+  const handleAdd = (pi: number, order: number) => {
     const procc = [...productProcess];
     const submodule = procc[pi].submodule;
     const sortedModule = submodule.sort((a, b) => a.order - b.order);
@@ -239,7 +239,7 @@ function SOPSettings() {
                                 <button type="button" onClick={() => handleDelete(pi, i)} className="bg-red-500 h-4 w-4 rounded-full text-white flex justify-center items-center">
                                   -
                                 </button>
-                                <button type="button" onClick={() => handleAdd(pi, i, y.order)} className="bg-[#5970F5] h-4 w-4 text-[12px] rounded-full text-white flex justify-center items-center">
+                                <button type="button" onClick={() => handleAdd(pi, y.order)} className="bg-[#5970F5] h-4 w-4 text-[12px] rounded-full text-white flex justify-center items-center">
                                   +
                                 </button>
                               </label>

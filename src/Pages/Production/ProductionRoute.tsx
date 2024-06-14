@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ProductionMasterRoute from "./ProductionMasterSettings/ProductionMasterRoute";
 import ProductionSOP from "./ProductionSOP/ProductionSOP";
