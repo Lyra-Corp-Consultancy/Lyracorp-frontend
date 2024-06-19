@@ -25,7 +25,7 @@ function RawMaterialOutward() {
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
     const vendor = dropDowns.vendor
-      .filter((x) => x?.VendorName?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
@@ -34,7 +34,7 @@ function RawMaterialOutward() {
 
     const active = data.filter((x) => {
         console.log(x)
-      if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.startsWith(lowerVal)) {
+      if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
         return x;
       }
     });

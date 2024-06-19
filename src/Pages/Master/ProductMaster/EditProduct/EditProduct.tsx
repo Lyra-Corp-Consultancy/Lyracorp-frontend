@@ -14,6 +14,9 @@ function EditProduct() {
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
+  const [searchValue,setSearchValue]=useState<{ margin?:string,  discount?:string,document?:string, uom?:string }>({margin:"", discount:"",  document:"", uom:"" })
+
+  
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -62,6 +65,18 @@ function EditProduct() {
 
     setFiles([...files, ...selectedFiles]);
   };
+
+  useEffect(() => {
+    setSearchValue({ 
+    
+                     margin:dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value,
+                     discount:dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value, 
+                     document:dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+                     uom:dropDowns?.uom?.filter((x) => x?._id=== data?.uomType)[0]?.value.name, 
+  })
+                        
+  }, [dropDowns, data])
+
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
 
@@ -74,6 +89,7 @@ function EditProduct() {
       });
     });
 
+  
     dispatch(getProductMasterById(params.id)).then((res: any) => {
       setData(res.payload);
     //   setFiles([...res.payload.fileUrls]);
@@ -91,6 +107,7 @@ function EditProduct() {
         };
       });
     });
+   
 
     dispatch(getType("discount")).then((res: any) => {
       setDropDown((prev) => {
@@ -128,6 +145,8 @@ function EditProduct() {
       setSearch({ ...search, country: val });
     });
   }, []);
+  console.log(data)
+console.log(dropDowns.uom)
 
   const handleDrop = (e: any) => {
     e.preventDefault();
@@ -137,7 +156,7 @@ function EditProduct() {
   };
   return (
     <div className="h-[110vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Product Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
@@ -159,10 +178,14 @@ function EditProduct() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[999]">
               <label>Margin Setting</label>
-              <Select required value={dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value}>
-                {dropDowns?.margin?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,margin:e.target.value})
+            }} value={searchValue.margin || ""} >
+              {dropDowns?.margin?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.margin?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,margin:x?.value})
                       setData({ ...data, marginType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -174,10 +197,14 @@ function EditProduct() {
             </div>
             <div className="flex gap-3 z-[999] items-center">
               <label>Discount</label>
-              <Select required value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
-                {dropDowns?.discount?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,discount:e.target.value})
+            }} value={searchValue.discount || ""} >
+              {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,discount:x?.value})
                       setData({ ...data, discountType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -190,10 +217,13 @@ function EditProduct() {
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM</label>
-              <Select required value={dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.name}>
-                {dropDowns?.uom?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,uom:e.target.value})
+            }} value={searchValue.uom || ""} >
+              {dropDowns?.uom?.filter((a)=>a?.value?.name?.toLowerCase()?.includes(searchValue?.uom?.toLowerCase())).map((x) => (
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,uom:x?.value?.name})
                       setData({ ...data, uomType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -275,7 +305,7 @@ function EditProduct() {
               <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -338,10 +368,14 @@ function EditProduct() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,document:e.target.value})
+            }} value={searchValue.document || ""} >
+              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,document:x?.value})
                     setData({ ...data, bussinessDocument: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"

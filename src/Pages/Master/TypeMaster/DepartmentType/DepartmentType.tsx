@@ -81,7 +81,7 @@ function DepartmentType() {
                       type="text"
                       placeholder="Search"
                       onChange={(e) => {
-                        const filteredValues = values?.filter((x) => x?.value?.toLowerCase().startsWith(e.target.value.toLowerCase()));
+                        const filteredValues = values?.filter((x) => x?.value?.toLowerCase().includes(e.target.value.toLowerCase()));
 
                         // Update the search state with the filtered values
                         setSearch(filteredValues || []);

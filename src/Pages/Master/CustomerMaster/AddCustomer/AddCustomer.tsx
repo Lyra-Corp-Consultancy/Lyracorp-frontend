@@ -130,6 +130,8 @@ function AddCustomer() {
     });
   }, []);
 
+  
+
   const handleDrop = (e: any) => {
     e.preventDefault();
     // setDragging(false);

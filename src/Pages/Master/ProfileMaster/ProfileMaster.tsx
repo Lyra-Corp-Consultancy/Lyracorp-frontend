@@ -18,7 +18,7 @@ function ProfileMaster() {
     const lowerVal = val.toLowerCase();
 
     const temp = data.filter((x) => {
-      if (x?.companyName?.toLowerCase()?.startsWith(lowerVal) || x?.manager?.toLowerCase()?.startsWith(lowerVal)) {
+      if (x?.companyName?.toLowerCase()?.includes(lowerVal) || x?.manager?.toLowerCase()?.includes(lowerVal)) {
         return x;
       }
     });
