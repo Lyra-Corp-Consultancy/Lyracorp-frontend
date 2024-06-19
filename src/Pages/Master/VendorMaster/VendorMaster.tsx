@@ -27,34 +27,35 @@ function VendorMaster() {
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
     const vendor = dropDowns.vendor
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
+      
     const account = dropDowns.account
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
     const discount = dropDowns.discount
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
     const payment = dropDowns.payment
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
-    console.log(vendor);
+    console.log("vendor ",vendor);
 
     const active = data.active.filter((x) => {
-      if (x?.vendorName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal) || vendor.includes(x?.vendorType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms)) {
+      if (x?.VendorName?.toLowerCase()?.includes(lowerVal) || x?.bankAccNo?.toLowerCase()?.includes(lowerVal) || x?.currency?.toLowerCase()?.includes(lowerVal) || x?.ifscCode?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.includes(lowerVal) || vendor.includes(x?.vendorType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms) ) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (x?.vendorName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal)) {
+      if (x?.VendorName?.toLowerCase()?.includes(lowerVal) || x?.bankAccNo?.toLowerCase()?.includes(lowerVal) || x?.currency?.toLowerCase()?.includes(lowerVal) || x?.ifscCode?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.includes(lowerVal) || vendor.includes(x?.vendorType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms) ) {
         return x;
       }
     });

@@ -30,7 +30,7 @@ function PurchaseInward() {
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
     const vendor = dropDowns.vendor
-      .filter((x) => x?.VendorName?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });

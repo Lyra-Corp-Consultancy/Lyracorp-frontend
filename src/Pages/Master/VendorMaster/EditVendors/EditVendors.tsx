@@ -15,6 +15,8 @@ function EditVendors() {
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const params: any = useParams();
+  
+  const [searchValue,setSearchValue] = useState<{payment?:string,document?:string,vendor?:string}>({payment:"",document:"",vendor:""})
 
   const [dropDowns, setDropDown] = useState<{
     vendor: any[];
@@ -60,6 +62,19 @@ function EditVendors() {
 
     setFiles([...files, ...selectedFiles]);
   };
+
+  
+      useEffect(() => {
+        setSearchValue({ 
+          vendor: dropDowns?.vendor?.filter((x) => x?._id === data?.vendorType)[0]?.value,
+                        
+                         payment:dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value,
+                         document:dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+                        })
+                        
+      }, [dropDowns, data])
+    
+
   useEffect(() => {
     const res1 = dispatch(getType("vendor"));
 
@@ -75,6 +90,8 @@ function EditVendors() {
           setSearch({ ...search, city: res.data.data });
         });
       });
+
+
 
 
     res1.then((res: any) => {
@@ -133,7 +150,7 @@ function EditVendors() {
       setSearch({ ...search, country: val });
     });
   }, []);
-
+     
   const handleDrop = (e: any) => {
     e.preventDefault();
     // setDragging(false);
@@ -156,10 +173,14 @@ function EditVendors() {
             <label>Vendor Name</label>
             <input required value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Vendor Type</label>
-            <Select required value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendorType)[0]?.value}>
-              {dropDowns?.vendor?.map((x) => (
+            <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,vendor:e.target.value})
+            }} value={searchValue.vendor || ""} >
+              {dropDowns?.vendor?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.vendor?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,vendor:x?.value})
                     setData({ ...data, vendorType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -178,7 +199,7 @@ function EditVendors() {
             <label>Primary Number</label>
             <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Secondary</label>
-            <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -282,7 +303,7 @@ function EditVendors() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] remove-spin-wheel rounded-md" />
             </div>
           </div>
 
@@ -302,10 +323,14 @@ function EditVendors() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Payment Terms</label>
-              <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
-                {dropDowns?.payment?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,payment:e.target.value})
+            }} value={searchValue.payment || ""} >
+              {dropDowns?.payment?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,payment:x?.value})
                       setData({ ...data, paymentTerms: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -325,10 +350,14 @@ function EditVendors() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
+            <Select   required onChange={(e)=>{
+              setSearchValue({...searchValue,document:e.target.value})
+            }} value={searchValue.document || ""} >
+              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,document:x?.value})
                     setData({ ...data, bussinessDocument: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"

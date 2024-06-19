@@ -27,37 +27,38 @@ function CustomerMaster() {
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
     const customer = dropDowns.customer
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
     const account = dropDowns.account
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
     const discount = dropDowns.discount
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
     const payment = dropDowns.payment
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
-    console.log(customer);
+    console.log("Search ",customer);
 
     const active = data.active.filter((x) => {
-      if (x?.customerId?.toLowerCase()?.startsWith(lowerVal) || x?.customerName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal) || customer.includes(x?.customerType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms)) {
+      if (x?.customerId?.toLowerCase()?.includes(lowerVal) || x?.customerName?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseResitriction?.toLowerCase()?.includes(lowerVal) || customer.includes(x?.customerType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (x?.customerId?.toLowerCase()?.startsWith(lowerVal) || x?.customerName?.toLowerCase()?.startsWith(lowerVal) || x?.contactPerson?.toLowerCase()?.startsWith(lowerVal) || x?.primaryNumber?.toLowerCase()?.startsWith(lowerVal) || x?.address?.toLowerCase()?.startsWith(lowerVal) || x?.email?.toLowerCase()?.startsWith(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.startsWith(lowerVal)) {
+      if (x?.customerId?.toLowerCase()?.includes(lowerVal) || x?.customerName?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseResitriction?.toLowerCase()?.includes(lowerVal) || customer.includes(x?.customerType) || account.includes(x?.accountType) || discount.includes(x?.discountType) || payment.includes(x?.paymentTerms)) {
         return x;
       }
     });
+   
 
     setFiltered({ active, deactive });
   };

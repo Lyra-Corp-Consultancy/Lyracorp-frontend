@@ -75,7 +75,7 @@ function EditCustomer() {
 
     setFiles([...files, ...selectedFiles]);
   };
-
+ 
   useEffect(() => {
     setSearchValue({ customer: dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value,
                      account:dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value,
@@ -159,6 +159,7 @@ function EditCustomer() {
     });
   }, []);
 
+      
   const handleDrop = (e: any) => {
     e.preventDefault();
     // setDragging(false);
