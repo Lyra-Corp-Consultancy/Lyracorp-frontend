@@ -13,7 +13,8 @@ function EditUser() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
-
+  const [searchValue,setSearchValue]=useState<{lineOfBusiness?:string,account?:string,department?:string,role?:string}>({lineOfBusiness:"",account:"",department:"",role:""})
+  const [roleSearch,setRoleSearch]=useState("")
   const [dropDowns, setDropDown] = useState<{
     lineOfBusiness: any[];
     account: any[];
@@ -57,6 +58,15 @@ function EditUser() {
       navigate(-1);
     });
   };
+   
+  useEffect(() => {
+    setSearchValue({ 
+      department: dropDowns?.department?.filter((x) => x?._id === data?.department)[0]?.value,
+      role:dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value.value,
+      lineOfBusiness:dropDowns?.lineOfBusiness?.filter((x)=>x?._id===data?.company)[0]?.companyName,
+     })
+  }, [dropDowns, data])
+   
 
  
   useEffect(() => {
@@ -69,6 +79,7 @@ function EditUser() {
           lineOfBusiness: res.payload,
         };
       });
+      console.log( res.payload)
     });
 
     const res2 = dispatch(getType("account"));
@@ -125,9 +136,11 @@ function EditUser() {
     });
   }, []);
 
+
+
   return (
-    <div className="h-[56vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add User</h1>
+    <div className="min-h-[60vh] w-screen px-4 pt-3 shadow-md">
+      <h1 className="roboto-bold text-lg">Edit User</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
@@ -204,10 +217,14 @@ function EditUser() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
               <label>Department</label>
-              <Select value={dropDowns?.department?.filter((x) => x?._id === data?.department)[0]?.value}>
-                {dropDowns?.department?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,department:e.target.value})
+            }} value={searchValue.department || ""} >
+              {dropDowns?.department?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.department?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,department:x?.value})
                       setData({ ...data, department: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -219,12 +236,14 @@ function EditUser() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Role</label>
-              <Select value={dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}>
+              <Select onChange={(e)=>setSearchValue({...searchValue,role:e.target.value})} value={searchValue.role|| ""}>
                 {dropDowns?.role
-                  ?.filter((x) => x?.value?.department === (data?.department || ""))
+                  ?.filter((x) => x?.value?.department === (data?.department || ""))?.filter((y)=>y?.value?.value?.toLowerCase().includes(searchValue?.role?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
+                        setRoleSearch(x.value.value)
+                        setSearchValue({...searchValue,role:x?.value?.value})
                         setData({ ...data, role: x?._id });
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -236,11 +255,13 @@ function EditUser() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
-              <Select className="z-[999]" value={dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}>
-                {dropDowns?.lineOfBusiness
-                  ?.map((x) => (
-                    <li
-                      onClick={() => {
+              <Select className="z-[999]" required  onChange={(e)=>{
+              setSearchValue({...searchValue,lineOfBusiness:e.target.value})
+            }} value={searchValue.lineOfBusiness || ""} >
+              {dropDowns?.lineOfBusiness?.filter((a)=>a?.companyName?.toLowerCase()?.includes(searchValue?.lineOfBusiness?.toLowerCase() || "")).map((x) => (
+               
+                <li
+                  onClick={() => {
                         setData({ ...data, company: x?._id });
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -253,7 +274,7 @@ function EditUser() {
           </div>
 
        
-          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+          <div className="w-full  bottom-4 justify-center items-center gap-3 pb-3 flex mt-5">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>

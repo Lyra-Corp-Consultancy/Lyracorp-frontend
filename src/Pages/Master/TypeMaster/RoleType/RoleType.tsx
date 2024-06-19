@@ -79,7 +79,7 @@ function RoleType() {
         .filter((x) => x?.value?.toLowerCase().includes(searching))
         .map((x) => x?._id);
     const filteredValues = values?.filter((x) => 
-        departmentIds.includes(x?.value?.department) || x?.value?.value?.toLowerCase().includes(searching)
+      x?.value?.department.includes(departmentIds) || x?.value?.value?.toLowerCase().includes(searching)
     );
   setSearch(filteredValues || []);
   }

@@ -13,8 +13,10 @@ function AddUser() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
-
-  const [dropDowns, setDropDown] = useState<{
+   
+  const [searchValue,setSearchValue]=useState<{lineOfBusiness?:string,account?:string,department?:string,role?:string,departmentId:string}>({lineOfBusiness:"",account:"",department:"",role:"",departmentId:""})
+  const [roleSearch,setRoleSearch]=useState("")
+   const [dropDowns, setDropDown] = useState<{
     lineOfBusiness: any[];
     account: any[];
     department: any[];
@@ -117,7 +119,7 @@ function AddUser() {
       setSearch({ ...search, country: val });
     });
   }, []);
-
+   
   return (
     <div className="h-[56vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add User</h1>
@@ -167,7 +169,7 @@ function AddUser() {
               ))}
             </div>
             <div className="flex gap-2 items-center">
-              <label>Username</label>
+              <label>Username </label>
               <input value={data.username} name="username" onChange={(e) => setData({ ...data, username: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-2 items-center">
@@ -192,27 +194,33 @@ function AddUser() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
               <label>Department</label>
-              <Select value={dropDowns?.department?.filter((x) => x?._id === data?.department)[0]?.value}>
-                {dropDowns?.department?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,department:e.target.value})
+            }} value={searchValue.department || ""} >
+              {dropDowns?.department?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.department?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,department:x?.value})
                       setData({ ...data, department: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
-                    {x?.value}
+                    {x?.value }
                   </li>
                 ))}
               </Select>
             </div>
             <div className="flex gap-2 items-center">
               <label>Role</label>
-              <Select value={dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}>
+              <Select onChange={(e)=>setRoleSearch(e.target.value)} value={roleSearch|| ""}>
                 {dropDowns?.role
-                  ?.filter((x) => x?.value?.department === (data?.department || ""))
+                  ?.filter((x) => x?.value?.department === (data?.department || ""))?.filter((y)=>y?.value?.value?.toLowerCase().includes(roleSearch.toLowerCase()))
                   ?.map((x) => (
                     <li
                       onClick={() => {
+                        setRoleSearch(x.value.value)
+                        setSearchValue({...searchValue,role:x?.value})
                         setData({ ...data, role: x?._id });
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -225,11 +233,14 @@ function AddUser() {
 
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
-              <Select className="z-[999]" value={dropDowns?.lineOfBusiness?.filter((x) => x?._id === data?.company)[0]?.companyName}>
-                {dropDowns?.lineOfBusiness
-                  ?.map((x) => (
-                    <li
-                      onClick={() => {
+              <Select className="z-[999]" required  onChange={(e)=>{
+              setSearchValue({...searchValue,lineOfBusiness:e.target.value})
+            }} value={searchValue.lineOfBusiness || ""} >
+              {dropDowns?.lineOfBusiness?.filter((a)=>a?.companyName?.toLowerCase()?.includes(searchValue?.lineOfBusiness?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,lineOfBusiness:x?.companyName})
                         setData({ ...data, company: x?._id });
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"

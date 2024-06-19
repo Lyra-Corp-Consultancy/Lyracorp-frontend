@@ -27,6 +27,7 @@ export interface CustomerMasterData {
 
 export interface UserData {
   username: string;
+  companyDetails?:any;
   phoneNumber: string;
   email: string;
   employeeId: string;
