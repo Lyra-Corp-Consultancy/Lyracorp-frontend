@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
 import { editCustomerMaster, getCustomerMasterById, getType } from "../../../../utils/redux/actions";
@@ -13,6 +13,7 @@ function EditCustomer() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  const [searchValue, setSearchValue] = useState<{ customer?: string, account?: string, discount?: string, payment?: string,document?:string}>({ customer: "", account: "", discount: "", payment: "",document: "" })
 
   const [dropDowns, setDropDown] = useState<{
     customer: any[];
@@ -74,6 +75,17 @@ function EditCustomer() {
 
     setFiles([...files, ...selectedFiles]);
   };
+
+  useEffect(() => {
+    setSearchValue({ customer: dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value,
+                     account:dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value,
+                     discount:dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value, 
+                     payment:dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value,
+                     document:dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+                    })
+                    
+  }, [dropDowns, data])
+
   useEffect(() => {
     const res1 = dispatch(getType("customer"));
 
@@ -88,7 +100,7 @@ function EditCustomer() {
 
     dispatch(getCustomerMasterById(params.id)).then((res: any) => {
       setData(res.payload);
-    //   setFiles([...res.payload.fileUrls]);
+      //   setFiles([...res.payload.fileUrls]);
       axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: res?.payload?.country }).then((res) => {
         setPlaces({ ...places, state: res.data.data.states });
         setSearch({ ...search, state: res.data.data.states });
@@ -155,23 +167,26 @@ function EditCustomer() {
   };
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Customer Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Customer Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full min-h-[90%]">
-        <form onSubmit={(e)=>{
+        <form onSubmit={(e) => {
           e.preventDefault()
           handleSave()
         }} className="shadow-md bg-white px-4 h-full pb-[100px] z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Customer Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Customer Acc No</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"></label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]">{data?.customerId}</label>
             <label>Customer Name</label>
-           <input required value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Customer Type</label>
-           <Select required value={dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}>
-              {dropDowns?.customer?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,customer:e.target.value})
+            }} value={searchValue.customer || ""} >
+              {dropDowns?.customer?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.customer?.toLowerCase())).map((x) => (
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,customer:x?.value})
                     setData({ ...data, customerType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -181,10 +196,13 @@ function EditCustomer() {
               ))}
             </Select>
             <label>Account Type</label>
-           <Select required value={dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}>
-              {dropDowns?.account?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,account:e.target.value})
+            }} value={searchValue.account || ""}>
+              {dropDowns?.account?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.account?.toLowerCase())).map((x) => (
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,account:x?.value})
                     setData({ ...data, accountType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -197,19 +215,19 @@ function EditCustomer() {
           <h1 className="roboto-medium mt-1">Contact Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
-           <input required value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Email Id</label>
-           <input required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Primary Number</label>
-           <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Secondary</label>
-           <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>
-             <Select required
+              <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -237,7 +255,7 @@ function EditCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>State</label>
-             <Select required
+              <Select required
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
                     return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -265,11 +283,11 @@ function EditCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>District</label>
-             <input required value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[22%] z-10 flex gap-3 items-center">
               <label>City/Village</label>
-             <Select required
+              <Select required
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
                     return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
@@ -298,7 +316,7 @@ function EditCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Zone</label>
-             <input required value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[50%] flex gap-3 items-center">
               <label>Address</label>
@@ -306,20 +324,24 @@ function EditCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-             <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel roboto-medium shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
           <h1 className="roboto-medium mt-1">Other Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Purchase Restriction</label>
-           <input required value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input required value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
 
             <label>Discount Type</label>
-           <Select required value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
-              {dropDowns?.discount?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,discount:e.target.value})
+            }} value={searchValue.discount || ""} >
+              {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,discount:x?.value})
                     setData({ ...data, discountType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -329,10 +351,14 @@ function EditCustomer() {
               ))}
             </Select>
             <label>Payment Terms</label>
-           <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
-              {dropDowns?.payment?.map((x) => (
+            <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,payment:e.target.value})
+            }} value={searchValue.payment || ""} >
+              {dropDowns?.payment?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,payment:x?.value})
                     setData({ ...data, paymentTerms: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -347,10 +373,14 @@ function EditCustomer() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-           <Select value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
+            <Select  required onChange={(e)=>{
+              setSearchValue({...searchValue,document:e.target.value})
+            }} value={searchValue.document || ""} >
+              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,document:x?.value})
                     setData({ ...data, bussinessDocument: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -364,9 +394,9 @@ function EditCustomer() {
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
               <p className="text-xs text-center">Upload Document or Drag the file</p>
-             <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
+              <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
-            {[...files,...data.fileUrls].map((x: any, i: number) => (
+            {[...files, ...data.fileUrls].map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -376,12 +406,12 @@ function EditCustomer() {
                 </svg>
                 <p
                   onClick={() => {
-                    if(x.includes("http")){
+                    if (x.includes("http")) {
                       window.open(x)
-                  }else{
+                    } else {
                       const url = URL.createObjectURL(x);
                       window.open(url);
-                  } 
+                    }
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"
                 >

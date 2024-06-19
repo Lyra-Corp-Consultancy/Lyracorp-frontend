@@ -8,14 +8,14 @@ interface Prop {
     onChange?:ChangeEventHandler<HTMLInputElement>,
     required?:boolean,
     placeholder?:string,
-    style?:React.CSSProperties
+    defaultValue?:string
 }
 
-function Select({ className,children,value,onChange,required,placeholder,style }: Prop) {
+function Select({ className,children,value,onChange,required,placeholder,defaultValue }: Prop) {
     return (
-        <label style={style} className={'relative  z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
-            <input placeholder={placeholder} required={required} onChange={onChange} value={value}  type="text" className={'w-full bg-transparent outline-none border-none '+styles.inputBox} />
-            <ul  className={'absolute z-auto max-h-[150px] overflow-auto hidden left-0 bg-white shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  w-full bottom-0 translate-y-[100%]  '+styles.dropDown}>
+        <label className={'relative  z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
+            <input defaultValue={defaultValue} placeholder={placeholder} required={required} onChange={onChange} value={value}  type="text" className={'w-full bg-transparent outline-none border-none '+styles.inputBox} />
+            <ul  className={'absolute z-20 max-h-[150px] overflow-auto hidden left-0 bg-white shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  w-full bottom-0 translate-y-[100%]  '+styles.dropDown}>
                 {children}
             </ul>
             <svg width="7" height="7" viewBox="0 0 7 7" fill="none" xmlns="http://www.w3.org/2000/svg">

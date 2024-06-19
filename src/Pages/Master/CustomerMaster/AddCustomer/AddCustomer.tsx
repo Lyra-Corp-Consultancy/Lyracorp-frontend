@@ -13,6 +13,7 @@ function AddCustomer() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  const [searchValue,setSearchValue] = useState<{customer?:string,account?:string,discount?:string,payment?:string,document?:string}>({customer:"",account:"",discount:"",payment:"",document:""})
 
   const [dropDowns, setDropDown] = useState<{
     customer: any[];
@@ -150,10 +151,13 @@ function AddCustomer() {
             <label>Customer Name</label>
            <input required  value={data.customerName} onChange={(e) => setData({ ...data, customerName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Customer Type</label>
-            <Select required  value={dropDowns?.customer?.filter((x) => x?._id === data?.customerType)[0]?.value}>
-              {dropDowns?.customer?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,customer:e.target.value})
+            }} value={searchValue.customer || ""} >
+              {dropDowns?.customer?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.customer?.toLowerCase())).map((x) => (
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,customer:x?.value})
                     setData({ ...data, customerType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -163,10 +167,13 @@ function AddCustomer() {
               ))}
             </Select>
             <label>Account Type</label>
-            <Select required value={dropDowns?.account?.filter((x) => x?._id === data?.accountType)[0]?.value}>
-              {dropDowns?.account?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,account:e.target.value})
+            }} value={searchValue.account || ""}>
+              {dropDowns?.account?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.account?.toLowerCase())).map((x) => (
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,account:x?.value})
                     setData({ ...data, accountType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -183,9 +190,9 @@ function AddCustomer() {
             <label>Email Id</label>
            <input required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Primary Number</label>
-           <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Secondary</label>
-           <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+           <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md remove-spin-wheel" />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -289,7 +296,7 @@ function AddCustomer() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-             <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+             <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
@@ -299,10 +306,14 @@ function AddCustomer() {
            <input required value={data.purchaseResitriction} onChange={(e) => setData({ ...data, purchaseResitriction: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
 
             <label>Discount Type</label>
-            <Select required value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
-              {dropDowns?.discount?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,discount:e.target.value})
+            }} value={searchValue.discount || ""} >
+              {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,discount:x?.value})
                     setData({ ...data, discountType: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -312,10 +323,14 @@ function AddCustomer() {
               ))}
             </Select>
             <label>Payment Terms</label>
-            <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerms)[0]?.value}>
-              {dropDowns?.payment?.map((x) => (
+            <Select required  onChange={(e)=>{
+              setSearchValue({...searchValue,payment:e.target.value})
+            }} value={searchValue.payment || ""} >
+              {dropDowns?.payment?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,payment:x?.value})
                     setData({ ...data, paymentTerms: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -330,10 +345,14 @@ function AddCustomer() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,document:e.target.value})
+            }} value={searchValue.document || ""} >
+              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,document:x?.value})
                     setData({ ...data, bussinessDocument: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
