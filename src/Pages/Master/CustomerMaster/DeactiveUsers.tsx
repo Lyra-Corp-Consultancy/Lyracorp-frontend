@@ -170,7 +170,7 @@ function DeactiveUsers({ data, dropDowns, ActiveCustomer, selected, setSelected 
               setInactive("");
             });
           }}
-          message="Do you want to inactive this customer?"
+          message="Do you want to active this customer?"
           pos="Active"
         />
       )}

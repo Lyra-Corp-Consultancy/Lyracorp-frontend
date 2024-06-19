@@ -164,7 +164,7 @@ function DeactiveUsers({ data, dropDowns, ActiveCustomer,selected,setSelected }:
               setInactive("")
             });
           }}
-          message="Do you want to inactive this vendor?"
+          message="Do you want to active this vendor?"
           pos="Active"
         />
       )}
