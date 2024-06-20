@@ -204,6 +204,9 @@ function AddPurchaseOrder() {
     });
   }, []);
 
+  console.log("data ", data)
+  console.log("dropdown ", dropDowns)
+
   const handleDrop = (e: any) => {
     e.preventDefault();
     // setDragging(false);
@@ -236,7 +239,7 @@ function AddPurchaseOrder() {
                     {x?.VendorName}
                   </li>
                 ))}
-              </Select>
+              </Select> 
             </div>
             <div className="flex  items-center gap-3">
               <label>Contact Name</label>
