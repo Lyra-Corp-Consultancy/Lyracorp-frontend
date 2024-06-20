@@ -35,7 +35,7 @@ function UserManagement() {
       .map((x) => {
         return x?._id;
       });
-     console.log( "rr ",roleId)
+     
   
     const active = data.active.filter((x) => {
       if (x?.username?.toLowerCase()?.includes(lowerVal) ||  x?.phoneNumber?.toLowerCase()?.includes(lowerVal) || x?.employeeId?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || departmentId.includes(x?.department) || roleId.includes(x?.role)) {
