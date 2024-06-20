@@ -12,11 +12,12 @@ interface Prop {
     type?:React.HTMLInputTypeAttribute,
     pattern?:string,
     title?:string,
+    style?: React.CSSProperties
 }
 
-function Select({ className,children,value,onChange,title,required,placeholder,defaultValue,type,pattern }: Prop) {
+function Select({ className,children,value,onChange,title,required,placeholder,defaultValue,type,pattern,style }: Prop) {
     return (
-        <label className={'relative  z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
+        <label style={style} className={'relative  z-0 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md' + " " + className}>
             <input pattern={pattern} title={title}  defaultValue={defaultValue} placeholder={placeholder} required={required} onChange={onChange} value={value}  type={type} className={'w-full  remove-spin-wheel bg-transparent outline-none border-none '+styles.inputBox} />
             <ul  className={'absolute z-20 max-h-[150px] overflow-auto hidden left-0 bg-white shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  w-full bottom-0 translate-y-[100%]  '+styles.dropDown}>
                 {children}
