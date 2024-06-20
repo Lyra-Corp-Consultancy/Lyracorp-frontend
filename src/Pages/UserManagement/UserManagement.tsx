@@ -109,8 +109,6 @@ function UserManagement() {
     });
   }, []);
 
-  console.log("data ",data)
-  console.log("dropd ",dropDowns)
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">

@@ -218,14 +218,15 @@ function EditUser() {
             <div className="flex gap-2 items-center">
               <label>Department</label>
               <Select required  onChange={(e)=>{
-              setSearchValue({...searchValue,department:e.target.value})
+              setSearchValue({...searchValue,department:e.target.value,role:""})
             }} value={searchValue.department || ""} >
               {dropDowns?.department?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.department?.toLowerCase())).map((x) => (
                
                 <li
                   onClick={() => {
                     setSearchValue({...searchValue,department:x?.value})
-                      setData({ ...data, department: x?._id });
+                      setData({ ...data, department: x?._id , role:""});
+                     
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
