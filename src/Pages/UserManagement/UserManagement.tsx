@@ -24,33 +24,28 @@ function UserManagement() {
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
-    const customer = dropDowns.customer
-      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
-    const account = dropDowns.account
-      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
-    const discount = dropDowns.discount
+    const departmentId = dropDowns.department
       .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
 
-    console.log(customer);
-
+      const roleId = dropDowns.role
+      .filter((x) => x?.value?.value?.toLowerCase()?.includes(lowerVal))
+      .map((x) => {
+        return x?._id;
+      });
+     console.log( "rr ",roleId)
+  
     const active = data.active.filter((x) => {
-      if (x?.customerId?.toLowerCase()?.includes(lowerVal) || x?.customerName?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.includes(lowerVal) || customer.includes(x?.customerType) || account.includes(x?.accountType) || discount.includes(x?.discountType) ) {
+      if (x?.username?.toLowerCase()?.includes(lowerVal) ||  x?.phoneNumber?.toLowerCase()?.includes(lowerVal) || x?.employeeId?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || departmentId.includes(x?.department) || roleId.includes(x?.role)) {
         return x;
-      }
+     }
     });
     const deactive = data.deactive.filter((x) => {
-      if (x?.customerId?.toLowerCase()?.includes(lowerVal) || x?.customerName?.toLowerCase()?.includes(lowerVal) || x?.contactPerson?.toLowerCase()?.includes(lowerVal) || x?.primaryNumber?.toLowerCase()?.includes(lowerVal) || x?.address?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || x?.purchaseRestriction?.toLowerCase()?.includes(lowerVal)) {
+      if (x?.username?.toLowerCase()?.includes(lowerVal) ||  x?.phoneNumber?.toLowerCase()?.includes(lowerVal) || x?.employeeId?.toLowerCase()?.includes(lowerVal) || x?.email?.toLowerCase()?.includes(lowerVal) || departmentId.includes(x?.department) || roleId.includes(x?.role)) {
         return x;
-      }
+     }
     });
 
     setFiltered({ active, deactive });
@@ -113,6 +108,9 @@ function UserManagement() {
       });
     });
   }, []);
+
+  console.log("data ",data)
+  console.log("dropd ",dropDowns)
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
