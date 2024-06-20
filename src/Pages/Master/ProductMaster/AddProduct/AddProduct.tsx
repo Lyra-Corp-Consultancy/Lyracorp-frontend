@@ -11,6 +11,7 @@ import { fileServer } from "../../../../utils/values/publicValues";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./AddProduct.module.scss";
+import { startLoading } from "../../../../utils/redux/slice";
 
 function AddProduct() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,6 +39,7 @@ function AddProduct() {
 
   const handleSave = async () => {
     const urls: string[] = [];
+    dispatch(startLoading())
     for (let i = 0; i < files.length; i++) {
       const x = files[i];
       const file = new FormData();
@@ -217,7 +219,7 @@ function AddProduct() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
-              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
@@ -241,38 +243,38 @@ function AddProduct() {
 
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
-              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 CGST
-                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 SGST
-                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 IGST
-                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
-              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
-              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
-              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center mt-3">
@@ -313,7 +315,7 @@ function AddProduct() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
-              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
@@ -327,22 +329,22 @@ function AddProduct() {
 
             <div className="flex gap-3 items-center">
               <label>Weight</label>
-              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 L
-                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 W
-                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 H
-                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
           </div>

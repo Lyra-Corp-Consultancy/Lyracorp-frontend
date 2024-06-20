@@ -17,6 +17,7 @@ import ProductionRoute from "./Pages/Production/ProductionRoute";
 function App() {
   const data = useSelector((state: any) => state.data);
   const user = useSelector((state: any) => state.data?.user);
+  const loader = useSelector((state: any) => state.data?.loader);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -53,6 +54,9 @@ function App() {
   }, [data]);
   return (
     <div>
+      {loader && <div className="fixed top-0 left-0 h-screen w-screen bg-[#00000050] z-[999] flex justify-center items-center">
+          <span className="loader"></span>
+      </div>}
       <div id="toaster" className="w-[360px] flex p-5 gap-3 transition-all duration-500 ease-in-out translate-x-[100%] bg-[#E0E4FF] rounded-[20px_0_0_0] absolute z-[999] right-0 top-24 shadow-md shadow-[#00000040]">
         <svg width={29} height={31} viewBox="0 0 29 31" fill="none" xmlns="http://www.w3.org/2000/svg">
           <mask id="mask0_631_40936" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x={0} y={0} width={29} height={31}>
