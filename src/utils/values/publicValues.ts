@@ -1,4 +1,4 @@
-export const fileServer = "http://fileserver.lyracorp.in/upload";
+export const fileServer = "https://fileserver.lyracorp.in/upload";
 
 export const createdModules = [
                                 ["dashboard"],
