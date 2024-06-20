@@ -8,12 +8,18 @@ import { editProductMaster, getProductMasterById, getType } from "../../../../ut
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import styles from "./EditProduct.module.scss";
 
 function EditProduct() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
+  const [searchValue,setSearchValue]=useState<{ margin?:string,  discount?:string,document?:string, uom?:string }>({margin:"", discount:"",  document:"", uom:"" })
+
+  
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -62,6 +68,18 @@ function EditProduct() {
 
     setFiles([...files, ...selectedFiles]);
   };
+
+  useEffect(() => {
+    setSearchValue({ 
+    
+                     margin:dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value,
+                     discount:dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value, 
+                     document:dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+                     uom:dropDowns?.uom?.filter((x) => x?._id=== data?.uomType)[0]?.value.name, 
+  })
+                        
+  }, [dropDowns, data])
+
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
 
@@ -74,6 +92,7 @@ function EditProduct() {
       });
     });
 
+  
     dispatch(getProductMasterById(params.id)).then((res: any) => {
       setData(res.payload);
     //   setFiles([...res.payload.fileUrls]);
@@ -91,6 +110,7 @@ function EditProduct() {
         };
       });
     });
+   
 
     dispatch(getType("discount")).then((res: any) => {
       setDropDown((prev) => {
@@ -128,6 +148,8 @@ function EditProduct() {
       setSearch({ ...search, country: val });
     });
   }, []);
+  console.log(data)
+console.log(dropDowns.uom)
 
   const handleDrop = (e: any) => {
     e.preventDefault();
@@ -137,7 +159,7 @@ function EditProduct() {
   };
   return (
     <div className="h-[110vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Product Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
@@ -159,10 +181,14 @@ function EditProduct() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[999]">
               <label>Margin Setting</label>
-              <Select required value={dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value}>
-                {dropDowns?.margin?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,margin:e.target.value})
+            }} value={searchValue.margin || ""} >
+              {dropDowns?.margin?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.margin?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,margin:x?.value})
                       setData({ ...data, marginType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -174,10 +200,14 @@ function EditProduct() {
             </div>
             <div className="flex gap-3 z-[999] items-center">
               <label>Discount</label>
-              <Select required value={dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}>
-                {dropDowns?.discount?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,discount:e.target.value})
+            }} value={searchValue.discount || ""} >
+              {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
+               
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,discount:x?.value})
                       setData({ ...data, discountType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -190,10 +220,13 @@ function EditProduct() {
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM</label>
-              <Select required value={dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.name}>
-                {dropDowns?.uom?.map((x) => (
-                  <li
-                    onClick={() => {
+              <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,uom:e.target.value})
+            }} value={searchValue.uom || ""} >
+              {dropDowns?.uom?.filter((a)=>a?.value?.name?.toLowerCase()?.includes(searchValue?.uom?.toLowerCase())).map((x) => (
+                <li
+                  onClick={() => {
+                    setSearchValue({...searchValue,uom:x?.value?.name})
                       setData({ ...data, uomType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -223,7 +256,22 @@ function EditProduct() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })}  type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
+                <p>{data?.pricingDate}</p>
+                <button type="button" className={styles.calendar}>
+                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
+                  </svg>
+                </button>
+                
+                <Calendar
+                  onChange={(e) => {
+                    setData({ ...data, pricingDate: e?.toLocaleString().split(",")[0] });
+                  }}
+                  className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
+                />
+              </label>
             </div>
 
             <div className="flex gap-3 items-center">
@@ -275,7 +323,7 @@ function EditProduct() {
               <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -338,10 +386,14 @@ function EditProduct() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
+            <Select required onChange={(e)=>{
+              setSearchValue({...searchValue,document:e.target.value})
+            }} value={searchValue.document || ""} >
+              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
+               
                 <li
                   onClick={() => {
+                    setSearchValue({...searchValue,document:x?.value})
                     setData({ ...data, bussinessDocument: x?._id });
                   }}
                   className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"

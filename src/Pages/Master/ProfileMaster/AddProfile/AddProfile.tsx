@@ -225,7 +225,7 @@ if(files1[0]){
               <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -253,7 +253,7 @@ if(files1[0]){
               <Select required
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
-                    return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, state: filtered });
                   setData({ ...data, state: e.target.value });
@@ -286,7 +286,7 @@ if(files1[0]){
               <Select required
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
-                    return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, city: filtered });
                   setData({ ...data, city: e.target.value });
@@ -320,7 +320,7 @@ if(files1[0]){
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
@@ -333,7 +333,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
-                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const billingAddress = data?.billingAddress;
                     if (billingAddress) billingAddress[i] = { ...billingAddress[i], country: e.target.value };
@@ -365,7 +365,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
-                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const billingAddress = data?.billingAddress;
                     if (billingAddress) billingAddress[i] = { ...billingAddress[i], state: e.target.value };
@@ -411,7 +411,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
-                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -472,7 +472,7 @@ if(files1[0]){
                     setData({ ...data, billingAddress });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
                 />
               </div>
             </div>
@@ -516,7 +516,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
-                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const shippingAddress = data?.shippingAddress;
                     if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
@@ -548,7 +548,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
-                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const shippingAddress = data?.shippingAddress;
                     if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
@@ -594,7 +594,7 @@ if(files1[0]){
                 <Select required
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
-                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -655,7 +655,7 @@ if(files1[0]){
                     setData({ ...data, shippingAddress });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] remove-spin-wheel rounded-md"
                   />
               </div>
               
@@ -683,7 +683,7 @@ if(files1[0]){
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
-                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const warehouse = data?.warehouse || [] || [];
                     warehouse[i] = { ...warehouse[i], country: e.target.value };
@@ -715,7 +715,7 @@ if(files1[0]){
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
-                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const warehouse = data?.warehouse || [];
                     warehouse[i] = { ...warehouse[i], state: e.target.value };
@@ -761,7 +761,7 @@ if(files1[0]){
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
-                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -822,7 +822,7 @@ if(files1[0]){
                     setData({ ...data, warehouse });
                   }}
                   type="number"
-                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] w-[200px] w-[200px]"
+                  className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] w-[200px] w-[200px]"
                 />
               </div>
             </div>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from '@reduxjs/toolkit'
-import { addCustomerMaster, addVendorMaster, getMyDetails } from './actions'
+import { addCustomerMaster, addProductMaster, addVendorMaster, getMyDetails } from './actions'
 
 export interface CounterState {
   msg: string|number,
@@ -9,12 +9,14 @@ export interface CounterState {
   user?:any,
   pathToGo?:string,
   superAdminCompany?:any,
+  loader:boolean,
 }
 
 const initialState: CounterState = {
   msg: `Customer Account Number Created as 04565`,
   submsg:`Your Customer Account has been Successfully Created`,
-  toaster:false
+  toaster:false,
+  loader:false,
 }
 
 export const counterSlice = createSlice({
@@ -29,6 +31,12 @@ export const counterSlice = createSlice({
     },
     setCompany:(state,{payload})=>{
       state.superAdminCompany = payload
+    },
+    startLoading:(state)=>{
+      state.loader = true
+    },
+    stopLoading:(state)=>{
+      state.loader = false
     }
   },
   extraReducers(builder) {
@@ -47,10 +55,19 @@ export const counterSlice = createSlice({
     builder.addCase(getMyDetails.fulfilled,(state,{payload})=>{
       state.user = payload
     })
+    builder.addCase(addProductMaster.pending,(state)=>{
+      state.loader = true
+    })
+    builder.addCase(addProductMaster.fulfilled,(state)=>{
+      state.loader = false
+    })
+    builder.addCase(addProductMaster.rejected,(state)=>{
+      state.loader = false
+    })
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {  makeToastFalse,addPathToGo,setCompany} = counterSlice.actions
+export const {  makeToastFalse,addPathToGo,setCompany,startLoading,stopLoading} = counterSlice.actions
 
 export default counterSlice.reducer

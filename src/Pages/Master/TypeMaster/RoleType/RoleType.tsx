@@ -18,7 +18,7 @@ function RoleType() {
   const [department, setDepartment] = useState<any[]>([]);
   const permissions = useSelector((state: any) => state.data?.user?.permissions);
 
-  const fetchRoleType = () => {
+    const fetchRoleType = () => {
     const res = dispatch(getType("role"));
     res.then((res: any) => {
       setValues(res?.payload[0]?.roleType);
@@ -62,7 +62,7 @@ function RoleType() {
     setConfirmation("");
   };
 
-  const editRoleType = () => {
+    const editRoleType = () => {
     const res = dispatch(updateType({ id: deleteType[0], val: input, type: "role" }));
     res.then(() => {
       setDelete([]);
@@ -71,6 +71,21 @@ function RoleType() {
     });
     setConfirmation("");
   };
+   
+  const searchBox = (e: string) => { 
+
+    const searching = e.toLowerCase();
+    const departmentIds = department
+        .filter((x) => x?.value?.toLowerCase().includes(searching))
+        .map((x) => x?._id);
+    const filteredValues = values?.filter((x) => 
+      x?.value?.department.includes(departmentIds) || x?.value?.value?.toLowerCase().includes(searching)
+    );
+  setSearch(filteredValues || []);
+  }
+    
+  
+
   return (
     <div className="min-h-screen">
       <NavigationBar />
@@ -89,13 +104,8 @@ function RoleType() {
                     <input
                       type="text"
                       placeholder="Search"
-                      onChange={(e) => {
-                        const filteredValues = values?.filter((x) => x?.value?.toLowerCase().startsWith(e.target.value.toLowerCase()));
-
-                        // Update the search state with the filtered values
-                        setSearch(filteredValues || []);
-                      }}
-                      className="placeholder:text-black outline-none border-none"
+                      onChange={(e) => searchBox(e.target.value)} 
+                     className="placeholder:text-black outline-none border-none"
                     />
                   </label>
                   {deleteType.length > 0 ? (
@@ -187,9 +197,11 @@ function RoleType() {
                   <div>
                     <div className="flex gap-16 px-5 pt-5 items-center">
                       <label htmlFor="" className="font-semibold text-[14px]">
-                        Department Name
+                        Department Name 
                       </label>
-                      <Select required value={department?.filter((x) => x?._id === input.department)[0]?.value || ""} onChange={(e) => setInput({ ...input, department: e.target.value })} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
+                      <Select required value={department?.filter((x) => x?._id === input.department)[0]?.value} 
+                      onChange={(e) => setInput({ ...input, department: e.target.value })} 
+                      className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]">
                         {department
                           ?.filter((x) => x?.value?.toLowerCase()?.includes(input.department || ""))
                           ?.map((x) => (

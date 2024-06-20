@@ -26,25 +26,25 @@ function ProductMaster() {
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
     const uom = dropDowns.uom
-      .filter((x) => x?.value?.name?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.name?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
 
     const discount = dropDowns.discount
-      .filter((x) => x?.value?.toLowerCase()?.startsWith(lowerVal))
+      .filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       .map((x) => {
         return x?._id;
       });
   
 
     const active = data.active.filter((x) => {
-      if (x?.productName?.toLowerCase()?.startsWith(lowerVal) || x?.productCode?.toLowerCase()?.startsWith(lowerVal) || x?.productDes?.toLowerCase()?.startsWith(lowerVal) || x?.mrp?.toLowerCase()?.startsWith(lowerVal) || x?.pricingDate?.toLowerCase()?.startsWith(lowerVal) || x?.netPrice?.toLowerCase()?.startsWith(lowerVal) ||x?.weight?.toLowerCase()?.startsWith(lowerVal) ||x?.eanNumber?.toLowerCase()?.startsWith(lowerVal) ||x?.eccn?.toLowerCase()?.startsWith(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
+      if (x?.productName?.toLowerCase()?.includes(lowerVal) || x?.productCode?.toLowerCase()?.includes(lowerVal) || x?.productDes?.toLowerCase()?.includes(lowerVal) || x?.mrp?.toLowerCase()?.includes(lowerVal) || x?.pricingDate?.toLowerCase()?.includes(lowerVal) || x?.netPrice?.toLowerCase()?.includes(lowerVal) ||x?.weight?.toLowerCase()?.includes(lowerVal) ||x?.eanNumber?.toLowerCase()?.includes(lowerVal) ||x?.eccn?.toLowerCase()?.includes(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (x?.productName?.toLowerCase()?.startsWith(lowerVal) || x?.productCode?.toLowerCase()?.startsWith(lowerVal) || x?.productDes?.toLowerCase()?.startsWith(lowerVal) || x?.mrp?.toLowerCase()?.startsWith(lowerVal) || x?.pricingDate?.toLowerCase()?.startsWith(lowerVal) || x?.netPrice?.toLowerCase()?.startsWith(lowerVal) ||x?.weight?.toLowerCase()?.startsWith(lowerVal) ||x?.eanNumber?.toLowerCase()?.startsWith(lowerVal) ||x?.eccn?.toLowerCase()?.startsWith(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
+      if (x?.productName?.toLowerCase()?.includes(lowerVal) || x?.productCode?.toLowerCase()?.includes(lowerVal) || x?.productDes?.toLowerCase()?.includes(lowerVal) || x?.mrp?.toLowerCase()?.includes(lowerVal) || x?.pricingDate?.toLowerCase()?.includes(lowerVal) || x?.netPrice?.toLowerCase()?.includes(lowerVal) ||x?.weight?.toLowerCase()?.includes(lowerVal) ||x?.eanNumber?.toLowerCase()?.includes(lowerVal) ||x?.eccn?.toLowerCase()?.includes(lowerVal) || uom.includes(x?.uomType) || discount.includes(x?.discountType)) {
         return x;
       }
     });

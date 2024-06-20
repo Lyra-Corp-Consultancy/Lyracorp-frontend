@@ -196,7 +196,7 @@ function EditProfile() {
                   onClick={() => {
                     const link = files1?.[0] || data?.logo;
 
-                    if ((link + "")?.startsWith("http")) {
+                    if ((link + "")?.includes("http")) {
                       window.open(data?.logo);
                     } else {
                       const url = URL.createObjectURL(files1?.[0]);
@@ -234,7 +234,7 @@ function EditProfile() {
               <Select required className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -262,7 +262,7 @@ function EditProfile() {
               <Select required className="w-[200px]"
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
-                    return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, state: filtered });
                   setData({ ...data, state: e.target.value });
@@ -295,7 +295,7 @@ function EditProfile() {
               <Select required className="w-[200px]" 
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
-                    return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.toLowerCase().includes(e.target.value.toLowerCase());
                   });
                   setSearch({ ...search, city: filtered });
                   setData({ ...data, city: e.target.value });
@@ -342,7 +342,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
-                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const billingAddress = data?.billingAddress;
                     billingAddress[i] = { ...billingAddress[i], country: e.target.value };
@@ -374,7 +374,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
-                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const billingAddress = data?.billingAddress;
                     billingAddress[i] = { ...billingAddress[i], state: e.target.value };
@@ -420,7 +420,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
-                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -474,7 +474,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
                     billingAddress[i] = { ...billingAddress[i], pinCode: e.target.value };
@@ -524,7 +524,7 @@ function EditProfile() {
                   <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.country.filter((x) => {
-                        return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                        return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                       });
                       const shippingAddress = data?.shippingAddress;
                       shippingAddress[i] = { ...shippingAddress[i], country: e.target.value };
@@ -556,7 +556,7 @@ function EditProfile() {
                   <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.state.filter((x) => {
-                        return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                        return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                       });
                       const shippingAddress = data?.shippingAddress;
                       shippingAddress[i] = { ...shippingAddress[i], state: e.target.value };
@@ -602,7 +602,7 @@ function EditProfile() {
                   <Select required className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.city.filter((x) => {
-                        return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                        return x?.toLowerCase().includes(e.target.value.toLowerCase());
                       });
                       setSearch({ ...search, city: filtered });
                       setData({ ...data, city: e.target.value });
@@ -656,7 +656,7 @@ function EditProfile() {
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Pin code</label>
                   <input required
-                    value={x.pincode}
+                    value={x.pinCode}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
                       shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
@@ -689,7 +689,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.country.filter((x) => {
-                      return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const warehouse = data?.warehouse;
                     warehouse[i] = { ...warehouse[i], country: e.target.value };
@@ -721,7 +721,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
-                      return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.name?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     const warehouse = data?.warehouse;
                     warehouse[i] = { ...warehouse[i], state: e.target.value };
@@ -767,7 +767,7 @@ function EditProfile() {
                 <Select required className="w-[200px]"
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
-                      return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                      return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -821,7 +821,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
                     warehouse[i] = { ...warehouse[i], pinCode: e.target.value };
@@ -918,7 +918,7 @@ function EditProfile() {
                 </svg>
                 <p
                   onClick={() => {
-                    if (x?.startsWith("http")) {
+                    if (x?.includes("http")) {
                       window.open(x);
                     } else {
                       const url = URL.createObjectURL(x);
