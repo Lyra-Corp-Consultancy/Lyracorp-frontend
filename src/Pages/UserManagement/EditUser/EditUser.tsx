@@ -14,7 +14,6 @@ function EditUser() {
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [searchValue,setSearchValue]=useState<{lineOfBusiness?:string,account?:string,department?:string,role?:string}>({lineOfBusiness:"",account:"",department:"",role:""})
-  const [roleSearch,setRoleSearch]=useState("")
   const [dropDowns, setDropDown] = useState<{
     lineOfBusiness: any[];
     account: any[];
@@ -243,7 +242,6 @@ function EditUser() {
                   ?.map((x) => (
                     <li
                       onClick={() => {
-                        setRoleSearch(x.value.value)
                         setSearchValue({...searchValue,role:x?.value?.value})
                         setData({ ...data, role: x?._id });
                       }}
