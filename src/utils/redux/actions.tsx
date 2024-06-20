@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, ProductProcess, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -529,6 +529,15 @@ export const getProductionSOP = createAsyncThunk("user/getProductionSOP", async 
 export const createOrUpdateProductionSOP = createAsyncThunk("user/createOrUpdateProductionSOP", async (val:{productId:string,productProcess:ProductProcess[]}, { rejectWithValue }) => {
   try {
      await instance.patch("/production/production-settings/"+val.productId,{productProcess:val.productProcess});
+    return 
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const ProductionProcessDone = createAsyncThunk("user/createOrUpdateProductionSOP", async (val:{productId:string,productProcess:ProductionSOPTypes[],batchNumber:string}, { rejectWithValue }) => {
+  try {
+    await instance.post("/production/sop",{processDone:val});
     return 
   } catch (err) {
     rejectWithValue(err);

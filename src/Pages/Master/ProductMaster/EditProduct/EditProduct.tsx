@@ -8,6 +8,9 @@ import { editProductMaster, getProductMasterById, getType } from "../../../../ut
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import styles from "./EditProduct.module.scss";
 
 function EditProduct() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -253,7 +256,22 @@ console.log(dropDowns.uom)
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })}  type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
+                <p>{data?.pricingDate}</p>
+                <button type="button" className={styles.calendar}>
+                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
+                  </svg>
+                </button>
+                
+                <Calendar
+                  onChange={(e) => {
+                    setData({ ...data, pricingDate: e?.toLocaleString().split(",")[0] });
+                  }}
+                  className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
+                />
+              </label>
             </div>
 
             <div className="flex gap-3 items-center">

@@ -161,7 +161,7 @@ function EditProfile() {
   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Profile Master</h1>
       <div className="bg-[#F1F3FF] shadow-md px-3 pt-3 pb-10 rounded-lg w-full ">
         <form
           onSubmit={(e) => {
@@ -474,7 +474,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
                     billingAddress[i] = { ...billingAddress[i], pinCode: e.target.value };
@@ -656,7 +656,7 @@ function EditProfile() {
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Pin code</label>
                   <input required
-                    value={x.pincode}
+                    value={x.pinCode}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
                       shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
@@ -821,7 +821,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
                     warehouse[i] = { ...warehouse[i], pinCode: e.target.value };

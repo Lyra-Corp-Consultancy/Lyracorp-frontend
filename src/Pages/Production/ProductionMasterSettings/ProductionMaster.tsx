@@ -26,8 +26,8 @@ function ProductionMaster() {
     });
   }, []);
   return (
-    <div className="h-[83vh] w-screen">
-      <div className="w-full px-5 h-[90%] pt-2">
+    <div className="min-h-[83vh] w-screen">
+      <div className="w-full px-5 min-h-[90%] pt-2">
         <h1 className="text-xl roboto-bold">Production SOP</h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="bg-white rounded-lg w-full p-3 h-[80%] shadow-md mt-0">
@@ -63,12 +63,12 @@ function ProductionMaster() {
               </div>
 
               {permissions?.delete?.includes("production management master") && (
-                <button className="text-white bg-[#5970F5] px-4 py-2 rounded-md" onClick={() => navigate("/production/master-settings/new/" + selectedProduct._id)}>
-                  Create New SOP
+                <button className="text-white bg-[#5970F5] px-4 py-2 rounded-md" onClick={() => navigate("/production/master-settings/new/" + selectedProduct._id+"?type=Save")}>
+                  Create SOP
                 </button>
               )}
             </div>
-            {productProcess[0] && <div className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[50%] mt-5 rounded-md w-full items-center justify-between flex px-5 py-3">
+            {productProcess[0] && <div className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[50%] mt-5 rounded-md w-full items-center justify-between flex flex-col px-5 py-3">
               <table className="w-full flex flex-col text-[14px] border-collapse rounded border">
                 <thead className="bg-[#5970F5]">
                   <tr className=" text-white flex">
@@ -126,6 +126,9 @@ function ProductionMaster() {
                   ))}
                 </tbody>
               </table>
+              <button className="text-white mt-3 bg-[#5970F5] px-4 py-2 rounded-md" onClick={() => navigate("/production/master-settings/new/" + selectedProduct._id+"?type=Update")}>
+                  Edit SOP
+                </button>
             </div>}
           </div>
         </div>
