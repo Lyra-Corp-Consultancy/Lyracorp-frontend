@@ -474,7 +474,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const billingAddress = data?.billingAddress;
                     billingAddress[i] = { ...billingAddress[i], pinCode: e.target.value };
@@ -656,7 +656,7 @@ function EditProfile() {
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Pin code</label>
                   <input required
-                    value={x.pincode}
+                    value={x.pinCode}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
                       shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
@@ -821,7 +821,7 @@ function EditProfile() {
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const warehouse = data?.warehouse;
                     warehouse[i] = { ...warehouse[i], pinCode: e.target.value };
