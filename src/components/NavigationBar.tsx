@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyDetails } from "../utils/redux/actions";
 import { createdModules } from "../utils/values/publicValues";
+import styles from "./NavigationBarStyle.module.scss"
+import Cookies from "js-cookie";
 
 function NavigationBar() {
   const location = useLocation();
@@ -94,8 +96,14 @@ function NavigationBar() {
             </svg>
           </button>
           {/* profile button */}
-          <button className=" rounded">
-            <img src={demoprofile} className="h-[30px]" alt="" />
+          <button className={" rounded relative "+styles?.logout}>
+            <img src={demoprofile} className={"h-[30px] " }alt="" />
+            <div onClick={()=>{
+              Cookies.remove("token")
+              navigate("/")
+              }} className={"bg-white w-[100px] transition-all duration-100  absolute right-0 rounded "+styles?.["logout-btn"]}>
+              <p className="text-red-500">Logout</p>
+            </div>
           </button>
         </div>
       </div>

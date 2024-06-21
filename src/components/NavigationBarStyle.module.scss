@@ -1,11 +1,19 @@
 
-.dropMaster:focus{
-    .dropdown{
-        display: flex;
-    }
+// .dropMaster:focus{
+//     .dropdown{
+//         display: flex;
+//     }
    
-}
+// }
 
-.dropdown:hover{
-     display: flex;   
+// .dropdown:hover{
+//      display: flex;   
+// }
+.logout-btn{
+    display: none;
+}
+.logout:hover{
+    .logout-btn{
+        display: block;
+    }
 }
