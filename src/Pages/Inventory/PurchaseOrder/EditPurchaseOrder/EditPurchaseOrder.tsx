@@ -222,7 +222,7 @@ function EditPurchaseOrder() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-              <Select required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+              <Select pattern={dropDowns?.vendor?.filter((a) => a?._id === data.vendor)[0] ? undefined : ""} title="Please Select values from drop down" required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
                 {dropDowns?.vendor?.map((x) => (
                   <li
                     onClick={() => {
@@ -237,7 +237,7 @@ function EditPurchaseOrder() {
             </div>
             <div className="flex  items-center gap-3">
               <label>Contact Name</label>
-              <Select required className="bg-white z-[100]" value={dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}>
+              <Select pattern={dropDowns?.users?.filter((a) => a?._id === data.contact)[0] ? undefined : ""} title="Please Select values from drop down" required className="bg-white z-[100]" value={dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}>
                 {dropDowns?.users?.map((x) => (
                   <li
                     onClick={() => {
@@ -267,10 +267,11 @@ function EditPurchaseOrder() {
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
                   </svg>
                 </button>
-                
                 <Calendar
+                  
                   onChange={(e) => {
                     setData({ ...data, deliveryDate: e?.toLocaleString().split(",")[0] });
+                    console.log("delivery date");
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
                 />
@@ -278,7 +279,7 @@ function EditPurchaseOrder() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Delivery to Name</label>
-              <Select required className="z-[99]" value={dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}>
+              <Select pattern={dropDowns?.users?.filter((a) => a?._id === data.deliveryTo)[0] ? undefined : ""} title="Please Select values from drop down" required className="z-[99]" value={dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}>
                 {dropDowns?.users?.map((x) => (
                   <li
                     onClick={() => {
@@ -301,7 +302,7 @@ function EditPurchaseOrder() {
 
             <div className="flex gap-3 z-[999] items-center">
               <label>Shipping Method</label>
-              <Select required value={dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}>
+              <Select pattern={dropDowns?.shipping?.filter((a) => a?._id === data.shippingMethod)[0] ? undefined : ""} title="Please Select values from drop down" required value={dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}>
                 {dropDowns?.shipping?.map((x) => (
                   <li
                     onClick={() => {
@@ -317,8 +318,8 @@ function EditPurchaseOrder() {
 
             <div className="flex gap-3 z-[96] items-center">
               <label>Shipping Address</label>
-              <Select required value={data?.shippingAddress?.address}>
-                {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x:any) => (
+              <Select pattern={(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.filter((a: any) => a === data.shippingAddress)[0] ? undefined : ""} title="Please Select values from drop down" required value={data?.shippingAddress?.address}>
+                {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x: any) => (
                   <li
                     onClick={() => {
                       setData({ ...data, shippingAddress: x });
@@ -333,8 +334,8 @@ function EditPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Billing Address</label>
-              <Select required value={data?.billingAddress?.address}>
-                {(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.map((x:any) => (
+              <Select pattern={(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.filter((a: any) => a === data.billingAddress)[0] ? undefined : ""} title="Please Select values from drop down" required value={data?.billingAddress?.address}>
+                {(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.map((x: any) => (
                   <li
                     onClick={() => {
                       setData({ ...data, billingAddress: x });
@@ -351,7 +352,8 @@ function EditPurchaseOrder() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Payment Terms</label>
-              <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}>
+              <Select pattern={dropDowns?.payment?.filter((a) => a?._id === data.paymentTerm)[0] ? undefined : ""}
+              title="Please Select values from drop down" required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}>
                 {dropDowns?.payment?.map((x) => (
                   <li
                     onClick={() => {
@@ -367,7 +369,8 @@ function EditPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <Select required value={data?.paymentType}>
+              <Select pattern={["Cash", "Credit"]?.filter((a) => a === data.paymentType)[0] ? undefined : ""}
+              title="Please Select values from drop down" required value={data?.paymentType}>
                 {["Cash", "Credit"]?.map((x) => (
                   <li
                     onClick={() => {

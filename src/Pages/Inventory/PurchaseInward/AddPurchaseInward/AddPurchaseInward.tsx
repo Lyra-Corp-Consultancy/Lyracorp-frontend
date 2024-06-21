@@ -369,6 +369,9 @@ function AddPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <input required
                       type="number"
+                      max={parseInt(x?.orderQuantity)}
+                      title="Received Quantity should be less than orderQuantity"
+                      min={0}
                       value={x.recievedQuantity}
                       onChange={(e) => {
                         const product = data?.products;
@@ -380,8 +383,9 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input required
-                      type="text"
+                      type="number"
                       value={x.orderQuantity}
+                      min={0}
                       onChange={(e) => {
                         const product = data?.products;
                         product[i] = { ...x, orderQuantity: e.target.value };
@@ -433,7 +437,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) || 0}</span>
+                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity)>0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">

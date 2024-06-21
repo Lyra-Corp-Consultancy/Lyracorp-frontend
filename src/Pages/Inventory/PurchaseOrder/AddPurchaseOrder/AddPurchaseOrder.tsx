@@ -3,10 +3,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import {  addPurchaseOrder, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
+import { addPurchaseOrder, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -20,7 +20,7 @@ function AddPurchaseOrder() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
-  const [confirmation,setConfirmation] = useState(false)
+  const [confirmation, setConfirmation] = useState(false);
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
@@ -33,10 +33,10 @@ function AddPurchaseOrder() {
     certificate: any[];
     products: any[];
     users: any[];
-    vendor:any[]; 
-    packing:any[];
-    shipping:any[];
-  }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [], products: [],vendor:[] ,certificate: [], users: [],packing:[],shipping:[] });
+    vendor: any[];
+    packing: any[];
+    shipping: any[];
+  }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
@@ -59,15 +59,14 @@ function AddPurchaseOrder() {
     console.log(urls);
     setData({ ...data, fileUrls: urls });
 
-    let lineOfBusiness:string | null
-    if(user?.superAdmin){
-      lineOfBusiness = superAdminCompany?._id
-    }else{
-      lineOfBusiness = user?.company
+    let lineOfBusiness: string | null;
+    if (user?.superAdmin) {
+      lineOfBusiness = superAdminCompany?._id;
+    } else {
+      lineOfBusiness = user?.company;
     }
 
-
-    dispatch(addPurchaseOrder({ ...data, fileUrls: urls,lineOfBusiness })).then(() => {
+    dispatch(addPurchaseOrder({ ...data, fileUrls: urls, lineOfBusiness })).then(() => {
       navigate(-1);
     });
   };
@@ -217,7 +216,7 @@ function AddPurchaseOrder() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            setConfirmation(true)
+            setConfirmation(true);
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
@@ -225,7 +224,7 @@ function AddPurchaseOrder() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-              <Select required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
+              <Select pattern={dropDowns?.vendor?.filter((a) => a?._id === data.vendor)[0] ? undefined : ""} title="Please Select values from drop down" required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
                 {dropDowns?.vendor?.map((x) => (
                   <li
                     onClick={() => {
@@ -240,7 +239,7 @@ function AddPurchaseOrder() {
             </div>
             <div className="flex  items-center gap-3">
               <label>Contact Name</label>
-              <Select required className="bg-white z-[100]" value={dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}>
+              <Select pattern={dropDowns?.users?.filter((a) => a?._id === data.contact)[0] ? undefined : ""} title="Please Select values from drop down" required className="bg-white z-[100]" value={dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]?.username}>
                 {dropDowns?.users?.map((x) => (
                   <li
                     onClick={() => {
@@ -282,7 +281,7 @@ function AddPurchaseOrder() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Delivery to Name</label>
-              <Select required className="z-[99]" value={dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}>
+              <Select pattern={dropDowns?.users?.filter((a) => a?._id === data.deliveryTo)[0] ? undefined : ""} title="Please Select values from drop down" required className="z-[99]" value={dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)[0]?.username}>
                 {dropDowns?.users?.map((x) => (
                   <li
                     onClick={() => {
@@ -305,7 +304,7 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 z-[999] items-center">
               <label>Shipping Method</label>
-              <Select required value={dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}>
+              <Select pattern={dropDowns?.shipping?.filter((a) => a?._id === data.shippingMethod)[0] ? undefined : ""} title="Please Select values from drop down" required value={dropDowns?.shipping?.filter((x) => x?._id === data?.shippingMethod)[0]?.value}>
                 {dropDowns?.shipping?.map((x) => (
                   <li
                     onClick={() => {
@@ -321,8 +320,8 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 z-[96] items-center">
               <label>Shipping Address</label>
-              <Select required value={data?.shippingAddress?.address}>
-                {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x:any) => (
+              <Select pattern={(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.filter((a: any) => a === data.shippingAddress)[0] ? undefined : ""} title="Please Select values from drop down" required value={data?.shippingAddress?.address}>
+                {(user?.companyDetails[0]?.shippingAddress || superAdminCompany?.shippingAddress)?.map((x: any) => (
                   <li
                     onClick={() => {
                       setData({ ...data, shippingAddress: x });
@@ -337,8 +336,8 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Billing Address</label>
-              <Select required value={data?.billingAddress?.address}>
-                {(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.map((x:any) => (
+              <Select pattern={(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.filter((a: any) => a === data.billingAddress)[0] ? undefined : ""} title="Please Select values from drop down" required value={data?.billingAddress?.address}>
+                {(user?.companyDetails[0]?.billingAddress || superAdminCompany?.billingAddress)?.map((x: any) => (
                   <li
                     onClick={() => {
                       setData({ ...data, billingAddress: x });
@@ -355,7 +354,8 @@ function AddPurchaseOrder() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Payment Terms</label>
-              <Select required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}>
+              <Select pattern={dropDowns?.payment?.filter((a) => a?._id === data.paymentTerm)[0] ? undefined : ""}
+              title="Please Select values from drop down" required value={dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}>
                 {dropDowns?.payment?.map((x) => (
                   <li
                     onClick={() => {
@@ -371,7 +371,8 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <Select required value={data?.paymentType}>
+              <Select pattern={["Cash", "Credit"]?.filter((a) => a === data.paymentType)[0] ? undefined : ""}
+              title="Please Select values from drop down" required value={data?.paymentType}>
                 {["Cash", "Credit"]?.map((x) => (
                   <li
                     onClick={() => {
@@ -390,7 +391,7 @@ function AddPurchaseOrder() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
+            <Select value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
               {dropDowns?.document?.map((x) => (
                 <li
                   onClick={() => {
@@ -464,7 +465,8 @@ function AddPurchaseOrder() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input required 
+                    <input
+                      required
                       type="text"
                       value={data?.products[i].orderQuantity}
                       onChange={(e) => {
@@ -495,7 +497,7 @@ function AddPurchaseOrder() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                    <Select required className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.packing?.filter((x) => x?._id === data?.products[i]?.packing)[0]?.value}>
+                      <Select required className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.packing?.filter((x) => x?._id === data?.products[i]?.packing)[0]?.value}>
                         {dropDowns?.packing?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -513,7 +515,7 @@ function AddPurchaseOrder() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                    <Select required className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
+                      <Select required className="w-[50%] shadow-none bg-[#F6F4F4]" value={dropDowns?.certificate?.filter((x) => x?._id === data?.products[i]?.certificate)[0]?.value}>
                         {dropDowns?.certificate?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -568,13 +570,7 @@ function AddPurchaseOrder() {
           </div>
         </form>
       </div>
-      {confirmation && <DeleteConfirmationBox
-        posColor="bg-[#196000]"
-          RejectFunction={() => setConfirmation(false)}
-          ResolveFunction={handleSave}
-          message="Do you want to save?"
-          pos="save"
-        />}
+      {confirmation && <DeleteConfirmationBox posColor="bg-[#196000]" RejectFunction={() => setConfirmation(false)} ResolveFunction={handleSave} message="Do you want to save?" pos="save" />}
     </div>
   );
 }

@@ -167,7 +167,7 @@ function AddProduct() {
               </Select>
             </div>
             <div className="flex gap-3 z-[999] items-center">
-              <label>Discount</label>
+              <label>Discount Type</label>
               <Select required onChange={(e)=>{
               setSearchValue({...searchValue,discount:e.target.value})
             }} value={searchValue.discount || ""} >
@@ -183,6 +183,12 @@ function AddProduct() {
                   </li>
                 ))}
               </Select>
+            </div>
+            <div className="flex gap-3 z-[999] items-center">
+              <label>Discount</label>
+              <input type="number" required onChange={(e)=>setData({...data,discount:e.target.value})} className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md" min={0} max={100}/>
+              <label>%</label>
+
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
