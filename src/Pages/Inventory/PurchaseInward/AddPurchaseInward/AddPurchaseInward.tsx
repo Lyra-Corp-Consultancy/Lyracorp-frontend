@@ -256,7 +256,7 @@ function AddPurchaseInward() {
             <div className="flex  items-center gap-3">
               <label>Inward Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
-                <p>{data?.inwardDate}</p>
+                <p>{data?.inwardDate}<input type="text" value={data?.inwardDate} name="" className="opacity-0 absolute" required id="invoicedate" /></p>
                 <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
@@ -280,7 +280,7 @@ function AddPurchaseInward() {
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
-                <p>{data?.invoiceDate}</p>
+                <label>{data?.invoiceDate} <input type="text" value={data?.invoiceDate} name="" className="opacity-0 absolute" required id="invoicedate" /></label>
                 <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
@@ -355,7 +355,7 @@ function AddPurchaseInward() {
                           <li
                             onClick={() => {
                               const product = data?.products;
-                              product[i] = { ...product[i], productId: x?._id };
+                              product[i] = { ...product[i], productId: x?._id,unitPrice:x?.mrp };
                               setData({ ...data, products: product });
                             }}
                             className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
@@ -442,12 +442,12 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{x?.productDetails?.mrp}</span>
+                      <span>{x?.unitPrice}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
-                      <span>{parseFloat(x?.productDetails?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
+                      <span>{parseFloat(x?.unitPrice) * parseInt(x?.recievedQuantity) || 0}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
