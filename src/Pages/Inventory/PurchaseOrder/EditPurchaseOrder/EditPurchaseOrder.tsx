@@ -3,15 +3,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  editPurchaseOrder,
-  getAllProductMaster,
-  getAllUserManagement,
-  getAllVendorMaster,
-  getPurchaseOrderById,
-  getType,
-} from "../../../../utils/redux/actions";
+import { useDispatch } from "react-redux";
+import { editPurchaseOrder, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseOrderById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -34,10 +27,10 @@ function EditPurchaseOrder() {
     city: any[];
   }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const superAdminCompany = useSelector(
-    (state: any) => state?.data?.superAdminCompany
-  );
-  const user = useSelector((state: any) => state?.data?.user);
+  // const superAdminCompany = useSelector(
+  //   (state: any) => state?.data?.superAdminCompany
+  // );
+  // const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -265,7 +258,7 @@ function EditPurchaseOrder() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,

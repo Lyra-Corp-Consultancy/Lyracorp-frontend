@@ -23,7 +23,12 @@ export const createdModules = [
                                         ]],
                                         ["customer master"], 
                                         ["vendor master"], 
-                                        ["product master"], 
+                                        ["product master",
+                                            [
+                                                ["raw material"],
+                                                ["finished goods"],
+                                                ["product mapping"]
+                                            ]], 
                                         ["profile master"]
                                     ]
                                 ],

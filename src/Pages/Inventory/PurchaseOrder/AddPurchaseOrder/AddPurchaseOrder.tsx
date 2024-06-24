@@ -6,13 +6,7 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addPurchaseOrder,
-  getAllProductMaster,
-  getAllUserManagement,
-  getAllVendorMaster,
-  getType,
-} from "../../../../utils/redux/actions";
+import { addPurchaseOrder, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -234,7 +228,7 @@ function AddPurchaseOrder() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
@@ -643,7 +637,7 @@ function AddPurchaseOrder() {
                     </li>
                   ))}
               </Select>
-            </div>
+            </div> 
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>

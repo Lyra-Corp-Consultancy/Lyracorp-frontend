@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {  useNavigate } from "react-router-dom";
-import { createOrUpdateProductionSOP, getAllProductMaster, getProductionSOP, getType } from "../../../../utils/redux/actions";
+import { createOrUpdateProductionSOP, getAllProductRawMaterial, getProductionSOP, getType } from "../../../../utils/redux/actions";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { useParams } from "react-router-dom";
 import Select from "../../../../components/Select";
@@ -23,7 +23,7 @@ function SOPSettings() {
   const [productProcess, setProcess] = useState<ProductProcess[]>([]);
   const location = useQuery()
   useEffect(() => {
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setData(res.payload.active);
     });
     dispatch(getType("department")).then((res: any) => {

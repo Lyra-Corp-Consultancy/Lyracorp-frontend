@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllProductMaster, getProductionSOP, getType } from "../../../utils/redux/actions";
+import { getAllProductRawMaterial, getProductionSOP, getType } from "../../../utils/redux/actions";
 import Select from "../../../components/Select";
 import { ProductProcess } from "../../../utils/Type/types";
 
@@ -17,7 +17,7 @@ function ProductionMaster() {
   const [productProcess, setProcess] = useState<ProductProcess[]>([]);
 
   useEffect(() => {
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setData(res.payload.active);
       console.log(res.payload.active);
     });

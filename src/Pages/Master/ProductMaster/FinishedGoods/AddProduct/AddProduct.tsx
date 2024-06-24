@@ -2,24 +2,24 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
-import Select from "../../../../components/Select";
+import Select from "../../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { editProductMaster, getProductMasterById, getType } from "../../../../utils/redux/actions";
-import { useNavigate, useParams } from "react-router-dom";
+import { addProductFinishedGoods, getType } from "../../../../../utils/redux/actions";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { fileServer } from "../../../../utils/values/publicValues";
+import { fileServer } from "../../../../../utils/values/publicValues";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import styles from "./EditProduct.module.scss";
+import styles from "./AddProduct.module.scss";
+import { startLoading } from "../../../../../utils/redux/slice";
 
-function EditProduct() {
+function AddProductFinishedGoods() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
   const [searchValue,setSearchValue]=useState<{ margin?:string,  discount?:string,document?:string, uom?:string }>({margin:"", discount:"",  document:"", uom:"" })
 
-  
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -36,50 +36,30 @@ function EditProduct() {
   });
 
   const navigate = useNavigate();
-  const params: any = useParams();
 
   const handleSave = async () => {
     const urls: string[] = [];
+    dispatch(startLoading())
     for (let i = 0; i < files.length; i++) {
       const x = files[i];
       const file = new FormData();
       file.append("file", x);
       const res = await axios.post(fileServer, file);
       urls.push(res.data);
-      if(data?.fileUrls){
-          setData({ ...data, fileUrls: [...data.fileUrls, ...urls] });
-        }else{
-          setData({ ...data, fileUrls:urls });
-
-        }
-
     }
-    console.log(urls)
+    console.log(urls);
+    setData({ ...data, fileUrls: urls });
 
-    dispatch(editProductMaster({data:{ ...data, fileUrls: urls },id:params.id})).then(() => {
+    dispatch(addProductFinishedGoods({ ...data, fileUrls: urls })).then(() => {
       navigate(-1);
     });
   };
-
-
 
   const handleFileSelect = (e: any) => {
     const selectedFiles = Array.from(e.target.files);
 
     setFiles([...files, ...selectedFiles]);
   };
-
-  useEffect(() => {
-    setSearchValue({ 
-    
-                     margin:dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value,
-                     discount:dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value, 
-                     document:dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
-                     uom:dropDowns?.uom?.filter((x) => x?._id=== data?.uomType)[0]?.value.name, 
-  })
-                        
-  }, [dropDowns, data])
-
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
 
@@ -92,14 +72,6 @@ function EditProduct() {
       });
     });
 
-  
-    dispatch(getProductMasterById(params.id)).then((res: any) => {
-      setData(res.payload);
-    //   setFiles([...res.payload.fileUrls]);
-     
-    });
-
-
     const res2 = dispatch(getType("uom"));
 
     res2.then((res: any) => {
@@ -110,7 +82,6 @@ function EditProduct() {
         };
       });
     });
-   
 
     dispatch(getType("discount")).then((res: any) => {
       setDropDown((prev) => {
@@ -148,9 +119,7 @@ function EditProduct() {
       setSearch({ ...search, country: val });
     });
   }, []);
-  console.log(data)
-console.log(dropDowns.uom)
-
+      console.log(searchValue)            
   const handleDrop = (e: any) => {
     e.preventDefault();
     // setDragging(false);
@@ -159,7 +128,7 @@ console.log(dropDowns.uom)
   };
   return (
     <div className="h-[110vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Edit Product Master</h1>
+      <h1 className="roboto-bold text-lg">Add Finished Goods Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
@@ -168,13 +137,13 @@ console.log(dropDowns.uom)
           }}
           className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Product Type</h1>
+          <h1 className="roboto-medium mt-1">Finished Goods Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Product Name</label>
+            <label>FG Name</label>
             <input required value={data.productName} name="productName" onChange={(e) => setData({ ...data, productName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-            <label>Product Code</label>
+            <label>FG Code</label>
             <input required value={data.productCode} name="productCode" onChange={(e) => setData({ ...data, productCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-            <label>Product Description</label>
+            <label>FG Description</label>
             <textarea required value={data.productDes} onChange={(e) => setData({ ...data, productDes: e.target.value })} cols={70} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
           </div>
           <h1 className="roboto-medium mt-1">Specifications</h1>
@@ -185,7 +154,6 @@ console.log(dropDowns.uom)
               setSearchValue({...searchValue,margin:e.target.value})
             }} value={searchValue.margin || ""} >
               {dropDowns?.margin?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.margin?.toLowerCase())).map((x) => (
-               
                 <li
                   onClick={() => {
                     setSearchValue({...searchValue,margin:x?.value})
@@ -199,12 +167,11 @@ console.log(dropDowns.uom)
               </Select>
             </div>
             <div className="flex gap-3 z-[999] items-center">
-              <label>Discount</label>
+              <label>Discount Type</label>
               <Select required onChange={(e)=>{
               setSearchValue({...searchValue,discount:e.target.value})
             }} value={searchValue.discount || ""} >
               {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
-               
                 <li
                   onClick={() => {
                     setSearchValue({...searchValue,discount:x?.value})
@@ -216,6 +183,11 @@ console.log(dropDowns.uom)
                   </li>
                 ))}
               </Select>
+            </div>
+            <div className="flex gap-3 z-[999] items-center">
+              <label>Discount</label>
+              <input type="number" value={data?.discount} required onChange={(e)=>setData({...data,discount:e.target.value})} className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md" min={0} max={100}/>
+              <label>%</label>
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
@@ -239,7 +211,7 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM Description</label>
-              <label htmlFor="" className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
+              <label htmlFor="" className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md">
                 {dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.des}
               </label>
             </div>
@@ -252,11 +224,11 @@ console.log(dropDowns.uom)
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
-              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })}  type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.pricingDate}</p>
                 <button type="button" className={styles.calendar}>
@@ -276,38 +248,38 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
-              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 CGST
-                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 SGST
-                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 IGST
-                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
-              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
-              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
-              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center mt-3">
@@ -348,7 +320,7 @@ console.log(dropDowns.uom)
             </div>
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
-              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
@@ -362,22 +334,22 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 items-center">
               <label>Weight</label>
-              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 L
-                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 W
-                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 H
-                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
           </div>
@@ -386,7 +358,7 @@ console.log(dropDowns.uom)
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select required onChange={(e)=>{
+            <Select  required onChange={(e)=>{
               setSearchValue({...searchValue,document:e.target.value})
             }} value={searchValue.document || ""} >
               {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
@@ -407,9 +379,9 @@ console.log(dropDowns.uom)
                 <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
               <p className="text-xs text-center">Upload Document or Drag the file</p>
-              <input  type="file" id="file" onChange={handleFileSelect} className="hidden" />
+              <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
-            {[...files,...data.fileUrls].map((x: any, i: number) => (
+            {files.map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
                 <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -419,12 +391,8 @@ console.log(dropDowns.uom)
                 </svg>
                 <p
                   onClick={() => {
-                    if(x?.includes("http")){
-                      window.open(x)
-                    }else{
-                      const url = URL.createObjectURL(x);
-                      window.open(url);
-                    }
+                    const url = URL.createObjectURL(x);
+                    window.open(url);
                   }}
                   className="text-[9px] cursor-pointer text-[#5970F5] underline"
                 >
@@ -435,12 +403,14 @@ console.log(dropDowns.uom)
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
-        
+            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ accountType: "", address: "", bussinessDocument: "", city: "", contactPerson: "", country: "", VendorName: "", vendorType: "", discountType: "", district: "", email: "", fileUrls: [], paymentTerms: "", pincode: "", primaryNumber: "", purchaseResitriction: "", secondaryNumber: "", state: "", zone: "" })}>
+              Reset
+            </button>
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
             <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Update
+              Save
             </button>
           </div>
         </form>
@@ -449,4 +419,4 @@ console.log(dropDowns.uom)
   );
 }
 
-export default EditProduct;
+export default AddProductFinishedGoods;

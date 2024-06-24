@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getType } from "../../../../utils/redux/actions";
+import { getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "react-calendar/dist/Calendar.css";
@@ -136,7 +136,7 @@ function ViewPurchaseInward() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,

@@ -3,11 +3,11 @@
 import  { useEffect, useState } from "react";
 // import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductMasterById, getType } from "../../../../utils/redux/actions";
+import { getProductFinishedGoodsById, getType } from "../../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 // import axios from "axios";
 
-function ViewProduct() {
+function ViewProductRawMaterial() {
   //   const fileServer = "http://192.168.1.42:3000/upload";
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   //   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -62,7 +62,7 @@ function ViewProduct() {
       });
     });
 
-    dispatch(getProductMasterById(params.id)).then((res: any) => {
+    dispatch(getProductFinishedGoodsById(params.id)).then((res: any) => {
       setData(res.payload);
     });
 
@@ -122,32 +122,36 @@ function ViewProduct() {
   //   };
   return (
     <div className="h-[110vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Customer Master</h1>
+      <h1 className="roboto-bold text-lg">View Finished Goods Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <div className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
-          <h1 className="roboto-medium mt-1">Product Type</h1>
+          <h1 className="roboto-medium mt-1">Finished Goods Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Product Name</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.productName}</label>
-            <label>Product Code</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.productCode}</label>
-            <label>Product Description</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.productDes}</label>
+            <label>FG Name</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.productName}</label>
+            <label>FG Code</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.productCode}</label>
+            <label>FG Description</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.productDes}</label>
           </div>
           <h1 className="roboto-medium mt-1">Specifications</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[999]">
               <label>Margin Setting</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{dropDowns?.margin?.filter((x) => x?._id === data?.marginType)[0]?.value}</label>
             </div>
             <div className="flex gap-3 z-[999] items-center">
               <label>Discount</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{dropDowns?.discount?.filter((x) => x?._id === data?.discountType)[0]?.value}</label>
+            </div>
+            <div className="flex gap-3 z-[999] items-center">
+              <label>Discount</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data?.discount}</label>
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.name}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.name}</label>
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
@@ -158,30 +162,30 @@ function ViewProduct() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Storage Specification</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.storageSpec}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.storageSpec}</label>
             </div>
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.mrp}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.mrp}</label>
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.pricingDate}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.pricingDate}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.netPrice}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.netPrice}</label>
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 CGST
-                <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.cgst}</label>
+                <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md ">{data.cgst}</label>
               </label>
               <label htmlFor="" className="flex flex-col">
                 SGST
@@ -189,28 +193,28 @@ function ViewProduct() {
               </label>
               <label htmlFor="" className="flex flex-col">
                 IGST
-                <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.igst}</label>
+                <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md ">{data.igst}</label>
               </label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.costPrice}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.costPrice}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.targetPrice}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.targetPrice}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.floorPrice}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.floorPrice}</label>
             </div>
 
             <div className="flex gap-3 items-center mt-3">
               <label>HSN</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,c0.385)] rounded-md">{data.hsn}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.hsn}</label>
             </div>
           </div>
 
@@ -218,25 +222,25 @@ function ViewProduct() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center  z-[998]">
               <label>Country of Origin</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.country}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.country}</label>
             </div>
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.manufacturingUnit}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.manufacturingUnit}</label>
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.eccn}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.eccn}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>EAN Number</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.eanNumber}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.eanNumber}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Weight</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.weight}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{data.weight}</label>
             </div>
 
             <div className="flex gap-5 items-end">
@@ -257,7 +261,7 @@ function ViewProduct() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
 
             
             {data?.fileUrls?.map((x: any, i: number) => (
@@ -285,7 +289,7 @@ function ViewProduct() {
           <button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Back
             </button>
-            {permissions?.edit?.includes("product master") &&<button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/product-master/edit-products/"+params?.id)}>
+            {permissions?.edit?.includes("finished goods") &&<button className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/master/product-master/finished-goods/edit/"+params?.id)}>
               Edit
             </button>}
             <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" >
@@ -298,4 +302,4 @@ function ViewProduct() {
   );
 }
 
-export default ViewProduct;
+export default ViewProductRawMaterial;
