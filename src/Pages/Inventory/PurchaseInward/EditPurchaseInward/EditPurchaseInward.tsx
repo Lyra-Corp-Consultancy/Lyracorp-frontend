@@ -4,7 +4,7 @@
 import  { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { editPurchaseInward, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getPurchaseOrdeBySerialNumber, getType } from "../../../../utils/redux/actions";
+import { editPurchaseInward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getPurchaseOrdeBySerialNumber, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -170,7 +170,7 @@ function EditPurchaseInward() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,

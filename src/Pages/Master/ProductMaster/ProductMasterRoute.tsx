@@ -1,20 +1,14 @@
 
 import { Route, Routes } from 'react-router-dom'
-import NavigationBar from '../../../components/NavigationBar'
-import ProductMaster from './ProductMaster'
-import AddProduct from './AddProduct/AddProduct'
-import ViewProduct from './ViewProduct/ViewProduct'
-import EditProduct from './EditProduct/EditProduct'
+import ProductRawMaterialRoute from './RawMaterial/ProductRawMaterialRoute'
+import ProductFinishedGoodsRoute from './FinishedGoods/ProductFinishedRoute'
 
 function ProductMasterRoute() {
   return (
     <div className='overflow-x-hidden'>
-    <NavigationBar/>
     <Routes>
-      <Route path='/' index element={<ProductMaster/>}/>
-      <Route path='/add-product' element={<AddProduct/>}/>
-      <Route path='/view-products/:id' element={<ViewProduct/>}/>
-      <Route path='/edit-products/:id' element={<EditProduct/>}/>
+      <Route path='/raw-material/*' index element={<ProductRawMaterialRoute/>}/>
+      <Route path='/finished-goods/*' index element={<ProductFinishedGoodsRoute/>}/>
     </Routes>
     </div>
   )
