@@ -159,6 +159,8 @@ function EditProfile() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles1(droppedFiles);
   };
+
+  
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Profile Master</h1>
@@ -423,7 +425,9 @@ function EditProfile() {
                       return x?.toLowerCase().includes(e.target.value.toLowerCase());
                     });
                     setSearch({ ...search, city: filtered });
-                    setData({ ...data, city: e.target.value });
+                    const billingAddress = data?.billingAddress;
+                        billingAddress[i] = { ...billingAddress[i], city: e.target.value };
+                        setData({ ...data, billingAddress });
                   }}
                   value={x.city}
                 >

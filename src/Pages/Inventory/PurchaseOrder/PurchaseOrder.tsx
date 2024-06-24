@@ -29,24 +29,55 @@ function PurchaseOrder() {
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
-    const vendor = dropDowns.vendor
-      .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
-      .map((x) => {
+    const vendor = dropDowns?.vendor
+      ?.filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
+      ?.map((x) => {
         return x?._id;
       });
+      
+      //constact Name
+      const user = dropDowns?.users
+      ?.filter((x) => x?.username?.toLowerCase()?.includes(lowerVal))
+     ?.map((x) => {
+        return x?._id;
+      });
+         
+     const shippingMethod =dropDowns?.shippingMethods
+     ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
+    ?.map((x) => {
+       return x?._id;
+     });
+
+     //paymentTerms
+
+     const paymentTerms =dropDowns?.payment
+     ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
+    ?.map((x) => {
+       return x?._id;
+     });
   
-  
-    console.log(vendor);
+
+   
 
     const active = data.active.filter((x) => {
-      if ( vendor.includes(x?.vendor)) {
+      if ( vendor?.includes(x?.vendor) ||
+       user?.includes(x?.contact) || 
+       paymentTerms?.includes(x?.paymentTerm)||
+        shippingMethod?.includes(x?.shippingMethod) || 
+        x?.deliveryDate?.toLowerCase().includes(lowerVal) ||
+         x?.paymentType?.toLowerCase().includes(lowerVal) ||  x?.billingAddress?.address?.toLowerCase().includes(lowerVal)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (vendor.includes(x?.vendor)) {
-        return x;
-      }
+      if ( vendor?.includes(x?.vendor) ||
+      user?.includes(x?.contact) || 
+      paymentTerms?.includes(x?.paymentTerm)||
+       shippingMethod?.includes(x?.shippingMethod) || 
+       x?.deliveryDate?.toLowerCase().includes(lowerVal) ||
+        x?.paymentType?.toLowerCase().includes(lowerVal) ||  x?.billingAddress?.address?.toLowerCase().includes(lowerVal)) {
+       return x;
+     }
     });
 
     setFiltered({ active, deactive });
@@ -139,6 +170,8 @@ function PurchaseOrder() {
       });
     });
   }, []);
+  console.log("data ", data)
+  console.log("dropdown ", dropDowns)
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
@@ -154,7 +187,7 @@ function PurchaseOrder() {
                   />
                   <path fill={active ? "white" : "black"} stroke={active ? "white" : "black"} d="M18.2657 6.07031L20.0377 7.85493L11.7728 16.1958L7.38086 11.7659L9.15282 9.98128L11.7728 12.6139L18.2657 6.07031Z" />
                 </svg>
-                <p className=" roboto-regular text-[15px]">Active Order</p>
+                <p className=" roboto-regular text-[15px]">Active Purchase Order</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.active?.length}</p>
             </button>
@@ -168,7 +201,7 @@ function PurchaseOrder() {
                   />
                 </svg>
 
-                <p className=" roboto-regular text-[15px]">Inactive Order</p>
+                <p className=" roboto-regular text-[15px]">Inactive Purchase Order</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.deactive?.length}</p>
             </button>
