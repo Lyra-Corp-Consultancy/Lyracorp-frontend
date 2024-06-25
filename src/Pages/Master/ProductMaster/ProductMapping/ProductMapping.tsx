@@ -13,11 +13,14 @@ function ProductMapping() {
   const [rawMaterials, setRawMaterials] = useState<any[]>([]);
   // const [fetchedMapping, setFetchedMapping] = useState<any[]>([]);
   const dispatch: any = useDispatch();
-  useEffect(() => {
+  const fetchMapping = () =>{
     dispatch(getAllProductFinishedGoods()).then((res: any) => {
       // console.log(res.payload.active)
       setFinishedGoods(res.payload.active);
     });
+  }
+  useEffect(() => {
+    fetchMapping()
     dispatch(getAllProductRawMaterial()).then((res: any) => {
       // console.log(res.payload.active)
       setRawMaterials(res.payload.active);
@@ -131,6 +134,8 @@ function ProductMapping() {
                     const temp = [...selectedProducts];
                     temp[1] = {};
                     setSelectedProducts([...temp]);
+                    setMappings([{}]);
+                    fetchMapping()
                   });
                 }}
                 className="w-full py-5"
@@ -146,8 +151,8 @@ function ProductMapping() {
                     {mappings.map((x, i) => (
                       <tr>
                         <td className="border">
-                          <Select value={rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName || ""}>
-                            {rawMaterials.map((x) => (
+                          <Select style={{zIndex:999-i}} value={rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName || ""}>
+                            {rawMaterials?.filter((x)=>mappings.every((y)=>y?.product!==x?._id)).map((x) => (
                               <li
                                 onClick={() => {
                                   const temp = [...mappings];
