@@ -52,7 +52,7 @@ function Permission() {
     setAllModules(data);
     dispatch(getUser(params.id)).then((res: any) => {
       setUser(res.payload);
-      setPermissions(res.payload.permissions)
+      setPermissions(res.payload.permissions || { view: [], edit: [], delete: [], add: [] })
     });
     dispatch(getType("department")).then((res: any) => {
       setDepartment(res?.payload[0]?.departmentType);
