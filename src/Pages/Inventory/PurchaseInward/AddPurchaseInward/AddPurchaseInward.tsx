@@ -120,6 +120,38 @@ function AddPurchaseInward() {
 
   //     setFiles([...files, ...selectedFiles]);
   //   };
+
+  useEffect(() => {
+    setSearchValue({
+      ...searchValue,
+      vendor: dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]
+        ?.VendorName,
+      
+        document: dropDowns?.document?.filter(
+        (x) => x?._id === data?.bussinessDocument
+      )[0]?.value,
+
+      uom: data?.products?.map((e: any) => {
+        return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value
+          ?.name;
+      }),
+
+     
+      certificate: data?.products?.map((e: any) => {
+        return dropDowns?.certificate?.filter(
+          (u: any) => u._id === e.certificate
+        )[0]?.value;
+      }),
+
+      products: data?.products?.map((e: any) => {
+        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]
+          ?.productName;
+      }),
+    });
+  }, [dropDowns, data]);
+
+
+
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
 
@@ -254,9 +286,6 @@ function AddPurchaseInward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-  console.log("dd ", dropDowns);
-  console.log("data ", data?.products);
-
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
@@ -294,6 +323,7 @@ function AddPurchaseInward() {
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
+
           <h1 className="roboto-medium mt-1">Vendor Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
@@ -474,21 +504,6 @@ function AddPurchaseInward() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Warehouse</label>
-              {/* <Select required value={data?.warehouse?.address}>
-                {(
-                  user?.companyDetails[0]?.warehouse ||
-                  superAdminCompany?.warehouse
-                )?.map((x: any) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, warehouse: x });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.address}
-                  </li>
-                ))}
-              </Select> */}
 
               <Select
                 required
