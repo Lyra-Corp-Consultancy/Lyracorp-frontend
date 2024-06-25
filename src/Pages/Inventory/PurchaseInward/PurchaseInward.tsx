@@ -208,7 +208,7 @@ function PurchaseInward() {
                     d="M18.2657 6.07031L20.0377 7.85493L11.7728 16.1958L7.38086 11.7659L9.15282 9.98128L11.7728 12.6139L18.2657 6.07031Z"
                   />
                 </svg>
-                <p className=" roboto-regular text-[15px]">Active Order</p>
+                <p className=" roboto-regular text-[15px]">Active Purchase Order</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">
                 {data?.active?.length}
@@ -238,7 +238,7 @@ function PurchaseInward() {
                   />
                 </svg>
 
-                <p className=" roboto-regular text-[15px]">Inactive Order</p>
+                <p className=" roboto-regular text-[15px]">Inactive Purchase Order</p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">
                 {data?.deactive?.length}
