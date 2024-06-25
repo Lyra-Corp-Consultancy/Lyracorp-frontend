@@ -229,7 +229,7 @@ function NavigationBar() {
                     {permissions?.view?.includes("finished goods") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/finished-goods")}>
                       Finished Goods
                     </li>}
-                    {permissions?.view?.includes("product mapping") && <li className="text-start ms-5" onClick={() => navigate("/master/type-master/customer-type")}>
+                    {permissions?.view?.includes("product mapping") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
                       Product Mapping
                     </li>}
                    
