@@ -86,7 +86,7 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
     }
   });
 
-  export const editProductFinishedGoods = createAsyncThunk("user/editProductFinishedGoods", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
+  export const editProductFinishedGoods = createAsyncThunk("user/editProductFinishedGoods", async ({data,id}:{data:any,id:string}, { rejectWithValue }) => {
     try {
       await instance.patch("/master/product-master/finished-goods/"+id, { data });
       return 
