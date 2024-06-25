@@ -311,18 +311,7 @@ function EditPurchaseInward() {
             className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md "
             type="text"
           />
-          {/* <button
-            type="button"
-            onClick={() => {
-              dispatch(getPurchaseOrdeBySerialNumber(serialNumber)).then((res: any) => {
-                console.log(res.payload);
-                setData({ vendor: res.payload.vendor, products: res.payload.products });
-              });
-            }}
-            className="bg-[#5970F5] h-[30px] flex justify-center items-center text-white px-4 py-2 rounded-md"
-          >
-            Fetch
-          </button> */}
+         
         </div>
         <form
           onSubmit={(e) => {
@@ -335,18 +324,7 @@ function EditPurchaseInward() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-              {/* <Select required className="bg-white z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
-                {dropDowns?.vendor?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, vendor: x?._id });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.VendorName}
-                  </li>
-                ))}
-              </Select> */}
+             
               <Select
                 className="bg-white z-[990]"
                 required
@@ -503,18 +481,7 @@ function EditPurchaseInward() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Warehouse</label>
-              {/* <Select required  value={data?.warehouse?.address}>
-                {(user?.companyDetails[0]?.warehouse || superAdminCompany?.warehouse)?.map((x:any) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, warehouse: x });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                  >
-                    {x?.address}
-                  </li>
-                ))}
-              </Select> */}
+            
               <Select
                 required
                 pattern={
