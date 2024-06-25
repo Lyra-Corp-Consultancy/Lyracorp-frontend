@@ -28,7 +28,7 @@ function Active({ data, dropDowns, inActiveCustomer, selected, setSelected }: Pr
   const [inactive, setInactive] = useState("");
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
-
+  
   return (
     <div className="h-[80%] overflow-auto w-full">
       <table className="w-full mt-3 overflow-auto">

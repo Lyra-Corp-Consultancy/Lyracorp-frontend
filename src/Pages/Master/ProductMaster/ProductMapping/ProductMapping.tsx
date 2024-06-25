@@ -37,6 +37,11 @@ function ProductMapping() {
       setRawMaterials(res.payload.active);
     });
   }, []);
+    // const fil= finishedGoods ?.filter(
+    //   (x) =>
+    //     x?.productName ===
+    //   searchValue.fgMaterial
+    // )[0]?.productName
 
   return (
     <div>
