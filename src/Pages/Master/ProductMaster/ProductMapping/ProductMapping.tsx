@@ -125,7 +125,7 @@ function ProductMapping() {
                         temp[1] = temp[0];
                         temp[0] = {};
                         setMappings([...(temp[1].mappings || [])]);
-                        setSearchValue({...searchValue,fgMaterial:"",fgMaterialAdd:temp?.[1]?.productName,raw:temp[1]?.mappings?.map((x)=>{
+                        setSearchValue({...searchValue,fgMaterial:"",fgMaterialAdd:temp?.[1]?.productName,raw:temp[1]?.mappings?.map((x:any)=>{
                           const val = rawMaterials.filter((y)=>y?._id===x?.product)[0]?.productName
                           return val
                         })})

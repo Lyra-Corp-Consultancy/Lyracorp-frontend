@@ -887,7 +887,7 @@ function EditPurchaseOrder() {
                     <input
                       required
                       type="text"
-                      value={data?.products[i].orderQuantity}
+                      value={x.orderQuantity}
                       onChange={(e) => {
                         const product = data?.products;
                         product[i] = {
