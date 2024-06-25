@@ -273,8 +273,9 @@ function AddPurchaseOrder() {
   };
 
   console.log("dr ",dropDowns)
-  console.log()
+  
 
+ 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Order</h1>

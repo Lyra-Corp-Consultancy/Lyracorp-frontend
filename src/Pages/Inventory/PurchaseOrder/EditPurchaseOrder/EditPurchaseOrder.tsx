@@ -4,7 +4,14 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { editPurchaseOrder, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseOrderById, getType } from "../../../../utils/redux/actions";
+import {
+  editPurchaseOrder,
+  getAllProductRawMaterial,
+  getAllUserManagement,
+  getAllVendorMaster,
+  getPurchaseOrderById,
+  getType,
+} from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -75,7 +82,7 @@ function EditPurchaseOrder() {
     uom: any[];
     document: string;
     certificate: any[];
-    products: string[];
+    products: any[];
     users: string;
     vendor: string;
     packing: any[];
@@ -89,7 +96,6 @@ function EditPurchaseOrder() {
     discount: "",
     payment: "",
     document: "",
-
     uom: [],
     products: [],
     vendor: "",
@@ -165,6 +171,25 @@ function EditPurchaseOrder() {
       document: dropDowns?.document?.filter(
         (x) => x?._id === data?.bussinessDocument
       )[0]?.value,
+
+      uom: data?.products?.map((e: any) => {
+        return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value
+          ?.name;
+      }),
+      
+      packing  :  data?.products?.map((e: any) => {
+        return dropDowns?.packing?.filter((u: any) => u._id === e.packing)[0]?.value
+          ;
+      }),
+      certificate:data?.products?.map((e: any) => {
+        return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value
+          ;
+      }),
+
+      products:data?.products?.map((e: any) => {
+        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName
+          ;
+      }),
     });
   }, [dropDowns, data]);
 
@@ -306,9 +331,7 @@ function EditPurchaseOrder() {
     setFiles([...files, ...droppedFiles]);
   };
 
-  console.log("data ", data);
-  console.log("dd  ", dropDowns);
-
+ 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Order</h1>
@@ -803,7 +826,7 @@ function EditPurchaseOrder() {
                 <th className=" w-1/5">Certification</th>
               </tr>
             </thead>
-            <tbody>
+            {/* <tbody>
               {data?.products?.map((_x: any, i: number) => (
                 <tr className="">
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
@@ -926,6 +949,245 @@ function EditPurchaseOrder() {
                             {x?.value}
                           </li>
                         ))}
+                      </Select>
+                    </div>
+                  </td>
+                  {i > 0 && (
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const product = data.products;
+                          product.splice(i, 1);
+                          setData({ ...data, products: product });
+                        }}
+                        className=" rounded-full bg-[#5970F5] text-white h-5 w-5 flex justify-center items-center"
+                      >
+                        {" "}
+                        -{" "}
+                      </button>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody> */}
+
+            <tbody>
+              {data?.products?.map((x: any, i: number) => (
+                <tr className="">
+                  <td className="text-center  border w-1/5  justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <Select
+                        required
+                        className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
+                        pattern={
+                          dropDowns?.products?.filter(
+                            (x) => x?.productName === searchValue.products[i]
+                          )[0]?.productName
+                            ? undefined
+                            : ""
+                        }
+                        title="Please Select values from drop down"
+                        onChange={(e) => {
+                          const temp = searchValue.products;
+                          temp[i] = e.target.value;
+                          setSearchValue({ ...searchValue, products: temp });
+                        }}
+                        value={searchValue.products[i] || ""}
+                      >
+                        {dropDowns?.products
+                          ?.filter((a) =>
+                            a?.productName
+                              ?.toLowerCase()
+                              ?.includes(
+                                searchValue?.products[i]?.toLowerCase() || ""
+                              )
+                          )
+                          ?.map((x) => (
+                            <li
+                              onClick={() => {
+                                const temp = searchValue.products;
+                                temp[i] = x?.productName;
+                                setSearchValue({
+                                  ...searchValue,
+                                  products: temp,
+                                });
+                                const product = data?.products;
+                                product[i] = {
+                                  ...product[i],
+                                  productId: x?._id,
+                                };
+                                setData({ ...data, products: product });
+                              }}
+                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                            >
+                              {x?.productName || "No Name"}
+                            </li>
+                          ))}
+                      </Select>
+                    </div>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <input
+                      required
+                      type="text"
+                      value={data?.products[i].orderQuantity}
+                      onChange={(e) => {
+                        const product = data?.products;
+                        product[i] = {
+                          ...product[i],
+                          orderQuantity: e.target.value,
+                        };
+                        setData({ ...data, products: product });
+                      }}
+                      className="px-2 py-1 w-[60%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                    />
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <Select
+                        required
+                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        pattern={
+                          dropDowns?.uom?.filter(
+                            (x) => x?.value?.name === searchValue.uom[i]
+                          )[0]?.value?.name
+                            ? undefined
+                            : ""
+                        }
+                        title="Please Select values from drop down"
+                        onChange={(e) => {
+                          const temp = searchValue.uom;
+                          temp[i] = e.target.value;
+                          setSearchValue({ ...searchValue, uom: temp });
+                        }}
+                        value={searchValue.uom[i] || ""}
+                      >
+                        {dropDowns?.uom
+                          ?.filter((a) =>
+                            a?.value?.name
+                              ?.toLowerCase()
+                              ?.includes(
+                                searchValue?.uom[i]?.toLowerCase() || ""
+                              )
+                          )
+                          ?.map((x) => (
+                            <li
+                              onClick={() => {
+                                const temp = searchValue.uom;
+                                temp[i] = x?.value?.name;
+                                setSearchValue({ ...searchValue, uom: temp });
+
+                                const product = data?.products;
+                                product[i] = { ...product[i], uom: x?._id };
+                                setData({ ...data, products: product });
+                              }}
+                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                            >
+                              {x?.value?.name}
+                            </li>
+                          ))}
+                      </Select>
+                    </div>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <Select
+                        required
+                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        pattern={
+                          dropDowns?.packing?.filter(
+                            (x) => x?.value === searchValue.packing[i]
+                          )[0]?.value
+                            ? undefined
+                            : ""
+                        }
+                        title="Please Select values from drop down"
+                        onChange={(e) => {
+                          const temp = searchValue.packing;
+                          temp[i] = e.target.value;
+                          setSearchValue({ ...searchValue, packing: temp });
+                        }}
+                        value={searchValue.packing[i] || ""}
+                      >
+                        {dropDowns?.packing
+                          ?.filter((a) =>
+                            a?.value
+                              ?.toLowerCase()
+                              ?.includes(
+                                searchValue?.packing[i]?.toLowerCase() || ""
+                              )
+                          )
+                          ?.map((x) => (
+                            <li
+                              onClick={() => {
+                                const temp = searchValue.packing;
+                                temp[i] = x?.value;
+                                setSearchValue({
+                                  ...searchValue,
+                                  packing: temp,
+                                });
+                                const product = data?.products;
+                                product[i] = { ...product[i], packing: x?._id };
+                                setData({ ...data, products: product });
+                              }}
+                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                            >
+                              {x?.value}
+                            </li>
+                          ))}
+                      </Select>
+                    </div>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <Select
+                        required
+                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        pattern={
+                          dropDowns?.certificate?.filter(
+                            (x) => x?.value === searchValue.certificate[i]
+                          )[0]?.value
+                            ? undefined
+                            : ""
+                        }
+                        title="Please Select values from drop down"
+                        onChange={(e) => {
+                          const temp = searchValue.certificate;
+                          temp[i] = e.target.value;
+                          setSearchValue({ ...searchValue, certificate: temp });
+                        }}
+                        value={searchValue.certificate[i] || ""}
+                      >
+                        {dropDowns?.certificate
+                          ?.filter((a) =>
+                            a?.value
+                              ?.toLowerCase()
+                              ?.includes(
+                                searchValue?.certificate[i]?.toLowerCase() || ""
+                              )
+                          )
+                          ?.map((x) => (
+                            <li
+                              onClick={() => {
+                                const temp = searchValue.certificate;
+                                temp[i] = x?.value;
+                                setSearchValue({
+                                  ...searchValue,
+                                  certificate: temp,
+                                });
+                                const product = data?.products;
+                                product[i] = {
+                                  ...product[i],
+                                  certificate: x?._id,
+                                };
+                                setData({ ...data, products: product });
+                              }}
+                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                            >
+                              {x?.value}
+                            </li>
+                          ))}
                       </Select>
                     </div>
                   </td>
