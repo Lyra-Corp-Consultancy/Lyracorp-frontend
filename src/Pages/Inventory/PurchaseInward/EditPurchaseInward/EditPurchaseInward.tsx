@@ -295,18 +295,12 @@ function EditPurchaseInward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-  console.log("dd ", dropDowns);
-
-  console.log("data ", data);
-
-  console.log("serial");
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Inward</h1>
-
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
-          <label className="font-bold">Purchase Order Serial No</label>
+          <label className="font-bold ">Purchase Order Serial No</label>
           <input
             value={data?.seq}
             readOnly
