@@ -215,7 +215,7 @@ function EditPurchaseInward() {
   //   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
+      <h1 className="roboto-bold text-lg">Edit Purchase Inward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
