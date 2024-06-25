@@ -208,6 +208,11 @@ function AddPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
+
+
+ console.log("dd ",dropDowns)
+   console.log("data ",data?.products )
+
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
@@ -220,7 +225,7 @@ function AddPurchaseInward() {
             type="button"
             onClick={() => {
               dispatch(getPurchaseOrdeBySerialNumber(serialNumber)).then((res: any) => {
-                console.log(res.payload);
+                console.log(" payload "   ,res.payload);
                 setData({ vendor: res.payload.vendor, products: res.payload.products });
               });
             }}
