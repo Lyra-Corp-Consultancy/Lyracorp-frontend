@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from '@reduxjs/toolkit'
-import { addCustomerMaster, addProductMaster, addVendorMaster, getMyDetails } from './actions'
+import { addCustomerMaster, addProductFinishedGoods, addProductRawMaterial, addVendorMaster, getMyDetails } from './actions'
 
 export interface CounterState {
   msg: string|number,
@@ -55,13 +55,22 @@ export const counterSlice = createSlice({
     builder.addCase(getMyDetails.fulfilled,(state,{payload})=>{
       state.user = payload
     })
-    builder.addCase(addProductMaster.pending,(state)=>{
+    builder.addCase(addProductRawMaterial.pending,(state)=>{
       state.loader = true
     })
-    builder.addCase(addProductMaster.fulfilled,(state)=>{
+    builder.addCase(addProductRawMaterial.fulfilled,(state)=>{
       state.loader = false
     })
-    builder.addCase(addProductMaster.rejected,(state)=>{
+    builder.addCase(addProductRawMaterial.rejected,(state)=>{
+      state.loader = false
+    })
+    builder.addCase(addProductFinishedGoods.pending,(state)=>{
+      state.loader = true
+    })
+    builder.addCase(addProductFinishedGoods.fulfilled,(state)=>{
+      state.loader = false
+    })
+    builder.addCase(addProductFinishedGoods.rejected,(state)=>{
       state.loader = false
     })
   },

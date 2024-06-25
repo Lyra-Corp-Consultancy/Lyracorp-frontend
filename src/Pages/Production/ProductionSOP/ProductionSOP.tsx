@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 import NavigationBar from "../../../components/NavigationBar";
 import Select from "../../../components/Select";
-import { getAllProductMaster, getAllUserManagement, getProductionSOP, getType, ProductionProcessDone } from "../../../utils/redux/actions";
+import { getAllProductRawMaterial, getAllUserManagement, getProductionSOP, getType, productionProcessDone } from "../../../utils/redux/actions";
 import { ProductionSOPTypes } from "../../../utils/Type/types";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
@@ -29,7 +29,7 @@ function ProductionSOP() {
   const [productProcess, setProcess] = useState<ProductionSOPTypes[]>([]);
 
   useEffect(() => {
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       console.log(res.payload.active);
       setData(res.payload.active);
     });
@@ -54,7 +54,7 @@ function ProductionSOP() {
                 e.preventDefault();
                 if (productProcess[0]) {
                   const saveData = { productProcess, productId: selectedProduct._id, batchNumber: selectedProduct.batchNumber };
-                  dispatch(ProductionProcessDone(saveData)).then(() => {
+                  dispatch(productionProcessDone(saveData)).then(() => {
                     console.log("saved");
                     setSelectedProduct({});
                     setProcess([]);

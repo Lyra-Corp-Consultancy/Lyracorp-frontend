@@ -2,18 +2,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
-import Select from "../../../../components/Select";
+import Select from "../../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { addProductMaster, getType } from "../../../../utils/redux/actions";
+import { addProductRawMaterial, getType } from "../../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { fileServer } from "../../../../utils/values/publicValues";
+import { fileServer } from "../../../../../utils/values/publicValues";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./AddProduct.module.scss";
-import { startLoading } from "../../../../utils/redux/slice";
+import { startLoading } from "../../../../../utils/redux/slice";
 
-function AddProduct() {
+function AddProductRawMaterial() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -50,7 +50,7 @@ function AddProduct() {
     console.log(urls);
     setData({ ...data, fileUrls: urls });
 
-    dispatch(addProductMaster({ ...data, fileUrls: urls })).then(() => {
+    dispatch(addProductRawMaterial({ ...data, fileUrls: urls })).then(() => {
       navigate(-1);
     });
   };
@@ -128,7 +128,7 @@ function AddProduct() {
   };
   return (
     <div className="h-[110vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Product Master</h1>
+      <h1 className="roboto-bold text-lg">Add Raw Material Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
@@ -137,13 +137,13 @@ function AddProduct() {
           }}
           className="shadow-md bg-white px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Product Type</h1>
+          <h1 className="roboto-medium mt-1">Raw Material Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Product Name</label>
+            <label>RM Name</label>
             <input required value={data.productName} name="productName" onChange={(e) => setData({ ...data, productName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-            <label>Product Code</label>
+            <label>RM Code</label>
             <input required value={data.productCode} name="productCode" onChange={(e) => setData({ ...data, productCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-            <label>Product Description</label>
+            <label>RM Description</label>
             <textarea required value={data.productDes} onChange={(e) => setData({ ...data, productDes: e.target.value })} cols={70} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
           </div>
           <h1 className="roboto-medium mt-1">Specifications</h1>
@@ -167,7 +167,7 @@ function AddProduct() {
               </Select>
             </div>
             <div className="flex gap-3 z-[999] items-center">
-              <label>Discount</label>
+              <label>Discount Type</label>
               <Select required onChange={(e)=>{
               setSearchValue({...searchValue,discount:e.target.value})
             }} value={searchValue.discount || ""} >
@@ -183,6 +183,11 @@ function AddProduct() {
                   </li>
                 ))}
               </Select>
+            </div>
+            <div className="flex gap-3 z-[999] items-center">
+              <label>Discount</label>
+              <input type="number" value={data?.discount} required onChange={(e)=>setData({...data,discount:e.target.value})} className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md" min={0} max={100}/>
+              <label>%</label>
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
@@ -414,4 +419,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default AddProductRawMaterial;

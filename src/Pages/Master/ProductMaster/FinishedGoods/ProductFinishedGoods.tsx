@@ -1,13 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { activeAndDeactiveProductMaster, getAllProductMaster, getType } from "../../../utils/redux/actions";
+import { activeAndDeactiveProductFinishedGoods, getAllProductFinishedGoods, getType } from "../../../../utils/redux/actions";
 import ActiveUsers from "./ActiveUsers";
 import DeactiveUsers from "./DeactiveUsers";
-import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
+import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
-function ProductMaster() {
+function ProductFinishedGoods() {
   const [data, setData] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
   const [filtered, setFiltered] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
   const dispatch: any = useDispatch();
@@ -55,7 +56,7 @@ function ProductMaster() {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductFinishedGoods()).then((res: any) => {
       setData(res.payload);
       setFiltered(res.payload);
     });
@@ -112,7 +113,7 @@ function ProductMaster() {
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
-        <h1 className="text-xl roboto-bold">Product Master</h1>
+        <h1 className="text-xl roboto-bold">Finished Goods Master</h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="flex gap-4">
             <button onClick={() => setActive(true)} className={"flex flex-col  rounded-md px-4 py-2 " + (active ? "bg-[#5970F5] text-white" : "bg-[#C3CBFF] text-black ")}>
@@ -124,7 +125,7 @@ function ProductMaster() {
                   <path d="M22.3602 7.09766L12.1602 12.1977" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M17.3797 4.55078L7.17969 9.65078" stroke={active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
-                <p className=" roboto-regular text-[15px]">Active Products</p>
+                <p className=" roboto-regular text-[15px]">Active Finished Goods </p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.active?.length}</p>
             </button>
@@ -139,14 +140,14 @@ function ProductMaster() {
                   <path d="M17.3797 4.55078L7.17969 9.65078" stroke={!active ? "white" : "black"} stroke-width="2.04" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
 
-                <p className=" roboto-regular text-[15px]">Inactive Products</p>
+                <p className=" roboto-regular text-[15px]">Inactive Finished Goods </p>
               </div>
               <p className=" roboto-regular flex justify-center items-center w-full text-[15px]">{data?.deactive?.length}</p>
             </button>
           </div>
 
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-4">
-            <h2 className="roboto-bold ms-3 text-[20px]">Product List</h2>
+            <h2 className="roboto-bold ms-3 text-[20px]">Finished Goods List</h2>
             <div className="px-4 flex justify-between">
               <label className="flex px-3 w-2/5 rounded-md py-1 mt-2 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] items-center gap-3" htmlFor="">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -203,11 +204,11 @@ function ProductMaster() {
                   </svg>
                 )}
 
-                {permissions?.add?.includes("product master") && <Link to={"/master/product-master/add-product"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
+                {permissions?.add?.includes("finished goods") && <Link to={"/master/product-master/finished-goods/add"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
                   <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.0714 7.92857H7.42857V12.5714C7.42857 12.8177 7.33074 13.0539 7.1566 13.228C6.98246 13.4022 6.74627 13.5 6.5 13.5C6.25373 13.5 6.01754 13.4022 5.8434 13.228C5.66926 13.0539 5.57143 12.8177 5.57143 12.5714V7.92857H0.928571C0.682299 7.92857 0.446113 7.83074 0.271972 7.6566C0.0978315 7.48246 0 7.24627 0 7C0 6.75373 0.0978315 6.51754 0.271972 6.3434C0.446113 6.16926 0.682299 6.07143 0.928571 6.07143H5.57143V1.42857C5.57143 1.1823 5.66926 0.946113 5.8434 0.771972C6.01754 0.597831 6.25373 0.5 6.5 0.5C6.74627 0.5 6.98246 0.597831 7.1566 0.771972C7.33074 0.946113 7.42857 1.1823 7.42857 1.42857V6.07143H12.0714C12.3177 6.07143 12.5539 6.16926 12.728 6.3434C12.9022 6.51754 13 6.75373 13 7C13 7.24627 12.9022 7.48246 12.728 7.6566C12.5539 7.83074 12.3177 7.92857 12.0714 7.92857Z" fill="white" />
                   </svg>
-                  Add Product
+                  Add Finished Goods 
                 </Link>}
               </div>
             </div>
@@ -216,7 +217,7 @@ function ProductMaster() {
                 setSelected={setActiveSelectedUsers}
                 selected={ActiveSelectUsers}
                 inActiveCustomer={() => {
-                  dispatch(getAllProductMaster()).then((res: any) => {
+                  dispatch(getAllProductFinishedGoods()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -231,7 +232,7 @@ function ProductMaster() {
                 data={filtered?.deactive}
                 dropDowns={dropDowns}
                 ActiveCustomer={() => {
-                  dispatch(getAllProductMaster()).then((res: any) => {
+                  dispatch(getAllProductFinishedGoods()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -250,8 +251,8 @@ function ProductMaster() {
           ResolveFunction={() => {
             if (active) {
               if (ActiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveProductMaster(ActiveSelectUsers)).then(() => {
-                  dispatch(getAllProductMaster()).then((res: any) => {
+                dispatch(activeAndDeactiveProductFinishedGoods(ActiveSelectUsers)).then(() => {
+                  dispatch(getAllProductFinishedGoods()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -260,8 +261,8 @@ function ProductMaster() {
               setActiveSelectedUsers([]);
             } else {
               if (InactiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveProductMaster(InactiveSelectUsers)).then(() => {
-                  dispatch(getAllProductMaster()).then((res: any) => {
+                dispatch(activeAndDeactiveProductFinishedGoods(InactiveSelectUsers)).then(() => {
+                  dispatch(getAllProductFinishedGoods()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -277,4 +278,4 @@ function ProductMaster() {
   );
 }
 
-export default ProductMaster;
+export default ProductFinishedGoods;

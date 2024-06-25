@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import demoprofile from "../assets/images/demoprofilepic.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +11,9 @@ import Cookies from "js-cookie";
 
 function NavigationBar() {
   const location = useLocation();
-  const superAdminCompany = useSelector((state:any)=>state?.data?.superAdminCompany)
+  const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const [dropDown, setDropDown] = useState("");
-  const [typeMaster, setTypeMaster] = useState(false);
+  const [typeMaster, setTypeMaster] = useState<null | "type" | "product">();
   const navigate = useNavigate();
   const dispatch: any = useDispatch();
   const permissions = useSelector((state: any) => state.data?.user?.permissions);
@@ -43,11 +43,15 @@ function NavigationBar() {
   }, [handleClick]);
 
   return (
-    <div className="bg-[#5970F5] w-full px-10" onMouseOut={()=>{
-      document.addEventListener("click",handleClick)
-    }} onMouseOver={()=>{
-      document.removeEventListener("click",handleClick)
-    }}>
+    <div
+      className="bg-[#5970F5] w-full px-10"
+      onMouseOut={() => {
+        document.addEventListener("click", handleClick);
+      }}
+      onMouseOver={() => {
+        document.removeEventListener("click", handleClick);
+      }}
+    >
       <div className="flex justify-between py-1 items-center">
         <h1 className="text-[30px] text-white font-semibold ">Logo</h1>
 
@@ -61,8 +65,8 @@ function NavigationBar() {
 
         <div className="flex gap-3">
           {/*call support button */}
-          <button className="px-3 py-1 bg-white rounded-md" onClick={()=>navigate("/select-company")}>
-              {superAdminCompany?.companyName}
+          <button className="px-3 py-1 bg-white rounded-md" onClick={() => navigate("/select-company")}>
+            {superAdminCompany?.companyName}
           </button>
           <button className=" bg-[#F4F4F4] p-1 rounded">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,9 +126,9 @@ function NavigationBar() {
                 {getAllChildrens(createdModules[1][1][0]).some((child) => permissions?.view?.includes(child)) && (
                   <>
                     {" "}
-                    {typeMaster ? (
+                    {typeMaster === "type" ? (
                       <ul className="list-item">
-                        <dl onClick={() => setTypeMaster(!typeMaster)} className="flex justify-between text-[#5970F5]">
+                        <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
                           Type Master <span>-</span>
                         </dl>
                         {permissions?.view?.includes("customer type") && (
@@ -187,24 +191,24 @@ function NavigationBar() {
                             Vendor Type
                           </li>
                         )}
-                          {permissions?.view?.includes("packing type") && (
+                        {permissions?.view?.includes("packing type") && (
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/packing-type")}>
                             Packing Type
                           </li>
-                        )} 
-                          {permissions?.view?.includes("shipping type") && (
+                        )}
+                        {permissions?.view?.includes("shipping type") && (
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/shipping-type")}>
                             Shipping Type
                           </li>
                         )}
-                          {permissions?.view?.includes("transport type") && (
+                        {permissions?.view?.includes("transport type") && (
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/transport-type")}>
                             Transport Type
                           </li>
-                        )} 
+                        )}
                       </ul>
                     ) : (
-                      <button onClick={() => setTypeMaster(!typeMaster)} className="flex justify-between text-[#5970F5]">
+                      <button onClick={() => setTypeMaster("type")} className="flex justify-between text-[#5970F5]">
                         Type Master <span>+</span>
                       </button>
                     )}
@@ -220,10 +224,26 @@ function NavigationBar() {
                     Vendor Master
                   </button>
                 )}
-                {permissions?.view?.includes("product master") && (
-                  <button className="text-start" onClick={() => navigate("/master/product-master")}>
-                    Product Master
-                  </button>
+                {getAllChildrens(createdModules[1][1][3]).some((child) => permissions?.view?.includes(child)) && (
+                  <>
+                  
+                  {typeMaster === "product" ? <ul className="list-item">
+                    <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
+                      Product Master <span>-</span>
+                    </dl>
+                    {permissions?.view?.includes("raw material") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/raw-material")}>
+                      Raw Materials
+                    </li>}
+                    {permissions?.view?.includes("finished goods") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/finished-goods")}>
+                      Finished Goods
+                    </li>}
+                    {permissions?.view?.includes("product mapping") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
+                      Product Mapping
+                    </li>}
+                   
+                  </ul> :  <button onClick={() => setTypeMaster("product")} className="flex justify-between text-[#5970F5]">
+                        Product Master <span>+</span>
+                      </button>}</>
                 )}
                 {permissions?.view?.includes("profile master") && (
                   <button className="text-start" onClick={() => navigate("/master/profile-master")}>
@@ -245,9 +265,17 @@ function NavigationBar() {
                     Purchase Order
                   </button>
                 )}
-                {permissions?.view?.includes("purchase inward") && <button className="text-start" onClick={() => navigate("/inventory/purchase-inward")}>Purchase Inward</button>}
+                {permissions?.view?.includes("purchase inward") && (
+                  <button className="text-start" onClick={() => navigate("/inventory/purchase-inward")}>
+                    Purchase Inward
+                  </button>
+                )}
                 {permissions?.view?.includes("stock check") && <button className="text-start">Stock Check</button>}
-                {permissions?.view?.includes("raw material - outward") && <button className="text-start" onClick={() => navigate("/inventory/raw-material-outward")}>Raw Material - Outward</button>}
+                {permissions?.view?.includes("raw material - outward") && (
+                  <button className="text-start" onClick={() => navigate("/inventory/raw-material-outward")}>
+                    Raw Material - Outward
+                  </button>
+                )}
                 {permissions?.view?.includes("finished good - inward") && <button className="text-start">Finished Goods - Inward</button>}
               </div>
             )}
@@ -259,8 +287,12 @@ function NavigationBar() {
             <p onClick={() => setDropDown(dropDown === "quality" ? "" : "quality")}>Quality Management</p>
             {dropDown === "quality" && (
               <div className={"flex p-1 flex-col bg-white absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
-               {permissions?.view?.includes("quality check - PO") &&  <button className="text-start" onClick={() => navigate("/qc/qc-po")}>Quality Check - PO</button>}
-               {permissions?.view?.includes("quality check - FG") &&<button className="text-start">Quality Check - FG</button>}
+                {permissions?.view?.includes("quality check - PO") && (
+                  <button className="text-start" onClick={() => navigate("/qc/qc-po")}>
+                    Quality Check - PO
+                  </button>
+                )}
+                {permissions?.view?.includes("quality check - FG") && <button className="text-start">Quality Check - FG</button>}
               </div>
             )}
           </button>
@@ -270,33 +302,36 @@ function NavigationBar() {
             <p onClick={() => setDropDown(dropDown === "production" ? "" : "production")}>Production Management</p>
             {dropDown === "production" && (
               <div className={"flex bg-white p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
-               {permissions?.view?.includes("production management master") &&  <button className="text-start" onClick={() => navigate("/production/master-settings")}>Production Master Settings</button>}
-               {permissions?.view?.includes("production sop") &&<button className="text-start" onClick={() => navigate("/production/sop")}>Production SOP</button>}
+                {permissions?.view?.includes("production management master") && (
+                  <button className="text-start" onClick={() => navigate("/production/master-settings")}>
+                    Production Master Settings
+                  </button>
+                )}
+                {permissions?.view?.includes("production sop") && (
+                  <button className="text-start" onClick={() => navigate("/production/sop")}>
+                    Production SOP
+                  </button>
+                )}
               </div>
             )}
           </button>
         )}
-        {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
+        {/* {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative" + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>
-            <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p>{" "}
-            {dropDown === "supply-chain" && (
-              <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
-              {permissions?.view?.includes("finished good outward") &&    <button className="text-start">Finished Goods Outward</button>}
-              </div>
-            )}
+            <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p> {dropDown === "supply-chain" && <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>{permissions?.view?.includes("finished good outward") && <button className="text-start">Finished Goods Outward</button>}</div>}
           </button>
-        )}
-        {permissions?.view?.includes("order management") && (
+        )} */}
+        {/* {permissions?.view?.includes("order management") && (
           <button onClick={() => navigate("/order-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/order-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             Order Management
           </button>
-        )}
+        )} */}
         {permissions?.view?.includes("user management") && (
           <button onClick={() => navigate("/user-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/user-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             User Management
           </button>
         )}
-        <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>More</button>
+        {/* <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>More</button> */}
       </div>
     </div>
   );

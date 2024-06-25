@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  addRawMaterialOutward, getAllProductMaster, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getRawMaterialOutwardById, getType } from "../../../../utils/redux/actions";
+import {  addRawMaterialOutward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getRawMaterialOutwardById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
@@ -166,7 +166,7 @@ function ViewRawMaterialOutward() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,

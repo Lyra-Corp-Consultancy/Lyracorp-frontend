@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllProductMaster, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getType } from "../../../../utils/redux/actions";
+import { getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import "react-calendar/dist/Calendar.css";
@@ -136,7 +136,7 @@ function ViewPurchaseInward() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductMaster()).then((res: any) => {
+    dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
@@ -182,6 +182,16 @@ function ViewPurchaseInward() {
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">View Purchase Inward</h1>
+      
+        <div className="flex items-center mb-5  ml-[29px] gap-3">
+          <label className="font-bold">Purchase Order Serial No</label>
+          <input
+            value={data?.seq}
+            readOnly
+            className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md focus:outline-none focus:ring-0"
+            type="text"
+          />
+        </div>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full">

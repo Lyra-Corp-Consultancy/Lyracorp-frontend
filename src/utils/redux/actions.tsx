@@ -77,9 +77,18 @@ export const editCustomerMaster = createAsyncThunk("user/editCustomerMaster", as
   });
 
 
-  export const editProductMaster = createAsyncThunk("user/editProductMaster", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
+  export const editProductRawMaterial = createAsyncThunk("user/editProductRawMaterial", async ({data,id}:{data:CustomerMasterData,id:string}, { rejectWithValue }) => {
     try {
-      await instance.patch("/master/product-master/"+id, { data });
+      await instance.patch("/master/product-master/raw-material/"+id, { data });
+      return 
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+
+  export const editProductFinishedGoods = createAsyncThunk("user/editProductFinishedGoods", async ({data,id}:{data:any,id:string}, { rejectWithValue }) => {
+    try {
+      await instance.patch("/master/product-master/finished-goods/"+id, { data });
       return 
     } catch (err) {
       rejectWithValue(err);
@@ -160,9 +169,18 @@ export const getCustomerMasterById = createAsyncThunk("user/getCustomerMasterByI
 })
 
 
-export const getProductMasterById = createAsyncThunk("user/getProductMasterById", async(id:string,{rejectWithValue})=>{
+export const getProductRawMaterialById = createAsyncThunk("user/getProductRawMaterialById", async(id:string,{rejectWithValue})=>{
   try{
-      const res = await instance.get("/master/product-master/individual",{params:{id}});
+      const res = await instance.get("/master/product-master/raw-material/individual",{params:{id}});
+      return res.data;
+  }catch(err){
+      rejectWithValue(err);
+  }
+})
+
+export const getProductFinishedGoodsById = createAsyncThunk("user/getFinishedGoodsById", async(id:string,{rejectWithValue})=>{
+  try{
+      const res = await instance.get("/master/product-master/finished-goods/individual",{params:{id}});
       return res.data;
   }catch(err){
       rejectWithValue(err);
@@ -189,10 +207,20 @@ export const addVendorMaster = createAsyncThunk("user/addVendorMaster", async (d
 });
 
 
-export const addProductMaster = createAsyncThunk("user/addProductMaster", async (data: VendorMasterData, { rejectWithValue }) => {
+export const addProductRawMaterial = createAsyncThunk("user/addProductRawMaterial", async (data: VendorMasterData, { rejectWithValue }) => {
   try {
     console.log(data)
-    const res = await instance.post("/master/product-master", { data });
+    const res = await instance.post("/master/product-master/raw-material", { data });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const addProductFinishedGoods = createAsyncThunk("user/addProductFinishedGoods", async (data: VendorMasterData, { rejectWithValue }) => {
+  try {
+    console.log(data)
+    const res = await instance.post("/master/product-master/finished-goods", { data });
     return res.data;
   } catch (err) {
     rejectWithValue(err);
@@ -200,7 +228,7 @@ export const addProductMaster = createAsyncThunk("user/addProductMaster", async 
 });
 
 
-export const addProfileMaster = createAsyncThunk("user/addProductMaster", async (data: ProfileMaster, { rejectWithValue }) => {
+export const addProfileMaster = createAsyncThunk("user/addProfileMaster", async (data: ProfileMaster, { rejectWithValue }) => {
   try {
     console.log(data)
     const res = await instance.post("/master/profile-master", { data });
@@ -303,9 +331,18 @@ export const editVendorMaster = createAsyncThunk("user/editVendorMaster", async 
 });
 
 
-export const getAllProductMaster = createAsyncThunk("user/getAllProductMaster", async (_, { rejectWithValue }) => {
+export const getAllProductRawMaterial = createAsyncThunk("user/getAllProductRawMaterial", async (_, { rejectWithValue }) => {
   try {
-    const res = await instance.get("/master/product-master/all");
+    const res = await instance.get("/master/product-master/raw-material/all");
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getAllProductFinishedGoods = createAsyncThunk("user/getAllProductFinishedGoods", async (_, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/master/product-master/finished-goods/all");
     return res.data;
   } catch (err) {
     rejectWithValue(err);
@@ -313,9 +350,18 @@ export const getAllProductMaster = createAsyncThunk("user/getAllProductMaster", 
 });
 
 
-export const activeAndDeactiveProductMaster = createAsyncThunk("user/inactiveProductMaster", async (id: string[], { rejectWithValue }) => {
+export const activeAndDeactiveProductRawMaterial = createAsyncThunk("user/inactiveProductRawMaterial", async (id: string[], { rejectWithValue }) => {
   try {
-    await instance.delete("/master/product-master",{params:{id}});
+    await instance.delete("/master/product-master/raw-material",{params:{id}});
+    return
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const activeAndDeactiveProductFinishedGoods = createAsyncThunk("user/inactiveProductFinishedGoods", async (id: string[], { rejectWithValue }) => {
+  try {
+    await instance.delete("/master/product-master/finished-goods",{params:{id}});
     return
   } catch (err) {
     rejectWithValue(err);
@@ -535,7 +581,7 @@ export const createOrUpdateProductionSOP = createAsyncThunk("user/createOrUpdate
   }
 });
 
-export const ProductionProcessDone = createAsyncThunk("user/createOrUpdateProductionSOP", async (val:{productId:string,productProcess:ProductionSOPTypes[],batchNumber:string}, { rejectWithValue }) => {
+export const productionProcessDone = createAsyncThunk("user/createOrUpdateProductionSOP", async (val:{productId:string,productProcess:ProductionSOPTypes[],batchNumber:string}, { rejectWithValue }) => {
   try {
     await instance.post("/production/sop",{processDone:val});
     return 
