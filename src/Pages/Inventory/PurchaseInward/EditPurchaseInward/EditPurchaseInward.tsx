@@ -298,6 +298,8 @@ function EditPurchaseInward() {
   console.log("dd ", dropDowns);
 
   console.log("data ", data);
+
+  console.log("serial");
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Inward</h1>
@@ -306,13 +308,13 @@ function EditPurchaseInward() {
         <div className="flex items-center mb-5 gap-3">
           <label className="font-bold">Purchase Order Serial No</label>
           <input
-            onChange={(e) => setSerialNumber(e.target.value)}
+            value={data?.seq}
             readOnly
-            className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md "
+            className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md focus:outline-none focus:ring-0"
             type="text"
           />
-         
         </div>
+
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -324,7 +326,7 @@ function EditPurchaseInward() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
-             
+
               <Select
                 className="bg-white z-[990]"
                 required
@@ -481,7 +483,7 @@ function EditPurchaseInward() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Warehouse</label>
-            
+
               <Select
                 required
                 pattern={
