@@ -176,19 +176,21 @@ function EditPurchaseOrder() {
         return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value
           ?.name;
       }),
-      
-      packing  :  data?.products?.map((e: any) => {
-        return dropDowns?.packing?.filter((u: any) => u._id === e.packing)[0]?.value
-          ;
-      }),
-      certificate:data?.products?.map((e: any) => {
-        return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value
-          ;
+
+      packing: data?.products?.map((e: any) => {
+        return dropDowns?.packing?.filter((u: any) => u._id === e.packing)[0]
+          ?.value;
       }),
 
-      products:data?.products?.map((e: any) => {
-        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName
-          ;
+      certificate: data?.products?.map((e: any) => {
+        return dropDowns?.certificate?.filter(
+          (u: any) => u._id === e.certificate
+        )[0]?.value;
+      }),
+
+      products: data?.products?.map((e: any) => {
+        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]
+          ?.productName;
       }),
     });
   }, [dropDowns, data]);
@@ -331,7 +333,6 @@ function EditPurchaseOrder() {
     setFiles([...files, ...droppedFiles]);
   };
 
- 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Order</h1>
@@ -826,151 +827,6 @@ function EditPurchaseOrder() {
                 <th className=" w-1/5">Certification</th>
               </tr>
             </thead>
-            {/* <tbody>
-              {data?.products?.map((_x: any, i: number) => (
-                <tr className="">
-                  <td className="text-center  border w-1/5  justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select
-                        required
-                        className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
-                        value={
-                          dropDowns?.products?.filter(
-                            (x) => x?._id === data?.products[i]?.productId
-                          )[0]?.productName
-                        }
-                      >
-                        {dropDowns?.products?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = { ...product[i], productId: x?._id };
-                              setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.productName || "No Name"}
-                          </li>
-                        ))}
-                      </Select>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <input
-                      required
-                      type="text"
-                      value={data?.products[i].orderQuantity}
-                      onChange={(e) => {
-                        const product = data?.products;
-                        product[i] = {
-                          ...product[i],
-                          orderQuantity: e.target.value,
-                        };
-                        setData({ ...data, products: product });
-                      }}
-                      className="px-2 py-1 w-[60%] bg-[#F6F4F4]  h-[25px] rounded-md"
-                    />
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select
-                        required
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        value={
-                          dropDowns?.uom?.filter(
-                            (x) => x?._id === data?.products[i]?.uom
-                          )[0]?.value?.name
-                        }
-                      >
-                        {dropDowns?.uom?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = { ...product[i], uom: x?._id };
-                              setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.value?.name}
-                          </li>
-                        ))}
-                      </Select>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select
-                        required
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        value={
-                          dropDowns?.packing?.filter(
-                            (x) => x?._id === data?.products[i]?.packing
-                          )[0]?.value
-                        }
-                      >
-                        {dropDowns?.packing?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = { ...product[i], packing: x?._id };
-                              setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.value}
-                          </li>
-                        ))}
-                      </Select>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select
-                        required
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        value={
-                          dropDowns?.certificate?.filter(
-                            (x) => x?._id === data?.products[i]?.certificate
-                          )[0]?.value
-                        }
-                      >
-                        {dropDowns?.certificate?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = {
-                                ...product[i],
-                                certificate: x?._id,
-                              };
-                              setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.value}
-                          </li>
-                        ))}
-                      </Select>
-                    </div>
-                  </td>
-                  {i > 0 && (
-                    <td>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const product = data.products;
-                          product.splice(i, 1);
-                          setData({ ...data, products: product });
-                        }}
-                        className=" rounded-full bg-[#5970F5] text-white h-5 w-5 flex justify-center items-center"
-                      >
-                        {" "}
-                        -{" "}
-                      </button>
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody> */}
 
             <tbody>
               {data?.products?.map((x: any, i: number) => (
