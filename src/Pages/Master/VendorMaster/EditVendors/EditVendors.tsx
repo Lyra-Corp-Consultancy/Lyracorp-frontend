@@ -159,7 +159,7 @@ function EditVendors() {
   };
   return (
     <div className="min-h-[90vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Vendor Master</h1>
+      <h1 className="roboto-bold text-lg">Edit Vendor Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full min-h-[90%]">
         <form
           onSubmit={(e) => {
