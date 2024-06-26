@@ -321,6 +321,7 @@ function NavigationBar() {
             )}
           </button>
         )}
+        
         {/* {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative" + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p> {dropDown === "supply-chain" && <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>{permissions?.view?.includes("finished good outward") && <button className="text-start">Finished Goods Outward</button>}</div>}
@@ -334,6 +335,25 @@ function NavigationBar() {
         {permissions?.view?.includes("user management") && (
           <button onClick={() => navigate("/user-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/user-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             User Management
+          </button>
+        )}
+         {getAllChildrens(createdModules[4]).some((child) => permissions?.view?.includes(child)) && (
+          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname?.includes("/production") ? " bg-white" : " bg-[#C3CBFF]")}>
+            <p onClick={() => setDropDown(dropDown === "reports" ? "" : "reports")}>Reports</p>
+            {dropDown === "reports" && (
+              <div className={"flex bg-white p-1 flex-col absolute shadow-md left-0  bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
+                {permissions?.view?.includes("production management master") && (
+                  <button className="text-start" onClick={() => navigate("/production/master-settings")}>
+                    Production Master Settings
+                  </button>
+                )}
+                {permissions?.view?.includes("production sop") && (
+                  <button className="text-start" onClick={() => navigate("/production/sop")}>
+                    Production SOP
+                  </button>
+                )}
+              </div>
+            )}
           </button>
         )}
         {/* <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>More</button> */}
