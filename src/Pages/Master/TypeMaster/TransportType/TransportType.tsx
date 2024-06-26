@@ -59,7 +59,7 @@ function TransportType() {
     const converted = input.split(" ").join("").toLowerCase();
 
     const finalword = values?.map((x) => {
-      return x?.value?.split(" ").join("");
+      return x?.value?.split(" ").join("").toLowerCase();
     });
    
     if (!finalword?.includes(converted)) {
