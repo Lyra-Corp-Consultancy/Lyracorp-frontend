@@ -12,6 +12,7 @@ export interface CustomerMasterData {
   primaryNumber?: string;
   secondaryNumber?: string;
   country?: string;
+  countryCode?: string;
   state?: string;
   district?: string;
   city?: string;

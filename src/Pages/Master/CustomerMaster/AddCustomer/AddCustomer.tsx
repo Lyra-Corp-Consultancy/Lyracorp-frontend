@@ -183,8 +183,8 @@ function AddCustomer() {
             <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"></label>
             <label>Customer Name</label>
             <input
-              pattern="[A-Za-z0-9_]+"
-              title="Users only can enter letter and number"
+              // pattern="[A-Za-z0-9_]+"
+              // title="Users only can enter letter and number"
               required
               value={data.customerName}
               onChange={(e) =>
@@ -304,26 +304,15 @@ function AddCustomer() {
                       onClick={() => {
                         const val = x;
                         setPhoneLength(val);
-                        setData({ ...data, country: val.label });
                         setSearchValue({
                           ...searchValue,
                           countryCode: "+" + val.phone,
                         });
-                        axios
-                          .post(
-                            "https://countriesnow.space/api/v0.1/countries/states",
-                            { country: val.label }
-                          )
-                          .then((res) => {
-                            setPlaces({
-                              ...places,
-                              state: res.data.data.states,
-                            });
-                            setSearch({
-                              ...search,
-                              state: res.data.data.states,
-                            });
-                          });
+                        setData({
+                          ...data,
+                          countryCode: "+" + val.phone,
+                        })
+                     
                       }}
                     >
                       +{x.phone}
@@ -400,11 +389,11 @@ function AddCustomer() {
                           y.label.toLowerCase() === x?.country?.toLowerCase()
                       );
                       console.log(country);
-                      setPhoneLength(country[0]);
-                      setSearchValue({
-                        ...searchValue,
-                        countryCode: "+" + country[0].phone,
-                      });
+                      // setPhoneLength(country[0]);
+                      // setSearchValue({
+                      //   ...searchValue,
+                      //   countryCode: "+" + country[0].phone,
+                      // });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
