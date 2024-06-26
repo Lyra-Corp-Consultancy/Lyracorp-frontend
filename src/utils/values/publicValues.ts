@@ -8,6 +8,7 @@ export const createdModules = [
                                             ["customer type"],
                                             ["account type"],
                                             ["payment type"],
+                                            ["payment term"],
                                             ["discount type"],
                                             ["document type"], 
                                             ["certification type"], 

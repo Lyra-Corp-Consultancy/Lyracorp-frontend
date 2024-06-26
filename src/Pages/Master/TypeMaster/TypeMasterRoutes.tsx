@@ -15,6 +15,7 @@ import RoleType from './RoleType/RoleType'
 import PackingType from './PackingType/PackingType'
 import ShippingType from './ShippingType/ShippingType'
 import TransportType from './TransportType/TransportType'
+import PaymentTerm from './PaymentTerm/PaymentTerm'
 
 function TypeMasterRoutes() {
     return (
@@ -35,6 +36,7 @@ function TypeMasterRoutes() {
                 <Route path='/packing-type' element={<PackingType />} />
                 <Route path='/shipping-type' element={<ShippingType />} />
                 <Route path='/transport-type' element={<TransportType />} />
+                <Route path='/payment-term' element={<PaymentTerm />} />
             </Routes>
         </>
     )

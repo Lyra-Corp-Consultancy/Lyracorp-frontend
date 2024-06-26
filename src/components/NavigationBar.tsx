@@ -138,6 +138,11 @@ function NavigationBar() {
                             Payment Type
                           </li>
                         )}
+                         {permissions?.view?.includes("payment term") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/type-master/payment-term")}>
+                            Payment Term
+                          </li>
+                        )}
                         {permissions?.view?.includes("discount type") && (
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/discount-type")}>
                             Discount Type
