@@ -5,105 +5,72 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTypeMaster, getType, postType, updateType } from "../../../../utils/redux/actions";
 import ConfirmationBox from "../../../../components/ConfirmationBox";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
-import { makeToast } from "../../../../utils/redux/slice";
 
-function UOMType() {
+function PaymentTerm() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch: any = useDispatch();
-  const [input, setInput] = useState({ name: "", des: "" });
+  const [input, setInput] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [values, setValues] = useState<any[]>();
   const [search, setSearch] = useState<any[]>();
   const [deleteType, setDelete] = useState<string[]>([]);
   const permissions = useSelector((state: any) => state.data?.user?.permissions);
 
-  const fetchUOMType = () => {
-    const res = dispatch(getType("uom"));
+  const fetchPaymentTerm = () => {
+    const res = dispatch(getType("paymentTerm"));
     res.then((res: any) => {
-      setValues(res?.payload[0]?.uomType);
-      setSearch(res?.payload[0]?.uomType);
-      setInput({ name: "", des: "" });
+      setValues(res?.payload[0]?.paymentTerm);
+      setSearch(res?.payload[0]?.paymentTerm);
+      setInput("");
     });
   };
   useEffect(() => {
-    fetchUOMType();
+    fetchPaymentTerm();
   }, []);
 
   useEffect(() => {
     if (deleteType.length === 1) {
       setInput(values?.filter((x) => x._id === deleteType[0])[0].value);
     } else {
-      setInput({ des: "", name: "" });
+      setInput("");
     }
   }, [deleteType]);
 
-  const removeUOMType = () => {
-    const res = dispatch(deleteTypeMaster({ values: deleteType, type: "uom" }));
+  const removePaymentTerm = () => {
+    const res = dispatch(deleteTypeMaster({ values: deleteType, type: "paymentTerm" }));
     res.then(() => {
       setDelete([]);
-      fetchUOMType();
+      fetchPaymentTerm();
     });
     setConfirmation("");
   };
 
-  const addUOMType = () => {
-    // const res = dispatch(postType({ value: input, type: "uom" }));
-    // res.then(() => {
-    //   fetchUOMType();
-    // });
-    // setConfirmation("");
-
-    const converted = input?.name?.split(" ").join("").toLowerCase();
-    const convertedDescription = input?.des
-    ?.split(" ").join("").toLowerCase();
-    const finalword = values?.map((x) => {
-      return x?.value?.name?.split(" ").join("");
-    });
-
-    const finalword2=values?.map((x)=>{
-      return x?.value?.des?.split(" ").join("");      //For description
-    }
-    )
-    
-    if ((!finalword?.includes(converted)) && (!finalword2?.includes(convertedDescription))  ) {
-      const res = dispatch(postType({ type: "shipping", value: input }));
-      res.then(() => {
-        fetchUOMType();
-      });
-      setConfirmation("");
-    } else {
-      setConfirmation("");
-      dispatch(
-        makeToast({
-          heading: "Error",
-          text: "Can't add the type; Name already exists.",
-        })
-      );
-    }
-
-  };
-
-  const editUOMType = () => {
-    const res = dispatch(updateType({ id: deleteType[0], val: input, type: "uom" }));
+  const addPaymentTerm = () => {
+    const res = dispatch(postType({ value: input, type: "paymentTerm" }));
     res.then(() => {
-      setDelete([]);
-      setInput({ des: "", name: "" });
-      fetchUOMType();
+      fetchPaymentTerm();
     });
     setConfirmation("");
   };
 
-  console.log("input ",input)
-  console.log("val ",values)
+  const editPaymentTerm = () => {
+    const res = dispatch(updateType({ id: deleteType[0], val: input, type: "paymentTerm" }));
+    res.then(() => {
+      setDelete([]);
+      setInput(" ");
+      fetchPaymentTerm();
+    });
+    setConfirmation("");
+  };
   return (
     <div className="min-h-screen">
       <NavigationBar />
       <div className="px-10 pt-4">
-        <h1 className="text-[20px] roboto-bold">UOM Type Master</h1>
+        <h1 className="text-[20px] roboto-bold">Payment Term Master</h1>
         <div className="w-full  justify-between rounded-lg shadow-md shadow-[#00000055] pt-2 px-5 pb-16 bg-[#F1F3FF] h-[60vh]">
           <div className="bg-[#ffffff] w-full flex justify-between  shadow-md shadow-[#00000055] h-full rounded-lg ">
             <div className="w-1/2 h-full px-5 py-2">
-              <h2 className="text-black font-semibold">UOM Type List</h2>
+              <h2 className="text-black font-semibold">Payment Term List</h2>
               <div className="w-full rounded-lg h-[85%] shadow-md shadow-[#00000055]">
                 <div className="flex justify-between px-3 py-2 items-center">
                   <label className="flex px-3 w-3/5 rounded-md py-1 shadow-md shadow-[#00000055] items-center gap-3" htmlFor="">
@@ -158,10 +125,7 @@ function UOMType() {
                       className="h-3 cursor-pointer w-3 border border-white bg-none"
                     ></div>
                   )}
-                  <div className="grid grid-cols-2 w-1/2 items-center">
-                    <p className="text-white ">UOM Type</p>
-                    <p className="text-white">UOM Description</p>
-                  </div>
+                  <p className="text-white ">Payment Term</p>
                 </div>
                 <div className="overflow-auto h-[70%] rounded-[0_0_10px_10px]">
                   {search?.map((x: any) => (
@@ -184,48 +148,37 @@ function UOMType() {
                       ) : (
                         <div onClick={() => setDelete((prev) => [...prev, x?._id])} className="h-3 cursor-pointer w-3 border border-[#5970f5] bg-none"></div>
                       )}
-                      <div className=" grid grid-cols-2 w-1/2  items-center">
-                        <p className="text-black ">{x?.value?.name}</p>
-                        <p>{x?.value?.des}</p>
-                      </div>
+                      <p className="text-black ">{x?.value}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {((deleteType?.length === 1 && permissions?.edit?.includes("UOM type")) || permissions?.add?.includes("UOM type")) && (
+            {((deleteType?.length === 1 && permissions?.edit?.includes("payment term")) || permissions?.add?.includes("payment term")) && (
               <div className="w-1/2 h-full px-5 py-2">
-                <h2 className="text-black font-semibold">{deleteType.length === 1 ? "Edit" : "Add"} UOM Type</h2>
+                <h2 className="text-black font-semibold">{deleteType.length === 1 ? "Edit" : "Add"} Payment Term</h2>
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
-                    if (input.des.length > 0 && input.name.length > 0) {
+                    if (input.length > 0) {
                       setConfirmation(deleteType.length === 1 ? "edit" : "add");
                     }
                   }}
                   className="w-full flex flex-col justify-between rounded-lg h-[85%] shadow-md shadow-[#00000055]"
                 >
-                  <div>
-                    <div className="flex gap-28 px-5 pt-5 items-center">
-                      <label htmlFor="" className="font-semibold text-[14px]">
-                        Type Name
-                      </label>
-                      <input required type="text" onChange={(e) => setInput({ ...input, name: e.target.value })} value={input.name} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
-                    </div>
-                    <div className="flex gap-[4.9rem] px-5 pt-5 items-center">
-                      <label htmlFor="" className="font-semibold text-[14px]">
-                        Type Description
-                      </label>
-                      <input required type="text" onChange={(e) => setInput({ ...input, des: e.target.value })} value={input.des} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
-                    </div>
+                  <div className="flex gap-28 px-5 pt-5 items-center">
+                    <label htmlFor="" className="font-semibold text-[14px]">
+                      Type Name
+                    </label>
+                    <input required type="text" onChange={(e) => setInput(e.target.value)} value={input} className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]" />
                   </div>
                   <div className="flex gap-3 items-center justify-end px-3 py-5">
                     <button
                       type="reset"
                       className="border border-[#5970F5] text-[#5970F5] px-4 py-2 rounded-md font-semibold"
                       onClick={() => {
-                        setInput({ des: "", name: "" });
+                        setInput("");
                       }}
                     >
                       Reset
@@ -238,13 +191,13 @@ function UOMType() {
           </div>
         </div>
       </div>
-      {confirmation === "add" && <ConfirmationBox RejectButtonText="Cancel" RejectFunction={() => setConfirmation("")} ResolveButtonText="Save" ResolveFunction={addUOMType} message="Are You sure want to save?" />}
+      {confirmation === "add" && <ConfirmationBox RejectButtonText="Cancel" RejectFunction={() => setConfirmation("")} ResolveButtonText="Save" ResolveFunction={addPaymentTerm} message="Are You sure want to save?" />}
 
-      {confirmation === "edit" && <ConfirmationBox RejectButtonText="No" RejectFunction={() => setConfirmation("")} ResolveButtonText="Yes" ResolveFunction={editUOMType} message="Are You sure want to change?" />}
+      {confirmation === "edit" && <ConfirmationBox RejectButtonText="No" RejectFunction={() => setConfirmation("")} ResolveButtonText="Yes" ResolveFunction={editPaymentTerm} message="Are You sure want to change?" />}
 
-      {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removeUOMType} message="Are you sure want to delete?" />}
+      {confirmation === "delete" && <DeleteConfirmationBox RejectFunction={() => setConfirmation("")} ResolveFunction={removePaymentTerm} message="Are you sure want to delete?" />}
     </div>
   );
 }
 
-export default UOMType;
+export default PaymentTerm;

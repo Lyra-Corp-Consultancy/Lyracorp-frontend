@@ -6,6 +6,7 @@ export interface CounterState {
   msg: string|number,
   submsg: string|number,
   toaster:boolean,
+  toastIcon:boolean,
   user?:any,
   pathToGo?:string,
   superAdminCompany?:any,
@@ -17,6 +18,7 @@ const initialState: CounterState = {
   submsg:`Your Customer Account has been Successfully Created`,
   toaster:false,
   loader:false,
+  toastIcon:true
 }
 
 export const counterSlice = createSlice({
@@ -26,8 +28,22 @@ export const counterSlice = createSlice({
     makeToastFalse: (state) => {
       state.toaster = false
     },
+    makeToast:(state,{payload})=>{
+      // console.log(payload)
+      if(payload?.heading){
+        state.msg = payload?.heading
+      }
+      if(payload?.text){
+        state.submsg = payload?.text
+      }
+      if(payload?.icon){
+        state.toastIcon = false
+      }
+      state.toaster = true
+    },
     addPathToGo:(state,{payload})=>{
       state.pathToGo = payload
+      
     },
     setCompany:(state,{payload})=>{
       state.superAdminCompany = payload
@@ -77,6 +93,6 @@ export const counterSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const {  makeToastFalse,addPathToGo,setCompany,startLoading,stopLoading} = counterSlice.actions
+export const {  makeToastFalse,addPathToGo,setCompany,startLoading,stopLoading,makeToast} = counterSlice.actions
 
 export default counterSlice.reducer

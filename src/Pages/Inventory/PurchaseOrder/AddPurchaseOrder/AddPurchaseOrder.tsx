@@ -50,9 +50,10 @@ function AddPurchaseOrder() {
     billing: string;
     deliveryUser: string;
     shippingAddress: string;
-   
+    paymentType:string;
   }>({
     paymentTerms: "",
+    paymentType: "",
     account: "",
     discount: "",
     payment: "",
@@ -83,6 +84,7 @@ function AddPurchaseOrder() {
     vendor: any[];
     packing: any[];
     shipping: any[];
+    paymentTerm: any[];
   }>({
     margin: [],
     account: [],
@@ -96,6 +98,7 @@ function AddPurchaseOrder() {
     users: [],
     packing: [],
     shipping: [],
+    paymentTerm: [],  
   });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
@@ -242,6 +245,15 @@ function AddPurchaseOrder() {
         return {
           ...prev,
           payment: res?.payload[0]?.paymentType,
+        };
+      });
+    });
+
+    dispatch(getType("paymentTerm")).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          paymentTerm: res?.payload[0]?.paymentTerm,
         };
       });
     });
@@ -602,7 +614,7 @@ function AddPurchaseOrder() {
               <Select
                 required
                 pattern={
-                  dropDowns?.payment?.filter(
+                  dropDowns?.paymentTerm?.filter(
                     (a) => a?.value === searchValue.paymentTerms
                   )
                     ? undefined
@@ -617,7 +629,7 @@ function AddPurchaseOrder() {
                 }}
                 value={searchValue.paymentTerms || ""}
               >
-                {dropDowns?.payment
+                {dropDowns?.paymentTerm
                   ?.filter((a) =>
                     a?.value
                       ?.toLowerCase()
@@ -646,20 +658,20 @@ function AddPurchaseOrder() {
                 required
                 value={data?.paymentType}
                 pattern={
-                  ["Cash", "Credit"].filter((a) => a === data.paymentType)[0]
+                  dropDowns.payment.filter((a) => a._id === data.paymentType)[0]
                     ? undefined
                     : ""
                 }
                 title="Please Select values from drop down"
               >
-                {["Cash", "Credit"]?.map((x) => (
+                {dropDowns.payment?.map((x) => (
                   <li
                     onClick={() => {
                       setData({ ...data, paymentType: x });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
-                    {x}
+                    {x?.value}
                   </li>
                 ))}
               </Select>
