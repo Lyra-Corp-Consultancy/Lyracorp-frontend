@@ -79,7 +79,7 @@ function RoleType() {
     const finalword = values
       ?.filter((depart) => depart?.value?.department === input?.department)
       ?.map((x) => {
-        return x?.value?.value?.split(" ").join("");
+        return x?.value?.value?.split(" ").join("").toLowerCase();
       });
     finalword;
     if (!finalword?.includes(converted)) {
