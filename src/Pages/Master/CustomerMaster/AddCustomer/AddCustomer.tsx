@@ -344,6 +344,7 @@ function AddCustomer() {
             </label>
             <label>Secondary Number</label>
             <input
+              required
               max={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
