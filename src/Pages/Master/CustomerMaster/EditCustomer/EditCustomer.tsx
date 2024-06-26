@@ -387,7 +387,7 @@ function EditCustomer() {
                   ))}
               </Select>
               <input
-                min={phoneLength?.phoneLength || undefined}
+                max={phoneLength?.phoneLength || undefined}
                 required
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
@@ -400,7 +400,7 @@ function EditCustomer() {
             <label>Secondary Number</label>
             <input
               required
-              min={phoneLength?.phoneLength || undefined}
+              max={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
                 setData({ ...data, secondaryNumber: e.target.value })

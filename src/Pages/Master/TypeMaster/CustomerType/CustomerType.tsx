@@ -62,7 +62,7 @@ function CustomerType() {
     const finalword = values?.map((x) => {
       return x?.value?.split(" ").join("");
     });
-    finalword;
+    // finalword;
     if (!finalword?.includes(converted)) {
       const res = dispatch(postType({ type: "customer", value: input }));
       res.then(() => {
