@@ -162,6 +162,10 @@ function AddCustomer() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
+
+  console.log("search ", searchValue);
+  console.log("phone ", phoneLength);
+
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Customer Master</h1>
@@ -326,8 +330,9 @@ function AddCustomer() {
                     </li>
                   ))}
               </Select>
+
               <input
-                min={phoneLength?.phoneLength || undefined}
+                max={phoneLength?.phoneLength || undefined}
                 required
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
@@ -339,8 +344,7 @@ function AddCustomer() {
             </label>
             <label>Secondary Number</label>
             <input
-              required
-              min={phoneLength?.phoneLength || undefined}
+              max={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
                 setData({ ...data, secondaryNumber: e.target.value })

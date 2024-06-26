@@ -56,12 +56,12 @@ function PaymentType() {
   };
 
   const addPaymentType = () => {
-    const converted = input.split(" ").join("").toLowerCase();
+    const converted = input.split(" ").join("")?.toLowerCase();
 
     const finalword = values?.map((x) => {
-      return x?.value?.split(" ").join("");
+      return x?.value?.split(" ").join("")?.toLowerCase();
     });
-    finalword;
+   
     if (!finalword?.includes(converted)) {
       const res = dispatch(postType({ type: "payment", value: input }));
       res.then(() => {

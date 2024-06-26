@@ -59,9 +59,9 @@ function DocumentType() {
     const converted = input.split(" ").join("").toLowerCase();
 
     const finalword = values?.map((x) => {
-      return x?.value?.split(" ").join("");
+      return x?.value?.split(" ").join("").toLowerCase();
     });
-    finalword;
+   
     if (!finalword?.includes(converted)) {
       const res = dispatch(postType({ type: "document", value: input }));
       res.then(() => {
