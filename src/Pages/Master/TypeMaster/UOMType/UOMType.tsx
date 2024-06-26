@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { deleteTypeMaster, getType, postType, updateType } from "../../../../utils/redux/actions";
 import ConfirmationBox from "../../../../components/ConfirmationBox";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
+import { makeToast } from "../../../../utils/redux/slice";
 
 function UOMType() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,11 +47,40 @@ function UOMType() {
   };
 
   const addUOMType = () => {
-    const res = dispatch(postType({ value: input, type: "uom" }));
-    res.then(() => {
-      fetchUOMType();
+    // const res = dispatch(postType({ value: input, type: "uom" }));
+    // res.then(() => {
+    //   fetchUOMType();
+    // });
+    // setConfirmation("");
+
+    const converted = input?.name?.split(" ").join("").toLowerCase();
+    const convertedDescription = input?.des
+    ?.split(" ").join("").toLowerCase();
+    const finalword = values?.map((x) => {
+      return x?.value?.name?.split(" ").join("");
     });
-    setConfirmation("");
+
+    const finalword2=values?.map((x)=>{
+      return x?.value?.des?.split(" ").join("");      //For description
+    }
+    )
+    
+    if ((!finalword?.includes(converted)) && (!finalword2?.includes(convertedDescription))  ) {
+      const res = dispatch(postType({ type: "shipping", value: input }));
+      res.then(() => {
+        fetchUOMType();
+      });
+      setConfirmation("");
+    } else {
+      setConfirmation("");
+      dispatch(
+        makeToast({
+          heading: "Error",
+          text: "Can't add the type; Name already exists.",
+        })
+      );
+    }
+
   };
 
   const editUOMType = () => {
@@ -62,6 +92,9 @@ function UOMType() {
     });
     setConfirmation("");
   };
+
+  console.log("input ",input)
+  console.log("val ",values)
   return (
     <div className="min-h-screen">
       <NavigationBar />
