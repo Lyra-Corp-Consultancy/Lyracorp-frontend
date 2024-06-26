@@ -6,7 +6,6 @@ import { activeAndDeactiveCustomerMaster, getAllCustomerMaster, getType } from "
 import ActiveUsers from "./ActiveUsers";
 import DeactiveUsers from "./DeactiveUsers";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
-import { CSV } from "../../../utils/functions/excel";
 
 function CustomerMaster() {
   const [data, setData] = useState<{ active: any[]; deactive: any[] }>({ active: [], deactive: [] });
@@ -166,10 +165,7 @@ function CustomerMaster() {
                 <input type="text" onChange={(e) => search(e.target.value)} placeholder="Search" className="placeholder:text-black outline-none border-none w-full" />
               </label>
               <div className="flex items-center gap-3">
-                <svg onClick={()=>{
-                  const csv = new CSV()
-                  csv.convertCSV([])
-                }} width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg  width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9.33333 6.22222L6.22222 3.11111V5.44444H0V7H6.22222V9.33333M14 10.8889V1.55556C14 1.143 13.8361 0.747335 13.5444 0.455612C13.2527 0.163888 12.857 0 12.4444 0H3.11111C2.69855 0 2.30289 0.163888 2.01117 0.455612C1.71944 0.747335 1.55556 1.143 1.55556 1.55556V3.88889H3.11111V1.55556H12.4444V10.8889H3.11111V8.55556H1.55556V10.8889C1.55556 11.3014 1.71944 11.6971 2.01117 11.9888C2.30289 12.2806 2.69855 12.4444 3.11111 12.4444H12.4444C12.857 12.4444 13.2527 12.2806 13.5444 11.9888C13.8361 11.6971 14 11.3014 14 10.8889Z" fill="#5970F5" />
                 </svg>
                 <svg width="17" height="13" viewBox="0 0 17 13" fill="none" xmlns="http://www.w3.org/2000/svg">
