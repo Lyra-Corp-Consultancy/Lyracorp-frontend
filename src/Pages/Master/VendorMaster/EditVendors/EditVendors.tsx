@@ -82,12 +82,12 @@ function EditVendors() {
         setData(res.payload);
       //   setFiles([...res.payload.fileUrls]);
         axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: res?.payload?.country }).then((res) => {
-          setPlaces({ ...places, state: res.data.data.states });
-          setSearch({ ...search, state: res.data.data.states });
+          setPlaces((prev)=>({ ...prev, state: res.data.data.states }));
+          setSearch((prev)=>({ ...prev, state: res.data.data.states }));
         });
         axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: res?.payload?.country, state: res?.payload?.state }).then((res) => {
-          setPlaces({ ...places, city: res.data.data });
-          setSearch({ ...search, city: res.data.data });
+          setPlaces((prev)=>({ ...prev, city: res.data.data }));
+          setSearch((prev)=>({ ...prev, city: res.data.data }));
         });
       });
 
@@ -142,12 +142,12 @@ function EditVendors() {
     });
 
     axios.get("https://api.first.org/data/v1/countries").then((res) => {
-      const val = [];
+      const val:any[] = [];
       for (const i in res.data.data) {
         val.push(res.data.data[i]);
       }
-      setPlaces({ ...places, country: val });
-      setSearch({ ...search, country: val });
+      setPlaces((prev)=>({ ...prev, country: val }));
+      setSearch((prev)=>({ ...prev, country: val }));
     });
   }, []);
      

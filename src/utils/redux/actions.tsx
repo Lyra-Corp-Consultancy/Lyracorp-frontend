@@ -589,3 +589,21 @@ export const productionProcessDone = createAsyncThunk("user/createOrUpdateProduc
     rejectWithValue(err);
   }
 });
+
+export const getRMReports = createAsyncThunk("user/getRMReports", async (_, { rejectWithValue,getState }) => {
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/reports/rm-reports",{params:{lineOfBusiness}});
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
