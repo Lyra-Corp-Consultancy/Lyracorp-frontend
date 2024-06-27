@@ -667,7 +667,7 @@ function AddPurchaseOrder() {
                 {dropDowns.payment?.map((x) => (
                   <li
                     onClick={() => {
-                      setData({ ...data, paymentType: x });
+                      setData({ ...data, paymentType: x?.value });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
