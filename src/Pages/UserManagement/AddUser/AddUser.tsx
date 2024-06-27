@@ -293,7 +293,7 @@ function AddUser() {
               <Select
                 pattern={
                   dropDowns?.department?.filter(
-                    (a) => a?.value === searchValue.department
+                    (a) => a?.value === searchValue?.department
                   )[0]
                     ? undefined
                     : ""
@@ -306,7 +306,7 @@ function AddUser() {
                     department: e.target.value,
                   });
                 }}
-                value={searchValue.department || ""}
+                value={searchValue?.department || ""}
               >
                 {dropDowns?.department
                   ?.filter((a) =>
@@ -381,7 +381,7 @@ function AddUser() {
                     lineOfBusiness: e.target.value,
                   });
                 }}
-                value={searchValue.lineOfBusiness || ""}
+                value={searchValue?.lineOfBusiness || ""}
               >
                 {dropDowns?.lineOfBusiness
                   ?.filter((a) =>

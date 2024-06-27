@@ -333,7 +333,7 @@ function AddPurchaseInward() {
                 required
                 pattern={
                   dropDowns?.vendor?.filter(
-                    (x) => x?.VendorName === searchValue.vendor
+                    (x) => x?.VendorName === searchValue?.vendor
                   )[0]?.VendorName
                     ? undefined
                     : " "
@@ -342,7 +342,7 @@ function AddPurchaseInward() {
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, vendor: e.target.value });
                 }}
-                value={searchValue.vendor || ""}
+                value={searchValue?.vendor || ""}
               >
                 {dropDowns?.vendor
                   ?.filter((a) =>
@@ -509,7 +509,7 @@ function AddPurchaseInward() {
                 required
                 pattern={
                   dropDowns?.users[0]?.companyDetails[0]?.warehouse?.filter(
-                    (a: any) => a?.address === searchValue.warehouse
+                    (a: any) => a?.address === searchValue?.warehouse
                   )[0]?.address
                     ? undefined
                     : ""
@@ -518,7 +518,7 @@ function AddPurchaseInward() {
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, warehouse: e.target.value });
                 }}
-                value={searchValue.warehouse || ""}
+                value={searchValue?.warehouse || ""}
               >
                 {dropDowns?.users[0]?.companyDetails[0]?.warehouse
 
@@ -574,18 +574,18 @@ function AddPurchaseInward() {
                         className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
-                            (x) => x?.productName === searchValue.products[i]
+                            (x) => x?.productName === searchValue?.products[i]
                           )[0]?.productName
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.products;
+                          const temp = searchValue?.products;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, products: temp });
                         }}
-                        value={searchValue.products[i] || ""}
+                        value={searchValue?.products[i] || ""}
                       >
                         {dropDowns?.products
                           ?.filter((a) =>
@@ -598,7 +598,7 @@ function AddPurchaseInward() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.products;
+                                const temp = searchValue?.products;
                                 temp[i] = x?.productName;
                                 setSearchValue({
                                   ...searchValue,
@@ -655,18 +655,18 @@ function AddPurchaseInward() {
                       className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
                       pattern={
                         dropDowns?.uom?.filter(
-                          (x) => x?.value?.name === searchValue.uom[i]
+                          (x) => x?.value?.name === searchValue?.uom[i]
                         )[0]?.value?.name
                           ? undefined
                           : ""
                       }
                       title="Please Select values from drop down"
                       onChange={(e) => {
-                        const temp = searchValue.uom;
+                        const temp = searchValue?.uom;
                         temp[i] = e.target.value;
                         setSearchValue({ ...searchValue, uom: temp });
                       }}
-                      value={searchValue.uom[i] || ""}
+                      value={searchValue?.uom[i] || ""}
                     >
                       {dropDowns?.uom
                         ?.filter((a) =>
@@ -677,7 +677,7 @@ function AddPurchaseInward() {
                         ?.map((x) => (
                           <li
                             onClick={() => {
-                              const temp = searchValue.uom;
+                              const temp = searchValue?.uom;
                               temp[i] = x?.value?.name;
                               setSearchValue({ ...searchValue, uom: temp });
 
@@ -772,18 +772,18 @@ function AddPurchaseInward() {
                         className="w-[90%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.certificate?.filter(
-                            (x) => x?.value === searchValue.certificate[i]
+                            (x) => x?.value === searchValue?.certificate[i]
                           )[0]?.value
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.certificate;
+                          const temp = searchValue?.certificate;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, certificate: temp });
                         }}
-                        value={searchValue.certificate[i] || ""}
+                        value={searchValue?.certificate[i] || ""}
                       >
                         {dropDowns?.certificate
                           ?.filter((a) =>
@@ -796,7 +796,7 @@ function AddPurchaseInward() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.certificate;
+                                const temp = searchValue?.certificate;
                                 temp[i] = x?.value;
                                 setSearchValue({
                                   ...searchValue,

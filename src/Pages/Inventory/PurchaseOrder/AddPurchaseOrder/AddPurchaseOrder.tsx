@@ -308,7 +308,7 @@ function AddPurchaseOrder() {
                 required
                 pattern={
                   dropDowns?.vendor?.filter(
-                    (x) => x?.VendorName === searchValue.vendor
+                    (x) => x?.VendorName === searchValue?.vendor
                   )[0]?.VendorName
                     ? undefined
                     : " "
@@ -317,7 +317,7 @@ function AddPurchaseOrder() {
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, vendor: e.target.value });
                 }}
-                value={searchValue.vendor || ""}
+                value={searchValue?.vendor || ""}
               >
                 {dropDowns?.vendor
                   ?.filter((a) =>
@@ -348,14 +348,14 @@ function AddPurchaseOrder() {
                 className="bg-white z-[100]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue.users
+                    (x) => x?.username === searchValue?.users
                   )[0]?.username
                 }
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, users: e.target.value });
                 }}
-                value={searchValue.users || ""}
+                value={searchValue?.users || ""}
               >
                 {dropDowns?.users
                   ?.filter((a) =>
@@ -433,7 +433,7 @@ function AddPurchaseOrder() {
                 className="z-[99]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue.deliveryUser
+                    (x) => x?.username === searchValue?.deliveryUser
                   )[0]?.username
                     ? undefined
                     : ""
@@ -445,7 +445,7 @@ function AddPurchaseOrder() {
                     deliveryUser: e.target.value,
                   });
                 }}
-                value={searchValue.deliveryUser || ""}
+                value={searchValue?.deliveryUser || ""}
               >
                 {dropDowns?.users
                   ?.filter((a) =>
@@ -527,11 +527,11 @@ function AddPurchaseOrder() {
               <label>Shipping Address</label>
               <Select
                 required
-                value={searchValue.shippingAddress || ""}
+                value={searchValue?.shippingAddress || ""}
                 pattern={
                   dropDowns?.users[0]?.companyDetails[0]?.shippingAddress
                   ?.filter((a: any) =>
-                    a?.address=== searchValue.shippingAddress)[0]?.address
+                    a?.address=== searchValue?.shippingAddress)[0]?.address
                     ? undefined
                     : ""
                 }
@@ -576,7 +576,7 @@ function AddPurchaseOrder() {
                 required
                 pattern={
                   dropDowns?.users[0]?.companyDetails[0]?.billingAddress?.filter((a: any) =>
-                    a?.address  === searchValue.billing )[0]?.address
+                    a?.address  === searchValue?.billing )[0]?.address
                     ? undefined
                     : ""
                 }
@@ -584,7 +584,7 @@ function AddPurchaseOrder() {
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
                 }}
-                value={searchValue.billing || ""}
+                value={searchValue?.billing || ""}
                 
               >
                 {dropDowns?.users[0]?.companyDetails[0]?.billingAddress
@@ -615,7 +615,7 @@ function AddPurchaseOrder() {
                 required
                 pattern={
                   dropDowns?.paymentTerm?.filter(
-                    (a) => a?.value === searchValue.paymentTerms
+                    (a) => a?.value === searchValue?.paymentTerms
                   )
                     ? undefined
                     : ""
@@ -627,7 +627,7 @@ function AddPurchaseOrder() {
                     paymentTerms: e.target.value,
                   });
                 }}
-                value={searchValue.paymentTerms || ""}
+                value={searchValue?.paymentTerms || ""}
               >
                 {dropDowns?.paymentTerm
                   ?.filter((a) =>
@@ -685,7 +685,7 @@ function AddPurchaseOrder() {
             <Select
               pattern={
                 dropDowns?.document?.filter(
-                  (a) => a?.value=== searchValue.document
+                  (a) => a?.value=== searchValue?.document
                 )[0]
                   ? undefined
                   : ""
@@ -695,7 +695,7 @@ function AddPurchaseOrder() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
-              value={searchValue.document || ""}
+              value={searchValue?.document || ""}
             >
               {dropDowns?.document
                 ?.filter((a) =>
@@ -793,18 +793,18 @@ function AddPurchaseOrder() {
                         className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
-                            (x) => x?.productName === searchValue.products[i]
+                            (x) => x?.productName === searchValue?.products[i]
                           )[0]?.productName
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.products;
+                          const temp = searchValue?.products;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, products: temp });
                         }}
-                        value={searchValue.products[i] || ""}
+                        value={searchValue?.products[i] || ""}
                       >
                         {dropDowns?.products
                           ?.filter((a) =>
@@ -817,7 +817,7 @@ function AddPurchaseOrder() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.products;
+                                const temp = searchValue?.products;
                                 temp[i] = x?.productName;
                                 setSearchValue({
                                   ...searchValue,
@@ -861,18 +861,18 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.uom?.filter(
-                            (x) => x?.value?.name === searchValue.uom[i]
+                            (x) => x?.value?.name === searchValue?.uom[i]
                           )[0]?.value?.name
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.uom;
+                          const temp = searchValue?.uom;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, uom: temp });
                         }}
-                        value={searchValue.uom[i] || ""}
+                        value={searchValue?.uom[i] || ""}
                       >
                         {dropDowns?.uom
                           ?.filter((a) =>
@@ -885,7 +885,7 @@ function AddPurchaseOrder() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.uom;
+                                const temp = searchValue?.uom;
                                 temp[i] = x?.value?.name;
                                 setSearchValue({ ...searchValue, uom: temp });
 
@@ -908,18 +908,18 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.packing?.filter(
-                            (x) => x?.value  === searchValue.packing[i] 
+                            (x) => x?.value  === searchValue?.packing[i] 
                           )[0]?.value
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.packing;
+                          const temp = searchValue?.packing;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, packing: temp });
                         }}
-                        value={searchValue.packing[i] || ""}
+                        value={searchValue?.packing[i] || ""}
                       >
                         {dropDowns?.packing
                           ?.filter((a) =>
@@ -932,7 +932,7 @@ function AddPurchaseOrder() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.packing;
+                                const temp = searchValue?.packing;
                                 temp[i] = x?.value;
                                 setSearchValue({
                                   ...searchValue,
@@ -957,18 +957,18 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.certificate?.filter(
-                            (x) => x?.value === searchValue.certificate[i]
+                            (x) => x?.value === searchValue?.certificate[i]
                           )[0]?.value
                             ? undefined
                             : ""
                         }
                         title="Please Select values from drop down"
                         onChange={(e) => {
-                          const temp = searchValue.certificate;
+                          const temp = searchValue?.certificate;
                           temp[i] = e.target.value;
                           setSearchValue({ ...searchValue, certificate: temp });
                         }}
-                        value={searchValue.certificate[i] || ""}
+                        value={searchValue?.certificate[i] || ""}
                       >
                         {dropDowns?.certificate
                           ?.filter((a) =>
@@ -981,7 +981,7 @@ function AddPurchaseOrder() {
                           ?.map((x) => (
                             <li
                               onClick={() => {
-                                const temp = searchValue.certificate;
+                                const temp = searchValue?.certificate;
                                 temp[i] = x?.value;
                                 setSearchValue({
                                   ...searchValue,

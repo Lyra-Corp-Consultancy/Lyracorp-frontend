@@ -40,7 +40,7 @@ function ProductMapping() {
     // const fil= finishedGoods ?.filter(
     //   (x) =>
     //     x?.productName ===
-    //   searchValue.fgMaterial
+    //   searchValue?.fgMaterial
     // )[0]?.productName
 
   return (
@@ -57,7 +57,7 @@ function ProductMapping() {
                   FG Material
                   <Select
                     required
-                    pattern={finishedGoods?.filter((x) => x?.productName === searchValue.fgMaterial)[0]?.productName ? undefined : ""}
+                    pattern={finishedGoods?.filter((x) => x?.productName === searchValue?.fgMaterial)[0]?.productName ? undefined : ""}
                     title="Please Select values from drop down"
                     onChange={(e) => {
                       setSearchValue({
@@ -65,7 +65,7 @@ function ProductMapping() {
                         fgMaterial: e.target.value,
                       });
                     }}
-                    value={searchValue.fgMaterial || ""}
+                    value={searchValue?.fgMaterial || ""}
                   >
                     {finishedGoods
                       .filter((item) => item?.productName?.toLowerCase().includes(searchValue?.fgMaterial?.toLowerCase() || ""))
@@ -152,7 +152,7 @@ function ProductMapping() {
                   FG Material
                   <Select
                     required
-                    pattern={finishedGoods?.filter((x) => x?.productName === searchValue.fgMaterialAdd)[0]?.productName ? undefined : ""}
+                    pattern={finishedGoods?.filter((x) => x?.productName === searchValue?.fgMaterialAdd)[0]?.productName ? undefined : ""}
                     title="Please Select values from drop down"
                     onChange={(e) => {
                       setSearchValue({
@@ -160,7 +160,7 @@ function ProductMapping() {
                         fgMaterialAdd: e.target.value,
                       });
                     }}
-                    value={searchValue.fgMaterialAdd || ""}
+                    value={searchValue?.fgMaterialAdd || ""}
                   >
                     {finishedGoods
                       .filter((item) => item?.productName?.toLowerCase().includes(searchValue?.fgMaterialAdd?.toLowerCase() || ""))
@@ -225,17 +225,17 @@ function ProductMapping() {
                             required
                             style={{zIndex:999-i}}
                             className="w-[90%] shadow-none bg-[#F6F4F4]"
-                            pattern={rawMaterials?.filter((x) => x?.productName === searchValue.raw[i])[0]?.productName ? undefined : ""}
+                            pattern={rawMaterials?.filter((x) => x?.productName === searchValue?.raw[i])[0]?.productName ? undefined : ""}
                             title="Please Select values from drop down"
                             onChange={(e) => {
-                              const temp = searchValue.raw;
+                              const temp = searchValue?.raw;
                               temp[i] = e.target.value;
                               setSearchValue({
                                 ...searchValue,
                                 raw: temp,
                               });
                             }}
-                            value={searchValue.raw[i] || ""}
+                            value={searchValue?.raw[i] || ""}
                           >
                             {rawMaterials
                               ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.raw[i]?.toLowerCase() || "")&& mappings.every((y)=>y?.product===a?._id))
@@ -246,7 +246,7 @@ function ProductMapping() {
                                     temp1[i].product = x?._id;
 
                                     setMappings([...temp1]);
-                                    const temp = searchValue.raw;
+                                    const temp = searchValue?.raw;
                                     temp[i] = x?.productName;
                                     setSearchValue({
                                       ...searchValue,
