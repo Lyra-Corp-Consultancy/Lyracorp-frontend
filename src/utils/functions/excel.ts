@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export class CSV {
-  convertCSV(titles: string[], data: string[][]) {
+  convertCSV(titles: string[], data: string| number[][]) {
     let title: string = "";
     titles.map((x) => {
       title += '"' + x + '",';
@@ -32,6 +32,7 @@ export class CSV {
     a.setAttribute("hidden", "");
     a.setAttribute("href", url);
     a.setAttribute("download", "export-" + new Date().toLocaleDateString());
+    // a.setAttribute("download", "export-" + new Date().toLocaleString().replace(/[:]/g, '-') + ".txt");
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
