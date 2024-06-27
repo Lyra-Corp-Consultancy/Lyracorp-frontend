@@ -218,6 +218,7 @@ function EditCustomer() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
+ 
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Customer Master</h1>
@@ -232,7 +233,8 @@ function EditCustomer() {
           <h1 className="roboto-medium mt-1">Customer Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Customer Acc No</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"></label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-full w-[200px]"> {data.customerId
+            }</label>
             <label>Customer Name</label>
             <input
               // pattern="[A-Za-z0-9_]+"
@@ -250,7 +252,7 @@ function EditCustomer() {
               required
               pattern={
                 dropDowns?.customer?.filter(
-                  (a) => a?._id === data.customerType
+                  (a) => a?.value === searchValue?.customer
                 )[0]
                   ? undefined
                   : ""
@@ -259,7 +261,7 @@ function EditCustomer() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, customer: e.target.value });
               }}
-              value={searchValue.customer || ""}
+              value={searchValue?.customer || ""}
             >
               {dropDowns?.customer
                 ?.filter((a) =>
@@ -284,7 +286,7 @@ function EditCustomer() {
               required
               pattern={
                 dropDowns?.account?.filter(
-                  (a) => a?._id === data.accountType
+                  (a) => a?.value === searchValue?.account
                 )[0]
                   ? undefined
                   : ""
@@ -293,7 +295,7 @@ function EditCustomer() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, account: e.target.value });
               }}
-              value={searchValue.account || ""}
+              value={searchValue?.account || ""}
             >
               {dropDowns?.account
                 ?.filter((a) =>
@@ -337,7 +339,7 @@ function EditCustomer() {
             <label>Primary Number</label>
             <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex rounded-md">
               <Select
-                value={searchValue.countryCode || ""}
+                value={searchValue?.countryCode || ""}
                 onChange={(e) => {
                   setSearchValue({
                     ...searchValue,
@@ -385,6 +387,7 @@ function EditCustomer() {
                   e.target.value.length<=10 && setData({ ...data, primaryNumber: e.target.value })
                 }
                 type="number"
+              
               />
             </label>
             <label>Secondary Number</label>
@@ -410,7 +413,7 @@ function EditCustomer() {
               <label>Country</label>
               <Select
                 pattern={
-                  places?.country?.filter((a) => a?.country === data.country)[0]
+                  places?.country?.filter((a) => a?.country === search?.country)[0]
                     ? undefined
                     : ""
                 }
@@ -460,7 +463,7 @@ function EditCustomer() {
                 <label>State</label>
                 <Select
                   pattern={
-                    places?.state?.filter((a) => a?.name === data.state)[0]
+                    places?.state?.filter((a) => a?.name === search.state)[0]
                       ? undefined
                       : ""
                   }
@@ -470,7 +473,7 @@ function EditCustomer() {
                     const filtered = places.state.filter((x) => {
                       return x?.name
                         ?.toLowerCase()
-                        .startsWith(e.target.value.toLowerCase());
+                        .startsWith(e.target.value.toLowerCase() || "");
                     });
                     setSearch({ ...search, state: filtered });
                     setData({ ...data, state: e.target.value });
@@ -488,7 +491,7 @@ function EditCustomer() {
                             { country: data.country, state: x?.name }
                           )
                           .then((res) => {
-                            console.log(res.data);
+                       
                             setPlaces({ ...places, city: res.data.data });
                             setSearch({ ...search, city: res.data.data });
                           });
@@ -520,7 +523,7 @@ function EditCustomer() {
                 <label>City/Village</label>
                 <Select
                   pattern={
-                    places?.city?.filter((a) => a === data.city)[0]
+                    places?.city?.filter((a) => a === search.city)[0]
                       ? undefined
                       : ""
                   }
@@ -530,7 +533,7 @@ function EditCustomer() {
                     const filtered = places.city.filter((x) => {
                       return x
                         ?.toLowerCase()
-                        .startsWith(e.target.value.toLowerCase());
+                        .startsWith(e.target.value.toLowerCase()|| "");
                     });
                     setSearch({ ...search, city: filtered });
                     setData({ ...data, city: e.target.value });
@@ -613,7 +616,7 @@ function EditCustomer() {
             <Select
               pattern={
                 dropDowns?.discount?.filter(
-                  (a) => a?._id === data.discountType
+                  (a) => a?.value === searchValue?.discount
                 )[0]
                   ? undefined
                   : ""
@@ -623,7 +626,7 @@ function EditCustomer() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, discount: e.target.value });
               }}
-              value={searchValue.discount || ""}
+              value={searchValue?.discount || ""}
             >
               {dropDowns?.discount
                 ?.filter((a) =>
@@ -647,7 +650,7 @@ function EditCustomer() {
             <Select
               pattern={
                 dropDowns?.payment?.filter(
-                  (a) => a?._id === data.paymentTerms
+                  (a) => a?.value === searchValue?.payment
                 )[0]
                   ? undefined
                   : ""
@@ -657,7 +660,7 @@ function EditCustomer() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, payment: e.target.value });
               }}
-              value={searchValue.payment || ""}
+              value={searchValue?.payment || ""}
             >
               {dropDowns?.payment
                 ?.filter((a) =>
@@ -686,7 +689,7 @@ function EditCustomer() {
             <Select
               pattern={
                 dropDowns?.document?.filter(
-                  (a) => a?._id === data.bussinessDocument
+                  (a) => a?.value === searchValue?.document
                 )[0]
                   ? undefined
                   : ""
@@ -696,7 +699,7 @@ function EditCustomer() {
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
-              value={searchValue.document || ""}
+              value={searchValue?.document || ""}
             >
               {dropDowns?.document
                 ?.filter((a) =>

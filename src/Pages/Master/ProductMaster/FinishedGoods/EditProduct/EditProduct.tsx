@@ -181,40 +181,74 @@ console.log(dropDowns.uom)
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[999]">
               <label>Margin Setting</label>
-              <Select required onChange={(e)=>{
-              setSearchValue({...searchValue,margin:e.target.value})
-            }} value={searchValue.margin || ""} >
-              {dropDowns?.margin?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.margin?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,margin:x?.value})
-                      setData({ ...data, marginType: x?._id });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.value}
-                  </li>
-                ))}
+              <Select
+                required
+                pattern={
+                  dropDowns?.margin?.filter(
+                    (a) => a?.value === searchValue?.margin
+                  )[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, margin: e.target.value });
+                }}
+                value={searchValue?.margin || ""}
+              >
+                {dropDowns?.margin
+                  ?.filter((a) =>
+                    a?.value
+                      ?.toLowerCase()
+                      ?.includes(searchValue?.margin?.toLowerCase() || "")
+                  )
+                  .map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, margin: x?.value });
+                        setData({ ...data, marginType: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex gap-3 z-[999] items-center">
               <label>Discount Type</label>
-              <Select required onChange={(e)=>{
-              setSearchValue({...searchValue,discount:e.target.value})
-            }} value={searchValue.discount || ""} >
-              {dropDowns?.discount?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.discount?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,discount:x?.value})
-                      setData({ ...data, discountType: x?._id });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.value}
-                  </li>
-                ))}
+              <Select
+                pattern={
+                  dropDowns?.discount?.filter(
+                    (a) => a?.value === searchValue?.discount
+                  )[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                required
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, discount: e.target.value });
+                }}
+                value={searchValue?.discount || ""}
+              >
+                {dropDowns?.discount
+                  ?.filter((a) =>
+                    a?.value
+                      ?.toLowerCase()
+                      ?.includes(searchValue?.discount?.toLowerCase() || "")
+                  )
+                  .map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, discount: x?.value });
+                        setData({ ...data, discountType: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex gap-3 z-[999] items-center">
@@ -225,26 +259,44 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM</label>
-              <Select required onChange={(e)=>{
-              setSearchValue({...searchValue,uom:e.target.value})
-            }} value={searchValue.uom || ""} >
-              {dropDowns?.uom?.filter((a)=>a?.value?.name?.toLowerCase()?.includes(searchValue?.uom?.toLowerCase())).map((x) => (
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,uom:x?.value?.name})
-                      setData({ ...data, uomType: x?._id });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.value?.name}
-                  </li>
-                ))}
+              <Select
+                pattern={
+                  dropDowns?.uom?.filter(
+                    (a) => a?.value?.name === searchValue?.uom
+                  )[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                required
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, uom: e.target.value });
+                }}
+                value={searchValue?.uom || ""}
+              >
+                {dropDowns?.uom
+                  ?.filter((a) =>
+                    a?.value?.name
+                      ?.toLowerCase()
+                      ?.includes(searchValue?.uom?.toLowerCase() || "")
+                  )
+                  .map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, uom: x?.value?.name });
+                        setData({ ...data, uomType: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value?.name}
+                    </li>
+                  ))}
               </Select>
             </div>
 
             <div className="flex gap-3 z-[999] items-center">
               <label>UOM Description</label>
-              <label htmlFor="" className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
+              <label htmlFor="" className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md">
                 {dropDowns?.uom?.filter((x) => x?._id === data?.uomType)[0]?.value?.des}
               </label>
             </div>
@@ -257,11 +309,11 @@ console.log(dropDowns.uom)
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
-              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })}  type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.pricingDate}</p>
                 <button type="button" className={styles.calendar}>
@@ -281,38 +333,38 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
-              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 CGST
-                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 SGST
-                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 IGST
-                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
-              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
-              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
-              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center mt-3">
@@ -328,7 +380,7 @@ console.log(dropDowns.uom)
               <Select required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase());
+                    return x?.country?.toLowerCase().includes(e.target.value.toLowerCase()||"");
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -353,7 +405,7 @@ console.log(dropDowns.uom)
             </div>
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
-              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
@@ -367,22 +419,22 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-3 items-center">
               <label>Weight</label>
-              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 L
-                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 W
-                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 H
-                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="text" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
           </div>
@@ -391,21 +443,38 @@ console.log(dropDowns.uom)
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select required onChange={(e)=>{
-              setSearchValue({...searchValue,document:e.target.value})
-            }} value={searchValue.document || ""} >
-              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,document:x?.value})
-                    setData({ ...data, bussinessDocument: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
+            <Select
+              pattern={
+                dropDowns?.document?.filter(
+                  (a) => a?.value === searchValue?.document
+                )[0]
+                  ? undefined
+                  : ""
+              }
+              title="Please Select values from drop down"
+              required
+              onChange={(e) => {
+                setSearchValue({ ...searchValue, document: e.target.value });
+              }}
+              value={searchValue?.document || ""}
+            >
+              {dropDowns?.document
+                ?.filter((a) =>
+                  a?.value
+                    ?.toLowerCase()
+                    ?.includes(searchValue?.document?.toLowerCase() || "")
+                )
+                .map((x) => (
+                  <li
+                    onClick={() => {
+                      setSearchValue({ ...searchValue, document: x?.value });
+                      setData({ ...data, bussinessDocument: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
             </Select>
             <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

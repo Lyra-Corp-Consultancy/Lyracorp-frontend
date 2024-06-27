@@ -173,21 +173,38 @@ function EditVendors() {
             <label>Vendor Name</label>
             <input required value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Vendor Type</label>
-            <Select required  onChange={(e)=>{
-              setSearchValue({...searchValue,vendor:e.target.value})
-            }} value={searchValue.vendor || ""} >
-              {dropDowns?.vendor?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.vendor?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,vendor:x?.value})
-                    setData({ ...data, vendorType: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
+            <Select
+              required
+              pattern={
+                dropDowns?.vendor?.filter(
+                  (a) => a?.value === searchValue?.vendor
+                )[0]
+                  ? undefined
+                  : ""
+              }
+              title="Please Select values from drop down"
+              onChange={(e) => {
+                setSearchValue({ ...searchValue, vendor: e.target.value });
+              }}
+              value={searchValue?.vendor || ""}
+            >
+              {dropDowns?.vendor
+                ?.filter((a) =>
+                  a?.value
+                    ?.toLowerCase()
+                    ?.includes(searchValue?.vendor?.toLowerCase() || "")
+                )
+                .map((x) => (
+                  <li
+                    onClick={() => {
+                      setSearchValue({ ...searchValue, vendor: x?.value });
+                      setData({ ...data, vendorType: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
             </Select>
           </div>
           <h1 className="roboto-medium mt-1">Contact Details</h1>
@@ -205,10 +222,19 @@ function EditVendors() {
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>
-              <Select required
+              <Select
+                  pattern={
+                    places?.country?.filter((a) => a?.country === search?.country)[0]
+                      ? undefined
+                      : ""
+                  }
+                  title="Please Select values from drop down"
+                required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
-                    return x?.country?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.country
+                      ?.toLowerCase()
+                      .startsWith(e.target.value.toLowerCase() || "");
                   });
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
@@ -219,10 +245,15 @@ function EditVendors() {
                   <li
                     onClick={() => {
                       setData({ ...data, country: x?.country });
-                      axios.post("https://countriesnow.space/api/v0.1/countries/states", { country: x?.country }).then((res) => {
-                        setPlaces({ ...places, state: res.data.data.states });
-                        setSearch({ ...search, state: res.data.data.states });
-                      });
+                      axios
+                        .post(
+                          "https://countriesnow.space/api/v0.1/countries/states",
+                          { country: x?.country }
+                        )
+                        .then((res) => {
+                          setPlaces({ ...places, state: res.data.data.states });
+                          setSearch({ ...search, state: res.data.data.states });
+                        });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
@@ -233,10 +264,19 @@ function EditVendors() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>State</label>
-              <Select required
+              <Select
+                 pattern={
+                  places?.state?.filter((a) => a?.name === search.state)[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                required
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
-                    return x?.name?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x?.name
+                      ?.toLowerCase()
+                      .startsWith(e.target.value.toLowerCase() || "");
                   });
                   setSearch({ ...search, state: filtered });
                   setData({ ...data, state: e.target.value });
@@ -247,11 +287,16 @@ function EditVendors() {
                   <li
                     onClick={() => {
                       setData({ ...data, state: x?.name });
-                      axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
-                        console.log(res.data);
-                        setPlaces({ ...places, city: res.data.data });
-                        setSearch({ ...search, city: res.data.data });
-                      });
+                      axios
+                        .post(
+                          "https://countriesnow.space/api/v0.1/countries/state/cities",
+                          { country: data.country, state: x?.name }
+                        )
+                        .then((res) => {
+                          console.log(res.data);
+                          setPlaces({ ...places, city: res.data.data });
+                          setSearch({ ...search, city: res.data.data });
+                        });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
@@ -266,10 +311,20 @@ function EditVendors() {
             </div>
             <div className="w-[22%] z-10 flex gap-3 items-center">
               <label>City/Village</label>
-              <Select required
+              <Select
+                
+                pattern={
+                  places?.city?.filter((a) => a === search.city)[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                required
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
-                    return x?.toLowerCase().startsWith(e.target.value.toLowerCase());
+                    return x
+                      ?.toLowerCase()
+                      .startsWith(e.target.value.toLowerCase() || "");
                   });
                   setSearch({ ...search, city: filtered });
                   setData({ ...data, city: e.target.value });
@@ -323,14 +378,31 @@ function EditVendors() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Payment Terms</label>
-              <Select required  onChange={(e)=>{
-              setSearchValue({...searchValue,payment:e.target.value})
-            }} value={searchValue.payment || ""} >
-              {dropDowns?.payment?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,payment:x?.value})
+              <Select
+              pattern={
+                dropDowns?.payment?.filter(
+                  (a) => a?.value === searchValue?.payment
+                )[0]
+                  ? undefined
+                  : ""
+              }
+              title="Please Select values from drop down"
+              required
+              onChange={(e) => {
+                setSearchValue({ ...searchValue, payment: e.target.value });
+              }}
+              value={searchValue?.payment || ""}
+            >
+              {dropDowns?.payment
+                ?.filter((a) =>
+                  a?.value
+                    ?.toLowerCase()
+                    ?.includes(searchValue?.payment?.toLowerCase() || "")
+                )
+                .map((x) => (
+                  <li
+                    onClick={() => {
+                      setSearchValue({ ...searchValue, payment: x?.value });
                       setData({ ...data, paymentTerms: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -338,7 +410,7 @@ function EditVendors() {
                     {x?.value}
                   </li>
                 ))}
-              </Select>
+            </Select>
             </div>
             <div className="flex gap-2 items-center">
               <label>Currency</label>
@@ -350,21 +422,38 @@ function EditVendors() {
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select   required onChange={(e)=>{
-              setSearchValue({...searchValue,document:e.target.value})
-            }} value={searchValue.document || ""} >
-              {dropDowns?.document?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,document:x?.value})
-                    setData({ ...data, bussinessDocument: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
+            <Select
+              pattern={
+                dropDowns?.document?.filter(
+                  (a) => a?.value === searchValue?.document
+                )[0]
+                  ? undefined
+                  : ""
+              }
+              title="Please Select values from drop down"
+              required
+              onChange={(e) => {
+                setSearchValue({ ...searchValue, document: e.target.value });
+              }}
+              value={searchValue?.document || ""}
+            >
+              {dropDowns?.document
+                ?.filter((a) =>
+                  a?.value
+                    ?.toLowerCase()
+                    ?.includes(searchValue?.document?.toLowerCase() || "")
+                )
+                .map((x) => (
+                  <li
+                    onClick={() => {
+                      setSearchValue({ ...searchValue, document: x?.value });
+                      setData({ ...data, bussinessDocument: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
             </Select>
             <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -404,7 +493,7 @@ function EditVendors() {
               Cancel
             </button>
             <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Edit
+              Update
             </button>
           </div>
         </form>

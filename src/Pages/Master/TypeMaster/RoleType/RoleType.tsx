@@ -13,6 +13,7 @@ import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox"
 import Select from "../../../../components/Select";
 import { makeToast } from "../../../../utils/redux/slice";
 
+
 function RoleType() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const dispatch: any = useDispatch();
@@ -28,6 +29,8 @@ function RoleType() {
   const permissions = useSelector(
     (state: any) => state.data?.user?.permissions
   );
+
+  const [searchValue, setSearchValue] = useState("");
 
   const fetchRoleType = () => {
     const res = dispatch(getType("role"));
@@ -68,20 +71,15 @@ function RoleType() {
   }, []);
 
   const addRoleType = () => {
-    const res = dispatch(postType({ value: input, type: "role" }));
-    res.then(() => {
-      fetchRoleType();
-    });
-    setConfirmation("");
-
     const converted = input?.value?.split(" ").join("").toLowerCase();
+    const selectedDepartment = values?.filter(
+      (e) => e?.value?.department === input?.department
+    );
 
-    const finalword = values
-      ?.filter((depart) => depart?.value?.department === input?.department)
-      ?.map((x) => {
-        return x?.value?.value?.split(" ").join("").toLowerCase();
-      });
-    finalword;
+    const finalword = selectedDepartment?.map((x) => {
+      return x?.value?.value?.split(" ").join("").toLowerCase();
+    });
+
     if (!finalword?.includes(converted)) {
       const res = dispatch(postType({ type: "role", value: input }));
       res.then(() => {
@@ -124,7 +122,7 @@ function RoleType() {
     setSearch(filteredValues || []);
   };
 
-  return (
+ return (
     <div className="min-h-screen">
       <NavigationBar />
       <div className="px-10 pt-4">
@@ -315,14 +313,16 @@ function RoleType() {
                       </label>
                       <Select
                         required
-                        value={
-                          department?.filter(
-                            (x) => x?._id === input.department
-                          )[0]?.value
+                        pattern={
+                          department?.filter((a) => a?.value === searchValue)[0]
+                            ? undefined
+                            : ""
                         }
-                        onChange={(e) =>
-                          setInput({ ...input, department: e.target.value })
-                        }
+                        value={searchValue || ""}
+                        onChange={(e) => {
+                          setSearchValue(e.target.value);
+                          setInput({ ...input, department: e.target.value });
+                        }}
                         className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]"
                       >
                         {department
@@ -333,9 +333,10 @@ function RoleType() {
                           )
                           ?.map((x) => (
                             <li
-                              onClick={() =>
-                                setInput({ ...input, department: x?._id })
-                              }
+                              onClick={() => {
+                                setSearchValue(x?.value);
+                                setInput({ ...input, department: x?._id });
+                              }}
                               className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                             >
                               {x?.value}

@@ -23,7 +23,7 @@ function EditUser() {
   }>({ lineOfBusiness: [], account: [], department: [], role: [], document: [] });
   const dispatch: any = useDispatch();
   const [files1, setFiles1] = useState<any[]>([]);
-
+  const [roleSearch, setRoleSearch] = useState("");
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<UserData>({department:"",email:"",role:"",employeeId:"",password:"",phoneNumber:"",username:"",userPhoto:""});
   const params:any = useParams()
@@ -216,33 +216,82 @@ function EditUser() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
               <label>Department</label>
-              <Select required  onChange={(e)=>{
-              setSearchValue({...searchValue,department:e.target.value,role:""})
-            }} value={searchValue.department || ""} >
-              {dropDowns?.department?.filter((a)=>a?.value?.toLowerCase()?.includes(searchValue?.department?.toLowerCase())).map((x) => (
-               
-                <li
-                  onClick={() => {
-                    setSearchValue({...searchValue,department:x?.value})
-                      setData({ ...data, department: x?._id , role:""});
-                     
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.value}
-                  </li>
-                ))}
+              <Select
+                pattern={
+                  dropDowns?.department?.filter(
+                    (a) => a?.value === searchValue?.department
+                  )[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                required
+                onChange={(e) => {
+                  setSearchValue({
+                    ...searchValue,
+                    department: e.target.value,
+                  });
+                }}
+                value={searchValue?.department || ""}
+              >
+                {dropDowns?.department
+                  ?.filter((a) =>
+                    a?.value
+                      ?.toLowerCase()
+                      ?.includes(searchValue?.department?.toLowerCase() || "")
+                  )
+                  .map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({
+                          ...searchValue,
+                          department: x?.value,
+                        });
+                        setData({ ...data, department: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex gap-2 items-center">
               <label>Role</label>
-              <Select onChange={(e)=>setSearchValue({...searchValue,role:e.target.value})} value={searchValue.role|| ""}>
+              <Select
+                pattern={
+                  dropDowns?.role
+                    ?.filter(
+                      (a) => a?.value.department === (data?.department || "")
+                    )
+                    ?.filter((b) => b?.value?.value === roleSearch)[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
+                onChange={(e) => {setRoleSearch(e.target.value)
+                  setSearchValue({
+                    ...searchValue,
+                    role: e.target.value,
+                  });
+                }
+                }
+                value={roleSearch|| searchValue?.role || ""}
+              >
                 {dropDowns?.role
-                  ?.filter((x) => x?.value?.department === (data?.department || ""))?.filter((y)=>y?.value?.value?.toLowerCase().includes(searchValue?.role?.toLowerCase() || ""))
+                  ?.filter(
+                    (x) => x?.value?.department === (data?.department || "")
+                  )
+                  ?.filter((y) =>
+                    y?.value?.value
+                      ?.toLowerCase()
+                      .includes(roleSearch.toLowerCase())
+                  )
                   ?.map((x) => (
                     <li
                       onClick={() => {
-                        setSearchValue({...searchValue,role:x?.value?.value})
+                        setRoleSearch(x.value.value);
+                        setSearchValue({ ...searchValue, role: x?.value });
                         setData({ ...data, role: x?._id });
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
@@ -256,7 +305,7 @@ function EditUser() {
               <label>Line of Business</label>
               <Select className="z-[999]" required  onChange={(e)=>{
               setSearchValue({...searchValue,lineOfBusiness:e.target.value})
-            }} value={searchValue.lineOfBusiness || ""} >
+            }} value={searchValue?.lineOfBusiness || ""} >
               {dropDowns?.lineOfBusiness?.filter((a)=>a?.companyName?.toLowerCase()?.includes(searchValue?.lineOfBusiness?.toLowerCase() || "")).map((x) => (
                
                 <li
