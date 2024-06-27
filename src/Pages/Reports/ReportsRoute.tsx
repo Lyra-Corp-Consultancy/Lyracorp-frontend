@@ -1,4 +1,3 @@
-import React from "react";
 import { Route, Routes } from "react-router-dom";
 import RMReports from "./RMReports/RMReports";
 import NavigationBar from "../../components/NavigationBar";
