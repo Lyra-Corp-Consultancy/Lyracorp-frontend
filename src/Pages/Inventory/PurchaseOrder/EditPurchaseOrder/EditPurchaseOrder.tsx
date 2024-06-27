@@ -19,6 +19,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./EditPurchaseOrder.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
+import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
 function EditPurchaseOrder() {
@@ -460,9 +461,9 @@ function EditPurchaseOrder() {
                   onChange={(e) => {
                     setData({
                       ...data,
-                      deliveryDate: e?.toLocaleString().split(",")[0],
+                      deliveryDate: formatDate(new Date(e as Date)),
                     });
-                    console.log("delivery date");
+                    // console.log("delivery date",new Date(e as Date));
                   }}
                   className={[
                     "bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " +
