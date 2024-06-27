@@ -10,6 +10,7 @@ import {
 import ActiveUsers from "./ActiveUsers";
 import DeactiveUsers from "./DeactiveUsers";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
+import { CSV } from "../../../utils/functions/excel";
 
 function CustomerMaster() {
   const [data, setData] = useState<{ active: any[]; deactive: any[] }>({

@@ -321,7 +321,7 @@ function AddCustomer() {
               </Select>
 
               <input
-                max={phoneLength?.phoneLength || undefined}
+                // min={phoneLength?.phoneLength || undefined}
                 required
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
@@ -334,7 +334,7 @@ function AddCustomer() {
             <label>Secondary Number</label>
             <input
               required
-              max={phoneLength?.phoneLength || undefined}
+              // max={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
                 setData({ ...data, secondaryNumber: e.target.value })
