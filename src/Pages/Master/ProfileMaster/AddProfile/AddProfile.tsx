@@ -834,7 +834,7 @@ if(files1[0]){
             </div>
           ))}
           <div className="flex mt-3 w-full items-end justify-end">
-            <button type="button" onClick={() => setData({ ...data, warehouse: [...data.warehouse, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+            <button type="button" onClick={() => setData({ ...data, warehouse: [...(data.warehouse || []), {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
               + Add{" "}
             </button>
           </div>
