@@ -140,7 +140,7 @@ function EditPurchaseInward() {
           ?.name;
       }),
 
-      warehouse: dropDowns?.users[0]?.companyDetails[0]?.warehouse?.filter(
+      warehouse: (user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)?.filter(
         (a: any) => a?.address === data?.warehouse?.address
       )[0]?.address,
 
@@ -482,7 +482,7 @@ function EditPurchaseInward() {
               <Select
                 required
                 pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.warehouse?.filter(
+                  (user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)?.filter(
                     (a: any) => a?.address === searchValue?.warehouse
                   )[0]?.address
                     ? undefined
@@ -494,7 +494,7 @@ function EditPurchaseInward() {
                 }}
                 value={searchValue?.warehouse || ""}
               >
-                {dropDowns?.users[0]?.companyDetails[0]?.warehouse
+                {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)
 
                   ?.filter((a: any) =>
                     a?.address

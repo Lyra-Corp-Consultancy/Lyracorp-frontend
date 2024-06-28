@@ -396,14 +396,12 @@ function AddPurchaseInward() {
 
               <Select
                 required
-                pattern={dropDowns?.users[0]?.companyDetails[0]?.warehouse?.filter((a: any) => a?.address === searchValue.warehouse)[0]?.address ? undefined : ""}
-                title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, warehouse: e.target.value });
                 }}
                 value={searchValue?.warehouse || ""}
               >
-                {dropDowns?.users[0]?.companyDetails[0]?.warehouse
+                {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)
 
                   ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.warehouse?.toLowerCase() || ""))
                   ?.map((x: any) => (
