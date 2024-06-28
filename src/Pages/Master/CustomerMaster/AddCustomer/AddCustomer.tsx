@@ -28,14 +28,14 @@ function AddCustomer() {
     customer?: string;
     account?: string;
     discount?: string;
-    payment?: string;
+    paymentTerm?: string;
     document?: string;
     countryCode: any;
   }>({
     customer: "",
     account: "",
     discount: "",
-    payment: "",
+    paymentTerm: "",
     document: "",
     countryCode: "",
   });
@@ -44,9 +44,9 @@ function AddCustomer() {
     customer: any[];
     account: any[];
     discount: any[];
-    payment: any[];
+    paymentTerm: any[];
     document: any[];
-  }>({ customer: [], account: [], discount: [], payment: [], document: [] });
+  }>({ customer: [], account: [], discount: [], paymentTerm: [], document: [] });
   const dispatch: any = useDispatch();
   const [phoneLength, setPhoneLength] = useState<any>({});
   // const [dragging, setDragging] = useState(false);
@@ -128,11 +128,11 @@ function AddCustomer() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          paymentTerm: res?.payload[0]?.paymentTerm,
         };
       });
     });
@@ -162,7 +162,10 @@ function AddCustomer() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
+   console.log("data",data)
+   console.log("dd ",dropDowns)
 
+   console.log("pla ",places)
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Customer Master</h1>
@@ -590,8 +593,8 @@ function AddCustomer() {
             <label>Payment Terms</label>
             <Select
               pattern={
-                dropDowns?.payment?.filter(
-                  (a) => a?.value === searchValue?.payment
+                dropDowns?.paymentTerm?.filter(
+                  (a) => a?.value === searchValue?.paymentTerm
                 )[0]
                   ? undefined
                   : ""
@@ -599,21 +602,21 @@ function AddCustomer() {
               title="Please Select values from drop down"
               required
               onChange={(e) => {
-                setSearchValue({ ...searchValue, payment: e.target.value });
+                setSearchValue({ ...searchValue, paymentTerm: e.target.value });
               }}
-              value={searchValue?.payment || ""}
+              value={searchValue?.paymentTerm || ""}
             >
-              {dropDowns?.payment
+              {dropDowns?.paymentTerm
                 ?.filter((a) =>
                   a?.value
                     ?.toLowerCase()
-                    ?.includes(searchValue?.payment?.toLowerCase() || "")
+                    ?.includes(searchValue?.paymentTerm?.toLowerCase() || "")
                 )
                 .map((x) => (
                   <li
                     onClick={() => {
-                      setSearchValue({ ...searchValue, payment: x?.value });
-                      setData({ ...data, paymentTerms: x?._id });
+                      setSearchValue({ ...searchValue, paymentTerm: x?.value });
+                      setData({ ...data, paymentTerm: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
