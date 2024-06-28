@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 // import { useParams } from "react-router-dom";
 import NavigationBar from "../../../components/NavigationBar";
 import Select from "../../../components/Select";
-import { getAllProductRawMaterial, getAllUserManagement, getProductionSOP, getType, productionProcessDone } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllUserManagement, getProductionSOP, getType, productionProcessDone } from "../../../utils/redux/actions";
 import { ProductionSOPTypes } from "../../../utils/Type/types";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
@@ -29,7 +29,7 @@ function ProductionSOP() {
   const [productProcess, setProcess] = useState<ProductionSOPTypes[]>([]);
 
   useEffect(() => {
-    dispatch(getAllProductRawMaterial()).then((res: any) => {
+    dispatch(getAllProductFinishedGoods()).then((res: any) => {
       console.log(res.payload.active);
       setData(res.payload.active);
     });
