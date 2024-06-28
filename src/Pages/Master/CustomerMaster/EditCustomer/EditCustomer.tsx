@@ -32,14 +32,14 @@ function EditCustomer() {
     customer?: string;
     account?: string;
     discount?: string;
-    payment?: string;
+    paymentTerm?: string;
     document?: string;
     countryCode: any;
   }>({
     customer: "",
     account: "",
     discount: "",
-    payment: "",
+    paymentTerm: "",
     document: "",
     countryCode: "",
   });
@@ -48,9 +48,9 @@ function EditCustomer() {
     customer: any[];
     account: any[];
     discount: any[];
-    payment: any[];
+    paymentTerm: any[];
     document: any[];
-  }>({ customer: [], account: [], discount: [], payment: [], document: [] });
+  }>({ customer: [], account: [], discount: [], paymentTerm: [], document: [] });
   const dispatch: any = useDispatch();
   const [phoneLength, setPhoneLength] = useState<any>({});
 
@@ -119,7 +119,7 @@ function EditCustomer() {
       discount: dropDowns?.discount?.filter(
         (x) => x?._id === data?.discountType
       )[0]?.value,
-      payment: dropDowns?.payment?.filter(
+      paymentTerm: dropDowns?.paymentTerm?.filter(
         (x) => x?._id === data?.paymentTerms
       )[0]?.value,
       document: dropDowns?.document?.filter(
@@ -183,11 +183,11 @@ function EditCustomer() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          paymentTerm: res?.payload[0]?.paymentTerm,
         };
       });
     });
@@ -649,8 +649,8 @@ function EditCustomer() {
             <label>Payment Terms</label>
             <Select
               pattern={
-                dropDowns?.payment?.filter(
-                  (a) => a?.value === searchValue?.payment
+                dropDowns?.paymentTerm?.filter(
+                  (a) => a?.value === searchValue?.paymentTerm
                 )[0]
                   ? undefined
                   : ""
@@ -658,20 +658,20 @@ function EditCustomer() {
               title="Please Select values from drop down"
               required
               onChange={(e) => {
-                setSearchValue({ ...searchValue, payment: e.target.value });
+                setSearchValue({ ...searchValue, paymentTerm: e.target.value });
               }}
-              value={searchValue?.payment || ""}
+              value={searchValue?.paymentTerm || ""}
             >
-              {dropDowns?.payment
+              {dropDowns?.paymentTerm
                 ?.filter((a) =>
                   a?.value
                     ?.toLowerCase()
-                    ?.includes(searchValue?.payment?.toLowerCase() || "")
+                    ?.includes(searchValue?.paymentTerm?.toLowerCase() || "")
                 )
                 .map((x) => (
                   <li
                     onClick={() => {
-                      setSearchValue({ ...searchValue, payment: x?.value });
+                      setSearchValue({ ...searchValue, paymentTerm: x?.value });
                       setData({ ...data, paymentTerms: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
