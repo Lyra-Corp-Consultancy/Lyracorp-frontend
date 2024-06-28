@@ -833,6 +833,11 @@ if(files1[0]){
               }} className="bg-red-500 rounded-full h-5 flex items-center justify-center text-white w-5">-</button>}
             </div>
           ))}
+          <div className="flex mt-3 w-full items-end justify-end">
+            <button type="button" onClick={() => setData({ ...data, warehouse: [...(data.warehouse || []), {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+              + Add{" "}
+            </button>
+          </div>
 
           <h1 className="roboto-medium mt-1">Identity Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">

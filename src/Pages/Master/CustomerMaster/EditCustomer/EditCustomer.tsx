@@ -125,12 +125,7 @@ function EditCustomer() {
       document: dropDowns?.document?.filter(
         (x) => x?._id === data?.bussinessDocument
       )[0]?.value,
-      countryCode: phoneNumberDetails.filter(
-        (x) => x?.label === data?.country
-      )[0]?.phone
-        ? "+" +
-          phoneNumberDetails.filter((x) => x?.label === data?.country)[0]?.phone
-        : "",
+      countryCode: data?.countryCode,
     });
   }, [dropDowns, data]);
 
@@ -154,8 +149,8 @@ function EditCustomer() {
           country: res?.payload?.country,
         })
         .then((res) => {
-          setPlaces({ ...places, state: res.data.data.states });
-          setSearch({ ...search, state: res.data.data.states });
+          setPlaces((prev)=>({ ...prev, state: res.data.data.states }));
+          setSearch((prev)=>({ ...prev, state: res.data.data.states }));
         });
       axios
         .post("https://countriesnow.space/api/v0.1/countries/state/cities", {
@@ -163,8 +158,8 @@ function EditCustomer() {
           state: res?.payload?.state,
         })
         .then((res) => {
-          setPlaces({ ...places, city: res.data.data });
-          setSearch({ ...search, city: res.data.data });
+          setPlaces((prev)=>({ ...prev, city: res.data.data }));
+          setSearch((prev)=>({ ...prev, city: res.data.data }));
         });
     });
 
@@ -207,12 +202,13 @@ function EditCustomer() {
     });
 
     axios.get("https://api.first.org/data/v1/countries").then((res) => {
-      const val = [];
+      const val:any[] = [];
       for (const i in res.data.data) {
         val.push(res.data.data[i]);
       }
-      setPlaces({ ...places, country: val });
-      setSearch({ ...search, country: val });
+      console.log(val,"hello wolrd")
+      setPlaces((prev)=>({ ...prev, country: val }));
+      setSearch((prev)=>({ ...prev, country: val }));
     });
   }, []);
 
@@ -241,8 +237,8 @@ function EditCustomer() {
             }</label>
             <label>Customer Name</label>
             <input
-              pattern="[A-Za-z0-9_]+"
-              title="Users only can enter letter and number"
+              // pattern="[A-Za-z0-9_]+"
+              // title="Users only can enter letter and number"
               required
               value={data.customerName}
               onChange={(e) =>
@@ -348,6 +344,10 @@ function EditCustomer() {
                   setSearchValue({
                     ...searchValue,
                     countryCode: e.target.value,
+                  }); 
+                  setData({
+                   ...data,
+                    countryCode: e.target.value,
                   });
                 }}
                 className="border-none outline-none w-3/12"
@@ -362,26 +362,16 @@ function EditCustomer() {
                       onClick={() => {
                         const val = x;
                         setPhoneLength(val);
-                        setData({ ...data, country: val.label });
+                        // setData({ ...data, country: val.label });
                         setSearchValue({
                           ...searchValue,
                           countryCode: "+" + val.phone,
                         });
-                        axios
-                          .post(
-                            "https://countriesnow.space/api/v0.1/countries/states",
-                            { country: val.label }
-                          )
-                          .then((res) => {
-                            setPlaces({
-                              ...places,
-                              state: res.data.data.states,
-                            });
-                            setSearch({
-                              ...search,
-                              state: res.data.data.states,
-                            });
-                          });
+                        setData({
+                          ...data,
+                           countryCode: "+" + val.phone,
+                         })
+                  
                       }}
                     >
                       +{x.phone}
@@ -394,7 +384,7 @@ function EditCustomer() {
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
                 onChange={(e) =>
-                  setData({ ...data, primaryNumber: e.target.value })
+                  e.target.value.length<=10 && setData({ ...data, primaryNumber: e.target.value })
                 }
                 type="number"
               
@@ -406,7 +396,7 @@ function EditCustomer() {
               min={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
-                setData({ ...data, secondaryNumber: e.target.value })
+               e.target.value.length<=10 && setData({ ...data, secondaryNumber: e.target.value })
               }
               type="number"
               className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md remove-spin-wheel"
@@ -440,7 +430,7 @@ function EditCustomer() {
                 }}
                 value={data?.country}
               >
-                {search?.country?.map((x) => (
+                {places?.country?.map((x) => (
                   <li
                     onClick={() => {
                       setData({ ...data, country: x?.country });
@@ -458,11 +448,8 @@ function EditCustomer() {
                           y.label.toLowerCase() === x?.country?.toLowerCase()
                       );
                       console.log(country);
-                      setPhoneLength(country[0]);
-                      setSearchValue({
-                        ...searchValue,
-                        countryCode: "+" + country[0].phone,
-                      });
+                      // setPhoneLength(country[0]);
+                      
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >

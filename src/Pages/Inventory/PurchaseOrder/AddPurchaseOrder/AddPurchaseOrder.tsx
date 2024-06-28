@@ -148,7 +148,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          margin: res?.payload[0]?.marginSettingType,
+          margin: res?.payload?.[0]?.marginSettingType,
         };
       });
     });
@@ -159,7 +159,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          uom: res?.payload[0]?.uomType,
+          uom: res?.payload?.[0]?.uomType,
         };
       });
     });
@@ -188,7 +188,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          discount: res?.payload[0]?.discountType,
+          discount: res?.payload?.[0]?.discountType,
         };
       });
     });
@@ -197,7 +197,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          packing: res?.payload[0]?.packingType,
+          packing: res?.payload?.[0]?.packingType,
         };
       });
     });
@@ -215,7 +215,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          certificate: res?.payload[0]?.certificationType,
+          certificate: res?.payload?.[0]?.certificationType,
         };
       });
       console.log(res.payload);
@@ -225,7 +225,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          shipping: res?.payload[0]?.shippingType,
+          shipping: res?.payload?.[0]?.shippingType,
         };
       });
       console.log(res.payload);
@@ -244,7 +244,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          payment: res?.payload?.[0]?.paymentType,
         };
       });
     });
@@ -253,7 +253,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          paymentTerm: res?.payload[0]?.paymentTerm,
+          paymentTerm: res?.payload?.[0]?.paymentTerm,
         };
       });
     });
@@ -262,7 +262,7 @@ function AddPurchaseOrder() {
       setDropDown((prev) => {
         return {
           ...prev,
-          document: res?.payload[0]?.documentType,
+          document: res?.payload?.[0]?.documentType,
         };
       });
     });
@@ -308,8 +308,8 @@ function AddPurchaseOrder() {
                 required
                 pattern={
                   dropDowns?.vendor?.filter(
-                    (x) => x?.VendorName === searchValue?.vendor
-                  )[0]?.VendorName
+                    (x) => x?.VendorName === searchValue.vendor
+                  )?.[0]?.VendorName
                     ? undefined
                     : " "
                 }
@@ -348,8 +348,8 @@ function AddPurchaseOrder() {
                 className="bg-white z-[100]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue?.users
-                  )[0]?.username
+                    (x) => x?.username === searchValue.users
+                  )?.[0]?.username
                 }
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -380,7 +380,7 @@ function AddPurchaseOrder() {
               <label>Contact Number</label>
               <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">
                 {
-                  dropDowns?.users?.filter((x) => x?._id === data?.contact)[0]
+                  dropDowns?.users?.filter((x) => x?._id === data?.contact)?.[0]
                     ?.phoneNumber
                 }
               </label>
@@ -415,7 +415,7 @@ function AddPurchaseOrder() {
                   onChange={(e) => {
                     setData({
                       ...data,
-                      deliveryDate: e?.toLocaleString().split(",")[0],
+                      deliveryDate: e?.toLocaleString().split(",")?.[0],
                     });
                     console.log("delivery date");
                   }}
@@ -433,8 +433,8 @@ function AddPurchaseOrder() {
                 className="z-[99]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue?.deliveryUser
-                  )[0]?.username
+                    (x) => x?.username === searchValue.deliveryUser
+                  )?.[0]?.username
                     ? undefined
                     : ""
                 }
@@ -481,7 +481,7 @@ function AddPurchaseOrder() {
                 {
                   dropDowns?.users?.filter(
                     (x) => x?._id === data?.deliveryTo
-                  )[0]?.phoneNumber
+                  )?.[0]?.phoneNumber
                 }
               </label>
             </div>
@@ -493,7 +493,7 @@ function AddPurchaseOrder() {
                 pattern={
                   dropDowns?.shipping?.filter(
                     (x) => x?.value === searchValue?.shipping
-                  )[0]?.value
+                  )?.[0]?.value
                     ? undefined
                     : ""
                 }
@@ -529,9 +529,9 @@ function AddPurchaseOrder() {
                 required
                 value={searchValue?.shippingAddress || ""}
                 pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.shippingAddress
+                  dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
                   ?.filter((a: any) =>
-                    a?.address=== searchValue?.shippingAddress)[0]?.address
+                    a?.address=== searchValue.shippingAddress)?.[0]?.address
                     ? undefined
                     : ""
                 }
@@ -545,7 +545,7 @@ function AddPurchaseOrder() {
               
                 title="Please Select values from drop down"
               >
-                {dropDowns?.users[0]?.companyDetails[0]?.shippingAddress
+                {dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -575,8 +575,8 @@ function AddPurchaseOrder() {
               <Select
                 required
                 pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.billingAddress?.filter((a: any) =>
-                    a?.address  === searchValue?.billing )[0]?.address
+                  dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress?.filter((a: any) =>
+                    a?.address  === searchValue.billing )?.[0]?.address
                     ? undefined
                     : ""
                 }
@@ -587,7 +587,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.billing || ""}
                 
               >
-                {dropDowns?.users[0]?.companyDetails[0]?.billingAddress
+                {dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -658,7 +658,7 @@ function AddPurchaseOrder() {
                 required
                 value={data?.paymentType}
                 pattern={
-                  dropDowns.payment.filter((a) => a._id === data.paymentType)[0]
+                  dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]
                     ? undefined
                     : ""
                 }
@@ -685,8 +685,8 @@ function AddPurchaseOrder() {
             <Select
               pattern={
                 dropDowns?.document?.filter(
-                  (a) => a?.value=== searchValue?.document
-                )[0]
+                  (a) => a?.value=== searchValue.document
+                )?.[0]
                   ? undefined
                   : ""
               }
@@ -793,8 +793,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
-                            (x) => x?.productName === searchValue?.products[i]
-                          )[0]?.productName
+                            (x) => x?.productName === searchValue.products[i]
+                          )?.[0]?.productName
                             ? undefined
                             : ""
                         }
@@ -861,8 +861,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.uom?.filter(
-                            (x) => x?.value?.name === searchValue?.uom[i]
-                          )[0]?.value?.name
+                            (x) => x?.value?.name === searchValue.uom[i]
+                          )?.[0]?.value?.name
                             ? undefined
                             : ""
                         }
@@ -908,8 +908,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.packing?.filter(
-                            (x) => x?.value  === searchValue?.packing[i] 
-                          )[0]?.value
+                            (x) => x?.value  === searchValue.packing[i] 
+                          )?.[0]?.value
                             ? undefined
                             : ""
                         }
@@ -957,8 +957,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.certificate?.filter(
-                            (x) => x?.value === searchValue?.certificate[i]
-                          )[0]?.value
+                            (x) => x?.value === searchValue.certificate[i]
+                          )?.[0]?.value
                             ? undefined
                             : ""
                         }

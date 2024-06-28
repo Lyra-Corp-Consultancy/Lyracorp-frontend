@@ -68,7 +68,7 @@ function UOMType() {
       !finalword?.includes(converted) &&
       !finalword2?.includes(convertedDescription)
     ) {
-      const res = dispatch(postType({ type: "shipping", value: input }));
+      const res = dispatch(postType({ type: "uom", value: input }));
       res.then(() => {
         fetchUOMType();
       });

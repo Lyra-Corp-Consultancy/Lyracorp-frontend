@@ -61,6 +61,17 @@ export const createdModules = [
                                 ],
                                 ["order management"],
                                 ["user management"],
+                                ["reports",
+                                    [
+                                        ["inventory report",
+                                            [
+                                                ["rm report"],
+                                                ["fg report"],
+                                                ["pm report"]
+                                            ]
+                                        ]
+                                    ]
+                                ]
                             ];
 
 

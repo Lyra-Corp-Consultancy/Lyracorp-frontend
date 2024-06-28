@@ -6,12 +6,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyDetails } from "../utils/redux/actions";
 import { createdModules } from "../utils/values/publicValues";
+import styles from "./NavigationBarStyle.module.scss"
+import Cookies from "js-cookie";
 
 function NavigationBar() {
   const location = useLocation();
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const [dropDown, setDropDown] = useState("");
-  const [typeMaster, setTypeMaster] = useState<null | "type" | "product">();
+  const [typeMaster, setTypeMaster] = useState<null | "type" | "product" | "inventory report">();
   const navigate = useNavigate();
   const dispatch: any = useDispatch();
   const permissions = useSelector((state: any) => state.data?.user?.permissions);
@@ -98,8 +100,14 @@ function NavigationBar() {
             </svg>
           </button>
           {/* profile button */}
-          <button className=" rounded">
-            <img src={demoprofile} className="h-[30px]" alt="" />
+          <button className={" rounded relative "+styles?.logout}>
+            <img src={demoprofile} className={"h-[30px] " }alt="" />
+            <div onClick={()=>{
+              Cookies.remove("token")
+              navigate("/")
+              }} className={"bg-white w-[100px] transition-all duration-100  absolute right-0 rounded "+styles?.["logout-btn"]}>
+              <p className="text-red-500">Logout</p>
+            </div>
           </button>
         </div>
       </div>
@@ -313,6 +321,7 @@ function NavigationBar() {
             )}
           </button>
         )}
+        
         {/* {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative" + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p> {dropDown === "supply-chain" && <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>{permissions?.view?.includes("finished good outward") && <button className="text-start">Finished Goods Outward</button>}</div>}
@@ -326,6 +335,32 @@ function NavigationBar() {
         {permissions?.view?.includes("user management") && (
           <button onClick={() => navigate("/user-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/user-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             User Management
+          </button>
+        )}
+         {getAllChildrens(createdModules[8]).some((child) => permissions?.view?.includes(child)) && (
+          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] z-[999] relative " + (location.pathname?.includes("/reports/") ? " bg-white" : " bg-[#C3CBFF]")}>
+            <p onClick={() => setDropDown(dropDown === "reports" ? "" : "reports")}>Reports</p>
+            {dropDown === "reports" && (
+              <div className={"flex bg-white p-1 flex-col w-[200%] absolute shadow-md left-0  bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
+                {typeMaster === "inventory report" ? <ul className="list-item">
+                    <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
+                      Inventory Report <span>-</span>
+                    </dl>
+                    {permissions?.view?.includes("rm report") && <li className="text-start ms-5" onClick={() => navigate("/reports/rm-reports")}>
+                      RM Report
+                    </li>}
+                    {permissions?.view?.includes("fg report") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/finished-goods")}>
+                      FG Report
+                    </li>}
+                    {permissions?.view?.includes("pm report") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
+                      PM Report
+                    </li>}
+                   
+                  </ul> :  <button onClick={() => setTypeMaster("inventory report")} className="flex justify-between text-[#5970F5]">
+                  Inventory Report <span>+</span>
+                      </button>}
+              </div>
+            )}
           </button>
         )}
         {/* <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>More</button> */}

@@ -244,7 +244,7 @@ function ShippingType() {
                           className="h-3 cursor-pointer w-3 border border-[#5970f5] bg-none"
                         ></div>
                       )}
-                      <p className="text-black ">{x?.value}</p>
+                      <p className="text-black ">{typeof x?.value==="string" && x?.value}</p>
                     </div>
                   ))}
                 </div>
