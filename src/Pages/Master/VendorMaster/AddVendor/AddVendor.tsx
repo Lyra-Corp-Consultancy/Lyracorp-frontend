@@ -101,11 +101,11 @@ function AddVendor() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          payment: res?.payload[0]?.paymentTerm,
         };
       });
     });
@@ -290,7 +290,7 @@ function AddVendor() {
               <label>Country</label>
               <Select
                   pattern={
-                    places?.country?.filter((a) => a?.country === search?.country)[0]
+                    places?.country?.filter((a) => a?.country === data?.country)[0]
                       ? undefined
                       : ""
                   }
@@ -332,7 +332,7 @@ function AddVendor() {
               <label>State</label>
               <Select
                  pattern={
-                  places?.state?.filter((a) => a?.name === search.state)[0]
+                  places?.state?.filter((a) => a?.name === data.state)[0]
                     ? undefined
                     : ""
                 }
@@ -386,7 +386,7 @@ function AddVendor() {
               <Select
                 
                 pattern={
-                  places?.city?.filter((a) => a === search.city)[0]
+                  places?.city?.filter((a) => a === data.city)[0]
                     ? undefined
                     : ""
                 }

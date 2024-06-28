@@ -6,7 +6,13 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { addPurchaseOrder, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
+import {
+  addPurchaseOrder,
+  getAllProductRawMaterial,
+  getAllUserManagement,
+  getAllVendorMaster,
+  getType,
+} from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -51,7 +57,7 @@ function AddPurchaseOrder() {
     billing: string;
     deliveryUser: string;
     shippingAddress: string;
-    paymentType:string;
+    paymentType: string;
   }>({
     paymentTerms: "",
     paymentType: "",
@@ -69,7 +75,6 @@ function AddPurchaseOrder() {
     billing: "",
     deliveryUser: "",
     shippingAddress: "",
-  
   });
 
   const [dropDowns, setDropDown] = useState<{
@@ -99,7 +104,7 @@ function AddPurchaseOrder() {
     users: [],
     packing: [],
     shipping: [],
-    paymentTerm: [],  
+    paymentTerm: [],
   });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
@@ -285,10 +290,8 @@ function AddPurchaseOrder() {
     setFiles([...files, ...droppedFiles]);
   };
 
-  console.log("dr ",dropDowns)
-  
+  console.log("dr ", dropDowns);
 
- 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Order</h1>
@@ -418,7 +421,6 @@ function AddPurchaseOrder() {
                       ...data,
                       deliveryDate: formatDate(new Date(e as Date)),
                     });
-
                   }}
                   className={[
                     "bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " +
@@ -536,10 +538,12 @@ function AddPurchaseOrder() {
                     shippingAddress: e.target.value,
                   });
                 }}
-              
                 title="Please Select values from drop down"
               >
-                {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)
+                {(
+                  user?.companyDetails?.[0]?.shippingAddress ||
+                  superAdminCompany?.shippingAddress
+                )
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -568,14 +572,15 @@ function AddPurchaseOrder() {
               <label>Billing Address</label>
               <Select
                 required
-               
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
                 }}
                 value={searchValue?.billing || ""}
-                
               >
-                {(user?.companyDetails?.[0]?.billingAddress || superAdminCompany?.billingAddress)
+                {(
+                  user?.companyDetails?.[0]?.billingAddress ||
+                  superAdminCompany?.billingAddress
+                )
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -638,7 +643,7 @@ function AddPurchaseOrder() {
                     </li>
                   ))}
               </Select>
-            </div> 
+            </div>
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
@@ -646,7 +651,9 @@ function AddPurchaseOrder() {
                 required
                 value={data?.paymentType}
                 pattern={
-                  dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]
+                  dropDowns.payment.filter(
+                    (a) => a._id === data.paymentType
+                  )?.[0]
                     ? undefined
                     : ""
                 }
@@ -673,7 +680,7 @@ function AddPurchaseOrder() {
             <Select
               pattern={
                 dropDowns?.document?.filter(
-                  (a) => a?.value=== searchValue.document
+                  (a) => a?.value === searchValue.document
                 )?.[0]
                   ? undefined
                   : ""
@@ -896,7 +903,7 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.packing?.filter(
-                            (x) => x?.value  === searchValue.packing[i] 
+                            (x) => x?.value === searchValue.packing[i]
                           )?.[0]?.value
                             ? undefined
                             : ""

@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   editPurchaseOrder,
   getAllProductRawMaterial,
@@ -35,10 +35,10 @@ function EditPurchaseOrder() {
     city: any[];
   }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  // const superAdminCompany = useSelector(
-  //   (state: any) => state?.data?.superAdminCompany
-  // );
-  // const user = useSelector((state: any) => state?.data?.user);
+  const superAdminCompany = useSelector(
+    (state: any) => state?.data?.superAdminCompany
+  );
+  const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -615,14 +615,16 @@ function EditPurchaseOrder() {
               </Select>
             </div>
 
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 z-[96] items-center">
               <label>Billing Address</label>
               <Select
                 required
                 pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.billingAddress?.filter(
-                    (a: any) => a?.address === searchValue?.billing
-                  )[0]?.address
+                  (
+                    user?.companyDetails?.[0]?.billingAddress ||
+                    superAdminCompany?.billingAddress
+                  )?.filter((a: any) => a?.address === searchValue?.billing)[0]
+                    ?.address
                     ? undefined
                     : ""
                 }
@@ -632,7 +634,10 @@ function EditPurchaseOrder() {
                 }}
                 value={searchValue?.billing || ""}
               >
-                {dropDowns?.users[0]?.companyDetails[0]?.billingAddress
+                {(
+                  user?.companyDetails?.[0]?.billingAddress ||
+                  superAdminCompany?.billingAddress
+                )
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -644,7 +649,7 @@ function EditPurchaseOrder() {
                         setSearchValue({ ...searchValue, billing: x?.address });
                         setData({ ...data, billingAddress: x });
                       }}
-                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
                     >
                       {x?.address}
                     </li>

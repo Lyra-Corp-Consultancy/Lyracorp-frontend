@@ -68,7 +68,7 @@ function AddCustomer() {
     pincode: "",
     purchaseResitriction: "",
     discountType: "",
-    paymentTerms: "",
+    paymentTerm: "",
     bussinessDocument: "",
     fileUrls: [],
   });
@@ -162,10 +162,7 @@ function AddCustomer() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
-   console.log("data",data)
-   console.log("dd ",dropDowns)
-
-   console.log("pla ",places)
+ 
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Customer Master</h1>
@@ -354,7 +351,7 @@ function AddCustomer() {
               <label>Country</label>
               <Select
                 pattern={
-                  places?.country?.filter((a) => a?.country === search?.country)[0]
+                  places?.country?.filter((a) => a?.country=== data?.country)[0]
                     ? undefined
                     : ""
                 }
@@ -407,7 +404,7 @@ function AddCustomer() {
                 <label>State</label>
                 <Select
                   pattern={
-                    places?.state?.filter((a) => a?.name === search.state)[0]
+                    places?.state?.filter((a) => a?.name === data.state)[0]
                       ? undefined
                       : ""
                   }
@@ -467,7 +464,7 @@ function AddCustomer() {
                 <label>City/Village</label>
                 <Select
                   pattern={
-                    places?.city?.filter((a) => a === search.city)[0]
+                    places?.city?.filter((a) => a === data.city)[0]
                       ? undefined
                       : ""
                   }
