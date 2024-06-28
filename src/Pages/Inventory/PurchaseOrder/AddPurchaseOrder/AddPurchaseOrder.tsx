@@ -529,13 +529,6 @@ function AddPurchaseOrder() {
               <Select
                 required
                 value={searchValue?.shippingAddress || ""}
-                pattern={
-                  dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
-                  ?.filter((a: any) =>
-                    a?.address=== searchValue.shippingAddress)?.[0]?.address
-                    ? undefined
-                    : ""
-                }
                 className="z-[99]"
                 onChange={(e) => {
                   setSearchValue({
@@ -546,7 +539,7 @@ function AddPurchaseOrder() {
               
                 title="Please Select values from drop down"
               >
-                {dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
+                {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -575,20 +568,14 @@ function AddPurchaseOrder() {
               <label>Billing Address</label>
               <Select
                 required
-                pattern={
-                  dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress?.filter((a: any) =>
-                    a?.address  === searchValue.billing )?.[0]?.address
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
+               
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
                 }}
                 value={searchValue?.billing || ""}
                 
               >
-                {dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress
+                {(user?.companyDetails?.[0]?.billingAddress || superAdminCompany?.billingAddress)
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
