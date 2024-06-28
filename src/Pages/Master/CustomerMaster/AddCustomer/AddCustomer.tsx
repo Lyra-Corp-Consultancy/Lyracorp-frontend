@@ -48,7 +48,7 @@ function AddCustomer() {
     document: any[];
   }>({ customer: [], account: [], discount: [], paymentTerm: [], document: [] });
   const dispatch: any = useDispatch();
-  const [phoneLength, setPhoneLength] = useState<any>({});
+  // const [phoneLength, setPhoneLength] = useState<any>({});
   // const [dragging, setDragging] = useState(false);
   const [files, setFiles] = useState<any[]>([]);
   const [data, setData] = useState<any>({
@@ -303,7 +303,7 @@ function AddCustomer() {
                       className="px-3 hover:bg-slate-200 py-1 transition-all truncate duration-100"
                       onClick={() => {
                         const val = x;
-                        setPhoneLength(val);
+                        // setPhoneLength(val);
                         setSearchValue({
                           ...searchValue,
                           countryCode: "+" + val.phone,

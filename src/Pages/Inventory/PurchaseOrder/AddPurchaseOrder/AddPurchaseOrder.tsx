@@ -14,6 +14,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./AddPurchaseOrder.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
+import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddPurchaseOrder() {
@@ -299,7 +300,7 @@ function AddPurchaseOrder() {
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Vendor Details</h1>
+          <h1 className="roboto-medium mt-1">Purchaser Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
@@ -415,9 +416,9 @@ function AddPurchaseOrder() {
                   onChange={(e) => {
                     setData({
                       ...data,
-                      deliveryDate: e?.toLocaleString().split(",")?.[0],
+                      deliveryDate: formatDate(new Date(e as Date)),
                     });
-                    console.log("delivery date");
+
                   }}
                   className={[
                     "bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " +
@@ -528,13 +529,6 @@ function AddPurchaseOrder() {
               <Select
                 required
                 value={searchValue?.shippingAddress || ""}
-                pattern={
-                  dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
-                  ?.filter((a: any) =>
-                    a?.address=== searchValue.shippingAddress)?.[0]?.address
-                    ? undefined
-                    : ""
-                }
                 className="z-[99]"
                 onChange={(e) => {
                   setSearchValue({
@@ -545,7 +539,7 @@ function AddPurchaseOrder() {
               
                 title="Please Select values from drop down"
               >
-                {dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
+                {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -574,20 +568,14 @@ function AddPurchaseOrder() {
               <label>Billing Address</label>
               <Select
                 required
-                pattern={
-                  dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress?.filter((a: any) =>
-                    a?.address  === searchValue.billing )?.[0]?.address
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
+               
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
                 }}
                 value={searchValue?.billing || ""}
                 
               >
-                {dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress
+                {(user?.companyDetails?.[0]?.billingAddress || superAdminCompany?.billingAddress)
                   ?.filter((a: any) =>
                     a?.address
                       ?.toLowerCase()
@@ -667,7 +655,7 @@ function AddPurchaseOrder() {
                 {dropDowns.payment?.map((x) => (
                   <li
                     onClick={() => {
-                      setData({ ...data, paymentType: x });
+                      setData({ ...data, paymentType: x?.value });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
