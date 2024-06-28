@@ -300,7 +300,7 @@ function AddPurchaseOrder() {
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
         >
-          <h1 className="roboto-medium mt-1">Vendor Details</h1>
+          <h1 className="roboto-medium mt-1">Purchaser Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
