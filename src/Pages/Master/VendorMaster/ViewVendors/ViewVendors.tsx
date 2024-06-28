@@ -87,11 +87,11 @@ function ViewVendors() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          payment: res?.payload[0]?.paymentTerm,
         };
       });
     });
@@ -123,7 +123,7 @@ function ViewVendors() {
   //   };
   return (
     <div className="min-h-[86vh] w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Customer Master</h1>
+      <h1 className="roboto-bold text-lg">View Customer Master</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full min-h-[90%]">
         <div className="shadow-md bg-white px-4 h-full pb-[100px] z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Vendor Type</h1>

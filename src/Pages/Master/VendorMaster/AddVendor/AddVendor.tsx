@@ -194,7 +194,7 @@ function AddVendor() {
             </Select>
           </div>
           <h1 className="roboto-medium mt-1">Contact Details</h1>
-          <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+          <div className="grid grid-flow-col z-[100] items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
             <input
               required
@@ -234,27 +234,16 @@ function AddVendor() {
                       className="px-3 hover:bg-slate-200 py-1 transition-all truncate duration-100"
                       onClick={() => {
                         const val = x;
-                        setPhoneLength(val);
-                        setData({ ...data, country: val.label });
+                        // setPhoneLength(val);
                         setSearchValue({
                           ...searchValue,
                           countryCode: "+" + val.phone,
                         });
-                        axios
-                          .post(
-                            "https://countriesnow.space/api/v0.1/countries/states",
-                            { country: val.label }
-                          )
-                          .then((res) => {
-                            setPlaces({
-                              ...places,
-                              state: res.data.data.states,
-                            });
-                            setSearch({
-                              ...search,
-                              state: res.data.data.states,
-                            });
-                          });
+                        setData({
+                          ...data,
+                          countryCode: "+" + val.phone,
+                        })
+                     
                       }}
                     >
                       +{x.phone}
@@ -263,7 +252,7 @@ function AddVendor() {
               </Select>
 
               <input
-                max={phoneLength?.phoneLength || undefined}
+                // min={phoneLength?.phoneLength || undefined}
                 required
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
@@ -275,7 +264,8 @@ function AddVendor() {
             </label>
             <label>Secondary Number</label>
             <input
-              max={phoneLength?.phoneLength || undefined}
+              required
+              // max={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
                 setData({ ...data, secondaryNumber: e.target.value })
@@ -285,16 +275,21 @@ function AddVendor() {
             />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
-          <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+          <div
+            className={
+              "flex flex-wrap gap-2 items-center  roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2 " +
+              (data?.state && "justify-between")
+            }
+          >
             <div className="w-[22%] flex gap-3 items-center">
               <label>Country</label>
               <Select
-                  pattern={
-                    places?.country?.filter((a) => a?.country === data?.country)[0]
-                      ? undefined
-                      : ""
-                  }
-                  title="Please Select values from drop down"
+                pattern={
+                  places?.country?.filter((a) => a?.country=== data?.country)[0]
+                    ? undefined
+                    : ""
+                }
+                title="Please Select values from drop down"
                 required
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
@@ -305,7 +300,7 @@ function AddVendor() {
                   setSearch({ ...search, country: filtered });
                   setData({ ...data, country: e.target.value });
                 }}
-                value={data.country}
+                value={data?.country}
               >
                 {search?.country?.map((x) => (
                   <li
@@ -320,6 +315,16 @@ function AddVendor() {
                           setPlaces({ ...places, state: res.data.data.states });
                           setSearch({ ...search, state: res.data.data.states });
                         });
+                      const country = phoneNumberDetails.filter(
+                        (y) =>
+                          y.label.toLowerCase() === x?.country?.toLowerCase()
+                      );
+                      console.log(country);
+                      // setPhoneLength(country[0]);
+                      // setSearchValue({
+                      //   ...searchValue,
+                      //   countryCode: "+" + country[0].phone,
+                      // });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
@@ -328,129 +333,146 @@ function AddVendor() {
                 ))}
               </Select>
             </div>
-            <div className="w-[22%] flex gap-3 items-center">
-              <label>State</label>
-              <Select
-                 pattern={
-                  places?.state?.filter((a) => a?.name === data.state)[0]
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
-                required
-                onChange={(e) => {
-                  const filtered = places.state.filter((x) => {
-                    return x?.name
-                      ?.toLowerCase()
-                      .startsWith(e.target.value.toLowerCase() || "");
-                  });
-                  setSearch({ ...search, state: filtered });
-                  setData({ ...data, state: e.target.value });
-                }}
-                value={data.state}
-              >
-                {search?.state?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, state: x?.name });
-                      axios
-                        .post(
-                          "https://countriesnow.space/api/v0.1/countries/state/cities",
-                          { country: data.country, state: x?.name }
-                        )
-                        .then((res) => {
-                          console.log(res.data);
-                          setPlaces({ ...places, city: res.data.data });
-                          setSearch({ ...search, city: res.data.data });
-                        });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.name}
-                  </li>
-                ))}
-              </Select>
-            </div>
-            <div className="w-[22%] flex gap-3 items-center">
-              <label>District</label>
-              <input
-                required
-                value={data.district}
-                onChange={(e) => setData({ ...data, district: e.target.value })}
-                type="text"
-                className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
-              />
-            </div>
-            <div className="w-[22%] z-10 flex gap-3 items-center">
-              <label>City/Village</label>
-              <Select
-                
-                pattern={
-                  places?.city?.filter((a) => a === data.city)[0]
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
-                required
-                onChange={(e) => {
-                  const filtered = places.city.filter((x) => {
-                    return x
-                      ?.toLowerCase()
-                      .startsWith(e.target.value.toLowerCase() || "");
-                  });
-                  setSearch({ ...search, city: filtered });
-                  setData({ ...data, city: e.target.value });
-                }}
-                value={data.city}
-              >
-                {search?.city?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, city: x });
-                      // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
-                      //   console.log(res.data)
-                      //   setPlaces({ ...places, city: res.data.data})
-                      //   setSearch({ ...search, city: res.data.data})
-                      // });
-                    }}
-                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x}
-                  </li>
-                ))}
-              </Select>
-            </div>
-            <div className="w-[22%] flex gap-3 items-center">
-              <label>Zone</label>
-              <input
-                required
-                value={data.zone}
-                onChange={(e) => setData({ ...data, zone: e.target.value })}
-                type="text"
-                className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
-              />
-            </div>
-            <div className="w-[50%] flex gap-3 items-center">
-              <label>Address</label>
-              <textarea
-                required
-                value={data.address}
-                onChange={(e) => setData({ ...data, address: e.target.value })}
-                className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
-              ></textarea>
-            </div>
-            <div className="w-[22%] flex gap-3 items-center">
-              <label>Pin code</label>
-              <input
-                required
-                value={data.pincode}
-                onChange={(e) => setData({ ...data, pincode: e.target.value })}
-                type="number"
-                className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
-              />
-            </div>
+            {data?.country && (
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <Select
+                  pattern={
+                    places?.state?.filter((a) => a?.name === data.state)[0]
+                      ? undefined
+                      : ""
+                  }
+                  title="Please Select values from drop down"
+                  required
+                  onChange={(e) => {
+                    const filtered = places.state.filter((x) => {
+                      return x?.name
+                        ?.toLowerCase()
+                        .startsWith(e.target.value.toLowerCase() || "" );
+                    });
+                    setSearch({ ...search, state: filtered });
+                    setData({ ...data, state: e.target.value });
+                  }}
+                  className="z-[99]"
+                  value={data.state}
+                >
+                  {search?.state?.map((x) => (
+                    <li
+                      onClick={() => {
+                        setData({ ...data, state: x?.name });
+                        axios
+                          .post(
+                            "https://countriesnow.space/api/v0.1/countries/state/cities",
+                            { country: data.country, state: x?.name }
+                          )
+                          .then((res) => {
+                            console.log(res.data);
+                            setPlaces({ ...places, city: res.data.data });
+                            setSearch({ ...search, city: res.data.data });
+                          });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.name}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+            )}
+            {data?.state && (
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <input
+                  required
+                  value={data.district}
+                  onChange={(e) =>
+                    setData({ ...data, district: e.target.value })
+                  }
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                />
+              </div>
+            )}
+            {data?.state && (
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <Select
+                  pattern={
+                    places?.city?.filter((a) => a === data.city)[0]
+                      ? undefined
+                      : ""
+                  }
+                  title="Please Select values from drop down"
+                  required
+                  onChange={(e) => {
+                    const filtered = places.city.filter((x) => {
+                      return x
+                        ?.toLowerCase()
+                        .startsWith(e.target.value.toLowerCase()|| "");
+                    });
+                    setSearch({ ...search, city: filtered });
+                    setData({ ...data, city: e.target.value });
+                  }}
+                  value={data.city}
+                >
+                  {search?.city?.map((x) => (
+                    <li
+                      onClick={() => {
+                        setData({ ...data, city: x });
+                        // axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country,state:x?.name }).then((res) => {
+                        //   console.log(res.data)
+                        //   setPlaces({ ...places, city: res.data.data})
+                        //   setSearch({ ...search, city: res.data.data})
+                        // });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x}
+                    </li>
+                  ))}
+                </Select>
+              </div>
+            )}
+            {data?.state && (
+              <>
+                {" "}
+                <div className="w-[22%] flex gap-3 items-center">
+                  <label>Zone</label>
+                  <input
+                    required
+                    value={data.zone}
+                    onChange={(e) => setData({ ...data, zone: e.target.value })}
+                    type="text"
+                    className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  />
+                </div>
+                <div className="w-[50%] flex gap-3 items-center">
+                  <label>Address</label>
+                  <textarea
+                    required
+                    value={data.address}
+                    onChange={(e) =>
+                      setData({ ...data, address: e.target.value })
+                    }
+                    className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  ></textarea>
+                </div>
+                <div className="w-[22%] flex gap-3 items-center">
+                  <label>Pin code</label>
+                  <input
+                    required
+                    value={data.pincode}
+                    min={6}
+                    onChange={(e) =>
+                      setData({ ...data, pincode: e.target.value })
+                    }
+                    type="number"
+                    className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
+                  />
+                </div>
+              </>
+            )}
           </div>
-
           <h1 className="roboto-medium mt-1">Payment Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
