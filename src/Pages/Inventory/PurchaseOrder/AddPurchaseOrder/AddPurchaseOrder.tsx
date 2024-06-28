@@ -309,8 +309,8 @@ function AddPurchaseOrder() {
                 required
                 pattern={
                   dropDowns?.vendor?.filter(
-                    (x) => x?.VendorName === searchValue?.vendor
-                  )[0]?.VendorName
+                    (x) => x?.VendorName === searchValue.vendor
+                  )?.[0]?.VendorName
                     ? undefined
                     : " "
                 }
@@ -349,8 +349,8 @@ function AddPurchaseOrder() {
                 className="bg-white z-[100]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue?.users
-                  )[0]?.username
+                    (x) => x?.username === searchValue.users
+                  )?.[0]?.username
                 }
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -434,8 +434,8 @@ function AddPurchaseOrder() {
                 className="z-[99]"
                 pattern={
                   dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue?.deliveryUser
-                  )[0]?.username
+                    (x) => x?.username === searchValue.deliveryUser
+                  )?.[0]?.username
                     ? undefined
                     : ""
                 }
@@ -532,7 +532,7 @@ function AddPurchaseOrder() {
                 pattern={
                   dropDowns?.users?.[0]?.companyDetails?.[0]?.shippingAddress
                   ?.filter((a: any) =>
-                    a?.address=== searchValue?.shippingAddress)[0]?.address
+                    a?.address=== searchValue.shippingAddress)?.[0]?.address
                     ? undefined
                     : ""
                 }
@@ -576,8 +576,8 @@ function AddPurchaseOrder() {
               <Select
                 required
                 pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.billingAddress?.filter((a: any) =>
-                    a?.address  === searchValue?.billing )[0]?.address
+                  dropDowns?.users?.[0]?.companyDetails?.[0]?.billingAddress?.filter((a: any) =>
+                    a?.address  === searchValue.billing )?.[0]?.address
                     ? undefined
                     : ""
                 }
@@ -686,8 +686,8 @@ function AddPurchaseOrder() {
             <Select
               pattern={
                 dropDowns?.document?.filter(
-                  (a) => a?.value=== searchValue?.document
-                )[0]
+                  (a) => a?.value=== searchValue.document
+                )?.[0]
                   ? undefined
                   : ""
               }
@@ -794,8 +794,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
-                            (x) => x?.productName === searchValue?.products[i]
-                          )[0]?.productName
+                            (x) => x?.productName === searchValue.products[i]
+                          )?.[0]?.productName
                             ? undefined
                             : ""
                         }
@@ -862,8 +862,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.uom?.filter(
-                            (x) => x?.value?.name === searchValue?.uom[i]
-                          )[0]?.value?.name
+                            (x) => x?.value?.name === searchValue.uom[i]
+                          )?.[0]?.value?.name
                             ? undefined
                             : ""
                         }
@@ -909,8 +909,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.packing?.filter(
-                            (x) => x?.value  === searchValue?.packing[i] 
-                          )[0]?.value
+                            (x) => x?.value  === searchValue.packing[i] 
+                          )?.[0]?.value
                             ? undefined
                             : ""
                         }
@@ -958,8 +958,8 @@ function AddPurchaseOrder() {
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.certificate?.filter(
-                            (x) => x?.value === searchValue?.certificate[i]
-                          )[0]?.value
+                            (x) => x?.value === searchValue.certificate[i]
+                          )?.[0]?.value
                             ? undefined
                             : ""
                         }
