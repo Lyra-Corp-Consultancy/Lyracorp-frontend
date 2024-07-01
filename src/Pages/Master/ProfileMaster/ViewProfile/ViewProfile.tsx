@@ -103,7 +103,7 @@ function ViewProfile() {
       setSearch({ ...search, country: val });
     });
   }, []);
-
+       console.log("data ",data)
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">View Profile Master</h1>
@@ -200,7 +200,7 @@ function ViewProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Pin code</label>
-                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pincode}</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pinCode}</label>
               </div>
             </div>
           ))}
@@ -234,7 +234,7 @@ function ViewProfile() {
               </div>
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Pin code</label>
-                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pincode}</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pinCode}</label>
               </div>
             </div>
           ))}

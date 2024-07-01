@@ -200,11 +200,11 @@ function CustomerMaster() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload[0]?.paymentType,
+          payment: res?.payload[0]?.paymentTerm,
         };
       });
     });
