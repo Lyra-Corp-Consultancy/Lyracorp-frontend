@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, FinishedGoodsInwards, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | {  [des:string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -605,5 +605,70 @@ export const getRMReports = createAsyncThunk("user/getRMReports", async (_, { re
     rejectWithValue(err);
   }
 });
+
+export const getProductsFinishedGoods = createAsyncThunk("user/getProductsFinishedGoods", async(_, { rejectWithValue,getState })=>{
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/inventory/finished-goods-inwards/getProducts",{params:{lineOfBusiness}});
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})
+
+export const getFinishedGoodsBatchNumberByProductId=createAsyncThunk("user/getProductsFinishedGoods", async(productId:string, { rejectWithValue,getState })=>{
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/inventory/finished-goods-inwards/getBatchNumberByProduct",{params:{lineOfBusiness,productId}});
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})
+
+export const postFinishedGoodsInward = createAsyncThunk("user/getProductsFinishedGoods", async(data:FinishedGoodsInwards[], { rejectWithValue,getState })=>{
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.post("/inventory/finished-goods-inwards",{lineOfBusiness,data});
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})
+
+export const getFinishedGoodsInwards=createAsyncThunk("user/getProductsFinishedGoods", async(_, { rejectWithValue,getState })=>{
+  try {
+    const state:any = getState()
+    let lineOfBusiness:string | null
+    if(state?.data?.user?.superAdmin){
+      lineOfBusiness = state.data?.superAdminCompany?._id
+    }else{
+      lineOfBusiness = state.data?.user?.company
+    }
+    const res = await instance.get("/inventory/finished-goods-inwards",{params:{lineOfBusiness}});
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+})
+
 
 

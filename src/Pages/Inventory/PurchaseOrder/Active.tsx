@@ -105,7 +105,7 @@ function Active({ data, dropDowns, inActiveCustomer, selected, setSelected }: Pr
               <th>{dropDowns?.users?.filter((y) => y?._id === x?.contact)[0]?.username}</th>
               <th>{x?.deliveryDate}</th>
               <th>{dropDowns?.shippingMethods?.filter((y) => y?._id === x?.shippingMethod)[0]?.value}</th>
-              <th className="truncate">{x?.billingAddress?.address}</th>
+              <th className="truncate max-w-[100px]">{x?.billingAddress?.address}</th>
               <th>{x?.paymentType}</th>
               <th>{dropDowns?.payment?.filter((y) => y?._id === x?.paymentTerm)[0]?.value}</th>
               <th className="relative ">

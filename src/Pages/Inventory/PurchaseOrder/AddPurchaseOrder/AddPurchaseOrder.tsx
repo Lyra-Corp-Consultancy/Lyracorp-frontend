@@ -6,13 +6,7 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addPurchaseOrder,
-  getAllProductRawMaterial,
-  getAllUserManagement,
-  getAllVendorMaster,
-  getType,
-} from "../../../../utils/redux/actions";
+import { addPurchaseOrder, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
@@ -36,9 +30,7 @@ function AddPurchaseOrder() {
     city: any[];
   }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const superAdminCompany = useSelector(
-    (state: any) => state?.data?.superAdminCompany
-  );
+  const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const user = useSelector((state: any) => state?.data?.user);
 
   const [searchValue, setSearchValue] = useState<{
@@ -135,9 +127,7 @@ function AddPurchaseOrder() {
       lineOfBusiness = user?.company;
     }
 
-    dispatch(
-      addPurchaseOrder({ ...data, fileUrls: urls, lineOfBusiness })
-    ).then(() => {
+    dispatch(addPurchaseOrder({ ...data, fileUrls: urls, lineOfBusiness })).then(() => {
       navigate(-1);
     });
   };
@@ -310,13 +300,7 @@ function AddPurchaseOrder() {
               <Select
                 className="bg-white z-[990]"
                 required
-                pattern={
-                  dropDowns?.vendor?.filter(
-                    (x) => x?.VendorName === searchValue.vendor
-                  )?.[0]?.VendorName
-                    ? undefined
-                    : " "
-                }
+                pattern={dropDowns?.vendor?.filter((x) => x?.VendorName === searchValue.vendor)?.[0]?.VendorName ? undefined : " "}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, vendor: e.target.value });
@@ -324,11 +308,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.vendor || ""}
               >
                 {dropDowns?.vendor
-                  ?.filter((a) =>
-                    a?.VendorName?.toLowerCase()?.includes(
-                      searchValue?.vendor?.toLowerCase() || ""
-                    )
-                  )
+                  ?.filter((a) => a?.VendorName?.toLowerCase()?.includes(searchValue?.vendor?.toLowerCase() || ""))
                   .map((x) => (
                     <li
                       onClick={() => {
@@ -350,11 +330,7 @@ function AddPurchaseOrder() {
               <Select
                 required
                 className="bg-white z-[100]"
-                pattern={
-                  dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue.users
-                  )?.[0]?.username
-                }
+                pattern={dropDowns?.users?.filter((x) => x?.username === searchValue.users)?.[0]?.username}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, users: e.target.value });
@@ -362,11 +338,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.users || ""}
               >
                 {dropDowns?.users
-                  ?.filter((a) =>
-                    a?.username
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.users?.toLowerCase() || "")
-                  )
+                  ?.filter((a) => a?.username?.toLowerCase()?.includes(searchValue?.users?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
@@ -382,12 +354,7 @@ function AddPurchaseOrder() {
             </div>
             <div className="flex items-center gap-3">
               <label>Contact Number</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">
-                {
-                  dropDowns?.users?.filter((x) => x?._id === data?.contact)?.[0]
-                    ?.phoneNumber
-                }
-              </label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{dropDowns?.users?.filter((x) => x?._id === data?.contact)?.[0]?.phoneNumber}</label>
             </div>
           </div>
 
@@ -395,23 +362,11 @@ function AddPurchaseOrder() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[99]">
               <label>Delivery Date</label>
-              <label
-                htmlFor="date"
-                className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
-              >
+              <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.deliveryDate}</p>
                 <button type="button" className={styles.calendar}>
-                  <svg
-                    width="10"
-                    height="12"
-                    viewBox="0 0 10 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z"
-                      fill="#5970F5"
-                    />
+                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
                   </svg>
                 </button>
                 <Calendar
@@ -422,10 +377,7 @@ function AddPurchaseOrder() {
                       deliveryDate: formatDate(new Date(e as Date)),
                     });
                   }}
-                  className={[
-                    "bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " +
-                      styles.enableCalender,
-                  ]}
+                  className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
                 />
               </label>
             </div>
@@ -434,13 +386,7 @@ function AddPurchaseOrder() {
               <Select
                 required
                 className="z-[99]"
-                pattern={
-                  dropDowns?.users?.filter(
-                    (x) => x?.username === searchValue.deliveryUser
-                  )?.[0]?.username
-                    ? undefined
-                    : ""
-                }
+                pattern={dropDowns?.users?.filter((x) => x?.username === searchValue.deliveryUser)?.[0]?.username ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({
@@ -451,11 +397,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.deliveryUser || ""}
               >
                 {dropDowns?.users
-                  ?.filter((a) =>
-                    a?.username
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.deliveryUser?.toLowerCase() || "")
-                  )
+                  ?.filter((a) => a?.username?.toLowerCase()?.includes(searchValue?.deliveryUser?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
@@ -474,18 +416,9 @@ function AddPurchaseOrder() {
             </div>
 
             <div className="flex gap-3  z-[999] items-center">
-              <label className="text-[12px] w-[170px]">
-                Delivery to Contact Number
-              </label>
-              <label
-                htmlFor=""
-                className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"
-              >
-                {
-                  dropDowns?.users?.filter(
-                    (x) => x?._id === data?.deliveryTo
-                  )?.[0]?.phoneNumber
-                }
+              <label className="text-[12px] w-[170px]">Delivery to Contact Number</label>
+              <label htmlFor="" className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md">
+                {dropDowns?.users?.filter((x) => x?._id === data?.deliveryTo)?.[0]?.phoneNumber}
               </label>
             </div>
 
@@ -493,13 +426,7 @@ function AddPurchaseOrder() {
               <label>Shipping Method</label>
               <Select
                 required
-                pattern={
-                  dropDowns?.shipping?.filter(
-                    (x) => x?.value === searchValue?.shipping
-                  )?.[0]?.value
-                    ? undefined
-                    : ""
-                }
+                pattern={dropDowns?.shipping?.filter((x) => x?.value === searchValue?.shipping)?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, shipping: e.target.value });
@@ -507,11 +434,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.shipping || ""}
               >
                 {dropDowns?.shipping
-                  ?.filter((a) =>
-                    a?.value
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.shipping?.toLowerCase() || "")
-                  )
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.shipping?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
@@ -540,17 +463,8 @@ function AddPurchaseOrder() {
                 }}
                 title="Please Select values from drop down"
               >
-                {(
-                  user?.companyDetails?.[0]?.shippingAddress ||
-                  superAdminCompany?.shippingAddress
-                )
-                  ?.filter((a: any) =>
-                    a?.address
-                      ?.toLowerCase()
-                      ?.includes(
-                        searchValue?.shippingAddress?.toLowerCase() || ""
-                      )
-                  )
+                {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)
+                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.shippingAddress?.toLowerCase() || ""))
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
@@ -577,15 +491,8 @@ function AddPurchaseOrder() {
                 }}
                 value={searchValue?.billing || ""}
               >
-                {(
-                  user?.companyDetails?.[0]?.billingAddress ||
-                  superAdminCompany?.billingAddress
-                )
-                  ?.filter((a: any) =>
-                    a?.address
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.billing?.toLowerCase() || "")
-                  )
+                {(user?.companyDetails?.[0]?.billingAddress || superAdminCompany?.billingAddress)
+                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.billing?.toLowerCase() || ""))
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
@@ -606,13 +513,7 @@ function AddPurchaseOrder() {
               <label>Payment Terms</label>
               <Select
                 required
-                pattern={
-                  dropDowns?.paymentTerm?.filter(
-                    (a) => a?.value === searchValue?.paymentTerms
-                  )
-                    ? undefined
-                    : ""
-                }
+                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms) ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({
@@ -623,11 +524,7 @@ function AddPurchaseOrder() {
                 value={searchValue?.paymentTerms || ""}
               >
                 {dropDowns?.paymentTerm
-                  ?.filter((a) =>
-                    a?.value
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.paymentTerms?.toLowerCase() || "")
-                  )
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.paymentTerms?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
@@ -647,22 +544,11 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <Select
-                required
-                value={data?.paymentType}
-                pattern={
-                  dropDowns.payment.filter(
-                    (a) => a._id === data.paymentType
-                  )?.[0]
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
-              >
+              <Select required value={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]?.value} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
                 {dropDowns.payment?.map((x) => (
                   <li
                     onClick={() => {
-                      setData({ ...data, paymentType: x?.value });
+                      setData({ ...data, paymentType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
@@ -678,13 +564,7 @@ function AddPurchaseOrder() {
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
             <Select
-              pattern={
-                dropDowns?.document?.filter(
-                  (a) => a?.value === searchValue.document
-                )?.[0]
-                  ? undefined
-                  : ""
-              }
+              pattern={dropDowns?.document?.filter((a) => a?.value === searchValue.document)?.[0] ? undefined : ""}
               title="Please Select values from drop down"
               required
               onChange={(e) => {
@@ -693,11 +573,7 @@ function AddPurchaseOrder() {
               value={searchValue?.document || ""}
             >
               {dropDowns?.document
-                ?.filter((a) =>
-                  a?.value
-                    ?.toLowerCase()
-                    ?.includes(searchValue?.document?.toLowerCase() || "")
-                )
+                ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.document?.toLowerCase() || ""))
                 .map((x) => (
                   <li
                     onClick={() => {
@@ -710,44 +586,16 @@ function AddPurchaseOrder() {
                   </li>
                 ))}
             </Select>
-            <label
-              htmlFor="file"
-              className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md"
-              onDrop={handleDrop}
-              onDragOver={(e) => e.preventDefault()}
-              onDragEnter={(e) => e.preventDefault()}
-            >
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 15 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z"
-                  fill="#5970F5"
-                />
+            <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
+              <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.5625 11.25V3.60938L4.125 6.04688L2.8125 4.6875L7.5 0L12.1875 4.6875L10.875 6.04688L8.4375 3.60938V11.25H6.5625ZM1.875 15C1.35938 15 0.918125 14.8166 0.55125 14.4497C0.184375 14.0828 0.000625 13.6412 0 13.125V10.3125H1.875V13.125H13.125V10.3125H15V13.125C15 13.6406 14.8166 14.0822 14.4497 14.4497C14.0828 14.8172 13.6412 15.0006 13.125 15H1.875Z" fill="#5970F5" />
               </svg>
-              <p className="text-xs text-center">
-                Upload Document or Drag the file
-              </p>
-              <input
-                type="file"
-                id="file"
-                onChange={handleFileSelect}
-                className="hidden"
-              />
+              <p className="text-xs text-center">Upload Document or Drag the file</p>
+              <input type="file" id="file" onChange={handleFileSelect} className="hidden" />
             </label>
             {files.map((x: any, i: number) => (
               <div className="  flex flex-col justify-center items-center">
-                <svg
-                  width="13"
-                  height="15"
-                  viewBox="0 0 13 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M0 0H8.07901L11.7144 3.63536V6.83338H10.4128V5.20639H6.50798V1.3016H1.3016V13.016H6.18259V14.3176H0V0ZM7.80958 1.57103V3.90479H10.1433L7.80958 1.57103ZM9.27388 8.78578C8.79922 8.78578 8.344 8.97434 8.00837 9.30997C7.67274 9.6456 7.48418 10.1008 7.48418 10.5755C7.48418 11.0501 7.67274 11.5053 8.00837 11.841C8.344 12.1766 8.79922 12.3652 9.27388 12.3652C9.74853 12.3652 10.2038 12.1766 10.5394 11.841C10.875 11.5053 11.0636 11.0501 11.0636 10.5755C11.0636 10.1008 10.875 9.6456 10.5394 9.30997C10.2038 8.97434 9.74853 8.78578 9.27388 8.78578ZM6.18259 10.5755C6.18266 10.0948 6.29482 9.62079 6.51015 9.19106C6.72548 8.76133 7.03806 8.38774 7.42305 8.09995C7.80804 7.81217 8.25483 7.61813 8.72794 7.53324C9.20104 7.44835 9.68743 7.47496 10.1484 7.61094C10.6095 7.74693 11.0324 7.98855 11.3837 8.31661C11.735 8.64467 12.005 9.05013 12.1722 9.50078C12.3393 9.95144 12.3991 10.4349 12.3468 10.9127C12.2944 11.3905 12.1314 11.8495 11.8706 12.2532L12.96 13.3407L12.0404 14.2616L10.9503 13.1728C10.4835 13.4741 9.94407 13.6441 9.3888 13.6647C8.83354 13.6854 8.28297 13.556 7.79503 13.2902C7.30709 13.0244 6.89982 12.632 6.61607 12.1542C6.33231 11.6765 6.18257 11.1311 6.18259 10.5755Z"
                     fill="#5970F5"
@@ -786,13 +634,7 @@ function AddPurchaseOrder() {
                       <Select
                         required
                         className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
-                        pattern={
-                          dropDowns?.products?.filter(
-                            (x) => x?.productName === searchValue.products[i]
-                          )?.[0]?.productName
-                            ? undefined
-                            : ""
-                        }
+                        pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])?.[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.products;
@@ -802,13 +644,7 @@ function AddPurchaseOrder() {
                         value={searchValue?.products[i] || ""}
                       >
                         {dropDowns?.products
-                          ?.filter((a) =>
-                            a?.productName
-                              ?.toLowerCase()
-                              ?.includes(
-                                searchValue?.products[i]?.toLowerCase() || ""
-                              )
-                          )
+                          ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.products[i]?.toLowerCase() || ""))
                           ?.map((x) => (
                             <li
                               onClick={() => {
@@ -854,13 +690,7 @@ function AddPurchaseOrder() {
                       <Select
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        pattern={
-                          dropDowns?.uom?.filter(
-                            (x) => x?.value?.name === searchValue.uom[i]
-                          )?.[0]?.value?.name
-                            ? undefined
-                            : ""
-                        }
+                        pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.uom;
@@ -870,13 +700,7 @@ function AddPurchaseOrder() {
                         value={searchValue?.uom[i] || ""}
                       >
                         {dropDowns?.uom
-                          ?.filter((a) =>
-                            a?.value?.name
-                              ?.toLowerCase()
-                              ?.includes(
-                                searchValue?.uom[i]?.toLowerCase() || ""
-                              )
-                          )
+                          ?.filter((a) => a?.value?.name?.toLowerCase()?.includes(searchValue?.uom[i]?.toLowerCase() || ""))
                           ?.map((x) => (
                             <li
                               onClick={() => {
@@ -901,13 +725,7 @@ function AddPurchaseOrder() {
                       <Select
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        pattern={
-                          dropDowns?.packing?.filter(
-                            (x) => x?.value === searchValue.packing[i]
-                          )?.[0]?.value
-                            ? undefined
-                            : ""
-                        }
+                        pattern={dropDowns?.packing?.filter((x) => x?.value === searchValue.packing[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.packing;
@@ -917,13 +735,7 @@ function AddPurchaseOrder() {
                         value={searchValue?.packing[i] || ""}
                       >
                         {dropDowns?.packing
-                          ?.filter((a) =>
-                            a?.value
-                              ?.toLowerCase()
-                              ?.includes(
-                                searchValue?.packing[i]?.toLowerCase() || ""
-                              )
-                          )
+                          ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.packing[i]?.toLowerCase() || ""))
                           ?.map((x) => (
                             <li
                               onClick={() => {
@@ -950,13 +762,7 @@ function AddPurchaseOrder() {
                       <Select
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
-                        pattern={
-                          dropDowns?.certificate?.filter(
-                            (x) => x?.value === searchValue.certificate[i]
-                          )?.[0]?.value
-                            ? undefined
-                            : ""
-                        }
+                        pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.certificate;
@@ -966,13 +772,7 @@ function AddPurchaseOrder() {
                         value={searchValue?.certificate[i] || ""}
                       >
                         {dropDowns?.certificate
-                          ?.filter((a) =>
-                            a?.value
-                              ?.toLowerCase()
-                              ?.includes(
-                                searchValue?.certificate[i]?.toLowerCase() || ""
-                              )
-                          )
+                          ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.certificate[i]?.toLowerCase() || ""))
                           ?.map((x) => (
                             <li
                               onClick={() => {
@@ -1018,13 +818,7 @@ function AddPurchaseOrder() {
             </tbody>
           </table>
           <div className="flex mt-3 w-full items-end justify-end">
-            <button
-              type="button"
-              onClick={() =>
-                setData({ ...data, products: [...data.products, {}] })
-              }
-              className="bg-[#5970F5] text-white px-4 py-2 rounded-md"
-            >
+            <button type="button" onClick={() => setData({ ...data, products: [...data.products, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
               + Add{" "}
             </button>
           </div>
@@ -1059,31 +853,16 @@ function AddPurchaseOrder() {
             >
               Reset
             </button>
-            <button
-              type="button"
-              className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]"
-              onClick={() => navigate(-1)}
-            >
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button
-              type="submit"
-              className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white"
-            >
+            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
               Save
             </button>
           </div>
         </form>
       </div>
-      {confirmation && (
-        <DeleteConfirmationBox
-          posColor="bg-[#196000]"
-          RejectFunction={() => setConfirmation(false)}
-          ResolveFunction={handleSave}
-          message="Do you want to save?"
-          pos="save"
-        />
-      )}
+      {confirmation && <DeleteConfirmationBox posColor="bg-[#196000]" RejectFunction={() => setConfirmation(false)} ResolveFunction={handleSave} message="Do you want to save?" pos="save" />}
     </div>
   );
 }

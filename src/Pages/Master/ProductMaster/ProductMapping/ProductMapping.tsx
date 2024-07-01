@@ -26,14 +26,14 @@ function ProductMapping() {
   const dispatch: any = useDispatch();
   const fetchMapping = () => {
     dispatch(getAllProductFinishedGoods()).then((res: any) => {
-      // console.log(res.payload.active)
+      console.log(res.payload.active)
       setFinishedGoods(res.payload.active);
     });
   };
   useEffect(() => {
     fetchMapping();
     dispatch(getAllProductRawMaterial()).then((res: any) => {
-      // console.log(res.payload.active)
+      console.log(res.payload.active)
       setRawMaterials(res.payload.active);
     });
   }, []);
@@ -224,7 +224,7 @@ function ProductMapping() {
                           <Select
                             required
                             style={{zIndex:999-i}}
-                            className="w-[90%] shadow-none bg-[#F6F4F4]"
+                            className="w-[90%] shadow-none border"
                             pattern={rawMaterials?.filter((x) => x?.productName === searchValue?.raw[i])[0]?.productName ? undefined : ""}
                             title="Please Select values from drop down"
                             onChange={(e) => {
@@ -238,7 +238,7 @@ function ProductMapping() {
                             value={searchValue?.raw[i] || ""}
                           >
                             {rawMaterials
-                              ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.raw[i]?.toLowerCase() || "")&& mappings.every((y)=>y?.product===a?._id))
+                              ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.raw[i]?.toLowerCase() || ""))
                               ?.map((x) => (
                                 <li
                                   onClick={() => {

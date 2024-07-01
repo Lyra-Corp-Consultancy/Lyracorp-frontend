@@ -28,17 +28,16 @@ export interface CustomerMasterData {
 
 export interface UserData {
   username: string;
-  companyDetails?:any;
+  companyDetails?: any;
   phoneNumber: string;
   email: string;
   employeeId: string;
   password: string;
   department: string;
   role: string;
-  company?:string;
-  userPhoto?: string; 
+  company?: string;
+  userPhoto?: string;
 }
-
 
 export interface VendorMasterData {
   vendorName?: string;
@@ -62,7 +61,6 @@ export interface VendorMasterData {
   fileUrls?: string[];
 }
 
-
 export interface Product {
   productId?: string;
   orderQuantity?: string;
@@ -82,12 +80,9 @@ export interface PurchaseOrder {
   paymentTerm?: string;
   paymentType?: string;
   bussinessDocument?: string;
-  vendor:string;
-  lineOfBusiness:string;
+  vendor: string;
+  lineOfBusiness: string;
 }
-
-
-
 
 export interface PurchaseInward {
   vendor?: string;
@@ -102,16 +97,15 @@ export interface PurchaseInward {
     remarks?: string;
     certificate?: string;
     image?: File;
-  }[]
+  }[];
   inwardDate?: string;
   invoiceNumber?: string;
   invoiceDate?: string;
   dcNumber?: string;
   transporter?: string;
-  warehouse?:any;
+  warehouse?: any;
   vehicleNumber?: string;
 }
-
 
 interface PrefixSeq {
   prefix?: string;
@@ -168,7 +162,7 @@ export interface ProductProcess {
 }
 
 export interface RawMaterialOutward {
-  transportationDistance?:string;
+  transportationDistance?: string;
   outwardDate?: string;
   sender?: {
     address?: string;
@@ -187,19 +181,31 @@ export interface RawMaterialOutward {
   remarks?: string;
   billOfLading?: string;
   products: any[];
-  lineOfBusiness?:string
+  lineOfBusiness?: string;
 }
 
-export interface ProductionSOPSub extends ProductSubModule{
+export interface ProductionSOPSub extends ProductSubModule {
   start?: Date;
   end?: Date;
-  workedTime?:number;
-  user:string;
-  remarks?:string
+  workedTime?: number;
+  user: string;
+  remarks?: string;
 }
 
-export interface ProductionSOPTypes extends ProductProcess{
+export interface ProductionSOPTypes extends ProductProcess {
   submodule: ProductionSOPSub[];
   moduleName: string;
   order: number;
+}
+
+export interface FinishedGoodsInwards {
+  product?: string;
+  batchNumber?: string;
+  productionQuantity?: number;
+  uom?: string;
+  rejected?: number;
+  warehouse?: any;
+  pick?: any;
+  doc?: string;
+  link?: any;
 }

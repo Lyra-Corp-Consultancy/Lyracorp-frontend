@@ -1,12 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./FinishedGoodsInward.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { getFinishedGoodsInwards, getProductsFinishedGoods } from "../../../utils/redux/actions";
 
 function FinishedGoodsInwards() {
   const [selected, setSelected] = useState<any[]>([]);
   const [data, setData] = useState<any>();
+  const [products, setProducts] = useState<{ productName: string; _id: string }[]>([]);
   const navigate = useNavigate();
+  const dispatch:any = useDispatch()
+
+  useEffect(()=>{
+    dispatch(getFinishedGoodsInwards()).then((res:any)=>{
+      console.log(res.payload)
+      setData(res.payload)
+    })
+    dispatch(getProductsFinishedGoods()).then((res: any) => {
+      setProducts(res.payload);
+    });
+  },[])
 
   return (
     <div className="min-h-[83vh] w-screen">
@@ -15,7 +29,7 @@ function FinishedGoodsInwards() {
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="flex gap-4"></div>
 
-          <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-4">
+          <div className="bg-white rounded-lg w-full pt-3 min-h-[70vh] shadow-md mt-4">
             <h2 className="roboto-bold ms-3 text-[20px] text-center">Finished Goods Inward List</h2>
             <div className="px-4 flex justify-between">
               <label className="flex px-3 w-2/5 rounded-md py-1 mt-2 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] items-center gap-3" htmlFor="">
@@ -49,7 +63,7 @@ function FinishedGoodsInwards() {
               </div>
             </div>
             <div className="h-[80%] overflow-auto w-full">
-              <table className="w-full mt-3 overflow-auto">
+              <table className="w-full  mt-3 overflow-auto">
                 <thead className="border w-full top-0 left-0  text-xs text-center bg-[#5970F5] text-white roboto-thin">
                   <tr className="w-full">
                     <th className="ps-1">
@@ -91,8 +105,8 @@ function FinishedGoodsInwards() {
                 </thead>
                 <tbody className="overflow-auto text-xs text-center  text-[#5970F5] roboto-thin">
                   {data?.map((x: any, i: number) => (
-                    <tr className="border relative">
-                      <th className="ps-1">
+                    <tr className="border relative font-black">
+                      <td className="ps-1">
                         {selected.includes(x?._id) ? (
                           <div
                             onClick={() => {
@@ -116,16 +130,17 @@ function FinishedGoodsInwards() {
                             className="h-3 cursor-pointer w-3 border border-[#5970f5] bg-none"
                           ></div>
                         )}
-                      </th>
-                      <th>{i + 1}</th>
-                      <th>{x?.seq}</th>
-                      <th>samp</th>
-                      <th>{x?.inwardDate}</th>
-                      <th>{x?.invoiceNumber}</th>
-                      <th>{x?.dcNumber}</th>
-                      <th>{x?.transporter}</th>
-                      <th>{x?.vehicleNumber}</th>
-                      <th className="relative ">
+                      </td>
+                      <td>{i + 1}</td>
+                      <td>{products.find((y)=>y._id===x?.product)?.productName}</td>
+                      <td>{x?.batchNumber}</td>
+                      <td>{x?.productionQuantity}</td>
+                      <td>{x?.rejected}</td>
+                      <td>{(x?.productionQuantity || 0) - (x?.rejected || 0)}</td>
+                      <td>{x?.doc}</td>
+                      <td ><label className="truncate px-1 w-[50px]">{x?.warehouse?.address}</label></td>
+                      <td ><label className="truncate px-1 w-[50px]">{x?.pick?.address}</label></td>
+                      <td className="relative ">
                         <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                           <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M1.80618 8.18484C1.80618 7.73465 1.4412 7.36969 0.99098 7.36969C0.540758 7.36969 0.175781 7.73465 0.175781 8.18484C0.175781 8.63504 0.540758 9 0.99098 9C1.4412 9 1.80618 8.63504 1.80618 8.18484Z" fill="#5970F5" />
@@ -160,7 +175,7 @@ function FinishedGoodsInwards() {
                             Edit
                           </button>
                         </div>
-                      </th>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
