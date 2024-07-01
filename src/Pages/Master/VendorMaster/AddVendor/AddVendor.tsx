@@ -46,7 +46,7 @@ function AddVendor() {
   });
 
   const navigate = useNavigate();
-  const [phoneLength, setPhoneLength] = useState<any>({});
+  // const [phoneLength, setPhoneLength] = useState<any>({});
   const handleSave = async () => {
     const urls: string[] = [];
     for (let i = 0; i < files.length; i++) {
