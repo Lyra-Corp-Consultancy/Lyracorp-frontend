@@ -68,12 +68,6 @@ function RoleType() {
   }, []);
 
   const addRoleType = () => {
-    const res = dispatch(postType({ value: input, type: "role" }));
-    res.then(() => {
-      fetchRoleType();
-    });
-    setConfirmation("");
-
     const converted = input?.value?.split(" ").join("").toLowerCase();
 
     const finalword = values
@@ -318,7 +312,7 @@ function RoleType() {
                         value={
                           department?.filter(
                             (x) => x?._id === input.department
-                          )[0]?.value
+                          )[0]?.value || ""
                         }
                         onChange={(e) =>
                           setInput({ ...input, department: e.target.value })
