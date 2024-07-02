@@ -3,27 +3,27 @@
 import  { useEffect, useState } from "react";
 import Select from "../../../components/Select";
 import { useDispatch } from "react-redux";
-import { getRMReports } from "../../../utils/redux/actions";
+import { getFGReports } from "../../../utils/redux/actions";
 import { makeToast } from "../../../utils/redux/slice";
 
 function FGReports() {
   const [report, setReports] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const dispatch: any = useDispatch();
-  const [search, setSearch] = useState<{ rmName: string; warehouse: string; grn: string }>({ rmName: "", warehouse: "", grn: "" });
-  const [dropDown, setDropDown] = useState<{ rawMaterials: string[]; warehouse: string[]; grn: string[] }>({ grn: [], warehouse: [], rawMaterials: [] });
+  const [search, setSearch] = useState<{ rmName: string; warehouse: string; batchNum: string }>({ rmName: "", warehouse: "", batchNum: "" });
+  const [dropDown, setDropDown] = useState<{ finishedGoods: string[]; warehouse: string[]; batchNum: string[] }>({ batchNum: [], warehouse: [], finishedGoods: [] });
   useEffect(() => {
-    dispatch(getRMReports()).then((res: any) => {
+    dispatch(getFGReports()).then((res: any) => {
       console.log(res.payload);
       setReports(res.payload);
       setFiltered(res.payload);
-      let rawMaterials = res.payload.map((x: any) => x?.product?.productName);
+      let finishedGoods = res.payload.map((x: any) => x?.products?.productName);
       let warehouse = res.payload.map((x: any) => x?.warehouse?.address);
-      let grn = res.payload.map((x: any) => x?.grn);
-      rawMaterials = [...new Set(rawMaterials)];
+      let batchNum = res.payload.map((x: any) => x?.batchNumbers);
+      finishedGoods = [...new Set(finishedGoods)];
       warehouse = [...new Set(warehouse)];
-      grn = [...new Set(grn)];
-      setDropDown({ rawMaterials, warehouse, grn });
+      batchNum = [...new Set(batchNum)];
+      setDropDown({ finishedGoods, warehouse, batchNum });
     });
   }, []);
   return (
@@ -34,18 +34,18 @@ function FGReports() {
         <div className="bg-white p-3 rounded-2xl">
           <div className="grid grid-cols-4 w-full gap-4">
             <div className="flex gap-3 items-center">
-              <label className="text-[14px]">Raw Material Name</label>
+              <label className="text-[14px] w-[200px]">Finished Goods Name</label>
               <Select value={search.rmName || ""} onChange={(e) => setSearch({ ...search, rmName: e.target.value })}>
-                {dropDown.rawMaterials
+                {dropDown.finishedGoods
                   .filter((x) => x?.toLocaleLowerCase()?.includes(search.rmName))
                   .map((x) => (
                     <li
                       onClick={() => {
                         setSearch({ ...search, rmName: x });
-                        const warehouse = report.filter((y) => y?.product?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.address);
-                        const grn = report.filter((y) => y?.product?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.grn);
-                        console.log(warehouse, grn);
-                        setDropDown({ ...dropDown, warehouse, grn });
+                        const warehouse = report.filter((y) => y?.products?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.address);
+                        const batchNum = report.filter((y) => y?.producs?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
+                        console.log(warehouse, batchNum);
+                        setDropDown({ ...dropDown, warehouse, batchNum });
                       }}
                       className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
                     >
@@ -63,8 +63,8 @@ function FGReports() {
                     <li
                       onClick={() => {
                         setSearch({ ...search, warehouse: x });
-                        const grn = filtered.filter((y) => y?.warehouse?.address?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.product?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.grn);
-                        setDropDown({ ...dropDown, grn });
+                        const batchNum = filtered.filter((y) => y?.warehouse?.address?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.products?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
+                        setDropDown({ ...dropDown, batchNum });
                       }}
                       className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
                     >
@@ -74,12 +74,12 @@ function FGReports() {
               </Select>
             </div>
             <div className="flex gap-3 items-center">
-              <label className="text-[14px]">GRN Name</label>
-              <Select value={search.grn || ""} onChange={(e) => setSearch({ ...search, grn: e.target.value })}>
-                {dropDown.grn
-                  .filter((x) => x?.toLocaleLowerCase()?.includes(search.grn))
+              <label className="text-[14px]">Batch Number</label>
+              <Select value={search.batchNum || ""} onChange={(e) => setSearch({ ...search, batchNum: e.target.value })}>
+                {dropDown.batchNum
+                  .filter((x) => x?.toLocaleLowerCase()?.includes(search.batchNum))
                   .map((x) => (
-                    <li onClick={() => setSearch({ ...search, grn: x })} className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150">
+                    <li onClick={() => setSearch({ ...search, batchNum: x })} className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150">
                       {x}
                     </li>
                   ))}
@@ -91,7 +91,7 @@ function FGReports() {
                   const filter = report
                     .filter((x) => {
                       if (search.rmName) {
-                        if (x?.product?.productName?.toLocaleLowerCase()?.includes(search.rmName.toLocaleLowerCase())) {
+                        if (x?.products?.productName?.toLocaleLowerCase()?.includes(search.rmName.toLocaleLowerCase())) {
                           return x;
                         }
                       } else {
@@ -108,8 +108,8 @@ function FGReports() {
                       }
                     })
                     .filter((x) => {
-                      if (search.grn) {
-                        if (x?.grn?.toLocaleLowerCase()?.includes(search.grn.toLocaleLowerCase())) {
+                      if (search.batchNum) {
+                        if (x?.batchNumbers?.toLocaleLowerCase()?.includes(search.batchNum.toLocaleLowerCase())) {
                           return x;
                         }
                       } else {
@@ -145,12 +145,11 @@ function FGReports() {
               {filtered.map((x, i) => (
                 <tr>
                   <td className="text-center">{i + 1}</td>
-                  <td className="text-center">{x?.product?.productName || "No Name"}</td>
-                  <td className="text-center">{x?.product?.productDes || "No Description"}</td>
-                  <td className="text-center">{x?.grn || "No GRN Number"}</td>
+                  <td className="text-center">{x?.products?.productName || "No Name"}</td>
+                  <td className="text-center">{x?.products?.productDes || "No Description"}</td>
+                  <td className="text-center">{x?.batchNumbers || "No Batch Number"}</td>
                   <td className="text-center">{x?.quantity || "No value Found"}</td>
                   <td className="text-center">{x?.warehouse?.address || "No Address Found"}</td>
-                  <td className="text-center">{x?.expiryDate || "No Expiry Date Found"}</td>
                 </tr>
               ))}
             </tbody>
