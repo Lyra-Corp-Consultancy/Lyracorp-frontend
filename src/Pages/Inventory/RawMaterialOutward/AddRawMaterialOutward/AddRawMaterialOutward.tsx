@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import {  addRawMaterialOutward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getType } from "../../../../utils/redux/actions";
+import { addRawMaterialOutward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getType } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
@@ -19,7 +19,7 @@ function AddRawMaterialOutward() {
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const [products,setProducts] = useState<any[]>()
+  const [products, setProducts] = useState<any[]>();
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
@@ -36,20 +36,39 @@ function AddRawMaterialOutward() {
     transporter: any[];
     packing: any[];
     shipping: any[];
-  }>({ margin: [], account: [], discount: [], payment: [],transporter:[] ,document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
+  }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<RawMaterialOutward>({
     products: [{}],
   });
 
-  const [selectedProduct,setSelectedProduct] = useState<any[]>([])
+  const [searchValue, setSearchValue] = useState<{
+    uom: any[];
+    Receiver: string;
+    sender: string;
+    products: any[];
+    grnNumber: any[];
+    TransportationMode: string;
+    transportationDistance: string;
+    shippingAddress: string;
+  }>({
+    uom: [],
+    Receiver: "",
+    sender: "",
+    products: [],
+    grnNumber: [],
+    TransportationMode: "",
+    transportationDistance: "",
+    shippingAddress: "",
+  });
+
+  const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
   const handleSave = async () => {
     const val = data;
- 
 
     let lineOfBusiness: string | undefined;
     if (user?.superAdmin) {
@@ -80,8 +99,8 @@ function AddRawMaterialOutward() {
       });
     });
     dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
-        setProducts(res?.payload)
-    })
+      setProducts(res?.payload);
+    });
     const res2 = dispatch(getType("uom"));
 
     res2.then((res: any) => {
@@ -93,15 +112,14 @@ function AddRawMaterialOutward() {
       });
     });
 
-
-    dispatch(getType("transport")).then((res:any)=>{
+    dispatch(getType("transport")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
           transporter: res?.payload?.[0]?.transportType,
         };
       });
-    })
+    });
 
     dispatch(getAllUserManagement()).then((res: any) => {
       setDropDown((prev) => {
@@ -213,16 +231,16 @@ function AddRawMaterialOutward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
+
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Raw Material Outward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
-                
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(data)
+            console.log(data);
             setConfirmation(true);
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
@@ -251,7 +269,7 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Sender</label>
-              <Select required className="bg-white w-[200px] z-[990]" value={data?.sender?.address}>
+              {/* <Select required className="bg-white w-[200px] z-[990]" value={data?.sender?.address}>
                 {(user?.superAdmin ? superAdminCompany?.warehouse : user?.company)?.map((x:any) => (
                   <li
                     onClick={() => {
@@ -262,6 +280,30 @@ function AddRawMaterialOutward() {
                     {x?.address}
                   </li>
                 ))}
+              </Select> */}
+
+              <Select
+                required
+                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.address === searchValue?.sender || "")?.[0]?.address ? undefined : ""}
+                title="Please Select values from drop down"
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, sender: e.target.value });
+                }}
+                value={searchValue?.sender || ""}
+              >
+                {(user?.superAdmin ? superAdminCompany?.warehouse : user?.company)
+                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.sender?.toLowerCase() || ""))
+                  ?.map((x: any) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, sender: x?.address });
+                        setData({ ...data, sender: x });
+                      }}
+                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.address}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex  items-center gap-3 justify-between">
@@ -275,8 +317,8 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Receiver</label>
-              <Select required className="bg-white w-[200px] z-[990]" value={data?.receiver?.address}>
-                {(data?.supplyChain==="own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)?.map((x:any) => (
+              {/* <Select required className="bg-white w-[200px] z-[990]" value={data?.receiver?.address}>
+                {(data?.supplyChain === "own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)?.map((x: any) => (
                   <li
                     onClick={() => {
                       setData({ ...data, receiver: x });
@@ -286,11 +328,33 @@ function AddRawMaterialOutward() {
                     {x?.address}
                   </li>
                 ))}
+              </Select> */}
+              <Select
+                className="bg-white w-[200px] z-[990]"
+                required
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, Receiver: e.target.value });
+                }}
+                value={searchValue?.Receiver || ""}
+              >
+                {(data?.supplyChain === "own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)
+                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.Receiver?.toLowerCase() || ""))
+                  ?.map((x: any) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, Receiver: x?.address });
+                        setData({ ...data, receiver: x });
+                      }}
+                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.address}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transporter</label>
-            <input required type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e)=>setData({...data,transporter:e.target.value})}/>
+              <input required type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} />
               {/* <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
                 {dropDowns?.vendor?.map((x) => (
                   <li
@@ -310,7 +374,7 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Mode</label>
-              <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
+              {/* <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
                 {dropDowns?.transporter?.map((x) => (
                   <li
                     onClick={() => {
@@ -321,11 +385,34 @@ function AddRawMaterialOutward() {
                     {x?.value}
                   </li>
                 ))}
+              </Select> */}
+              <Select
+                required
+                pattern={dropDowns?.transporter?.filter((x) => x?.value === searchValue?.TransportationMode)?.[0]?.value ? undefined : ""}
+                title="Please Select values from drop down"
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, TransportationMode: e.target.value });
+                }}
+                value={searchValue?.TransportationMode || ""}
+              >
+                {dropDowns?.transporter
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.TransportationMode?.toLowerCase() || ""))
+                  ?.map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, TransportationMode: x?.value });
+                        setData({ ...data, transporterMode: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Date</label>
-              <label htmlFor="date"  className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
+              <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.transpotationDate}</p>
                 <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,16 +432,16 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Distance</label>
-              <input required type="text" value={data.transportationDistance} onChange={(e)=>setData({...data,transportationDistance:e.target.value})} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md"/>
-              <Select required className="bg-white w-[50px] z-[509]" value={data?.transportationDistanceUnit}>
-                {dropDowns?.uom?.map((x) => (
+              <input required type="text" value={data.transportationDistance} onChange={(e) => setData({ ...data, transportationDistance: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md" />
+              <Select required className="bg-white w-[70px] z-[509]" value={data?.transportationDistanceUnit}>
+                {["Km","Miles"].map((x) => (
                   <li
                     onClick={() => {
-                      setData({ ...data, transportationDistanceUnit: x?.value?.name });
+                      setData({ ...data, transportationDistanceUnit: x });
                     }}
                     className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
                   >
-                    {x?.value?.name}
+                    {x}
                   </li>
                 ))}
               </Select>
@@ -383,30 +470,70 @@ function AddRawMaterialOutward() {
             </thead>
             <tbody>
               {data?.products?.map((x: any, i: number) => (
-                <tr className={`text-center relative `} style={{zIndex:500-i}}>
+                <tr className={`text-center relative `} style={{ zIndex: 500 - i }}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y)=>y?._id===x?.productId)?.[0]?.name}>
+                      {/* <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y) => y?._id === x?.productId)?.[0]?.name}>
                         {products?.map((x: any) => (
                           <li
                             onClick={() => {
                               const product = data?.products;
                               product[i] = { ...product[i], productId: x?._id };
                               setData({ ...data, products: product });
-                              const temp = selectedProduct
-                              temp[i] = x
-                              setSelectedProduct(temp)
+                              const temp = selectedProduct;
+                              temp[i] = x;
+                              setSelectedProduct(temp);
                             }}
                             className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
                           >
                             {x?.name || "No Name"}
                           </li>
                         ))}
+                      </Select> */}
+
+                      <Select
+                        required
+                        className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                        pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
+                        title="Please Select values from drop down"
+                        onChange={(e) => {
+                          const temp = searchValue?.products;
+                          temp[i] = e.target.value;
+                          setSearchValue({ ...searchValue, products: temp });
+                        }}
+                        value={searchValue?.products[i] || ""}
+                      >
+                        {products
+                          ?.filter((a) => a?.name?.toLowerCase()?.includes(searchValue?.products[i]?.toLowerCase() || ""))
+                          ?.map((x) => (
+                            <li
+                              onClick={() => {
+                                const temp = searchValue?.products;
+                                temp[i] = x?.name;
+                                setSearchValue({
+                                  ...searchValue,
+                                  products: temp,
+                                });
+                                const product = data?.products;
+                                product[i] = {
+                                  ...product[i],
+                                  productId: x?._id,
+                                };
+                                setData({ ...data, products: product });
+                                const temp1 = selectedProduct;
+                                temp1[i] = x;
+                                setSelectedProduct(temp1);
+                              }}
+                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                            >
+                              {x?.name || "No Name"}
+                            </li>
+                          ))}
                       </Select>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
+                    {/* <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
                       {selectedProduct[i]?.qnGrn?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -419,29 +546,101 @@ function AddRawMaterialOutward() {
                           {x?.grn || "No Name"}
                         </li>
                       ))}
+                    </Select> */}
+
+                    <Select
+                      required
+                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                       pattern={selectedProduct[i]?.qnGrn?.filter((a:any) => a?.grn === searchValue.grnNumber[i])?.[0]?.grn ? undefined : ""}
+                        title="Please Select values from drop down"
+                      onChange={(e) => {
+                        const temp = searchValue?.grnNumber;
+                        temp[i] = e.target.value;
+                        setSearchValue({ ...searchValue, grnNumber: temp });
+                      }}
+                      value={searchValue?.grnNumber[i] || ""}
+                    >
+                      {selectedProduct[i]?.qnGrn
+                        ?.filter((a: any) => a?.grn?.toLowerCase()?.includes(searchValue?.grnNumber[i]?.toLowerCase() || ""))
+                        ?.map((x: any) => (
+                          <li
+                            onClick={() => {
+                              const temp = searchValue?.grnNumber;
+                              temp[i] = x?.grn;
+                              setSearchValue({
+                                ...searchValue,
+                                grnNumber: temp,
+                              });
+                              const product = data?.products;
+                              product[i] = { ...product[i], grn: x?.grn };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.grn || "No Name"}
+                          </li>
+                        ))}
                     </Select>
+
+                    {/* <Select
+                      required
+                            pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
+                        title="Please Select values from drop down" 
+                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                      onChange={(e) => {
+                        const updatedGrnNumbers = [...(searchValue.grnNumber || [])];
+                      
+                        updatedGrnNumbers[i] = e.target.value;
+                      
+                        setSearchValue({ ...searchValue, grnNumber: updatedGrnNumbers });
+                      }}
+                      value={searchValue?.grnNumber[i] || ""}
+                      
+                    >
+                      {selectedProduct?.filter((e)=>e.name === searchValue.products[i])?.[0]?.qnGrn
+                        ?.filter((a:any) => a?.grn?.toLowerCase()?.includes(searchValue?.products[i]?.name?.toLowerCase() || ""))
+                        ?.map((x:any) => (
+                          <li
+                            onClick={() => {
+                              const temp = searchValue?.grnNumber;
+                              temp[i] = x.grn;
+                              setSearchValue({
+                                ...searchValue,
+                                grnNumber: temp,
+                              });
+                              const product = data?.products;
+                            product[i] = { ...product[i], grn: x?.grn };
+                            setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.grn || "No Name"}
+                          </li>
+                        ))}
+                    </Select> */}
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                      <div className="w-full flex">
-                    <input required
-                      type="number"
-                      value={x.recievedQuantity}
-                      onChange={(e) => {
-                        console.log(`z-[${990-i}]`)
-                        console.log(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0].qn,x?.grn)
-                        if(parseInt(e.target.value || "0")<=parseInt(selectedProduct[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0].qn)){
+                    <div className="w-full flex">
+                      <input
+                        required
+                        type="number"
+                        value={x.recievedQuantity}
+                        onChange={(e) => {
+                          console.log(`z-[${990 - i}]`);
+                          console.log(selectedProduct[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0].qn, x?.grn);
+                          if (parseInt(e.target.value || "0") <= parseInt(selectedProduct[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0].qn)) {
                             const product = data?.products;
                             product[i] = { ...x, recievedQuantity: parseInt(e.target.value) };
                             setData({ ...data, products: product });
-                        }
-                      }}
-                      className="px-2 py-1 w-[73%] bg-[#F6F4F4]  h-[25px] rounded-md"
-                    />
-                    <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y:any)=>y?.grn===x?.grn)?.[0]?.qn}</label>
+                          }
+                        }}
+                        className="px-2 py-1 w-[73%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      />
+                      <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0]?.qn}</label>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
+                    {/* <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
                       {dropDowns?.uom?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -454,10 +653,43 @@ function AddRawMaterialOutward() {
                           {x?.value?.name || "No Name"}
                         </li>
                       ))}
+                    </Select> */}
+                    <Select
+                      style={{ zIndex: 997 - i }}
+                      required
+                      className="w-[90%] shadow-none bg-[#F6F4F4]"
+                      pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
+                      title="Please Select values from drop down"
+                      onChange={(e) => {
+                        const temp = searchValue?.uom;
+                        temp[i] = e.target.value;
+                        setSearchValue({ ...searchValue, uom: temp });
+                      }}
+                      value={searchValue?.uom[i] || ""}
+                    >
+                      {dropDowns?.uom
+                        ?.filter((a) => a?.value?.name?.toLowerCase()?.includes(searchValue?.uom[i]?.toLowerCase() || ""))
+                        ?.map((x) => (
+                          <li
+                            onClick={() => {
+                              const temp = searchValue?.uom;
+                              temp[i] = x?.value?.name;
+                              setSearchValue({ ...searchValue, uom: temp });
+
+                              const product = data?.products;
+                              product[i] = { ...product[i], uom: x?._id };
+                              setData({ ...data, products: product });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
+                          >
+                            {x?.value?.name}
+                          </li>
+                        ))}
                     </Select>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <input required
+                    <input
+                      required
                       type="text"
                       value={x?.remark}
                       onChange={(e) => {
@@ -468,7 +700,7 @@ function AddRawMaterialOutward() {
                       className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
                   </td>
-                 
+
                   {i > 0 && (
                     <td>
                       <button
@@ -496,7 +728,7 @@ function AddRawMaterialOutward() {
           </div>
 
           <div className="w-full absolute bottom-4 justify-center items-center  gap-3 flex mt-5">
-            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({products:[{}]})}>
+            <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ products: [{}] })}>
               Reset
             </button>
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>

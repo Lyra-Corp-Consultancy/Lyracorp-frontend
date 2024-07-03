@@ -282,7 +282,7 @@ function AddPurchaseOrder() {
 
   console.log("dr ", dropDowns);
   console.log("data ", data);
-
+  console.log("da ", dropDowns);
   console.log("user", user);
   console.log("super ", superAdminCompany);
   console.log("sear ", searchValue);
