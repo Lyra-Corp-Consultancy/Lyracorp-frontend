@@ -282,7 +282,7 @@ function AddPurchaseOrder() {
 
   console.log("dr ", dropDowns);
   console.log("data ", data);
-
+  console.log("da ", dropDowns);
   console.log("user", user);
   console.log("super ", superAdminCompany);
   console.log("sear ", searchValue);
@@ -552,7 +552,7 @@ function AddPurchaseOrder() {
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <Select required value={data?.paymentType} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
+              <Select required value={data?.paymentType} pattern={dropDowns.payment.filter((a) => a.value === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
                 {dropDowns.payment?.map((x) => (
                   <li
                     onClick={() => {
