@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export class CSV {
   convertCSV(titles: string[], data: string| number[][]) {
     let title: string = "";

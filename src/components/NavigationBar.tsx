@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyDetails } from "../utils/redux/actions";
 import { createdModules } from "../utils/values/publicValues";
-import styles from "./NavigationBarStyle.module.scss"
+import styles from "./NavigationBarStyle.module.scss";
 import Cookies from "js-cookie";
 
 function NavigationBar() {
@@ -100,12 +100,15 @@ function NavigationBar() {
             </svg>
           </button>
           {/* profile button */}
-          <button className={" rounded relative "+styles?.logout}>
-            <img src={demoprofile} className={"h-[30px] " }alt="" />
-            <div onClick={()=>{
-              Cookies.remove("token")
-              navigate("/")
-              }} className={"bg-white w-[100px] transition-all duration-100  absolute right-0 rounded "+styles?.["logout-btn"]}>
+          <button className={" rounded relative " + styles?.logout}>
+            <img src={demoprofile} className={"h-[30px] "} alt="" />
+            <div
+              onClick={() => {
+                Cookies.remove("token");
+                navigate("/");
+              }}
+              className={"bg-white w-[100px] transition-all duration-100  absolute right-0 rounded " + styles?.["logout-btn"]}
+            >
               <p className="text-red-500">Logout</p>
             </div>
           </button>
@@ -146,7 +149,7 @@ function NavigationBar() {
                             Payment Type
                           </li>
                         )}
-                         {permissions?.view?.includes("payment term") && (
+                        {permissions?.view?.includes("payment term") && (
                           <li className="text-start ms-5" onClick={() => navigate("/master/type-master/payment-term")}>
                             Payment Term
                           </li>
@@ -231,24 +234,33 @@ function NavigationBar() {
                 )}
                 {getAllChildrens(createdModules[1][1][3]).some((child) => permissions?.view?.includes(child)) && (
                   <>
-                  
-                  {typeMaster === "product" ? <ul className="list-item">
-                    <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
-                      Product Master <span>-</span>
-                    </dl>
-                    {permissions?.view?.includes("raw material") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/raw-material")}>
-                      Raw Materials
-                    </li>}
-                    {permissions?.view?.includes("finished goods") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/finished-goods")}>
-                      Finished Goods
-                    </li>}
-                    {permissions?.view?.includes("product mapping") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
-                      Product Mapping
-                    </li>}
-                   
-                  </ul> :  <button onClick={() => setTypeMaster("product")} className="flex justify-between text-[#5970F5]">
+                    {typeMaster === "product" ? (
+                      <ul className="list-item">
+                        <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
+                          Product Master <span>-</span>
+                        </dl>
+                        {permissions?.view?.includes("raw material") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/product-master/raw-material")}>
+                            Raw Materials
+                          </li>
+                        )}
+                        {permissions?.view?.includes("finished goods") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/product-master/finished-goods")}>
+                            Finished Goods
+                          </li>
+                        )}
+                        {permissions?.view?.includes("product mapping") && (
+                          <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
+                            Product Mapping
+                          </li>
+                        )}
+                      </ul>
+                    ) : (
+                      <button onClick={() => setTypeMaster("product")} className="flex justify-between text-[#5970F5]">
                         Product Master <span>+</span>
-                      </button>}</>
+                      </button>
+                    )}
+                  </>
                 )}
                 {permissions?.view?.includes("profile master") && (
                   <button className="text-start" onClick={() => navigate("/master/profile-master")}>
@@ -281,7 +293,11 @@ function NavigationBar() {
                     Raw Material - Outward
                   </button>
                 )}
-                {permissions?.view?.includes("finished good - inward") && <button className="text-start" onClick={() => navigate("/inventory/finished-goods-inward")}>Finished Goods - Inward</button>}
+                {permissions?.view?.includes("finished good - inward") && (
+                  <button className="text-start" onClick={() => navigate("/inventory/finished-goods-inward")}>
+                    Finished Goods - Inward
+                  </button>
+                )}
               </div>
             )}
           </button>
@@ -321,7 +337,7 @@ function NavigationBar() {
             )}
           </button>
         )}
-        
+
         {/* {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative" + (location.pathname === "" ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply Chain Management</p> {dropDown === "supply-chain" && <div className={"flex p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>{permissions?.view?.includes("finished good outward") && <button className="text-start">Finished Goods Outward</button>}</div>}
@@ -337,28 +353,37 @@ function NavigationBar() {
             User Management
           </button>
         )}
-         {getAllChildrens(createdModules[8]).some((child) => permissions?.view?.includes(child)) && (
-          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px]  relative " + (location.pathname?.includes("/reports/") ? " bg-white" : " bg-[#C3CBFF]")}>
+        {getAllChildrens(createdModules[8]).some((child) => permissions?.view?.includes(child)) && (
+          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px]  relative z-[998]" + (location.pathname?.includes("/reports/") ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "reports" ? "" : "reports")}>Reports</p>
             {dropDown === "reports" && (
               <div className={"flex bg-white p-1 flex-col w-[200%] absolute shadow-md left-0  bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
-                {typeMaster === "inventory report" ? <ul className="list-item">
+                {typeMaster === "inventory report" ? (
+                  <ul className="list-item">
                     <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
                       Inventory Report <span>-</span>
                     </dl>
-                    {permissions?.view?.includes("rm report") && <li className="text-start ms-5" onClick={() => navigate("/reports/rm-reports")}>
-                      RM Report
-                    </li>}
-                    {permissions?.view?.includes("fg report") && <li className="text-start ms-5" onClick={() => navigate("/reports/fg-reports")}>
-                      FG Report
-                    </li>}
-                    {permissions?.view?.includes("pm report") && <li className="text-start ms-5" onClick={() => navigate("/master/product-master/product-mapping")}>
-                      PM Report
-                    </li>}
-                   
-                  </ul> :  <button onClick={() => setTypeMaster("inventory report")} className="flex justify-between text-[#5970F5]">
-                  Inventory Report <span>+</span>
-                      </button>}
+                    {permissions?.view?.includes("rm report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/rm-reports")}>
+                        RM Report
+                      </li>
+                    )}
+                    {permissions?.view?.includes("fg report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/fg-reports")}>
+                        FG Report
+                      </li>
+                    )}
+                    {permissions?.view?.includes("pm report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/pm-reports")}>
+                        PM Report
+                      </li>
+                    )}
+                  </ul>
+                ) : (
+                  <button onClick={() => setTypeMaster("inventory report")} className="flex justify-between text-[#5970F5]">
+                    Inventory Report <span>+</span>
+                  </button>
+                )}
               </div>
             )}
           </button>
