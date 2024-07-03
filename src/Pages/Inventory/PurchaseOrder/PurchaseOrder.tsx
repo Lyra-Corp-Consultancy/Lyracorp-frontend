@@ -23,9 +23,10 @@ function PurchaseOrder() {
     users: any[];
     discount: any[];
     payment: any[];
+    paymentTerm: any[];
     document: any[];
     shippingMethods: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
+  }>({ vendor: [], account: [], discount: [], payment: [], paymentTerm: [], document: [], vendorType: [], users: [], shippingMethods: [] });
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
@@ -35,7 +36,7 @@ function PurchaseOrder() {
         return x?._id;
       });
 
-    //constact Name
+    //contact Name
     const user = dropDowns?.users
       ?.filter((x) => x?.username?.toLowerCase()?.includes(lowerVal))
       ?.map((x) => {
@@ -48,21 +49,27 @@ function PurchaseOrder() {
         return x?._id;
       });
 
-    //paymentTerms
+    //paymentType
+    const paymentType = dropDowns?.payment
+      ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
+      ?.map((x) => {
+        return x?._id;
+      });
 
-    const paymentTerms = dropDowns?.payment
+    //paymentTerm
+    const paymentTerm = dropDowns?.paymentTerm
       ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
       ?.map((x) => {
         return x?._id;
       });
 
     const active = data.active.filter((x) => {
-      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentTerms?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
+      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentType?.includes(x?.paymentType) || paymentTerm?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentTerms?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
+      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentType?.includes(x?.paymentType) || paymentTerm?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
         return x;
       }
     });
@@ -142,6 +149,14 @@ function PurchaseOrder() {
         return {
           ...prev,
           payment: res?.payload[0]?.paymentType,
+        };
+      });
+    });
+    dispatch(getType("paymentTerm")).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          paymentTerm: res?.payload[0]?.paymentTerm,
         };
       });
     });

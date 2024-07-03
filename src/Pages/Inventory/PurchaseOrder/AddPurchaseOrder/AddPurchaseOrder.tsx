@@ -280,11 +280,9 @@ function AddPurchaseOrder() {
     setFiles([...files, ...droppedFiles]);
   };
 
-  console.log("dr ", dropDowns);
+  
   console.log("data ", data);
   console.log("da ", dropDowns);
-  console.log("user", user);
-  console.log("super ", superAdminCompany);
   console.log("sear ", searchValue);
 
   return (
@@ -466,7 +464,7 @@ function AddPurchaseOrder() {
                     shippingAddress: e.target.value,
                   });
                 }}
-                pattern={superAdminCompany?.shippingAddress?.filter(( a:any)=> a?.address === searchValue?.shippingAddress || "")?.[0]?.address ? undefined : ""}
+                pattern={superAdminCompany?.shippingAddress?.filter((a: any) => a?.address === searchValue?.shippingAddress || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
               >
                 {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)
@@ -492,7 +490,7 @@ function AddPurchaseOrder() {
               <label>Billing Address</label>
               <Select
                 required
-              pattern={superAdminCompany?.billingAddress?.filter(( a:any)=> a?.address === searchValue?.billing || "")?.[0]?.address ? undefined : ""}
+                pattern={superAdminCompany?.billingAddress?.filter((a: any) => a?.address === searchValue?.billing || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
@@ -518,10 +516,10 @@ function AddPurchaseOrder() {
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 z-[96] items-center">
-              <label>Payment Terms</label>
+              <label>Payment Terms </label>
               <Select
                 required
-                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms) ? undefined : ""}
+                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({
@@ -551,10 +549,13 @@ function AddPurchaseOrder() {
             </div>
 
             <div className="flex gap-3 items-center">
-              <label>Payment Type</label>
-              <Select required value={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]?.value} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
+              <label>Payment Type </label>
+              {/* <Select required 
+              
+              value={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]?.value} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
                 {dropDowns.payment?.map((x) => (
                   <li
+                  
                     onClick={() => {
                       setData({ ...data, paymentType: x?._id });
                     }}
@@ -563,6 +564,36 @@ function AddPurchaseOrder() {
                     {x?.value}
                   </li>
                 ))}
+              </Select> */}
+
+              <Select
+                required
+                pattern={dropDowns?.payment?.filter((a) => a?.value === searchValue?.payment|| "")?.[0]?.value ? undefined : ""}
+                title="Please Select values from drop down"
+                onChange={(e) => {
+                  setSearchValue({
+                    ...searchValue,
+                    payment: e.target.value,
+                  });
+                }}
+                value={searchValue?.payment || ""}
+              >
+                {dropDowns?.payment
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase() || ""))
+                  ?.map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({
+                          ...searchValue,
+                          payment: x?.value,
+                        });
+                        setData({ ...data,  paymentType: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
           </div>
@@ -589,7 +620,7 @@ function AddPurchaseOrder() {
                       setSearchValue({ ...searchValue, document: x?.value });
                       setData({ ...data, bussinessDocument: x?._id });
                     }}
-                     className="px-3 hover:bg-slate-200 py-1 transition-all"
+                    className="px-3 hover:bg-slate-200 py-1 transition-all"
                   >
                     {x?.value}
                   </li>
@@ -635,14 +666,14 @@ function AddPurchaseOrder() {
                 <th className=" w-1/5">Certification</th>
               </tr>
             </thead>
-            <tbody >
+            <tbody>
               {data?.products?.map((x: any, i: number) => (
                 <tr className="">
                   <td className="text-center   border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center  ">
                       <Select
                         required
-                        style={{ zIndex: 997-i }}
+                        style={{ zIndex: 997 - i }}
                         className="w-[50%]  shadow-none "
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])?.[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
@@ -657,7 +688,6 @@ function AddPurchaseOrder() {
                           ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.products[i]?.toLowerCase() || ""))
                           ?.map((x) => (
                             <li
-                           
                               onClick={() => {
                                 const temp = searchValue?.products;
                                 temp[i] = x?.productName;
@@ -699,7 +729,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                        style={{ zIndex: 997 - i }}
                         required
                         className="w-[50%] z-10 shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
@@ -735,7 +765,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                        style={{ zIndex: 997 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.packing?.filter((x) => x?.value === searchValue.packing[i])?.[0]?.value ? undefined : ""}
@@ -773,7 +803,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                        style={{ zIndex: 997 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])?.[0]?.value ? undefined : ""}
@@ -832,7 +862,6 @@ function AddPurchaseOrder() {
             </tbody>
           </table>
 
-               
           <div className="flex mt-3 w-full items-end justify-end">
             <button type="button" onClick={() => setData({ ...data, products: [...data.products, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
               + Add{" "}
