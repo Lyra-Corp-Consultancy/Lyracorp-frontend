@@ -662,7 +662,7 @@ console.log("dropdown ",dropDowns)
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 z-[96]  items-center">
               <label>Payment Terms</label>
               <Select
                 required
@@ -750,7 +750,7 @@ console.log("dropdown ",dropDowns)
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
             <Select
-            className="z-[999]" 
+           className="z-[95]"
               pattern={
                 dropDowns?.document?.filter(
                   (a) => a?.value === searchValue?.document
@@ -858,9 +858,9 @@ console.log("dropdown ",dropDowns)
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
-                        className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%]  shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
                             (x) => x?.productName === searchValue?.products[i]
@@ -927,7 +927,7 @@ console.log("dropdown ",dropDowns)
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -975,7 +975,7 @@ console.log("dropdown ",dropDowns)
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -1025,7 +1025,7 @@ console.log("dropdown ",dropDowns)
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={

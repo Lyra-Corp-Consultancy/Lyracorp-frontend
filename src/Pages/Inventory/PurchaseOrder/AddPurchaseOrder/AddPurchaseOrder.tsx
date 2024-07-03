@@ -519,6 +519,7 @@ function AddPurchaseOrder() {
               <label>Payment Terms </label>
               <Select
                 required
+                
                 pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -533,6 +534,7 @@ function AddPurchaseOrder() {
                   ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.paymentTerms?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
+                    
                       onClick={() => {
                         setSearchValue({
                           ...searchValue,
@@ -540,7 +542,7 @@ function AddPurchaseOrder() {
                         });
                         setData({ ...data, paymentTerm: x?._id });
                       }}
-                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                      className="px-3 hover:bg-slate-200 py-1 transition-all  duration-100"
                     >
                       {x?.value}
                     </li>
@@ -606,7 +608,7 @@ function AddPurchaseOrder() {
               pattern={dropDowns?.document?.filter((a) => a?.value === searchValue.document)?.[0] ? undefined : ""}
               title="Please Select values from drop down"
               required
-              className="z-[998]"
+              className="z-[95]"
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
@@ -673,7 +675,7 @@ function AddPurchaseOrder() {
                     <div className="flex justify-center items-center  ">
                       <Select
                         required
-                        style={{ zIndex: 997 - i }}
+                        style={{ zIndex: 94 - i }}
                         className="w-[50%]  shadow-none "
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])?.[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
@@ -729,7 +731,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        style={{ zIndex: 997 - i }}
+                        style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] z-10 shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
@@ -765,7 +767,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        style={{ zIndex: 997 - i }}
+                        style={{ zIndex: 94- i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.packing?.filter((x) => x?.value === searchValue.packing[i])?.[0]?.value ? undefined : ""}
@@ -803,7 +805,7 @@ function AddPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        style={{ zIndex: 997 - i }}
+                        style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])?.[0]?.value ? undefined : ""}
