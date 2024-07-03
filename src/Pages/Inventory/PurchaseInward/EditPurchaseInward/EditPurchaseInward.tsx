@@ -300,13 +300,13 @@ function EditPurchaseInward() {
       <h1 className="roboto-bold text-lg">Edit Purchase Inward</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
-          {/* <label className="font-bold">Purchase Order Serial No</label>
+          <label className="font-bold">Purchase Order Serial No</label>
           <input
             value={data?.seq}
             readOnly
             className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md focus:outline-none focus:ring-0"
             type="text"
-          /> */}
+          />
          
         </div>
 

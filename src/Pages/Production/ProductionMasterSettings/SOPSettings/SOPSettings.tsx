@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {  useNavigate } from "react-router-dom";
-import { createOrUpdateProductionSOP, getAllProductRawMaterial, getProductionSOP, getType } from "../../../../utils/redux/actions";
+import { createOrUpdateProductionSOP, getAllProductFinishedGoods, getProductionSOP, getRMReports, getType } from "../../../../utils/redux/actions";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { useParams } from "react-router-dom";
 import Select from "../../../../components/Select";
@@ -16,6 +16,7 @@ function SOPSettings() {
   const [order, setOrder] = useState({ order: -1, pi: -1, index: -1 });
   const [orderMain, setOrderMain] = useState({ order: -1, index: -1 });
   const [departments, setDepartments] = useState<any[]>([]);
+  const [rawMaterial,setRawMaterial] = useState<any[]>([])
   // const [confirmation, setConfirm] = useState("");
   const dispatch: any = useDispatch();
   const params = useParams();
@@ -23,7 +24,7 @@ function SOPSettings() {
   const [productProcess, setProcess] = useState<ProductProcess[]>([]);
   const location = useQuery()
   useEffect(() => {
-    dispatch(getAllProductRawMaterial()).then((res: any) => {
+    dispatch(getAllProductFinishedGoods()).then((res: any) => {
       setData(res.payload.active);
     });
     dispatch(getType("department")).then((res: any) => {
@@ -31,6 +32,11 @@ function SOPSettings() {
     });
     dispatch(getProductionSOP(params.id as string)).then((res:any)=>{
       setProcess(res.payload.productProcess ||[{moduleName:"",order:0,submodule:[{department:"",name:"",order:0,productionFloor:"",rawMaterial:"",uom:""}]}] )
+    })
+
+    dispatch(getRMReports()).then((res: any) => {
+     setRawMaterial(res.payload)
+     console.log(res.payload)
     })
   }, []);
 
@@ -214,7 +220,13 @@ function SOPSettings() {
                               </label>
 
                               <label className=" w-[12.5%] px-2  ">
-                                <input placeholder="Raw Material" required value={y.rawMaterial} onChange={(e) => handleChangeSub(e, pi, i)} name="rawMaterial" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" />
+                                <select value={y.rawMaterial} name="rawMaterial" onChange={(e)=>handleChangeSub(e, pi, i)}  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md">
+                                 <option value="">Select</option>
+                                  {rawMaterial?.map((x)=>(
+                                    <option>{x?.product?.productName || "No Name"}</option>
+                                  ))}
+                                </select>
+                                {/* <input placeholder="Raw Material" required value={y.rawMaterial} onChange={(e) => handleChangeSub(e, pi, i)} name="rawMaterial" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" /> */}
                               </label>
                               <label className=" w-[12.5%] px-2  ">
                                 <input placeholder="Unit of Measurement" required value={y.uom} onChange={(e) => handleChangeSub(e, pi, i)} name="uom" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" />

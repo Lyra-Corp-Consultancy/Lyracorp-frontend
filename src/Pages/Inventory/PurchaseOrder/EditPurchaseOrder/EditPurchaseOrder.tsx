@@ -574,13 +574,8 @@ function EditPurchaseOrder() {
               <Select
                 required
                 value={searchValue?.shippingAddress || ""}
-                pattern={
-                  dropDowns?.users[0]?.companyDetails[0]?.shippingAddress?.filter(
-                    (a: any) => a?.address === searchValue?.shippingAddress
-                  )[0]?.address
-                    ? undefined
-                    : ""
-                }
+                 pattern={superAdminCompany?.shippingAddress?.filter(( a:any)=> a?.address === searchValue?.shippingAddress || "")?.[0]?.address ? undefined : ""}
+                title="Please Select values from drop down"
                 className="z-[99]"
                 onChange={(e) => {
                   setSearchValue({
@@ -588,7 +583,7 @@ function EditPurchaseOrder() {
                     shippingAddress: e.target.value,
                   });
                 }}
-                title="Please Select values from drop down"
+              
               >
                 {dropDowns?.users[0]?.companyDetails[0]?.shippingAddress
                   ?.filter((a: any) =>
@@ -619,16 +614,9 @@ function EditPurchaseOrder() {
               <label>Billing Address</label>
               <Select
                 required
-                pattern={
-                  (
-                    user?.companyDetails?.[0]?.billingAddress ||
-                    superAdminCompany?.billingAddress
-                  )?.filter((a: any) => a?.address === searchValue?.billing)[0]
-                    ?.address
-                    ? undefined
-                    : ""
-                }
+                pattern={superAdminCompany?.billingAddress?.filter(( a:any)=> a?.address === searchValue?.billing || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, billing: e.target.value });
                 }}
@@ -733,6 +721,7 @@ function EditPurchaseOrder() {
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
             <Select
+            className="z-[999]" 
               pattern={
                 dropDowns?.document?.filter(
                   (a) => a?.value === searchValue?.document
@@ -840,6 +829,7 @@ function EditPurchaseOrder() {
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
+                      style={{ zIndex: 997-i }}
                         required
                         className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -908,6 +898,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
+                      style={{ zIndex: 997-i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -955,6 +946,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
+                      style={{ zIndex: 997-i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -1004,6 +996,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
+                      style={{ zIndex: 997-i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={

@@ -30,8 +30,8 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
     const navigate = useNavigate()
 
   return (
-    <div className="h-[80%] overflow-auto w-full">
-      <table className="w-full mt-3 overflow-auto">
+    <div className="h-[80%]  w-full">
+      <table className="w-full mt-3 ">
         <thead className="border w-full top-0 left-0  text-xs text-center bg-[#5970F5] text-white roboto-thin">
           <tr className="w-full">
             <th className="ps-1">

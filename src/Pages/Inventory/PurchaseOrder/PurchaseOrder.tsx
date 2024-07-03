@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { activeAndDeactivePurchaseOrder, getAllPurchaseOrder, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
@@ -20,12 +20,12 @@ function PurchaseOrder() {
     vendor: any[];
     vendorType: any[];
     account: any[];
-    users:any[];
+    users: any[];
     discount: any[];
     payment: any[];
     document: any[];
     shippingMethods: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [],vendorType:[],users:[],shippingMethods:[] });
+  }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
@@ -34,50 +34,37 @@ function PurchaseOrder() {
       ?.map((x) => {
         return x?._id;
       });
-      
-      //constact Name
-      const user = dropDowns?.users
+
+    //constact Name
+    const user = dropDowns?.users
       ?.filter((x) => x?.username?.toLowerCase()?.includes(lowerVal))
-     ?.map((x) => {
+      ?.map((x) => {
         return x?._id;
       });
-         
-     const shippingMethod =dropDowns?.shippingMethods
-     ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
-    ?.map((x) => {
-       return x?._id;
-     });
 
-     //paymentTerms
+    const shippingMethod = dropDowns?.shippingMethods
+      ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
+      ?.map((x) => {
+        return x?._id;
+      });
 
-     const paymentTerms =dropDowns?.payment
-     ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
-    ?.map((x) => {
-       return x?._id;
-     });
-  
+    //paymentTerms
 
-   
+    const paymentTerms = dropDowns?.payment
+      ?.filter((x) => x?.value?.toLowerCase()?.includes(lowerVal))
+      ?.map((x) => {
+        return x?._id;
+      });
 
     const active = data.active.filter((x) => {
-      if ( vendor?.includes(x?.vendor) ||
-       user?.includes(x?.contact) || 
-       paymentTerms?.includes(x?.paymentTerm)||
-        shippingMethod?.includes(x?.shippingMethod) || 
-        x?.deliveryDate?.toLowerCase().includes(lowerVal) ||
-         x?.paymentType?.toLowerCase().includes(lowerVal) ||  x?.billingAddress?.address?.toLowerCase().includes(lowerVal)) {
+      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentTerms?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
         return x;
       }
     });
     const deactive = data.deactive.filter((x) => {
-      if ( vendor?.includes(x?.vendor) ||
-      user?.includes(x?.contact) || 
-      paymentTerms?.includes(x?.paymentTerm)||
-       shippingMethod?.includes(x?.shippingMethod) || 
-       x?.deliveryDate?.toLowerCase().includes(lowerVal) ||
-        x?.paymentType?.toLowerCase().includes(lowerVal) ||  x?.billingAddress?.address?.toLowerCase().includes(lowerVal)) {
-       return x;
-     }
+      if (vendor?.includes(x?.vendor) || user?.includes(x?.contact) || paymentTerms?.includes(x?.paymentTerm) || shippingMethod?.includes(x?.shippingMethod) || x?.deliveryDate?.toLowerCase().includes(lowerVal) || x?.paymentType?.toLowerCase().includes(lowerVal) || x?.billingAddress?.address?.toLowerCase().includes(lowerVal) || x?.seq?.toLowerCase().includes(lowerVal)) {
+        return x;
+      }
     });
 
     setFiltered({ active, deactive });
@@ -101,7 +88,6 @@ function PurchaseOrder() {
         };
       });
     });
-
 
     dispatch(getAllUserManagement()).then((res: any) => {
       setDropDown((prev) => {
@@ -142,7 +128,6 @@ function PurchaseOrder() {
       });
     });
 
-    
     dispatch(getType("shipping")).then((res: any) => {
       setDropDown((prev) => {
         return {
@@ -170,15 +155,15 @@ function PurchaseOrder() {
       });
     });
   }, []);
-  console.log("data ", data)
-  console.log("dropdown ", dropDowns)
+  console.log("data ", data);
+  console.log("dropdown ", dropDowns);
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
         <h1 className="text-xl roboto-bold">Purchase Order</h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="flex gap-4">
-          <button onClick={() => setActive(true)} className={"flex flex-col  rounded-md px-4 py-2 " + (active ? "bg-[#5970F5] text-white" : "bg-[#C3CBFF] text-black ")}>
+            <button onClick={() => setActive(true)} className={"flex flex-col  rounded-md px-4 py-2 " + (active ? "bg-[#5970F5] text-white" : "bg-[#C3CBFF] text-black ")}>
               <div className="flex items-center gap-3">
                 <svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path

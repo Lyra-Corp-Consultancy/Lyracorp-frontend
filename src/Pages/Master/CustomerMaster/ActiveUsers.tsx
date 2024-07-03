@@ -105,7 +105,7 @@ function ActiveUsers({ data, dropDowns, inActiveCustomer,selected,setSelected }:
               <th>{dropDowns?.account?.filter((y) => y?._id === x?.accountType)[0]?.value}</th>
               <th>{x?.contactPerson}</th>
               <th>{x?.primaryNumber}</th>
-              <th className="truncate">{x?.address}</th>
+              <th className="truncate max-w-[200px]">{x?.address}</th>
               <th>{x?.email}</th>
               <th>{x?.purchaseResitriction}</th>
               <th>{dropDowns?.discount?.filter((y) => y?._id === x?.discountType)[0]?.value}</th>

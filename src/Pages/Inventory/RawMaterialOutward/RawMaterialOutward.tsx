@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./RawMaterialOutward.module.scss";
@@ -24,17 +24,9 @@ function RawMaterialOutward() {
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
-    const vendor = dropDowns.vendor
-      .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
-
-    console.log(vendor);
-
     const active = data.filter((x) => {
-        console.log(x)
-      if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
+      console.log(x);
+      if (x?.seq?.toLowerCase()?.includes(lowerVal) || x?.outwardDate?.toLowerCase()?.includes(lowerVal) || x?.sender?.address?.toLowerCase()?.includes(lowerVal) || x?.transporter?.toLowerCase()?.includes(lowerVal) || x?.vehicleNumber?.toLowerCase()?.includes(lowerVal) || x?.supplyChain?.toLowerCase()?.includes(lowerVal)) {
         return x;
       }
     });
@@ -125,10 +117,14 @@ function RawMaterialOutward() {
       });
     });
   }, []);
+
+  console.log("dd ", dropDowns);
+  console.log("data ", data);
+
   return (
-    <div className="h-[83vh] w-screen">
+    <div className="min-h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
-        <h1 className="text-xl roboto-bold">Raw Material Outward</h1>
+        <h1 className="text-xl roboto-bold">Raw Material Outward </h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-0">
             <h2 className="roboto-bold ms-3 text-[20px] text-center">Raw Material Outward List</h2>
@@ -157,11 +153,10 @@ function RawMaterialOutward() {
                 </Link>
               </div>
             </div>
-            <div className="h-[80%] overflow-auto w-full">
-              <table className="w-full mt-3 overflow-auto">
+            <div className="h-[80%] w-full">
+              <table className="w-full mt-3 ">
                 <thead className="border w-full top-0 left-0  text-xs text-center bg-[#5970F5] text-white roboto-thin">
                   <tr className="w-full">
-                    
                     <th>S No</th>
                     <th>DC No</th>
                     <th>Outward Date</th>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from '@reduxjs/toolkit'
-import { addCustomerMaster, addProductFinishedGoods, addProductRawMaterial, addVendorMaster, getMyDetails } from './actions'
+import { addCustomerMaster, addProductFinishedGoods, addProductRawMaterial, addVendorMaster, getMyDetails, getProductsFinishedGoods } from './actions'
 
 export interface CounterState {
   msg: string|number,
@@ -56,6 +56,7 @@ export const counterSlice = createSlice({
     }
   },
   extraReducers(builder) {
+
     builder.addCase(addCustomerMaster.fulfilled,(state,action)=>{
       state.msg = `Customer Account Number Create as ${action.payload}`
       state.submsg = `Your Customer Account has been Successfully Created`
@@ -87,6 +88,16 @@ export const counterSlice = createSlice({
       state.loader = false
     })
     builder.addCase(addProductFinishedGoods.rejected,(state)=>{
+      state.loader = false
+    })
+
+    builder.addCase(getProductsFinishedGoods.pending,(state)=>{
+      state.loader = true
+    })
+    builder.addCase(getProductsFinishedGoods.fulfilled,(state)=>{
+      state.loader = false
+    })
+    builder.addCase(getProductsFinishedGoods.rejected,(state)=>{
       state.loader = false
     })
   },

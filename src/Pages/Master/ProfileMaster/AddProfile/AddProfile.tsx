@@ -33,6 +33,22 @@ function AddProfile() {
     warehouse: [{}],
   });
 
+  const [searchValue, setSearchValue] = useState<{
+    customer?: string;
+    account?: string;
+    discount?: string;
+    paymentTerm?: string;
+    document?: string;
+    countryCode: any;
+  }>({
+    customer: "",
+    account: "",
+    discount: "",
+    paymentTerm: "",
+    document: "",
+    countryCode: "",
+  });
+
   const navigate = useNavigate();
 
   const handleSave = async () => {
@@ -882,17 +898,38 @@ if(files1[0]){
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
-            <Select  value={dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}>
-              {dropDowns?.document?.map((x) => (
-                <li
-                  onClick={() => {
-                    setData({ ...data, bussinessDocument: x?._id });
-                  }}
-                  className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
-                >
-                  {x?.value}
-                </li>
-              ))}
+            <Select
+              pattern={
+                dropDowns?.document?.filter(
+                  (a) => a?.value === searchValue?.document
+                )[0]
+                  ? undefined
+                  : ""
+              }
+              title="Please Select values from drop down"
+              required
+              onChange={(e) => {
+                setSearchValue({ ...searchValue, document: e.target.value });
+              }}
+              value={searchValue?.document || ""}
+            >
+              {dropDowns?.document
+                ?.filter((a) =>
+                  a?.value
+                    ?.toLowerCase()
+                    ?.includes(searchValue?.document?.toLowerCase() || "")
+                )
+                .map((x) => (
+                  <li
+                    onClick={() => {
+                      setSearchValue({ ...searchValue, document: x?.value });
+                      setData({ ...data, bussinessDocument: x?._id });
+                    }}
+                    className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                  >
+                    {x?.value}
+                  </li>
+                ))}
             </Select>
             <label htmlFor="document" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
