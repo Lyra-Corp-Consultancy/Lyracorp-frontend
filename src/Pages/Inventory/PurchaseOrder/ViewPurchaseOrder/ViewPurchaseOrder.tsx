@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseOrderById, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
@@ -36,7 +36,6 @@ function ViewPurchaseOrder() {
   });
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     const res1 = dispatch(getType("marginSetting"));
@@ -179,12 +178,10 @@ function ViewPurchaseOrder() {
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">View Purchase Order</h1>
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
-        <div
-          className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
-        >
+        <div className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-          <div className="flex  items-center gap-3">
+            <div className="flex  items-center gap-3">
               <label>Serial Number</label>
               <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.seq}</label>
             </div>
@@ -234,12 +231,13 @@ function ViewPurchaseOrder() {
 
             <div className="flex gap-3 z-[99] items-center">
               <label>Shipping Address</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.shippingAddress?.address}</label>
+              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md overflow-hidden text-ellipsis whitespace-nowrap">{data?.shippingAddress?.address}</label>
             </div>
 
-            <div className="flex gap-3 items-center">
+        
+            <div className="flex gap-3 z-[99] items-center">
               <label>Billing Address</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.billingAddress?.address}</label>
+              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md overflow-hidden text-ellipsis whitespace-nowrap">{data?.billingAddress?.address}</label>
             </div>
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
@@ -304,7 +302,7 @@ function ViewPurchaseOrder() {
                 <tr className="">
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                    <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.productName}</label>
+                      <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.productName}</label>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -331,13 +329,12 @@ function ViewPurchaseOrder() {
               ))}
             </tbody>
           </table>
-          
 
           <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button onClick={() => navigate("/inventory/purchase-order/edit-purchase-order/"+params?.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+            <button onClick={() => navigate("/inventory/purchase-order/edit-purchase-order/" + params?.id)} className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
               Edit
             </button>
           </div>
