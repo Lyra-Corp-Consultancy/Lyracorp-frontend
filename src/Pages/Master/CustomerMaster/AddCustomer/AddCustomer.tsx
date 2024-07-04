@@ -625,7 +625,7 @@ function AddCustomer() {
 
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
-          <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+          <div className="flex items-center  gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
             <Select
               pattern={
@@ -637,6 +637,7 @@ function AddCustomer() {
               }
               title="Please Select values from drop down"
               required
+              className="z-[1]"
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
@@ -716,7 +717,7 @@ function AddCustomer() {
             ))}
           </div>
 
-          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+          <div className="w-full absolute bottom-4 justify-center z-[0] items-center gap-3 flex mt-5">
             <button
               type="reset"
               className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]"
