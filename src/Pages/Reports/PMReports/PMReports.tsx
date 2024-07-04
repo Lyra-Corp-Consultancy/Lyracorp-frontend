@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllProductFinishedGoods, getAllProductRawMaterial, getRMReports } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllProductRawMaterial, getRMReports, getType } from "../../../utils/redux/actions";
 import Select from "../../../components/Select";
 
 function PMReports() {
@@ -10,11 +10,15 @@ function PMReports() {
   const [selectedProducts, setSelectedProducts] = useState<any>();
   const [rawMaterials, setRawMaterials] = useState<any[]>([]);
   const [report, setReports] = useState<any[]>([]);
+  const [uom,setUom] = useState<any[]>([]);
 
   useEffect(() => {
     dispatch(getAllProductFinishedGoods()).then((res: any) => {
       setProducts(res.payload.active);
     });
+    dispatch(getType("uom")).then((res:any)=>{
+      setUom(res.payload[0]?.uomType)
+    })
     dispatch(getAllProductRawMaterial()).then((res: any) => {
       setRawMaterials(res.payload.active);
     });
@@ -33,7 +37,10 @@ function PMReports() {
             <h6>Product Name</h6>
             <Select value={selectedProducts?.productName || ""}>
               {products?.map((x) => (
-                <li onClick={() => setSelectedProducts(x)} className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150">
+                <li onClick={() =>{
+                   setSelectedProducts(x)
+                   console.log(x)
+                   }} className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150">
                   {x.productName}
                 </li>
               ))}
@@ -57,27 +64,29 @@ function PMReports() {
                     <th>S No</th>
                     <th className="border">Raw Material</th>
                     <th className="border">Required Quantity</th>
+                    <th className="border">UOM</th>
                     <th className="border w-1/4">Warehouse</th>
                     <th className="border">Available Quantity</th>
+                    <th className="border">UOM</th>
                   </tr>
                 </thead>
                 <tbody>
                   {selectedProducts?.mappings?.map((x: any, i: number) => (
                     <>
                     <tr className={(report.filter((y) => y?.product?._id === x?.product )[0]?.quantity<x.quantity || !report.filter((y) => y?.product?._id === x?.product )[0]?.quantity) ? "text-red-500":"" }>
-                      <td className="border text-center">{i + 1}</td>
-                      <td className="border text-center">{rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName}</td>
-                      <td className="border text-center w-1/4 p-1">{x?.quantity}</td>
-                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.warehouse?.address || "Not Found"}</td>
-                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.quantity || "Not Found" }</td>
+                      <td className="border text-center" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{i + 1}</td>
+                      <td className="border text-center" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName}</td>
+                      <td className="border text-center w-1/4 p-1" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{x?.quantity}</td>
+                      <td className="border text-center" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name || "Not Found" }</td>
+                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.warehouse?.address || "Out Of Stock"}</td>
+                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.quantity || 0 }</td>
+                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.uom?.name ||uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name  || "Not Found" }</td>
                     </tr>
                     {report.filter((y) => y?.product?._id === x?.product ).map((z,i)=>(
                      <> {i>0 && <tr className={(report.filter((y) => y?.product?._id === x?.product )[0]?.quantity<x.quantity || !report.filter((y) => y?.product?._id === x?.product )[0]?.quantity) ? "text-red-500":"" }>
-                      <td className="border text-center">{i + 1}</td>
-                      <td className="border text-center">{rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName}</td>
-                      <td className="border text-center w-1/4 p-1">{x?.quantity}</td>
-                      <td className="border text-center">{z?.warehouse?.address || "Not Found"}</td>
-                      <td className="border text-center">{z?.quantity || "Not Found" }</td>
+                      <td className="border text-center">{z?.warehouse?.address || "Out Of Stock"}</td>
+                      <td className="border text-center">{z?.quantity || 0 }</td>
+                      <td className="border text-center">{z?.uom?.name||uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name || "Not Found" }</td>
                     </tr>}</>
                     ))}
                     </>
