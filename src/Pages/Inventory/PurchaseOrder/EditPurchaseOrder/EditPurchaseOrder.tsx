@@ -44,6 +44,7 @@ function EditPurchaseOrder() {
     account: any[];
     discount: any[];
     payment: any[];
+    paymentTerm: any[];
     uom: any[];
     document: any[];
     certificate: any[];
@@ -57,6 +58,7 @@ function EditPurchaseOrder() {
     account: [],
     discount: [],
     payment: [],
+    paymentTerm: [],
     document: [],
     uom: [],
     products: [],
@@ -79,7 +81,7 @@ function EditPurchaseOrder() {
     account: string;
     discount: string;
     payment: string;
-
+    
     uom: any[];
     document: string;
     certificate: any[];
@@ -165,8 +167,12 @@ function EditPurchaseOrder() {
         (a: any) => a?.address === data?.billingAddress?.address
       )[0]?.address,
 
-      paymentTerms: dropDowns?.payment?.filter(
+      paymentTerms: dropDowns?.paymentTerm?.filter(
         (x) => x?._id === data?.paymentTerm
+      )[0]?.value,
+
+      payment: dropDowns?.payment?.filter(
+        (x) => x?._id === data?.paymentType
       )[0]?.value,
 
       document: dropDowns?.document?.filter(
@@ -308,6 +314,14 @@ function EditPurchaseOrder() {
       });
     });
 
+    dispatch(getType("paymentTerm")).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          paymentTerm: res?.payload[0]?.paymentTerm, 
+        };
+      });
+    });
     dispatch(getType("document")).then((res: any) => {
       setDropDown((prev) => {
         return {
@@ -333,7 +347,8 @@ function EditPurchaseOrder() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
-
+console.log("data",data)
+console.log("dropdown ",dropDowns)
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Order</h1>
@@ -647,17 +662,11 @@ function EditPurchaseOrder() {
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
-            <div className="flex gap-3 items-center">
+            <div className="flex gap-3 z-[96]  items-center">
               <label>Payment Terms</label>
               <Select
                 required
-                pattern={
-                  dropDowns?.payment?.filter(
-                    (a) => a?.value === searchValue?.paymentTerms
-                  )
-                    ? undefined
-                    : ""
-                }
+                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({
@@ -667,12 +676,8 @@ function EditPurchaseOrder() {
                 }}
                 value={searchValue?.paymentTerms || ""}
               >
-                {dropDowns?.payment
-                  ?.filter((a) =>
-                    a?.value
-                      ?.toLowerCase()
-                      ?.includes(searchValue?.paymentTerms?.toLowerCase() || "")
-                  )
+                {dropDowns?.paymentTerm
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.paymentTerms?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                       onClick={() => {
@@ -691,27 +696,51 @@ function EditPurchaseOrder() {
             </div>
 
             <div className="flex gap-3 items-center">
-              <label>Payment Type</label>
-              <Select
-                required
-                value={data?.paymentType}
-                pattern={
-                  ["Cash", "Credit"].filter((a) => a === data.paymentType)[0]
-                    ? undefined
-                    : ""
-                }
-                title="Please Select values from drop down"
-              >
-                {["Cash", "Credit"]?.map((x) => (
+              <label>Payment Type </label>
+              {/* <Select required 
+              
+              value={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]?.value} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
+                {dropDowns.payment?.map((x) => (
                   <li
+                  
                     onClick={() => {
-                      setData({ ...data, paymentType: x });
+                      setData({ ...data, paymentType: x?._id });
                     }}
                     className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                   >
-                    {x}
+                    {x?.value}
                   </li>
                 ))}
+              </Select> */}
+
+              <Select
+                required
+                pattern={dropDowns?.payment?.filter((a) => a?.value === searchValue?.payment|| "")?.[0]?.value ? undefined : ""}
+                title="Please Select values from drop down"
+                onChange={(e) => {
+                  setSearchValue({
+                    ...searchValue,
+                    payment: e.target.value,
+                  });
+                }}
+                value={searchValue?.payment || ""}
+              >
+                {dropDowns?.payment
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.payment?.toLowerCase() || ""))
+                  ?.map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({
+                          ...searchValue,
+                          payment: x?.value,
+                        });
+                        setData({ ...data,  paymentType: x?._id });
+                      }}
+                      className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {x?.value}
+                    </li>
+                  ))}
               </Select>
             </div>
           </div>
@@ -721,7 +750,7 @@ function EditPurchaseOrder() {
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Bussiness Document</label>
             <Select
-            className="z-[999]" 
+           className="z-[95]"
               pattern={
                 dropDowns?.document?.filter(
                   (a) => a?.value === searchValue?.document
@@ -829,9 +858,9 @@ function EditPurchaseOrder() {
                   <td className="text-center  border w-1/5  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
-                        className="w-[50%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%]  shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
                             (x) => x?.productName === searchValue?.products[i]
@@ -898,7 +927,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -946,7 +975,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
@@ -996,7 +1025,7 @@ function EditPurchaseOrder() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                      style={{ zIndex: 997-i }}
+                       style={{ zIndex: 94 - i }}
                         required
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={

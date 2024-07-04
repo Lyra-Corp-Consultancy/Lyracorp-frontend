@@ -17,6 +17,7 @@ function ViewPurchaseOrder() {
     account: any[];
     discount: any[];
     payment: any[];
+    paymentTerm: any[];
     uom: any[];
     document: any[];
     certificate: any[];
@@ -25,7 +26,7 @@ function ViewPurchaseOrder() {
     vendor: any[];
     packing: any[];
     shipping: any[];
-  }>({ margin: [], account: [], discount: [], payment: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
+  }>({ margin: [], account: [], discount: [], payment: [], paymentTerm: [],document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   const params: any = useParams();
   // const [dragging, setDragging] = useState(false);
@@ -148,7 +149,14 @@ function ViewPurchaseOrder() {
         };
       });
     });
-
+    dispatch(getType("paymentTerm")).then((res: any) => {
+      setDropDown((prev) => {
+        return {
+          ...prev,
+          paymentTerm: res?.payload[0]?.paymentTerm, 
+        };
+      });
+    });
     dispatch(getType("document")).then((res: any) => {
       setDropDown((prev) => {
         return {
@@ -174,6 +182,7 @@ function ViewPurchaseOrder() {
     const droppedFiles = Array.from(e.dataTransfer.files);
     setFiles([...files, ...droppedFiles]);
   };
+  
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">View Purchase Order</h1>
@@ -244,12 +253,12 @@ function ViewPurchaseOrder() {
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Payment Terms</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.payment?.filter((x) => x?._id === data?.paymentTerm)[0]?.value}</label>
+              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.paymentTerm?.filter((y) => y?._id === data?.paymentTerm)[0]?.value}</label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Payment Type</label>
-              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{data?.paymentType}</label>
+              <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.payment?.filter((y) => y?._id === data?.paymentType)[0]?.value}</label>
             </div>
           </div>
 

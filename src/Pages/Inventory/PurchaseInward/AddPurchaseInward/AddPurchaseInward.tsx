@@ -12,6 +12,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./AddPurchaseInward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
+import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddPurchaseInward() {
@@ -331,13 +332,10 @@ function AddPurchaseInward() {
                   ))}
               </Select>
             </div>
-            <div className="flex  items-center gap-3">
+            <div className="flex gap-3 items-center z-[99]">
               <label>Inward Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
-                <p>
-                  {data?.inwardDate}
-                  <input type="text" value={data?.inwardDate} name="" className="opacity-0 absolute" required id="invoicedate" />
-                </p>
+                <p>{data?.inwardDate}</p>
                 <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
@@ -347,33 +345,28 @@ function AddPurchaseInward() {
                   value={data.inwardDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date); // Extract the date in yyyy-mm-dd format
                     setData({ ...data, inwardDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
                 />
               </label>
             </div>
-            <div className="flex items-center gap-3">
-              <label>Invoice Number</label>
-              <input required value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
-            </div>
+           
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
-                <label>
-                  {data?.invoiceDate} <input type="text" value={data?.invoiceDate} name="" className="opacity-0 absolute" required id="invoicedate" />
-                </label>
+                <p>{data?.invoiceDate}</p>
                 <button type="button" className={styles.calendar}>
                   <svg width="10" height="12" viewBox="0 0 10 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5 6.11111H7.77778V8.88889H5V6.11111ZM8.88889 1.11111H8.33333V0H7.22222V1.11111H2.77778V0H1.66667V1.11111H1.11111C0.5 1.11111 0 1.61111 0 2.22222V10C0 10.6111 0.5 11.1111 1.11111 11.1111H8.88889C9.5 11.1111 10 10.6111 10 10V2.22222C10 1.61111 9.5 1.11111 8.88889 1.11111ZM8.88889 2.22222V3.33333H1.11111V2.22222H8.88889ZM1.11111 10V4.44444H8.88889V10H1.11111Z" fill="#5970F5" />
                   </svg>
                 </button>
                 <Calendar
-                  value={data.invoiceDate}
+                  value={data?.invoiceDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date);// Extract the date in yyyy-mm-dd format
                     setData({ ...data, invoiceDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}

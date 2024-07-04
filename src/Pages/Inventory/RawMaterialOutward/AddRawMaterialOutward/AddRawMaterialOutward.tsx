@@ -12,6 +12,7 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./AddRawMaterialOutward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { RawMaterialOutward } from "../../../../utils/Type/types";
+import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddRawMaterialOutward() {
@@ -232,6 +233,11 @@ function AddRawMaterialOutward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
+   console.log("data ",data)
+   console.log("drop ",dropDowns)
+   console.log("ser ",searchValue)
+   console.log("pro ",products)
+
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Raw Material Outward</h1>
@@ -260,7 +266,7 @@ function AddRawMaterialOutward() {
                   value={data.outwardDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")?.[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date);// Extract the date in yyyy-mm-dd format
                     setData({ ...data, outwardDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
@@ -423,7 +429,7 @@ function AddRawMaterialOutward() {
                   value={data.transpotationDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = date.toISOString().split("T")?.[0]; // Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date); // Extract the date in yyyy-mm-dd format
                     setData({ ...data, transpotationDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}

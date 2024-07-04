@@ -61,7 +61,7 @@ function Inactive({ data, dropDowns, ActiveCustomer,selected,setSelected }: Prop
               )}
             </th>
             <th>S No</th>
-            <th>Serial No.</th>
+            <th>GRN No.</th>
             <th>Vendor Name</th>
             <th>Inward Date</th>
             <th>Invoice Number</th>
