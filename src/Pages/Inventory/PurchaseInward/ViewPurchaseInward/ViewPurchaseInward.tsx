@@ -184,7 +184,7 @@ function ViewPurchaseInward() {
       <h1 className="roboto-bold text-lg">View Purchase Inward</h1>
       
         <div className="flex items-center mb-5  ml-[29px] gap-3">
-          <label className="font-bold">Purchase Order Serial No</label>
+          <label className="font-bold">GRN No</label>
           <input
             value={data?.seq}
             readOnly
@@ -197,10 +197,10 @@ function ViewPurchaseInward() {
         <div className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
           <h1 className="roboto-medium mt-1">Vendor Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <div className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3">
               <label>Serial Number</label>
               <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data.seq}</label>
-            </div>
+            </div> */}
             <div className="flex  items-center gap-3">
               <label>Vendor Name</label>
               <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}</label>
@@ -284,7 +284,7 @@ function ViewPurchaseInward() {
                     <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</label>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{parseFloat(x?.productDetails?.mrp) * parseInt(x?.recievedQuantity) || 0}</label>
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md"> {parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</label>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">

@@ -89,7 +89,7 @@ function ProductionSOP() {
                   </div>
                   <div className="flex gap-3 items-center ">
                     <label className="text-[14px]">Batch Number</label>
-                    <input type="text" placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} value={selectedProduct?.batchNumber || ""} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
+                    <input type="text" required placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} value={selectedProduct?.batchNumber || ""} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
                   </div>
                   <div className="flex gap-3 items-center">
                     <label className="text-[14px] ">Production Date</label>

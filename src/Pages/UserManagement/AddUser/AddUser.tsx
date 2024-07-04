@@ -159,15 +159,15 @@ function AddUser() {
   }, []);
  
   return (
-    <div className="h-[56vh] w-screen px-4 pt-3 shadow-md">
+    <div className="min-h-[56vh] w-screen px-4 pt-3 pb-10 ">
       <h1 className="roboto-bold text-lg">Add User</h1>
-      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md p-3 pb-10 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
             handleSave();
           }}
-          className="shadow-md bg-white px-4 h-[90%] z-[0] relative rounded-lg pt-1 w-full"
+          className="shadow-md bg-white px-4 h-[90%] pb-10 z-[0] relative rounded-lg pt-1 w-full"
         >
           <h1 className="roboto-medium mt-1">User Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -300,10 +300,12 @@ function AddUser() {
                 }
                 title="Please Select values from drop down"
                 required
+                className="z-[3]"
                 onChange={(e) => {
                   setSearchValue({
                     ...searchValue,
                     department: e.target.value,
+                    role:""
                   });
                 }}
                 value={searchValue?.department || ""}
@@ -330,7 +332,7 @@ function AddUser() {
                   ))}
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-9 items-center">
               <label>Role</label>
               <Select
                 pattern={
@@ -343,6 +345,8 @@ function AddUser() {
                     : ""
                 }
                 title="Please Select values from drop down"
+                className="z-[2]"
+                required
                 onChange={(e) => setRoleSearch(e.target.value)}
                 value={roleSearch || ""}
               >
@@ -373,7 +377,7 @@ function AddUser() {
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
               <Select
-                className="z-[999]"
+                className="z-[1]"
                 required
                 onChange={(e) => {
                   setSearchValue({
@@ -407,7 +411,7 @@ function AddUser() {
             </div>
           </div>
 
-          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+          <div className="w-full mt-[90px] pb-7 z-[0] bottom-4 justify-center items-center gap-3 flex ">
             <button
               type="reset"
               className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]"

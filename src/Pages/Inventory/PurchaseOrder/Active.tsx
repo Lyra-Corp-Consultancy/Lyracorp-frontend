@@ -18,6 +18,7 @@ interface Prop {
     discount: any[];
     payment: any[];
     document: any[];
+    paymentTerm: any[];
     shippingMethods: any[];
   };
   inActiveCustomer: () => void;
@@ -29,6 +30,8 @@ function Active({ data, dropDowns, inActiveCustomer, selected, setSelected }: Pr
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   
+console.log("d d ",dropDowns)
+
   return (
     <div className="h-[80%] overflow-auto w-full">
       <table className="w-full mt-3 overflow-auto">
@@ -106,8 +109,8 @@ function Active({ data, dropDowns, inActiveCustomer, selected, setSelected }: Pr
               <th>{x?.deliveryDate}</th>
               <th>{dropDowns?.shippingMethods?.filter((y) => y?._id === x?.shippingMethod)[0]?.value}</th>
               <th className="truncate max-w-[100px]">{x?.billingAddress?.address}</th>
-              <th>{x?.paymentType}</th>
-              <th>{dropDowns?.payment?.filter((y) => y?._id === x?.paymentTerm)[0]?.value}</th>
+              <th>{dropDowns?.payment?.filter((y) => y?._id === x?.paymentType)[0]?.value}</th>
+              <th>{dropDowns?.paymentTerm?.filter((y) => y?._id === x?.paymentTerm)[0]?.value}</th>
               <th className="relative ">
                 <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                   <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">

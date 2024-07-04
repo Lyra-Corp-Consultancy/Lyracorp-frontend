@@ -200,7 +200,7 @@ function SOPSettings() {
                               />
                             </svg>
                           </button>
-                          <input value={x.moduleName} placeholder="Description of the process" onChange={(e) => handleChange(e, pi)} required className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[80%] rounded-md" type="text" />
+                          <input value={x.moduleName} placeholder="Description of the process" onChange={(e) => handleChange(e, pi)} required className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[80%] rounded-md" type="text" />
                         </div>
                       </td>
                       <td colSpan={7} className="border  py-3 w-[82%]">
@@ -216,32 +216,32 @@ function SOPSettings() {
                                 </svg>
                               </button>
                               <label className=" w-[19%]  rounded-md px-2">
-                                <input placeholder="Description of Sub Process" value={y.name} onChange={(e) => handleChangeSub(e, pi, i)} name="name" required className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" />
+                                <input placeholder="Description of Sub Process" value={y.name} onChange={(e) => handleChangeSub(e, pi, i)} name="name" required className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md" type="text" />
                               </label>
 
                               <label className=" w-[12.5%] px-2  ">
-                                <select value={y.rawMaterial} name="rawMaterial" onChange={(e)=>handleChangeSub(e, pi, i)}  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md">
+                                <select value={y.rawMaterial} name="rawMaterial" onChange={(e)=>handleChangeSub(e, pi, i)}  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md">
                                  <option value="">Select</option>
                                   {rawMaterial?.map((x)=>(
                                     <option>{x?.product?.productName || "No Name"}</option>
                                   ))}
                                 </select>
-                                {/* <input placeholder="Raw Material" required value={y.rawMaterial} onChange={(e) => handleChangeSub(e, pi, i)} name="rawMaterial" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" /> */}
+                                {/* <input placeholder="Raw Material" required value={y.rawMaterial} onChange={(e) => handleChangeSub(e, pi, i)} name="rawMaterial" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md" type="text" /> */}
                               </label>
                               <label className=" w-[12.5%] px-2  ">
-                                <input placeholder="Unit of Measurement" required value={y.uom} onChange={(e) => handleChangeSub(e, pi, i)} name="uom" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" />
+                                <input placeholder="Unit of Measurement" required value={y.uom} onChange={(e) => handleChangeSub(e, pi, i)} name="uom" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md" type="text" />
                               </label>
                               <label className=" w-[12.5%] px-2  ">
-                                <input required placeholder="quantity" value={y.quantity} onChange={(e) => handleChangeSub(e, pi, i)} name="quantity" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="number" />
+                                <input required placeholder="quantity" value={y.quantity} onChange={(e) => handleChangeSub(e, pi, i)} name="quantity" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md" type="number" />
                               </label>
                               <label className=" w-[12.5%] px-2  ">
-                                <input required placeholder="Production Floor" value={y.productionFloor} onChange={(e) => handleChangeSub(e, pi, i)} name="productionFloor" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100%] rounded-md" type="text" />
+                                <input required placeholder="Production Floor" value={y.productionFloor} onChange={(e) => handleChangeSub(e, pi, i)} name="productionFloor" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[100%] rounded-md" type="text" />
                               </label>
                               <label className=" w-[12.5%] px-2  ">
-                                <input required placeholder="Time Duration" value={y.timeDuration} onChange={(e) => handleChangeSub(e, pi, i)} name="timeDuration" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[80%] rounded-md" type="number" />
+                                <input required placeholder="Time Duration" value={y.timeDuration} onChange={(e) => handleChangeSub(e, pi, i)} name="timeDuration" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[80%] rounded-md" type="number" />
                               </label>
                               <label className=" w-[16.5%] px-2  flex items-center gap-2" style={{zIndex:999-i}}>
-                                <Select placeholder="Department" value={departments?.filter((z) => z?._id === y?.department)[0]?.value} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[90%] rounded-md">
+                                <Select placeholder="Department" value={departments?.filter((z) => z?._id === y?.department)[0]?.value} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] min-h-[25px] w-[90%] rounded-md">
                                   {departments.map((x) => (
                                     <li className="ps-2 truncate bg-white hover:bg-slate-300" onClick={() => handleChangeSub({ target: { value: x?._id, name: "department" } }, pi, i)}>
                                       {x?.value}

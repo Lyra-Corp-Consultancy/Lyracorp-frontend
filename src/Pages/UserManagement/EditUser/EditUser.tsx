@@ -138,9 +138,9 @@ function EditUser() {
 
 
   return (
-    <div className="min-h-[60vh] w-screen px-4 pt-3 shadow-md">
+    <div className="min-h-[60vh] w-screen px-4 pt-3 pb-10 ">
       <h1 className="roboto-bold text-lg">Edit User</h1>
-      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md p-3 pb-10 rounded-lg w-full h-[90%]">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -217,6 +217,7 @@ function EditUser() {
             <div className="flex gap-2 items-center">
               <label>Department</label>
               <Select
+              className="z-[3]"
                 pattern={
                   dropDowns?.department?.filter(
                     (a) => a?.value === searchValue?.department
@@ -256,9 +257,10 @@ function EditUser() {
                   ))}
               </Select>
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-9 items-center">
               <label>Role</label>
               <Select
+              className="z-[2]"
                 pattern={
                   dropDowns?.role
                     ?.filter(
@@ -303,7 +305,7 @@ function EditUser() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
-              <Select className="z-[999]" required  onChange={(e)=>{
+              <Select className="z-[1]" required  onChange={(e)=>{
               setSearchValue({...searchValue,lineOfBusiness:e.target.value})
             }} value={searchValue?.lineOfBusiness || ""} >
               {dropDowns?.lineOfBusiness?.filter((a)=>a?.companyName?.toLowerCase()?.includes(searchValue?.lineOfBusiness?.toLowerCase() || "")).map((x) => (
@@ -322,7 +324,7 @@ function EditUser() {
           </div>
 
        
-          <div className="w-full  bottom-4 justify-center items-center gap-3 pb-3 flex mt-5">
+          <div className="w-full z-[0] mt-[90px] pb-7  bottom-4 justify-center items-center gap-3  flex ">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
