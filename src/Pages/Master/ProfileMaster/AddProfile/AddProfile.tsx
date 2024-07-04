@@ -390,13 +390,13 @@ if(files1[0]){
                   }}
                   value={x.state}
                 >
-                  {search?.state?.map((x) => (
+                  {search?.state?.map((a) => (
                     <li
                       onClick={() => {
                         const billingAddress = data?.billingAddress;
-                        if (billingAddress) billingAddress[i] = { ...billingAddress[i], state: x?.name };
+                        if (billingAddress) billingAddress[i] = { ...billingAddress[i], state: a?.name };
                         setData({ ...data, billingAddress });
-                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: a?.name }).then((res) => {
                           console.log(res.data);
                           setPlaces({ ...places, city: res.data.data });
                           setSearch({ ...search, city: res.data.data });
@@ -404,7 +404,7 @@ if(files1[0]){
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.name}
+                      {a?.name}
                     </li>
                   ))}
                 </Select>
@@ -573,13 +573,13 @@ if(files1[0]){
                   }}
                   value={x.state}
                   >
-                  {search?.state?.map((x) => (
+                  {search?.state?.map((a) => (
                     <li
                     onClick={() => {
                       const shippingAddress = data?.shippingAddress;
-                      if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], state: x?.name };
+                      if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], state: a?.name };
                         setData({ ...data, shippingAddress });
-                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: x?.name }).then((res) => {
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: a?.name }).then((res) => {
                           console.log(res.data);
                           setPlaces({ ...places, city: res.data.data });
                           setSearch({ ...search, city: res.data.data });
@@ -587,7 +587,7 @@ if(files1[0]){
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.name}
+                      {a?.name}
                     </li>
                   ))}
                 </Select>
@@ -740,13 +740,13 @@ if(files1[0]){
                   }}
                   value={x.state}
                 >
-                  {search?.state?.map((x) => (
+                  {search?.state?.map((a) => (
                     <li
                       onClick={() => {
                         const warehouse = data?.warehouse || [];
-                        warehouse[i] = { ...warehouse[i], state: x?.name };
+                        warehouse[i] = { ...warehouse[i], state: a?.name };
                         setData({ ...data, warehouse });
-                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: data.country, state: x?.name }).then((res) => {
+                        axios.post("https://countriesnow.space/api/v0.1/countries/state/cities", { country: x.country, state: a?.name }).then((res) => {
                           console.log(res.data);
                           setPlaces({ ...places, city: res.data.data });
                           setSearch({ ...search, city: res.data.data });
@@ -754,7 +754,7 @@ if(files1[0]){
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.name}
+                      {a?.name}
                     </li>
                   ))}
                 </Select>

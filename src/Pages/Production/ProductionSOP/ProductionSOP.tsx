@@ -9,6 +9,7 @@ import NavigationBar from "../../../components/NavigationBar";
 import Select from "../../../components/Select";
 import { getAllProductFinishedGoods, getAllUserManagement, getProductionSOP, getType, productionProcessDone } from "../../../utils/redux/actions";
 import { ProductionSOPTypes } from "../../../utils/Type/types";
+import { makeToast } from "../../../utils/redux/slice";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
 function ProductionSOP() {
@@ -54,11 +55,16 @@ function ProductionSOP() {
                 e.preventDefault();
                 if (productProcess[0]) {
                   const saveData = { productProcess, productId: selectedProduct._id, batchNumber: selectedProduct.batchNumber };
-                  dispatch(productionProcessDone(saveData)).then(() => {
-                    console.log("saved");
-                    setSelectedProduct({});
-                    setProcess([]);
-                    if (runningInterval) clearInterval(runningInterval);
+                  dispatch(productionProcessDone(saveData)).then((res:any) => {
+                    if(res.status===200){
+
+                      console.log("saved");
+                      setSelectedProduct({});
+                      setProcess([]);
+                      if (runningInterval) clearInterval(runningInterval);
+                    }else{
+                      dispatch(makeToast({text:"Batch Number Already Used",heading:"Error"}))
+                    }
                   });
                 console.log(saveData);
                 }
