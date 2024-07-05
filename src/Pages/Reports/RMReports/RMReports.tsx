@@ -18,7 +18,7 @@ function RMReports() {
       setReports(res.payload);
       setFiltered(res.payload);
       let rawMaterials = res.payload.map((x: any) => x?.product?.productName);
-      let warehouse = res.payload.map((x: any) => x?.warehouse?.address);
+      let warehouse = res.payload.map((x: any) => x?.warehouse?.warehouseName);
       let grn = res.payload.map((x: any) => x?.grn);
       rawMaterials = [...new Set(rawMaterials)];
       warehouse = [...new Set(warehouse)];
@@ -42,7 +42,7 @@ function RMReports() {
                     <li
                       onClick={() => {
                         setSearch({ ...search, rmName: x });
-                        const warehouse = report.filter((y) => y?.product?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.address);
+                        const warehouse = report.filter((y) => y?.product?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.warehouseName);
                         const grn = report.filter((y) => y?.product?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.grn);
                         console.log(warehouse, grn);
                         setDropDown({ ...dropDown, warehouse, grn });
@@ -63,7 +63,7 @@ function RMReports() {
                     <li
                       onClick={() => {
                         setSearch({ ...search, warehouse: x });
-                        const grn = filtered.filter((y) => y?.warehouse?.address?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.product?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.grn);
+                        const grn = filtered.filter((y) => y?.warehouse?.warehouseName?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.product?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.grn);
                         setDropDown({ ...dropDown, grn });
                       }}
                       className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
@@ -100,7 +100,7 @@ function RMReports() {
                     })
                     .filter((x) => {
                       if (search.warehouse) {
-                        if (x?.warehouse?.address?.toLocaleLowerCase()?.includes(search.warehouse.toLocaleLowerCase())) {
+                        if (x?.warehouse?.warehouseName?.toLocaleLowerCase()?.includes(search.warehouse.toLocaleLowerCase())) {
                           return x;
                         }
                       } else {
@@ -150,7 +150,7 @@ function RMReports() {
                   <td className="text-center">{x?.product?.productDes || "No Description"}</td>
                   <td className="text-center">{x?.grn || "No GRN Number"}</td>
                   <td className="text-center">{x?.quantity || "No value Found"}</td>
-                  <td className="text-center">{x?.warehouse?.address || "No Address Found"}</td>
+                  <td className="text-center">{x?.warehouse?.warehouseName || "No Address Found"}</td>
                   <td className="text-center">{x?.expiryDate || "No Expiry Date Found"}</td>
                 </tr>
               ))}

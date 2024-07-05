@@ -173,7 +173,7 @@ function RawMaterialOutward() {
                       <th>{i + 1}</th>
                       <th>{x?.seq}</th>
                       <th>{x?.outwardDate}</th>
-                      <th>{x?.sender?.address}</th>
+                      <th>{x?.sender?.warehouseName}</th>
                       <th>{x?.transporter}</th>
                       <th>{x?.vehicleNumber}</th>
                       <th>{x?.supplyChain}</th>

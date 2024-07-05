@@ -409,7 +409,7 @@ function AddPurchaseInward() {
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.address}
+                      {x?.warehouseName}
                     </li>
                   ))}
               </Select>

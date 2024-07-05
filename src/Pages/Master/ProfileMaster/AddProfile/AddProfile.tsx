@@ -694,6 +694,19 @@ if(files1[0]){
           {data?.warehouse?.map((x: any, i: number) => (
             <div className="flex items-center">
             <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+            <div className="w-[22%] flex justify-between gap-3 items-center">
+                <label>Name</label>
+                <input required
+                  value={x.warehouseName}
+                  onChange={(e) => {
+                    const warehouse = data?.warehouse || [];
+                    warehouse[i] = { ...warehouse[i], warehouseName: e.target.value };
+                    setData({ ...data, warehouse });
+                  }}
+                  type="text"
+                  className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px] w-[200px] w-[200px]"
+                />
+              </div>
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Country</label>
                 <Select required className="w-[200px]"

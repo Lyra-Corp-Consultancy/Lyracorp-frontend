@@ -113,6 +113,7 @@ interface PrefixSeq {
 }
 
 export interface ProfileMaster {
+  
   fileUrls: string[];
   logo?: string;
   companyName?: string;
