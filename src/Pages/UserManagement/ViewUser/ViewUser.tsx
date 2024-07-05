@@ -105,11 +105,11 @@ function ViewUser() {
   }, []);
 
   return (
-    <div className="h-[56vh] w-screen px-4 pt-3 shadow-md">
+    <div className="min-h-[56vh] w-screen px-4 pt-3 ">
       <h1 className="roboto-bold text-lg">Add User</h1>
-      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full h-[90%]">
+      <div className="bg-[#F1F3FF] shadow-md p-3 pb-10 rounded-lg w-full h-[90%]">
         <div
-          className="shadow-md bg-white px-4 h-[90%] z-[0] relative rounded-lg pt-1 w-full"
+          className="shadow-md bg-white px-4 min-h-[90%] z-[0] relative rounded-lg pt-1 w-full"
         >
           <h1 className="roboto-medium mt-1">User Details</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -155,19 +155,19 @@ function ViewUser() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Username</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{data.username}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{data.username}</label>
             </div>
             <div className="flex gap-2 items-center">
               <label>Phone Number</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{data.phoneNumber}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{data.phoneNumber}</label>
             </div>
             <div className="flex gap-2 items-center">
               <label>Email ID</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{data.email}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{data.email}</label>
             </div>
             <div className="flex gap-2 items-center">
               <label>Employee ID</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{data.employeeId}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{data.employeeId}</label>
             </div>
           </div>
           <h1 className="roboto-medium mt-1">Position Details</h1>
@@ -175,23 +175,23 @@ function ViewUser() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
               <label>Department</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{dropDowns?.department?.filter((x) => x?._id === data?.department)[0]?.value}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{dropDowns?.department?.filter((x) => x?._id === data?.department)[0]?.value}</label>
 
             </div>
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-9 items-center">
               <label>Role</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{dropDowns?.role?.filter((x) => x?._id === data?.role)[0]?.value?.value}</label>
 
             </div>
             <div className="flex gap-2 items-center">
               <label>Line Of Business</label>
-              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] h-[25px] rounded-md" >{data?.companyDetails[0]?.companyName}</label>
+              <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] min-h-[25px] rounded-md" >{data?.companyDetails[0]?.companyName}</label>
 
             </div>
           </div>
 
        
-          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+          <div className="w-full bottom-4 justify-center items-center gap-3 flex mt-[90px] pb-7">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Back
             </button>

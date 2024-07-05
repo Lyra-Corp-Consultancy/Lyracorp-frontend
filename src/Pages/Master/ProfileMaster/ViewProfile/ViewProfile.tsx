@@ -239,6 +239,40 @@ function ViewProfile() {
             </div>
           ))}
 
+{data?.warehouse?.length > 0 && <h1 className="roboto-medium mt-1">Warehouse Details</h1>}
+          {data?.warehouse?.map((x: any) => (
+            <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Country</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.country}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>State</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.state}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>District</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.district}</label>
+              </div>
+              <div className="w-[22%] z-10 flex gap-3 items-center">
+                <label>City/Village</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.city}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Zone</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.zone}</label>
+              </div>
+              <div className="w-[50%] flex gap-3 items-center">
+                <label>Address</label>
+                <label className="px-2 py-1 w-[77%]  shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{x.address}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
+                <label>Pin code</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.pinCode}</label>
+              </div>
+            </div>
+          ))}
+
           <h1 className="roboto-medium mt-1">Identity Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
@@ -309,9 +343,7 @@ function ViewProfile() {
               <div className="flex gap-3 items-center">
                 <label>Purchase Order</label>
               </div>
-              <div className="flex gap-3 items-center">
-                <label>Purchase Order</label>
-              </div>
+              
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.grn?.prefix}</span>

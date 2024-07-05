@@ -38,6 +38,7 @@ function RoleType() {
       setValues(res?.payload[0]?.roleType);
       setSearch(res?.payload[0]?.roleType);
       setInput({ department: "", value: "" });
+      setSearchValue("")
     });
   };
   useEffect(() => {
@@ -47,8 +48,11 @@ function RoleType() {
   useEffect(() => {
     if (deleteType.length === 1) {
       setInput(values?.filter((x) => x._id === deleteType[0])[0].value);
+      console.log()
+      setSearchValue(department?.filter((a) => a?._id === values?.filter((x) => x._id === deleteType[0])[0].value.department)[0]?.value)
     } else {
       setInput({ department: "", value: "" });
+      setSearchValue("")
     }
   }, [deleteType]);
 

@@ -664,7 +664,7 @@ if(files1[0]){
               <div className="w-[22%] flex gap-3 items-center">
                 <label>Pin code</label>
                 <input required
-                  value={x.pincode}
+                  value={x.pinCode}
                   onChange={(e) => {
                     const shippingAddress = data?.shippingAddress;
                     if (shippingAddress) shippingAddress[i] = { ...shippingAddress[i], pinCode: e.target.value };
