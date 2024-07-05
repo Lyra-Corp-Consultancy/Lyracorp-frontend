@@ -554,7 +554,7 @@ function AddPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
                   </td>
-                  <td className="text-center border justify-center py-2 items-center ">
+                  <td className="text-center border justify-center py-2 items-center "> 
                     <input
                       required
                       type="date"

@@ -15,6 +15,11 @@ import QCRoute from "./Pages/QC/QCRoute";
 import ProductionRoute from "./Pages/Production/ProductionRoute";
 import ErrorPage from "./Error404Page";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
+import OrderManagementRoute from "./Pages/orderManagement/OrderMangementRoute";
+
+
+
+
 
 function App() {
   const data = useSelector((state: any) => state.data);
@@ -83,6 +88,7 @@ function App() {
         <Route path="/user-management/*" element={<UserManagementRoute />} />
         <Route path="/qc/*" element={<QCRoute />} />
         <Route path="/production/*" element={<ProductionRoute />} />
+        <Route path="/order-management/*" element={<OrderManagementRoute/>} />
         <Route path="/reports/*" element={<ReportsRoute />} />
         <Route path="*" element={<ErrorPage/>} />
         
