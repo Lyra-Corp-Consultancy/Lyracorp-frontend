@@ -243,6 +243,10 @@ function ViewProfile() {
           {data?.warehouse?.map((x: any) => (
             <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex gap-3 items-center">
+                <label>Name</label>
+                <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.warehouseName}</label>
+              </div>
+              <div className="w-[22%] flex gap-3 items-center">
                 <label>Country</label>
                 <label className="px-2 py-1   shadow-[0px_0px_4px_rgba(0,0,0,0.385)] w-[200px] rounded-md">{x.country}</label>
               </div>
@@ -337,11 +341,25 @@ function ViewProfile() {
               </div>
             ))}
           </div>
-          <h1 className="roboto-medium mt-1">Create Order Code</h1>
+          <h1 className="roboto-medium mt-1">Order Code</h1>
           <div className="grid gap-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="grid grid-cols-4 gap-8">
               <div className="flex gap-3 items-center">
                 <label>Purchase Order</label>
+              </div>
+              
+              <div className="flex gap-3 items-center">
+                <label>Prefix</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.purchaseOrder?.prefix}</span>
+              </div>
+              <div className="flex gap-3 items-center">
+                <label>Sequence</label>
+                <span className="h-[30px] w-[200px] px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.purchaseOrder?.seq}</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-4 gap-8">
+              <div className="flex gap-3 items-center">
+                <label>GRN</label>
               </div>
               
               <div className="flex gap-3 items-center">

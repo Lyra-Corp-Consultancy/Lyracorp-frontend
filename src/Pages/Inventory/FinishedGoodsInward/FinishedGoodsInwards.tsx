@@ -139,8 +139,8 @@ function FinishedGoodsInwards() {
                       <td>{x?.rejected}</td>
                       <td>{(x?.productionQuantity || 0) - (x?.rejected || 0)}</td>
                       <td>{x?.doc}</td>
-                      <td ><label className="truncate px-1 w-[50px]">{x?.warehouse?.address}</label></td>
-                      <td ><label className="truncate px-1 w-[50px]">{x?.pick?.address}</label></td>
+                      <td ><label className="truncate px-1 w-[50px]">{x?.warehouse?.warehouseName}</label></td>
+                      <td ><label className="truncate px-1 w-[50px]">{x?.pick?.warehouseName}</label></td>
                       <td className="relative ">
                         <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                           <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">

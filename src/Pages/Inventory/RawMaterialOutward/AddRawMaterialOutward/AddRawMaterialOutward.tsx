@@ -307,7 +307,7 @@ function AddRawMaterialOutward() {
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.address}
+                      {x?.warehouseName}
                     </li>
                   ))}
               </Select>
@@ -353,7 +353,7 @@ function AddRawMaterialOutward() {
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.address}
+                      {data?.supplyChain === "own" ? x?.warehouseName : x?.VendorName}
                     </li>
                   ))}
               </Select>

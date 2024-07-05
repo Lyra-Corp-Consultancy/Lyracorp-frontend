@@ -224,14 +224,16 @@ function ProductionSOP() {
                                   ) : (
                                     <button
                                       onClick={() => {
-                                        const temp = y;
-                                        temp.end = new Date();
-                                        temp.workedTime = timer.totalSec / 60;
-                                        const procc = [...productProcess];
-                                        procc[pi].submodule[i] = temp;
-                                        setProcess([...procc]);
-                                        clearInterval(runningInterval);
-                                        setTimer({ hours: 0, min: 0, sec: 0, totalSec: 0 });
+                                        if(!(!y?.start || y?.end)){
+                                          const temp = y;
+                                          temp.end = new Date();
+                                          temp.workedTime = timer.totalSec / 60;
+                                          const procc = [...productProcess];
+                                          procc[pi].submodule[i] = temp;
+                                          setProcess([...procc]);
+                                          clearInterval(runningInterval);
+                                          setTimer({ hours: 0, min: 0, sec: 0, totalSec: 0 });
+                                        }
                                       }}
                                       type="button"
                                       className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white " + ((!y?.start || y?.end) && "opacity-70")}

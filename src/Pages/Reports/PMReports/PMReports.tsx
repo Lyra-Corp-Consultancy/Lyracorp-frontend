@@ -78,13 +78,13 @@ function PMReports() {
                       <td className="border text-center" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{rawMaterials.filter((y) => y?._id === x?.product)[0]?.productName}</td>
                       <td className="border text-center w-1/4 p-1" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{x?.quantity}</td>
                       <td className="border text-center" rowSpan={report.filter((y) => y?.product?._id === x?.product ).length}>{uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name || "Not Found" }</td>
-                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.warehouse?.address || "Out Of Stock"}</td>
+                      <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.warehouse?.warehouseName || "Out Of Stock"}</td>
                       <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.quantity || 0 }</td>
                       <td className="border text-center">{report.filter((y) => y?.product?._id === x?.product )[0]?.uom?.name ||uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name  || "Not Found" }</td>
                     </tr>
                     {report.filter((y) => y?.product?._id === x?.product ).map((z,i)=>(
                      <> {i>0 && <tr className={(report.filter((y) => y?.product?._id === x?.product )[0]?.quantity<x.quantity || !report.filter((y) => y?.product?._id === x?.product )[0]?.quantity) ? "text-red-500":"" }>
-                      <td className="border text-center">{z?.warehouse?.address || "Out Of Stock"}</td>
+                      <td className="border text-center">{z?.warehouse?.warehouseName || "Out Of Stock"}</td>
                       <td className="border text-center">{z?.quantity || 0 }</td>
                       <td className="border text-center">{z?.uom?.name||uom.find((z)=>z._id===rawMaterials.filter((y) => y?._id === x?.product)[0]?.uomType).value.name || "Not Found" }</td>
                     </tr>}</>

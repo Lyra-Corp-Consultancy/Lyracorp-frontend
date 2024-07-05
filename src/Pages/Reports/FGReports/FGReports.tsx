@@ -18,7 +18,7 @@ function FGReports() {
       setReports(res.payload);
       setFiltered(res.payload);
       let finishedGoods = res.payload.map((x: any) => x?.products?.productName);
-      let warehouse = res.payload.map((x: any) => x?.warehouse?.address);
+      let warehouse = res.payload.map((x: any) => x?.warehouse?.warehouseName);
       let batchNum = res.payload.map((x: any) => x?.batchNumbers);
       finishedGoods = [...new Set(finishedGoods)];
       warehouse = [...new Set(warehouse)];
@@ -42,7 +42,7 @@ function FGReports() {
                     <li
                       onClick={() => {
                         setSearch({ ...search, rmName: x });
-                        const warehouse = report.filter((y) => y?.products?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.address);
+                        const warehouse = report.filter((y) => y?.products?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.warehouseName);
                         const batchNum = report.filter((y) => y?.producs?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
                         console.log(warehouse, batchNum);
                         setDropDown({ ...dropDown, warehouse, batchNum });
@@ -63,7 +63,7 @@ function FGReports() {
                     <li
                       onClick={() => {
                         setSearch({ ...search, warehouse: x });
-                        const batchNum = filtered.filter((y) => y?.warehouse?.address?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.products?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
+                        const batchNum = filtered.filter((y) => y?.warehouse?.warehouseName?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.products?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
                         setDropDown({ ...dropDown, batchNum });
                       }}
                       className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
@@ -100,7 +100,7 @@ function FGReports() {
                     })
                     .filter((x) => {
                       if (search.warehouse) {
-                        if (x?.warehouse?.address?.toLocaleLowerCase()?.includes(search.warehouse.toLocaleLowerCase())) {
+                        if (x?.warehouse?.warehouseName?.toLocaleLowerCase()?.includes(search.warehouse.toLocaleLowerCase())) {
                           return x;
                         }
                       } else {
@@ -149,7 +149,7 @@ function FGReports() {
                   <td className="text-center">{x?.products?.productDes || "No Description"}</td>
                   <td className="text-center">{x?.batchNumbers || "No Batch Number"}</td>
                   <td className="text-center">{x?.quantity || "No value Found"}</td>
-                  <td className="text-center">{x?.warehouse?.address || "No Address Found"}</td>
+                  <td className="text-center">{x?.warehouse?.warehouseName || "No Address Found"}</td>
                 </tr>
               ))}
             </tbody>
