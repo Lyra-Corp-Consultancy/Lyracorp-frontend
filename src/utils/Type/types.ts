@@ -210,3 +210,9 @@ export interface FinishedGoodsInwards {
   doc?: string;
   link?: any;
 }
+
+export interface RawMaterialUtilizationTypes {
+  product: string;
+  batchNumber: string;
+  used: { product: string; quantity: string,grnNumber:string,usedQuantity:number }[];
+}
