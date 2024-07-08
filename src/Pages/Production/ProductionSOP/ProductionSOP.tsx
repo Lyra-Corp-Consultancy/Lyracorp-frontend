@@ -56,8 +56,7 @@ function ProductionSOP() {
                 if (productProcess[0]) {
                   const saveData = { productProcess, productId: selectedProduct._id, batchNumber: selectedProduct.batchNumber };
                   dispatch(productionProcessDone(saveData)).then((res:any) => {
-                    if(res.status===200){
-
+                    if(res.payload.status===200){
                       console.log("saved");
                       setSelectedProduct({});
                       setProcess([]);

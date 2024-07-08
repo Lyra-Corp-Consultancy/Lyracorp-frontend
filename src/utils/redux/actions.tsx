@@ -564,7 +564,7 @@ export const createOrUpdateProductionSOP = createAsyncThunk("user/createOrUpdate
 export const productionProcessDone = createAsyncThunk("user/createOrUpdateProductionSOP", async (val: { productId: string; productProcess: ProductionSOPTypes[]; batchNumber: string }, { rejectWithValue }) => {
   try {
     const res = await instance.post("/production/sop", { processDone: val });
-    return res.status;
+    return res;
   } catch (err) {
     rejectWithValue(err);
   }
