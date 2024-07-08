@@ -2,10 +2,10 @@
 import { Route, Routes } from "react-router-dom";
 
 import NavigationBar from "../../components/NavigationBar";
-import OrderManagement from "./OrderMangenment";
 import AddOrderManagement from "./AddOrderManagement/AddOrderManagement";
 import EditOrderManagement from "./EditOrderManagement/EditOrderManagement";
 import ViewOrderManagement from "./ViewOrderManagement/ViewOrderManagement";
+import OrderManagement from "./Ordermangenment";
 
 function OrderManagementRoute() {
   return (
