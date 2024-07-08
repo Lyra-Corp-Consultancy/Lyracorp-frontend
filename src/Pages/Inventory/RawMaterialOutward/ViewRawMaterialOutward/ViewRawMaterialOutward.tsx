@@ -237,7 +237,7 @@ function ViewRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Sender</label>
-      <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.sender?.address}</label>
+      <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.sender?.warehouseName}</label>
 
             </div>
             <div className="flex  items-center gap-3 justify-between">
@@ -247,7 +247,7 @@ function ViewRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Receiver</label>
-      <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data?.receiver?.address}</label>
+      <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{ data?.supplyChain === "own" ? data?.receiver?.warehouseName : data?.receiver?.VendorName }</label>
 
             
             </div>

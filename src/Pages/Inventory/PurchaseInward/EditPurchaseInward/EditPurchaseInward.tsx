@@ -133,7 +133,7 @@ function EditPurchaseInward() {
         return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value?.name;
       }),
 
-      warehouse: (user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)?.filter((a: any) => a?.address === data?.warehouse?.address)[0]?.address,
+      warehouse: (user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)?.filter((a: any) => a?.warehouseName === data?.warehouse?.warehouseName)[0]?.warehouseName,
 
       certificate: data?.products?.map((e: any) => {
         return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value;
@@ -416,7 +416,7 @@ function EditPurchaseInward() {
                       }}
                       className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
                     >
-                      {x?.address}
+                      {x?.warehouseName}
                     </li>
                   ))}
               </Select>

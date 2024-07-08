@@ -9,6 +9,7 @@ import NavigationBar from "../../../components/NavigationBar";
 import Select from "../../../components/Select";
 import { getAllProductFinishedGoods, getAllUserManagement, getProductionSOP, getType, productionProcessDone } from "../../../utils/redux/actions";
 import { ProductionSOPTypes } from "../../../utils/Type/types";
+import { makeToast } from "../../../utils/redux/slice";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
 function ProductionSOP() {
@@ -54,11 +55,15 @@ function ProductionSOP() {
                 e.preventDefault();
                 if (productProcess[0]) {
                   const saveData = { productProcess, productId: selectedProduct._id, batchNumber: selectedProduct.batchNumber };
-                  dispatch(productionProcessDone(saveData)).then(() => {
-                    console.log("saved");
-                    setSelectedProduct({});
-                    setProcess([]);
-                    if (runningInterval) clearInterval(runningInterval);
+                  dispatch(productionProcessDone(saveData)).then((res:any) => {
+                    if(res.payload.status===200){
+                      console.log("saved");
+                      setSelectedProduct({});
+                      setProcess([]);
+                      if (runningInterval) clearInterval(runningInterval);
+                    }else{
+                      dispatch(makeToast({text:"Batch Number Already Used",heading:"Error"}))
+                    }
                   });
                 console.log(saveData);
                 }
@@ -218,14 +223,16 @@ function ProductionSOP() {
                                   ) : (
                                     <button
                                       onClick={() => {
-                                        const temp = y;
-                                        temp.end = new Date();
-                                        temp.workedTime = timer.totalSec / 60;
-                                        const procc = [...productProcess];
-                                        procc[pi].submodule[i] = temp;
-                                        setProcess([...procc]);
-                                        clearInterval(runningInterval);
-                                        setTimer({ hours: 0, min: 0, sec: 0, totalSec: 0 });
+                                        if(!(!y?.start || y?.end)){
+                                          const temp = y;
+                                          temp.end = new Date();
+                                          temp.workedTime = timer.totalSec / 60;
+                                          const procc = [...productProcess];
+                                          procc[pi].submodule[i] = temp;
+                                          setProcess([...procc]);
+                                          clearInterval(runningInterval);
+                                          setTimer({ hours: 0, min: 0, sec: 0, totalSec: 0 });
+                                        }
                                       }}
                                       type="button"
                                       className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white " + ((!y?.start || y?.end) && "opacity-70")}

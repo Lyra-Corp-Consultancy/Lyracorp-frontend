@@ -138,7 +138,7 @@ function AddFinishedGoods() {
                     <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</h6>
                   </td>
                   <td className="px-3 py-1 border">
-                    <Select value={x?.warehouse?.address || ""}>
+                    <Select value={x?.warehouse?.warehouseName || ""}>
                       {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse || []).map((y: any) => (
                         <li
                           onClick={() => {
@@ -148,7 +148,7 @@ function AddFinishedGoods() {
                           }}
                           className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
                         >
-                          {y.address}
+                          {y.warehouseName}
                         </li>
                       ))}
                     </Select>
@@ -164,7 +164,7 @@ function AddFinishedGoods() {
                           }}
                           className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
                         >
-                          {y.address}
+                          {y.warehouseName}
                         </li>
                       ))}
                     </Select>

@@ -70,10 +70,10 @@ function ViewFinishedGoods() {
                     <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</h6>
                   </td>
                   <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.warehouse?.address}</label>
+                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.warehouse?.warehouseName}</label>
                   </td>
                   <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.pick?.address}</label>
+                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.pick?.warehouseName}</label>
                   </td>
                   <td className="px-3 py-1 border">
                     <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x.doc}</label>
