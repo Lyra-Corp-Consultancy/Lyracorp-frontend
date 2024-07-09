@@ -44,7 +44,7 @@ function NavigationBar() {
 
   return (
     <div
-      className="bg-[#f55959] w-full px-10"
+      className="bg-[#5970F5] w-full px-10"
       onMouseOut={() => {
         document.addEventListener("click", handleClick);
       }}
