@@ -15,6 +15,7 @@ import QCRoute from "./Pages/QC/QCRoute";
 import ProductionRoute from "./Pages/Production/ProductionRoute";
 import ErrorPage from "./Error404Page";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
+// import SupplyChainRoute from "./Pages/SupplyChain/SupplyChainRoute";
 
 function App() {
   const data = useSelector((state: any) => state.data);
@@ -84,6 +85,7 @@ function App() {
         <Route path="/qc/*" element={<QCRoute />} />
         <Route path="/production/*" element={<ProductionRoute />} />
         <Route path="/reports/*" element={<ReportsRoute />} />
+        {/* <Route path="/supply-chain/*" element={<SupplyChainRoute />} /> */}
         <Route path="*" element={<ErrorPage/>} />
         
       </Routes>

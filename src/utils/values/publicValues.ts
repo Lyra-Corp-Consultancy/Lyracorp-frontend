@@ -51,7 +51,8 @@ export const createdModules = [
                                 ["product management",
                                     [
                                         ["production management master"],
-                                        ["production sop"]
+                                        ["production sop"],
+                                        ["raw material utilization"]
                                     ]
                                 ],
                                 ["supply chain management",
