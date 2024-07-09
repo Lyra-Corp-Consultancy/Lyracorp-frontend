@@ -15,7 +15,7 @@ import QCRoute from "./Pages/QC/QCRoute";
 import ProductionRoute from "./Pages/Production/ProductionRoute";
 import ErrorPage from "./Error404Page";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
-import OrderManagementRoute from "./Pages/OrderManagement/OrdermangementRoute";
+import OrderManagementRoute from "./Pages/OrderManagement/OrderManagementRoute";
 
 
 

@@ -5,8 +5,8 @@ import NavigationBar from "../../components/NavigationBar";
 import AddOrderManagement from "./AddOrderManagement/AddOrderManagement";
 import EditOrderManagement from "./EditOrderManagement/EditOrderManagement";
 import ViewOrderManagement from "./ViewOrderManagement/ViewOrderManagement";
-import OrderManagement from "./Ordermangenment";
-
+import OrderManagement from "./OrderManagement";
+ //test
 function OrderManagementRoute() {
   return (
     <div>
