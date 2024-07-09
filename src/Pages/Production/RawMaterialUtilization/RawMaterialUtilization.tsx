@@ -115,7 +115,7 @@ function RawMaterialUtilization() {
                           </Select>
                         </div>
                       </td>
-                      <td className="border p-1 text-center">{uom.find((b) => b?._id === rawMaterial.find((a) => a?._id === x?.product)?.uomType).value.name}</td>
+                      <td className="border p-1 text-center">{uom.find((b) => b?._id === rawMaterial.find((a) => a?._id === x?.product)?.uomType)?.value?.name}</td>
                       <td className="border p-1 text-center">{x.quantity}</td>
                       <td className="border p-1 text-center">
                         <input type="number" value={x?.usedQuantity} onChange={(e)=>{
