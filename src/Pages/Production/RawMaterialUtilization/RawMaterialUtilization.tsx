@@ -45,7 +45,7 @@ function RawMaterialUtilization() {
               <div className="flex mt-5 gap-5">
                 <label className="flex gap-3">
                   Product{" "}
-                  <Select value={products.find((a) => a?._id === data?.product)?.productName}>
+                  <Select value={products.find((a) => a?._id === data?.product)?.productName || ""}>
                     {products.map((x) => (
                       <li
                         onClick={() => {
@@ -67,7 +67,7 @@ function RawMaterialUtilization() {
                 </label>
                 <label className="flex gap-3">
                   Batch Number{" "}
-                  <Select className="z-[997]" value={data.batchNumber}>
+                  <Select className="z-[997]" value={data?.batchNumber || " "}>
                     {batchNumbers.map((x) => (
                       <li
                         onClick={() => {
