@@ -64,6 +64,11 @@ function DeactiveOrder({ data, dropDowns, ActiveUser, selected, setSelected }: P
             <th>Order Quantity</th>
             <th>UOM</th>
             <th>Delivery Date</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
             <th>Action</th>
           </tr>
         </thead>

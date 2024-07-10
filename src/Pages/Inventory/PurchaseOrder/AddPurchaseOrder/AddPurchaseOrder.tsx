@@ -282,8 +282,10 @@ function AddPurchaseOrder() {
 
   
   console.log("data ", data);
-  console.log("da ", dropDowns);
+  console.log("dd ", dropDowns);
   console.log("sear ", searchValue);
+
+
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">

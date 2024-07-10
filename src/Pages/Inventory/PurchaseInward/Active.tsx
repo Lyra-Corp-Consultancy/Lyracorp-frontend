@@ -28,7 +28,7 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
   const [inactive, setInactive] = useState("");
   const dispatch: any = useDispatch();
     const navigate = useNavigate()
-
+  console.log("aa ",data)
   return (
     <div className="h-[80%]  w-full">
       <table className="w-full mt-3 ">

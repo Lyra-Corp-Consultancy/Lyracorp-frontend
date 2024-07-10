@@ -99,6 +99,11 @@ function ActiveOrder({ data, dropDowns, inActiveUser, selected, setSelected }: P
               <th>{x?.email}</th>
               <th>{x?.employeeId}</th>
               <th>{dropDowns?.department?.filter((y) => y?._id === x?.department)[0]?.value}</th>
+              <th> </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
               <th>{dropDowns?.role?.filter((y) => y?._id === x?.role)[0]?.value?.value}</th>
               <th className="relative ">
                 <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>

@@ -237,6 +237,8 @@ function AddRawMaterialOutward() {
    console.log("drop ",dropDowns)
    console.log("ser ",searchValue)
    console.log("pro ",products)
+   console.log("user ",user)
+   console.log("super",superAdminCompany)
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
@@ -290,7 +292,7 @@ function AddRawMaterialOutward() {
 
               <Select
                 required
-                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.address === searchValue?.sender || "")?.[0]?.address ? undefined : ""}
+                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.warehouseName === searchValue?.sender || "")?.[0]?.warehouseName ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, sender: e.target.value });
@@ -302,7 +304,7 @@ function AddRawMaterialOutward() {
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
-                        setSearchValue({ ...searchValue, sender: x?.address });
+                        setSearchValue({ ...searchValue, sender: x?.warehouseName });
                         setData({ ...data, sender: x });
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
@@ -348,7 +350,7 @@ function AddRawMaterialOutward() {
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
-                        setSearchValue({ ...searchValue, Receiver: x?.address });
+                        setSearchValue({ ...searchValue, Receiver: x?.warehouseName || x?.VendorName });
                         setData({ ...data, receiver: x });
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"

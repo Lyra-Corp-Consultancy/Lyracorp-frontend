@@ -282,6 +282,10 @@ function EditPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
+  console.log("data e ",data)
+    console.log("dd e ",dropDowns)
+    console.log("user  e ",user)
+    console.log("com  e ",superAdminCompany)
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
@@ -390,7 +394,7 @@ function EditPurchaseInward() {
               <label>Vehicle Number</label>
               <input required value={data?.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <label>Warehouse</label>
 
               <Select
@@ -419,8 +423,8 @@ function EditPurchaseInward() {
                       {x?.warehouseName}
                     </li>
                   ))}
-              </Select>
-            </div>
+              </Select> */}
+            {/* </div> */}
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>

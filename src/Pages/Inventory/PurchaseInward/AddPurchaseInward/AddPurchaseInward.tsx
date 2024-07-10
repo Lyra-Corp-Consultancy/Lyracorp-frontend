@@ -269,14 +269,19 @@ function AddPurchaseInward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-  return (
+    console.log("data ",data)
+    console.log("dd ",dropDowns)
+    console.log("user ",user)
+    console.log("com ",superAdminCompany)
+
+    return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
           <label className="font-bold">Purchase Order Serial No</label>
-          <input onChange={(e) => setSerialNumber(e.target.value)} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+          <input onChange={(e) => setSerialNumber(e.target.value.toUpperCase()||e.target.value.toLowerCase())} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
           <button
             type="button"
             onClick={() => {
@@ -352,7 +357,12 @@ function AddPurchaseInward() {
                 />
               </label>
             </div>
-           
+                  
+            <div className="flex items-center gap-3">
+              <label>Invoice Number</label>
+              <input required value={data.transporter} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+            </div>
+                  
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
@@ -385,8 +395,8 @@ function AddPurchaseInward() {
               <label>Vehicle Number</label>
               <input required value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
-            <div className="flex gap-3 items-center">
-              <label>Warehouse</label>
+            {/* <div className="flex gap-3 items-center">
+              <label>Warehouse Name</label>
 
               <Select
                 required
@@ -403,7 +413,7 @@ function AddPurchaseInward() {
                       onClick={() => {
                         setSearchValue({
                           ...searchValue,
-                          warehouse: x?.address,
+                          warehouse: x?.warehouseName,
                         });
                         setData({ ...data, warehouse: x });
                       }}
@@ -413,7 +423,7 @@ function AddPurchaseInward() {
                     </li>
                   ))}
               </Select>
-            </div>
+            </div> */}
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>

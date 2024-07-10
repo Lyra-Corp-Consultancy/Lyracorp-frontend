@@ -14,6 +14,7 @@ import { formatDate } from "../../../utils/functions/formats";
 import Select from "../../../components/Select";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
 import { RawMaterialOutward } from "../../../utils/Type/types";
+import PaymentTerm from "../../Master/TypeMaster/PaymentTerm/PaymentTerm";
 
 // import styles from "../PurchaseOrder.module.scss"
 
@@ -29,7 +30,7 @@ function AddOrderManagement() {
     margin: any[];
     account: any[];
     discount: any[];
-    payment: any[];
+    paymentTerm: any[];
     uom: any[];
     document: any[];
     certificate: any[];
@@ -39,7 +40,7 @@ function AddOrderManagement() {
     transporter: any[];
     packing: any[];
     shipping: any[];
-  }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
+  }>({ margin: [], account: [], discount: [], paymentTerm: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<RawMaterialOutward>({
@@ -55,6 +56,7 @@ function AddOrderManagement() {
     TransportationMode: string;
     transportationDistance: string;
     shippingAddress: string;
+    paymentTerm:any[]
   }>({
     uom: [],
     Receiver: "",
@@ -64,6 +66,7 @@ function AddOrderManagement() {
     TransportationMode: "",
     transportationDistance: "",
     shippingAddress: "",
+    paymentTerm:[]
   });
 
   const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
@@ -195,11 +198,12 @@ function AddOrderManagement() {
       });
     });
 
-    dispatch(getType("payment")).then((res: any) => {
+    
+    dispatch(getType("paymentTerm")).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
-          payment: res?.payload?.[0]?.paymentType,
+          paymentTerm: res?.payload?.[0]?.paymentTerm,
         };
       });
     });
@@ -402,25 +406,25 @@ function AddOrderManagement() {
               <Select
                 required
                 
-                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms|| "")?.[0]?.value ? undefined : ""}
+                pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerm|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({
                     ...searchValue,
-                    paymentTerms: e.target.value,
+                    paymentTerm: e.target.value,
                   });
                 }}
-                value={searchValue?.paymentTerms || ""}
+                value={searchValue?.paymentTerm|| ""}
               >
                 {dropDowns?.paymentTerm
-                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.paymentTerms?.toLowerCase() || ""))
+                  ?.filter((a) => a?.value?.toLowerCase()?.includes(searchValue?.paymentTer?.toLowerCase() || ""))
                   ?.map((x) => (
                     <li
                     
                       onClick={() => {
                         setSearchValue({
                           ...searchValue,
-                          paymentTerms: x?.value,
+                          paymentTerm: x?.value,
                         });
                         setData({ ...data, paymentTerm: x?._id });
                       }}
