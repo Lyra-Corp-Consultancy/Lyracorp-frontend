@@ -260,7 +260,7 @@ function ViewProductRawMaterial() {
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Bussiness Document</label>
+            <label>Business Document</label>
             <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[200px]">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
 
             

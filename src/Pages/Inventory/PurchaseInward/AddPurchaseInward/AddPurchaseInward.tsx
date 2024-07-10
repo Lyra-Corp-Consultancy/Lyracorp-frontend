@@ -360,7 +360,7 @@ function AddPurchaseInward() {
                   
             <div className="flex items-center gap-3">
               <label>Invoice Number</label>
-              <input required value={data.transporter} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input required value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
                   
             <div className="flex  items-center gap-3">

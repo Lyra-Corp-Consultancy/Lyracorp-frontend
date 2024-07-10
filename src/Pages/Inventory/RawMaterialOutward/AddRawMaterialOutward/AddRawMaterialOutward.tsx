@@ -37,6 +37,7 @@ function AddRawMaterialOutward() {
     transporter: any[];
     packing: any[];
     shipping: any[];
+    
   }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
@@ -101,6 +102,7 @@ function AddRawMaterialOutward() {
     });
     dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
       setProducts(res?.payload);
+      console.log("res ",res)
     });
     const res2 = dispatch(getType("uom"));
 
@@ -233,12 +235,12 @@ function AddRawMaterialOutward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-   console.log("data ",data)
-   console.log("drop ",dropDowns)
-   console.log("ser ",searchValue)
-   console.log("pro ",products)
-   console.log("user ",user)
-   console.log("super",superAdminCompany)
+   console.log("data add ",data)
+   console.log("drop add ",dropDowns)
+   console.log("ser  add",searchValue)
+   console.log("pro  add",products)
+   console.log("user add ",user)
+   console.log("super add ",superAdminCompany)
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
