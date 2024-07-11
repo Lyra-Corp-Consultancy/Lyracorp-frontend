@@ -239,7 +239,7 @@ function EditCustomer() {
             <input
               // pattern="[A-Za-z0-9_]+"
               // title="Users only can enter letter and number"
-              required
+              
               value={data.customerName}
               onChange={(e) =>
                 setData({ ...data, customerName: e.target.value })
@@ -249,7 +249,7 @@ function EditCustomer() {
             />
             <label>Customer Type</label>
             <Select
-              required
+              
               pattern={
                 dropDowns?.customer?.filter(
                   (a) => a?.value === searchValue?.customer
@@ -283,7 +283,7 @@ function EditCustomer() {
             </Select>
             <label>Account Type</label>
             <Select
-              required
+              
               pattern={
                 dropDowns?.account?.filter(
                   (a) => a?.value === searchValue?.account
@@ -320,7 +320,7 @@ function EditCustomer() {
           <div className="grid grid-flow-col z-[100] items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
             <input
-              required
+              
               value={data.contactPerson}
               onChange={(e) =>
                 setData({ ...data, contactPerson: e.target.value })
@@ -330,7 +330,7 @@ function EditCustomer() {
             />
             <label>Email Id</label>
             <input
-              required
+              
               value={data.email}
               onChange={(e) => setData({ ...data, email: e.target.value })}
               type="email"
@@ -380,7 +380,7 @@ function EditCustomer() {
               </Select>
               <input
                 min={phoneLength?.phoneLength || undefined}
-                required
+                
                 className="ps-2 remove-spin-wheel w-9/12 border-none outline-none"
                 value={data.primaryNumber}
                 onChange={(e) =>
@@ -392,7 +392,7 @@ function EditCustomer() {
             </label>
             <label>Secondary Number</label>
             <input
-              required
+              
               min={phoneLength?.phoneLength || undefined}
               value={data.secondaryNumber}
               onChange={(e) =>
@@ -418,7 +418,7 @@ function EditCustomer() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country
@@ -468,7 +468,7 @@ function EditCustomer() {
                       : ""
                   }
                   title="Please Select values from drop down"
-                  required
+                  
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name
@@ -508,7 +508,7 @@ function EditCustomer() {
               <div className="w-[22%] flex gap-3 items-center">
                 <label>District</label>
                 <input
-                  required
+                  
                   value={data.district}
                   onChange={(e) =>
                     setData({ ...data, district: e.target.value })
@@ -528,7 +528,7 @@ function EditCustomer() {
                       : ""
                   }
                   title="Please Select values from drop down"
-                  required
+                  
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x
@@ -564,7 +564,7 @@ function EditCustomer() {
                 <div className="w-[22%] flex gap-3 items-center">
                   <label>Zone</label>
                   <input
-                    required
+                    
                     value={data.zone}
                     onChange={(e) => setData({ ...data, zone: e.target.value })}
                     type="text"
@@ -574,7 +574,7 @@ function EditCustomer() {
                 <div className="w-[50%] flex gap-3 items-center">
                   <label>Address</label>
                   <textarea
-                    required
+                    
                     value={data.address}
                     onChange={(e) =>
                       setData({ ...data, address: e.target.value })
@@ -585,7 +585,7 @@ function EditCustomer() {
                 <div className="w-[22%] flex gap-3 items-center">
                   <label>Pin code</label>
                   <input
-                    required
+                    
                     value={data.pincode}
                     min={6}
                     onChange={(e) =>
@@ -603,7 +603,7 @@ function EditCustomer() {
           <div className="grid z-[98] grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Purchase Restriction</label>
             <input
-              required
+              
               value={data.purchaseResitriction}
               onChange={(e) =>
                 setData({ ...data, purchaseResitriction: e.target.value })
@@ -622,7 +622,7 @@ function EditCustomer() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, discount: e.target.value });
               }}
@@ -656,7 +656,7 @@ function EditCustomer() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, paymentTerm: e.target.value });
               }}
@@ -695,7 +695,7 @@ function EditCustomer() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               className="z-[1]"
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });

@@ -226,7 +226,7 @@ function EditUser() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({
                     ...searchValue,
@@ -305,7 +305,7 @@ function EditUser() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Line of Business</label>
-              <Select className="z-[1]" required  onChange={(e)=>{
+              <Select className="z-[1]"   onChange={(e)=>{
               setSearchValue({...searchValue,lineOfBusiness:e.target.value})
             }} value={searchValue?.lineOfBusiness || ""} >
               {dropDowns?.lineOfBusiness?.filter((a)=>a?.companyName?.toLowerCase()?.includes(searchValue?.lineOfBusiness?.toLowerCase() || "")).map((x) => (

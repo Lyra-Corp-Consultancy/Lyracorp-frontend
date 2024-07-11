@@ -265,7 +265,7 @@ function CheckQCPO() {
                   <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x.orderQuantity}</label>
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">
-                    <input required onChange={(e)=>{
+                    <input  onChange={(e)=>{
                       const temp = rejected
                       temp[i] ={ rejected:parseInt(e.target.value || "0"),productId:x?.productId}
                       setRejected([...temp])

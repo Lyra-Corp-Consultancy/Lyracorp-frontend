@@ -366,7 +366,7 @@ console.log("dropdown ",dropDowns)
               <label>Vendor Name</label>
               <Select
                 className="bg-white z-[990]"
-                required
+                
                 pattern={
                   dropDowns?.vendor?.filter(
                     (x) => x?.VendorName === searchValue?.vendor
@@ -405,7 +405,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex  items-center gap-3">
               <label>Contact Name</label>
               <Select
-                required
+                
                 className="bg-white z-[100]"
                 pattern={
                   dropDowns?.users?.filter(
@@ -490,7 +490,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Delivery to Name</label>
               <Select
-                required
+                
                 className="z-[99]"
                 pattern={
                   dropDowns?.users?.filter(
@@ -550,7 +550,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex gap-3 z-[999] items-center">
               <label>Shipping Method</label>
               <Select
-                required
+                
                 pattern={
                   dropDowns?.shipping?.filter(
                     (x) => x?.value === searchValue?.shipping
@@ -587,7 +587,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex gap-3 z-[96] items-center">
               <label>Shipping Address</label>
               <Select
-                required
+                
                 value={searchValue?.shippingAddress || ""}
                  pattern={superAdminCompany?.shippingAddress?.filter(( a:any)=> a?.address === searchValue?.shippingAddress || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
@@ -628,7 +628,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex gap-3 z-[96] items-center">
               <label>Billing Address</label>
               <Select
-                required
+                
                 pattern={superAdminCompany?.billingAddress?.filter(( a:any)=> a?.address === searchValue?.billing || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
                 
@@ -665,7 +665,7 @@ console.log("dropdown ",dropDowns)
             <div className="flex gap-3 z-[96]  items-center">
               <label>Payment Terms</label>
               <Select
-                required
+                
                 pattern={dropDowns?.paymentTerm?.filter((a) => a?.value === searchValue?.paymentTerms|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -697,7 +697,7 @@ console.log("dropdown ",dropDowns)
 
             <div className="flex gap-3 items-center">
               <label>Payment Type </label>
-              {/* <Select required 
+              {/* <Select  
               
               value={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0]?.value} pattern={dropDowns.payment.filter((a) => a._id === data.paymentType)?.[0] ? undefined : ""} title="Please Select values from drop down">
                 {dropDowns.payment?.map((x) => (
@@ -714,7 +714,7 @@ console.log("dropdown ",dropDowns)
               </Select> */}
 
               <Select
-                required
+                
                 pattern={dropDowns?.payment?.filter((a) => a?.value === searchValue?.payment|| "")?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -759,7 +759,7 @@ console.log("dropdown ",dropDowns)
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
@@ -859,7 +859,7 @@ console.log("dropdown ",dropDowns)
                     <div className="flex justify-center items-center">
                       <Select
                        style={{ zIndex: 94 - i }}
-                        required
+                        
                         className="w-[50%]  shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.products?.filter(
@@ -910,7 +910,7 @@ console.log("dropdown ",dropDowns)
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="text"
                       value={x.orderQuantity}
                       onChange={(e) => {
@@ -928,7 +928,7 @@ console.log("dropdown ",dropDowns)
                     <div className="flex justify-center items-center">
                       <Select
                        style={{ zIndex: 94 - i }}
-                        required
+                        
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.uom?.filter(
@@ -976,7 +976,7 @@ console.log("dropdown ",dropDowns)
                     <div className="flex justify-center items-center">
                       <Select
                        style={{ zIndex: 94 - i }}
-                        required
+                        
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.packing?.filter(
@@ -1026,7 +1026,7 @@ console.log("dropdown ",dropDowns)
                     <div className="flex justify-center items-center">
                       <Select
                        style={{ zIndex: 94 - i }}
-                        required
+                        
                         className="w-[50%] shadow-none bg-[#F6F4F4]"
                         pattern={
                           dropDowns?.certificate?.filter(
