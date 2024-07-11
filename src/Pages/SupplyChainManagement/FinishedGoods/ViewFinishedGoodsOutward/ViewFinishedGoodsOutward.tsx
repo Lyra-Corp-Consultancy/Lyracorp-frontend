@@ -643,7 +643,7 @@ function ViewFinishedGoodsOutward() {
             <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ products: [{}] })}>
               Cancel
             </button>
-            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
+            <button type="button" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" onClick={() => navigate(-1)}>
               Print
             </button>
           </div>
