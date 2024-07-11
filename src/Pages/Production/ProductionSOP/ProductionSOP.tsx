@@ -75,7 +75,7 @@ function ProductionSOP() {
                 <div className="grid grid-cols-4 gap-5 items-center w-full ">
                   <div className="flex gap-3 items-center ">
                     <label className="text-[14px]">Product</label>
-                    <Select required placeholder="Product Name" value={selectedProduct?.productName || ""} className="w-[80%]">
+                    <Select  placeholder="Product Name" value={selectedProduct?.productName || ""} className="w-[80%]">
                       {data?.map((x) => (
                         <li
                           onClick={() => {
@@ -94,7 +94,7 @@ function ProductionSOP() {
                   </div>
                   <div className="flex gap-3 items-center ">
                     <label className="text-[14px]">Batch Number</label>
-                    <input type="text" required placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} value={selectedProduct?.batchNumber || ""} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
+                    <input type="text"  placeholder="Batch Number" onChange={(e) => setSelectedProduct({ ...selectedProduct, batchNumber: e.target.value })} value={selectedProduct?.batchNumber || ""} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md w-[60%]" />
                   </div>
                   <div className="flex gap-3 items-center">
                     <label className="text-[14px] ">Production Date</label>
@@ -146,7 +146,7 @@ function ProductionSOP() {
                                 <td className="p-2 border">{y.timeDuration}</td>
                                 <td className="p-2 border">{departments?.filter((z) => z?._id === y?.department)[0]?.value}</td>
                                 <td className="p-2 border relative z-auto">
-                                  <Select required style={{ zIndex: 999 - (i + (pi === 0 ? pi - 1 : pi)) }} value={users?.filter((z) => z?._id === y?.user)[0]?.username} className="w-[100%]">
+                                  <Select  style={{ zIndex: 999 - (i + (pi === 0 ? pi - 1 : pi)) }} value={users?.filter((z) => z?._id === y?.user)[0]?.username} className="w-[100%]">
                                     {users?.map((x) => (
                                       <li
                                         onClick={() => {

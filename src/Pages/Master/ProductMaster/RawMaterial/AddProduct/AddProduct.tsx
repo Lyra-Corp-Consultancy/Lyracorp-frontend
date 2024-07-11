@@ -164,7 +164,7 @@ function AddProductRawMaterial() {
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>RM Name</label>
             <input
-              required
+              
               value={data.productName}
               name="productName"
               onChange={(e) =>
@@ -175,7 +175,7 @@ function AddProductRawMaterial() {
             />
             <label>RM Code</label>
             <input
-              required
+              
               value={data.productCode}
               name="productCode"
               onChange={(e) =>
@@ -186,7 +186,7 @@ function AddProductRawMaterial() {
             />
             <label>RM Description</label>
             <textarea
-              required
+              
               value={data.productDes}
               onChange={(e) => setData({ ...data, productDes: e.target.value })}
               cols={70}
@@ -199,7 +199,7 @@ function AddProductRawMaterial() {
               <label>Margin Setting</label>
 
               <Select
-                required
+                
                 pattern={
                   dropDowns?.margin?.filter(
                     (a) => a?.value === searchValue?.margin
@@ -243,7 +243,7 @@ function AddProductRawMaterial() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, discount: e.target.value });
                 }}
@@ -273,7 +273,7 @@ function AddProductRawMaterial() {
               <input
                 type="number"
                 value={data?.discount}
-                required
+                
                 onChange={(e) => setData({ ...data, discount: e.target.value })}
                 className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md"
                 min={0}
@@ -294,7 +294,7 @@ function AddProductRawMaterial() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, uom: e.target.value });
                 }}
@@ -335,7 +335,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Storage Specification</label>
               <input
-                required
+                
                 value={data.storageSpec}
                 name="storageSpec"
                 onChange={(e) =>
@@ -350,7 +350,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
               <input
-                required
+                
                 value={data.mrp}
                 name="mrp"
                 onChange={(e) => setData({ ...data, mrp: e.target.value })}
@@ -360,7 +360,7 @@ function AddProductRawMaterial() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              {/* <input  value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
               <label
                 htmlFor="date"
                 className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
@@ -399,7 +399,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
               <input
-                required
+                
                 value={data.netPrice}
                 name="netPrice"
                 onChange={(e) => setData({ ...data, netPrice: e.target.value })}
@@ -416,7 +416,7 @@ function AddProductRawMaterial() {
               >
                 CGST
                 <input
-                  required
+                  
                   value={data.cgst}
                   name="cgst"
                   onChange={(e) => setData({ ...data, cgst: e.target.value })}
@@ -427,7 +427,7 @@ function AddProductRawMaterial() {
               <label htmlFor="" className="flex flex-col">
                 SGST
                 <input
-                  required
+                  
                   value={data.sgst}
                   name="sgst"
                   onChange={(e) => setData({ ...data, sgst: e.target.value })}
@@ -438,7 +438,7 @@ function AddProductRawMaterial() {
               <label htmlFor="" className="flex flex-col">
                 IGST
                 <input
-                  required
+                  
                   value={data.igst}
                   name="netPrice"
                   onChange={(e) => setData({ ...data, igst: e.target.value })}
@@ -451,7 +451,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
               <input
-                required
+                
                 value={data.costPrice}
                 name="costPrice"
                 onChange={(e) =>
@@ -465,7 +465,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
               <input
-                required
+                
                 value={data.targetPrice}
                 name="targetPrice"
                 onChange={(e) =>
@@ -479,7 +479,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
               <input
-                required
+                
                 value={data.floorPrice}
                 name="floorPrice"
                 onChange={(e) =>
@@ -493,7 +493,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center mt-3">
               <label>HSN</label>
               <input
-                required
+                
                 value={data.hsn}
                 name="hsn"
                 onChange={(e) => setData({ ...data, hsn: e.target.value })}
@@ -508,7 +508,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center  z-[998]">
               <label>Country of Origin</label>
               <Select
-                required
+                
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country
@@ -544,20 +544,20 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
               <input
-                required
+                
                 value={data.manufacturingUnit}
                 name="manufacturingUnit"
                 onChange={(e) =>
                   setData({ ...data, manufacturingUnit: e.target.value })
                 }
-                type="number"
+                type="text"
                 className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
               />
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
               <input
-                required
+                
                 value={data.eccn}
                 name="eccn"
                 onChange={(e) => setData({ ...data, eccn: e.target.value })}
@@ -569,7 +569,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>EAN Number</label>
               <input
-                required
+                
                 value={data.eanNumber}
                 name="eanNumber"
                 onChange={(e) =>
@@ -583,7 +583,7 @@ function AddProductRawMaterial() {
             <div className="flex gap-3 items-center">
               <label>Weight</label>
               <input
-                required
+                
                 value={data.weight}
                 name="weight"
                 onChange={(e) => setData({ ...data, weight: e.target.value })}
@@ -600,7 +600,7 @@ function AddProductRawMaterial() {
               >
                 L
                 <input
-                  required
+                  
                   value={data.dimenL}
                   name="dimenL"
                   onChange={(e) => setData({ ...data, dimenL: e.target.value })}
@@ -611,7 +611,7 @@ function AddProductRawMaterial() {
               <label htmlFor="" className="flex flex-col items-center">
                 W
                 <input
-                  required
+                  
                   value={data.dimenW}
                   name="dimenW"
                   onChange={(e) => setData({ ...data, dimenW: e.target.value })}
@@ -622,7 +622,7 @@ function AddProductRawMaterial() {
               <label htmlFor="" className="flex flex-col items-center">
                 H
                 <input
-                  required
+                  
                   value={data.dimenH}
                   name="dimenH"
                   onChange={(e) => setData({ ...data, dimenH: e.target.value })}
@@ -646,7 +646,7 @@ function AddProductRawMaterial() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}

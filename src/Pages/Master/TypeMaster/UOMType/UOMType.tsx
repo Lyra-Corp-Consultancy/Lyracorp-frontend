@@ -287,7 +287,7 @@ function UOMType() {
                         Type Name
                       </label>
                       <input
-                        required
+                        
                         type="text"
                         onChange={(e) =>
                           setInput({ ...input, name: e.target.value })
@@ -301,7 +301,7 @@ function UOMType() {
                         Type Description
                       </label>
                       <input
-                        required
+                        
                         type="text"
                         onChange={(e) =>
                           setInput({ ...input, des: e.target.value })

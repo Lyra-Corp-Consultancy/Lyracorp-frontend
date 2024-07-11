@@ -171,10 +171,10 @@ function EditVendors() {
           <h1 className="roboto-medium mt-1">Vendor Type</h1>
           <div className="grid grid-flow-col items-center gap-4  roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Vendor Name</label>
-            <input required value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.VendorName} name="vendorName" onChange={(e) => setData({ ...data, VendorName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Vendor Type</label>
             <Select
-              required
+              
               pattern={
                 dropDowns?.vendor?.filter(
                   (a) => a?.value === searchValue?.vendor
@@ -210,13 +210,13 @@ function EditVendors() {
           <h1 className="roboto-medium mt-1">Contact Details</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>Contact Person</label>
-            <input required value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.contactPerson} onChange={(e) => setData({ ...data, contactPerson: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Email Id</label>
-            <input required value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.email} onChange={(e) => setData({ ...data, email: e.target.value })} type="email" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Primary Number</label>
-            <input required value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.primaryNumber} onChange={(e) => setData({ ...data, primaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>Secondary</label>
-            <input required value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.secondaryNumber} onChange={(e) => setData({ ...data, secondaryNumber: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
           </div>
           <h1 className="roboto-medium mt-1">Address Details</h1>
           <div className="flex flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
@@ -229,7 +229,7 @@ function EditVendors() {
                       : ""
                   }
                   title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country
@@ -271,7 +271,7 @@ function EditVendors() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   const filtered = places.state.filter((x) => {
                     return x?.name
@@ -307,7 +307,7 @@ function EditVendors() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>District</label>
-              <input required value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.district} onChange={(e) => setData({ ...data, district: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[22%] z-10 flex gap-3 items-center">
               <label>City/Village</label>
@@ -319,7 +319,7 @@ function EditVendors() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   const filtered = places.city.filter((x) => {
                     return x
@@ -350,15 +350,15 @@ function EditVendors() {
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Zone</label>
-              <input required value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.zone} onChange={(e) => setData({ ...data, zone: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="w-[50%] flex gap-3 items-center">
               <label>Address</label>
-              <textarea required value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+              <textarea  value={data.address} onChange={(e) => setData({ ...data, address: e.target.value })} className="px-2 py-1 w-[77%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
             </div>
             <div className="w-[22%] flex gap-3 items-center">
               <label>Pin code</label>
-              <input required value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] remove-spin-wheel rounded-md" />
+              <input  value={data.pincode} onChange={(e) => setData({ ...data, pincode: e.target.value })} type="number" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] remove-spin-wheel rounded-md" />
             </div>
           </div>
 
@@ -366,15 +366,15 @@ function EditVendors() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-2 items-center">
               <label>Bank Account No</label>
-              <input required value={data.bankAccNo} onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="number" className="px-2  remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.bankAccNo} onChange={(e) => setData({ ...data, bankAccNo: e.target.value })} type="number" className="px-2  remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-2 items-center">
               <label>Account Branch</label>
-              <input required value={data.accountBranch} onChange={(e) => setData({ ...data, accountBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.accountBranch} onChange={(e) => setData({ ...data, accountBranch: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-2 items-center">
               <label>IFSC Code</label>
-              <input required value={data.ifscCode} onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.ifscCode} onChange={(e) => setData({ ...data, ifscCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-2 items-center">
               <label>Payment Terms</label>
@@ -387,7 +387,7 @@ function EditVendors() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, payment: e.target.value });
               }}
@@ -414,7 +414,7 @@ function EditVendors() {
             </div>
             <div className="flex gap-2 items-center">
               <label>Currency</label>
-              <input required value={data.currency} onChange={(e) => setData({ ...data, currency: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.currency} onChange={(e) => setData({ ...data, currency: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
@@ -431,7 +431,7 @@ function EditVendors() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               className="z-[1]"
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
