@@ -114,7 +114,7 @@ function EditFinishedGoods() {
                     </Select>
                   </td>
                   <td className="px-3 py-1 border">
-                  <input type="number" required value={x?.productionQuantity} className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"/>
+                  <input type="number"  value={x?.productionQuantity} className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"/>
                   </td>
                   <td className="px-3 py-1 border">
                     <Select value={dropDowns?.uom?.find((y) => y?._id === x?.uom)?.value?.name || ""}>

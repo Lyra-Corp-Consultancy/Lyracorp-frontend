@@ -306,7 +306,7 @@ function AddPurchaseInward() {
               <label>Vendor Name</label>
               <Select
                 className="bg-white z-[990]"
-                required
+                
                 pattern={dropDowns?.vendor?.filter((x) => x?.VendorName === searchValue.vendor)[0]?.VendorName ? undefined : " "}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -375,21 +375,21 @@ function AddPurchaseInward() {
             </div>
             <div className="flex items-center gap-3">
               <label>DC Number</label>
-              <input required value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input  value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Transporter</label>
-              <input required value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input  value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Vehicle Number</label>
-              <input required value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input  value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Warehouse</label>
 
               <Select
-                required
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, warehouse: e.target.value });
                 }}
@@ -441,7 +441,7 @@ function AddPurchaseInward() {
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        required
+                        
                         className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
@@ -480,7 +480,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="number"
                       max={parseInt(x?.orderQuantity)}
                       title="Received Quantity should be less than orderQuantity"
@@ -496,7 +496,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="number"
                       value={x.orderQuantity}
                       min={0}
@@ -510,7 +510,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
-                      required
+                      
                       className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
@@ -543,7 +543,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="text"
                       value={x?.batchNumber}
                       onChange={(e) => {
@@ -556,7 +556,7 @@ function AddPurchaseInward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="date"
                       value={x.expDate}
                       onChange={(e) => {
@@ -586,7 +586,7 @@ function AddPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <input
-                        required
+                        
                         type="text"
                         value={x.remarks}
                         onChange={(e) => {
@@ -601,7 +601,7 @@ function AddPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        required
+                        
                         className="w-[90%] shadow-none bg-[#F6F4F4]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"

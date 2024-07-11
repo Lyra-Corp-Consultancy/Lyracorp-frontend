@@ -316,7 +316,7 @@ function RoleType() {
                         Department Name
                       </label>
                       <Select
-                        required
+                        
                         pattern={
                           department?.filter((a) => a?.value === searchValue)[0]
                             ? undefined
@@ -354,7 +354,7 @@ function RoleType() {
                         Role Name
                       </label>
                       <input
-                        required
+                        
                         type="text"
                         onChange={(e) =>
                           setInput({ ...input, value: e.target.value })

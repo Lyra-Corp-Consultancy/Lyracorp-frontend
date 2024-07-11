@@ -272,7 +272,7 @@ function VendorType() {
                       Type Name
                     </label>
                     <input
-                      required
+                      
                       type="text"
                       onChange={(e) => setInput(e.target.value)}
                       value={input}
