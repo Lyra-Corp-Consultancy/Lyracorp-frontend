@@ -9,13 +9,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import styles from "./AddRawMaterialOutward.module.scss";
+import styles from "./../AddFinishedGoodsOutward/AddFinishedGoodsOutward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { RawMaterialOutward } from "../../../../utils/Type/types";
 import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
-function AddRawMaterialOutward() {
+function ViewFinishedGoodsOutward() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -37,7 +37,6 @@ function AddRawMaterialOutward() {
     transporter: any[];
     packing: any[];
     shipping: any[];
-    
   }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
@@ -102,7 +101,7 @@ function AddRawMaterialOutward() {
     });
     dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
       setProducts(res?.payload);
-      console.log("res ",res)
+      console.log("res ", res);
     });
     const res2 = dispatch(getType("uom"));
 
@@ -235,16 +234,9 @@ function AddRawMaterialOutward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-   console.log("data add ",data)
-   console.log("drop add ",dropDowns)
-   console.log("ser  add",searchValue)
-   console.log("pro  add",products)
-   console.log("user add ",user)
-   console.log("super add ",superAdminCompany)
-
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Raw Material Outward </h1>
+      <h1 className="roboto-bold text-lg">View Finished Goods Outward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <form
@@ -270,7 +262,7 @@ function AddRawMaterialOutward() {
                   value={data.outwardDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = formatDate(date);// Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date); // Extract the date in yyyy-mm-dd format
                     setData({ ...data, outwardDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
@@ -279,18 +271,6 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Sender</label>
-              {/* <Select required className="bg-white w-[200px] z-[990]" value={data?.sender?.address}>
-                {(user?.superAdmin ? superAdminCompany?.warehouse : user?.company)?.map((x:any) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, sender: x });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.address}
-                  </li>
-                ))}
-              </Select> */}
 
               <Select
                 required
@@ -316,29 +296,10 @@ function AddRawMaterialOutward() {
                   ))}
               </Select>
             </div>
-            <div className="flex  items-center gap-3 justify-between">
-              <label>Supply Chain</label>
-              <label className="w-[200px] flex items-center">
-                <input required type="radio" name="supplyChain" id="" onChange={() => setData({ ...data, supplyChain: "own" })} />
-                <label className="ms-1">Own</label>
-                <input required type="radio" className="ms-3" name="supplyChain" onChange={() => setData({ ...data, supplyChain: "job work" })} id="" />
-                <label className="ms-1">Job Work</label>
-              </label>
-            </div>
+
             <div className="flex  items-center gap-3 justify-between">
               <label>Receiver</label>
-              {/* <Select required className="bg-white w-[200px] z-[990]" value={data?.receiver?.address}>
-                {(data?.supplyChain === "own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)?.map((x: any) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, receiver: x });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.address}
-                  </li>
-                ))}
-              </Select> */}
+
               <Select
                 className="bg-white w-[200px] z-[990]"
                 required
@@ -365,18 +326,6 @@ function AddRawMaterialOutward() {
             <div className="flex  items-center gap-3 justify-between">
               <label>Transporter</label>
               <input required type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} />
-              {/* <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}>
-                {dropDowns?.vendor?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, vendor: x?._id });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.VendorName}
-                  </li>
-                ))}
-              </Select> */}
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Vehicle Number</label>
@@ -384,18 +333,7 @@ function AddRawMaterialOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Mode</label>
-              {/* <Select required className="bg-white w-[200px] z-[990]" value={dropDowns?.transporter?.filter((x) => x?._id === data?.transporterMode)?.[0]?.value}>
-                {dropDowns?.transporter?.map((x) => (
-                  <li
-                    onClick={() => {
-                      setData({ ...data, transporterMode: x?._id });
-                    }}
-                    className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
-                  >
-                    {x?.value}
-                  </li>
-                ))}
-              </Select> */}
+
               <Select
                 required
                 pattern={dropDowns?.transporter?.filter((x) => x?.value === searchValue?.TransportationMode)?.[0]?.value ? undefined : ""}
@@ -444,7 +382,7 @@ function AddRawMaterialOutward() {
               <label>Transportation Distance</label>
               <input required type="text" value={data.transportationDistance} onChange={(e) => setData({ ...data, transportationDistance: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md" />
               <Select required className="bg-white w-[70px] z-[509]" value={data?.transportationDistanceUnit}>
-                {["Km","Miles"].map((x) => (
+                {["Km", "Miles"].map((x) => (
                   <li
                     onClick={() => {
                       setData({ ...data, transportationDistanceUnit: x });
@@ -454,6 +392,32 @@ function AddRawMaterialOutward() {
                     {x}
                   </li>
                 ))}
+              </Select>
+            </div>
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Supply Type</label>
+
+              <Select
+                className="bg-white w-[200px] z-[990]"
+                required
+                onChange={(e) => {
+                  setSearchValue({ ...searchValue, Receiver: e.target.value });
+                }}
+                value={searchValue?.Receiver || ""}
+              >
+                {(data?.supplyChain === "own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)
+                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.Receiver?.toLowerCase() || ""))
+                  ?.map((x: any) => (
+                    <li
+                      onClick={() => {
+                        setSearchValue({ ...searchValue, Receiver: x?.warehouseName || x?.VendorName });
+                        setData({ ...data, receiver: x });
+                      }}
+                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
+                    >
+                      {data?.supplyChain === "own" ? x?.warehouseName : x?.VendorName}
+                    </li>
+                  ))}
               </Select>
             </div>
             <div className="flex items-center gap-3 justify-between">
@@ -471,11 +435,12 @@ function AddRawMaterialOutward() {
           <table className="w-full text-[14px] border-collapse rounded border">
             <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className=" border-r w-1/5">Product Name</th>
-                <th className=" border-r w-1/5">GRN Number</th>
-                <th className="border-r w-1/5">Outward Quantity</th>
-                <th className="border-r w-1/5">UOM</th>
-                <th className="border-r w-1/5">Remarks</th>
+                <th className=" border-r w-1/6">Product Name</th>
+                <th className=" border-r w-1/6">Batch Number</th>
+                <th className="border-r w-1/6">Outward Quantity</th>
+                <th className="border-r w-1/6">UOM</th>
+                <th className="border-r w-1/6">Remarks</th>
+                <th className="border-r w-1/6">Upload</th>
               </tr>
             </thead>
             <tbody>
@@ -483,24 +448,6 @@ function AddRawMaterialOutward() {
                 <tr className={`text-center relative `} style={{ zIndex: 500 - i }}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      {/* <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y) => y?._id === x?.productId)?.[0]?.name}>
-                        {products?.map((x: any) => (
-                          <li
-                            onClick={() => {
-                              const product = data?.products;
-                              product[i] = { ...product[i], productId: x?._id };
-                              setData({ ...data, products: product });
-                              const temp = selectedProduct;
-                              temp[i] = x;
-                              setSelectedProduct(temp);
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.name || "No Name"}
-                          </li>
-                        ))}
-                      </Select> */}
-
                       <Select
                         required
                         className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
@@ -543,26 +490,11 @@ function AddRawMaterialOutward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    {/* <Select required className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
-                      {selectedProduct[i]?.qnGrn?.map((x: any) => (
-                        <li
-                          onClick={() => {
-                            const product = data?.products;
-                            product[i] = { ...product[i], grn: x?.grn };
-                            setData({ ...data, products: product });
-                          }}
-                          className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                        >
-                          {x?.grn || "No Name"}
-                        </li>
-                      ))}
-                    </Select> */}
-
                     <Select
                       required
                       className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
-                       pattern={selectedProduct[i]?.qnGrn?.filter((a:any) => a?.grn === searchValue.grnNumber[i])?.[0]?.grn ? undefined : ""}
-                        title="Please Select values from drop down"
+                      pattern={selectedProduct[i]?.qnGrn?.filter((a: any) => a?.grn === searchValue.grnNumber[i])?.[0]?.grn ? undefined : ""}
+                      title="Please Select values from drop down"
                       onChange={(e) => {
                         const temp = searchValue?.grnNumber;
                         temp[i] = e.target.value;
@@ -591,43 +523,6 @@ function AddRawMaterialOutward() {
                           </li>
                         ))}
                     </Select>
-
-                    {/* <Select
-                      required
-                            pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
-                        title="Please Select values from drop down" 
-                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
-                      onChange={(e) => {
-                        const updatedGrnNumbers = [...(searchValue.grnNumber || [])];
-                      
-                        updatedGrnNumbers[i] = e.target.value;
-                      
-                        setSearchValue({ ...searchValue, grnNumber: updatedGrnNumbers });
-                      }}
-                      value={searchValue?.grnNumber[i] || ""}
-                      
-                    >
-                      {selectedProduct?.filter((e)=>e.name === searchValue.products[i])?.[0]?.qnGrn
-                        ?.filter((a:any) => a?.grn?.toLowerCase()?.includes(searchValue?.products[i]?.name?.toLowerCase() || ""))
-                        ?.map((x:any) => (
-                          <li
-                            onClick={() => {
-                              const temp = searchValue?.grnNumber;
-                              temp[i] = x.grn;
-                              setSearchValue({
-                                ...searchValue,
-                                grnNumber: temp,
-                              });
-                              const product = data?.products;
-                            product[i] = { ...product[i], grn: x?.grn };
-                            setData({ ...data, products: product });
-                            }}
-                            className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                          >
-                            {x?.grn || "No Name"}
-                          </li>
-                        ))}
-                    </Select> */}
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="w-full flex">
@@ -650,20 +545,6 @@ function AddRawMaterialOutward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    {/* <Select required className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
-                      {dropDowns?.uom?.map((x: any) => (
-                        <li
-                          onClick={() => {
-                            const product = data?.products;
-                            product[i] = { ...product[i], uom: x?._id };
-                            setData({ ...data, products: product });
-                          }}
-                          className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                        >
-                          {x?.value?.name || "No Name"}
-                        </li>
-                      ))}
-                    </Select> */}
                     <Select
                       style={{ zIndex: 997 - i }}
                       required
@@ -710,6 +591,27 @@ function AddRawMaterialOutward() {
                       className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
                     />
                   </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <label>
+                        <svg width="13" height="13" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M3.5 6V1.925L2.2 3.225L1.5 2.5L4 0L6.5 2.5L5.8 3.225L4.5 1.925V6H3.5ZM1 8C0.725 8 0.489667 7.90217 0.294 7.7065C0.0983332 7.51083 0.000333333 7.27533 0 7V5.5H1V7H7V5.5H8V7C8 7.275 7.90217 7.5105 7.7065 7.7065C7.51083 7.9025 7.27533 8.00033 7 8H1Z" fill="#5970F5" />
+                        </svg>
+
+                        <input
+                          type="file"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e?.target?.files?.[0]) {
+                              const product = data?.products;
+                              product[i] = { ...x, image: e.target.files[0] };
+                              setData({ ...data, products: product });
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
+                  </td>
 
                   {i > 0 && (
                     <td>
@@ -739,13 +641,10 @@ function AddRawMaterialOutward() {
 
           <div className="w-full absolute bottom-4 justify-center items-center  gap-3 flex mt-5">
             <button type="reset" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => setData({ products: [{}] })}>
-              Reset
-            </button>
-            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
-              Save
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
+              Print
             </button>
           </div>
         </form>
@@ -755,4 +654,4 @@ function AddRawMaterialOutward() {
   );
 }
 
-export default AddRawMaterialOutward;
+export default ViewFinishedGoodsOutward;

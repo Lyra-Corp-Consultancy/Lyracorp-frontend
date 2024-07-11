@@ -17,6 +17,8 @@ import ErrorPage from "./Error404Page";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
 import OrderManagementRoute from "./Pages/OrderManagement/OrderManagementRoute";
 
+import SupplyChainManagementRoute from "./Pages/SupplyChainManagement/SupplyChainManagementRoute";
+
 
 
 
@@ -88,6 +90,7 @@ function App() {
         <Route path="/user-management/*" element={<UserManagementRoute />} />
         <Route path="/qc/*" element={<QCRoute />} />
         <Route path="/production/*" element={<ProductionRoute />} />
+        <Route path="/supply-chain/*" element={<SupplyChainManagementRoute/>} />
         <Route path="/order-management/*" element={<OrderManagementRoute/>} />
         <Route path="/reports/*" element={<ReportsRoute />} />
         <Route path="*" element={<ErrorPage/>} />
