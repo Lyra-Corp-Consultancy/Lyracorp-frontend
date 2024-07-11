@@ -56,7 +56,7 @@ function ProductMapping() {
                 <label className="flex gap-4">
                   FG Material
                   <Select
-                    required
+                    
                     pattern={finishedGoods?.filter((x) => x?.productName === searchValue?.fgMaterial)[0]?.productName ? undefined : ""}
                     title="Please Select values from drop down"
                     onChange={(e) => {
@@ -151,7 +151,7 @@ function ProductMapping() {
                 <label className="flex gap-4">
                   FG Material
                   <Select
-                    required
+                    
                     pattern={finishedGoods?.filter((x) => x?.productName === searchValue?.fgMaterialAdd)[0]?.productName ? undefined : ""}
                     title="Please Select values from drop down"
                     onChange={(e) => {
@@ -222,7 +222,7 @@ function ProductMapping() {
                       <tr>
                         <td className="border">
                           <Select
-                            required
+                            
                             style={{zIndex:999-i}}
                             className="w-[90%] shadow-none border"
                             pattern={rawMaterials?.filter((x) => x?.productName === searchValue?.raw[i])[0]?.productName ? undefined : ""}

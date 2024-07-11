@@ -140,18 +140,18 @@ function AddProductFinishedGoods() {
           <h1 className="roboto-medium mt-1">Finished Goods Type</h1>
           <div className="grid grid-flow-col items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <label>FG Name</label>
-            <input required value={data.productName} name="productName" onChange={(e) => setData({ ...data, productName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.productName} name="productName" onChange={(e) => setData({ ...data, productName: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>FG Code</label>
-            <input required value={data.productCode} name="productCode" onChange={(e) => setData({ ...data, productCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+            <input  value={data.productCode} name="productCode" onChange={(e) => setData({ ...data, productCode: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             <label>FG Description</label>
-            <textarea required value={data.productDes} onChange={(e) => setData({ ...data, productDes: e.target.value })} cols={70} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
+            <textarea  value={data.productDes} onChange={(e) => setData({ ...data, productDes: e.target.value })} cols={70} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"></textarea>
           </div>
           <h1 className="roboto-medium mt-1">Specifications</h1>
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center z-[999]">
               <label>Margin Setting</label>
               <Select
-                required
+                
                 pattern={
                   dropDowns?.margin?.filter(
                     (a) => a?.value === searchValue?.margin
@@ -195,7 +195,7 @@ function AddProductFinishedGoods() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, discount: e.target.value });
                 }}
@@ -222,7 +222,7 @@ function AddProductFinishedGoods() {
             </div>
             <div className="flex gap-3 z-[999] items-center">
               <label>Discount</label>
-              <input type="number" value={data?.discount} required onChange={(e)=>setData({...data,discount:e.target.value})} className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md" min={0} max={100}/>
+              <input type="number" value={data?.discount}  onChange={(e)=>setData({...data,discount:e.target.value})} className="px-2 py-1 w-[30%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)]  h-[25px] rounded-md" min={0} max={100}/>
               <label>%</label>
             </div>
 
@@ -237,7 +237,7 @@ function AddProductFinishedGoods() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, uom: e.target.value });
                 }}
@@ -271,18 +271,18 @@ function AddProductFinishedGoods() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Storage Specification</label>
-              <input required value={data.storageSpec} name="storageSpec" onChange={(e) => setData({ ...data, storageSpec: e.target.value })} className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.storageSpec} name="storageSpec" onChange={(e) => setData({ ...data, storageSpec: e.target.value })} className="px-2 py-1 w-[60%] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
               <label>Pricing MRP</label>
-              <input required value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.mrp} name="mrp" onChange={(e) => setData({ ...data, mrp: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>Pricing Date</label>
-              {/* <input required value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
+              {/* <input  value={data.pricingDate} name="pricingDate" onChange={(e) => setData({ ...data, pricingDate: e.target.value })} type="date" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" /> */}
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
                 <p>{data?.pricingDate}</p>
                 <button type="button" className={styles.calendar}>
@@ -302,43 +302,43 @@ function AddProductFinishedGoods() {
 
             <div className="flex gap-3 items-center">
               <label>Net Price</label>
-              <input required value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.netPrice} name="netPrice" onChange={(e) => setData({ ...data, netPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 CGST
-                <input required value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.cgst} name="cgst" onChange={(e) => setData({ ...data, cgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 SGST
-                <input required value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.sgst} name="sgst" onChange={(e) => setData({ ...data, sgst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col">
                 IGST
-                <input required value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.igst} name="netPrice" onChange={(e) => setData({ ...data, igst: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Cost Price</label>
-              <input required value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.costPrice} name="costPrice" onChange={(e) => setData({ ...data, costPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
-              <input required value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.targetPrice} name="targetPrice" onChange={(e) => setData({ ...data, targetPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Floor Price</label>
-              <input required value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.floorPrice} name="floorPrice" onChange={(e) => setData({ ...data, floorPrice: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center mt-3">
               <label>HSN</label>
-              <input required value={data.hsn} name="hsn" onChange={(e) => setData({ ...data, hsn: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.hsn} name="hsn" onChange={(e) => setData({ ...data, hsn: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
           </div>
 
@@ -346,7 +346,7 @@ function AddProductFinishedGoods() {
           <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center  z-[998]">
               <label>Country of Origin</label>
-              <Select required
+              <Select 
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country?.toLowerCase().includes(e.target.value.toLowerCase()||"");
@@ -374,36 +374,36 @@ function AddProductFinishedGoods() {
             </div>
             <div className="flex gap-3 items-center">
               <label>Manufacturing Unit</label>
-              <input required value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="number" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.manufacturingUnit} name="manufacturingUnit" onChange={(e) => setData({ ...data, manufacturingUnit: e.target.value })} type="text" className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
             <div className="flex gap-3 items-center">
               <label>ECCN</label>
-              <input required value={data.eccn} name="eccn" onChange={(e) => setData({ ...data, eccn: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.eccn} name="eccn" onChange={(e) => setData({ ...data, eccn: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>EAN Number</label>
-              <input required value={data.eanNumber} name="eanNumber" onChange={(e) => setData({ ...data, eanNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.eanNumber} name="eanNumber" onChange={(e) => setData({ ...data, eanNumber: e.target.value })} type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-3 items-center">
               <label>Weight</label>
-              <input required value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+              <input  value={data.weight} name="weight" onChange={(e) => setData({ ...data, weight: e.target.value })} type="number" className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
             </div>
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
               <label htmlFor="" className="flex flex-col items-center justify-center">
                 L
-                <input required value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 W
-                <input required value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
               <label htmlFor="" className="flex flex-col items-center">
                 H
-                <input required value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
+                <input  value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
               </label>
             </div>
           </div>
@@ -421,7 +421,7 @@ function AddProductFinishedGoods() {
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}

@@ -299,7 +299,7 @@ function AddUser() {
                     : ""
                 }
                 title="Please Select values from drop down"
-                required
+                
                 className="z-[3]"
                 onChange={(e) => {
                   setSearchValue({
@@ -346,7 +346,7 @@ function AddUser() {
                 }
                 title="Please Select values from drop down"
                 className="z-[2]"
-                required
+                
                 onChange={(e) => setRoleSearch(e.target.value)}
                 value={roleSearch || ""}
               >
@@ -378,7 +378,7 @@ function AddUser() {
               <label>Line of Business</label>
               <Select
                 className="z-[1]"
-                required
+                
                 onChange={(e) => {
                   setSearchValue({
                     ...searchValue,

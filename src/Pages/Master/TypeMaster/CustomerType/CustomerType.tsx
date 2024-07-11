@@ -275,7 +275,7 @@ function CustomerType() {
                     </label>
                     <input
                       type="text"
-                      required
+                      
                       onChange={(e) => setInput(e.target.value)}
                       value={input}
                       className="rounded-md w-1/3 shadow-[0px_0px_4px_rgba(0,0,0,0.685)] outline-none border-none px-3 shadow-[#00000037]"

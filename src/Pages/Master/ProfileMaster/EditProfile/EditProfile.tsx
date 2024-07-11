@@ -282,7 +282,7 @@ console.log("dd ",dropDowns)
             </div>
             <label>Company Name</label>
             <input
-              required
+              
               value={data.companyName}
               name="companyName"
               onChange={(e) =>
@@ -301,7 +301,7 @@ console.log("dd ",dropDowns)
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({
                   ...searchValue,
@@ -333,7 +333,7 @@ console.log("dd ",dropDowns)
                 </Select>
             <label>Contact Number</label>
             <input
-              required
+              
               value={data.contactNumber}
               name="contactNumber"
               onChange={(e) =>
@@ -361,7 +361,7 @@ console.log("dd ",dropDowns)
                 //     : ""
                 // }
                 // title="Please Select values from drop down"
-                required
+                
                 onChange={(e) => {
                   const filtered = places.country.filter((x) => {
                     return x?.country
@@ -414,7 +414,7 @@ console.log("dd ",dropDowns)
                   //     : ""
                   // }
                   // title="Please Select values from drop down"
-                  required
+                  
                   onChange={(e) => {
                     const filtered = places.state.filter((x) => {
                       return x?.name
@@ -454,7 +454,7 @@ console.log("dd ",dropDowns)
               <div className="w-[22%] flex gap-3 items-center">
                 <label>District</label>
                 <input
-                  required
+                  
                   value={data.district}
                   onChange={(e) =>
                     setData({ ...data, district: e.target.value })
@@ -474,7 +474,7 @@ console.log("dd ",dropDowns)
                   //     : ""
                   // }
                   // title="Please Select values from drop down"
-                  required
+                  
                   onChange={(e) => {
                     const filtered = places.city.filter((x) => {
                       return x
@@ -510,7 +510,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex gap-3 items-center">
                   <label>Zone</label>
                   <input
-                    required
+                    
                     value={data.zone}
                     onChange={(e) => setData({ ...data, zone: e.target.value })}
                     type="text"
@@ -520,7 +520,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[50%] flex gap-3 items-center">
                   <label>Address</label>
                   <textarea
-                    required
+                    
                     value={data.address}
                     onChange={(e) =>
                       setData({ ...data, address: e.target.value })
@@ -531,7 +531,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex gap-3 items-center">
                   <label>Pin code</label>
                   <input
-                    required
+                    
                     value={data.pincode}
                     min={6}
                     onChange={(e) =>
@@ -560,7 +560,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.country.filter((x) => {
@@ -621,7 +621,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.state.filter((x) => {
@@ -669,7 +669,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>District</label>
                   <input
-                    required
+                    
                     value={x.district}
                     onChange={(e) => {
                       const billingAddress = data?.billingAddress;
@@ -686,7 +686,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] z-10 flex justify-between  gap-3 items-center">
                   <label>City/Village</label>
                   <Select
-                    required
+                    
                     // pattern={
                     //   places?.city?.filter(
                     //     (a) => a === data?.billingAddress[i]?.city
@@ -734,7 +734,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>Zone</label>
                   <input
-                    required
+                    
                     value={x.zone}
                     onChange={(e) => {
                       const billingAddress = data?.billingAddress;
@@ -751,7 +751,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[48%] justify-between  flex gap-3 items-center">
                   <label>Address</label>
                   <textarea
-                    required
+                    
                     value={x.address}
                     onChange={(e) => {
                       const billingAddress = data?.billingAddress;
@@ -767,7 +767,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>Pin code</label>
                   <input
-                    required
+                    
                     value={x.pinCode}
                     onChange={(e) => {
                       const billingAddress = data?.billingAddress;
@@ -852,7 +852,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.country.filter((x) => {
@@ -913,7 +913,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.state.filter((x) => {
@@ -961,7 +961,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>District</label>
                   <input
-                    required
+                    
                     value={x.district}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -986,7 +986,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.city.filter((x) => {
@@ -1024,7 +1024,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Zone</label>
                   <input
-                    required
+                    
                     value={x.zone}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -1041,7 +1041,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[48%] justify-between flex gap-3 items-center">
                   <label>Address</label>
                   <textarea
-                    required
+                    
                     value={x.address}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -1057,7 +1057,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between  gap-3 items-center">
                   <label>Pin code</label>
                   <input
-                    required
+                    
                     value={x.pinCode}
                     onChange={(e) => {
                       const shippingAddress = data?.shippingAddress;
@@ -1108,7 +1108,7 @@ console.log("dd ",dropDowns)
               <div className="flex mt-3 flex-wrap gap-2 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
               <div className="w-[22%] flex justify-between gap-3 items-center">
                 <label>Name</label>
-                <input required
+                <input 
                   value={x?.warehouseName}
                   onChange={(e) => {
                     const warehouse = data?.warehouse || [];
@@ -1130,7 +1130,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.country.filter((x) => {
@@ -1191,7 +1191,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.state.filter((x) => {
@@ -1233,7 +1233,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>District</label>
                   <input
-                    required
+                    
                     value={x.district}
                     onChange={(e) => {
                       const warehouse = data?.warehouse;
@@ -1258,7 +1258,7 @@ console.log("dd ",dropDowns)
                     //     : ""
                     // }
                     // title="Please Select values from drop down"
-                    required
+                    
                     className="w-[200px]"
                     onChange={(e) => {
                       const filtered = places.city.filter((x) => {
@@ -1293,7 +1293,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>Zone</label>
                   <input
-                    required
+                    
                     value={x.zone}
                     onChange={(e) => {
                       const warehouse = data?.warehouse;
@@ -1307,7 +1307,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[48%] justify-between  flex gap-3 items-center">
                   <label>Address</label>
                   <textarea
-                    required
+                    
                     value={x.address}
                     onChange={(e) => {
                       const warehouse = data?.warehouse;
@@ -1323,7 +1323,7 @@ console.log("dd ",dropDowns)
                 <div className="w-[22%] flex justify-between gap-3 items-center">
                   <label>Pin code</label>
                   <input
-                    required
+                    
                     value={x.pinCode}
                     onChange={(e) => {
                       const warehouse = data?.warehouse;
@@ -1371,7 +1371,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Aadhar Number</label>
               <input
-                required
+                
                 value={data.aadharNumber}
                 name="aadharNumber"
                 onChange={(e) =>
@@ -1384,7 +1384,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Pan Number</label>
               <input
-                required
+                
                 value={data.panNumber}
                 name="panNumber"
                 onChange={(e) =>
@@ -1398,7 +1398,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Registration No</label>
               <input
-                required
+                
                 value={data.regNumber}
                 name="regNumber"
                 onChange={(e) =>
@@ -1412,7 +1412,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>GSTIN No</label>
               <input
-                required
+                
                 value={data.gstinNumber}
                 name="gstinNumber"
                 onChange={(e) =>
@@ -1429,7 +1429,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Bank Account No</label>
               <input
-                required
+                
                 value={data.bankAccNo}
                 name="bankAccNo"
                 onChange={(e) =>
@@ -1442,7 +1442,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>Account Branch</label>
               <input
-                required
+                
                 value={data.accBranch}
                 name="accBranch"
                 onChange={(e) =>
@@ -1456,7 +1456,7 @@ console.log("dd ",dropDowns)
             <div className="flex gap-3 items-center">
               <label>IFSC Code</label>
               <input
-                required
+                
                 value={data.ifscCode}
                 name="ifscCode"
                 onChange={(e) => setData({ ...data, ifscCode: e.target.value })}
@@ -1479,7 +1479,7 @@ console.log("dd ",dropDowns)
                   : ""
               }
               title="Please Select values from drop down"
-              required
+              
               onChange={(e) => {
                 setSearchValue({ ...searchValue, document: e.target.value });
               }}
@@ -1572,7 +1572,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.purchaseOrder?.prefix}
                   name="purchaseOrderPrefix"
                   onChange={(e) =>
@@ -1591,7 +1591,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.purchaseOrder?.seq}
                   name="purchaseOrderSeq"
                   onChange={(e) =>
@@ -1615,7 +1615,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.grn?.prefix}
                   name="grnPrefix"
                   onChange={(e) =>
@@ -1631,7 +1631,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.grn?.seq}
                   name="grnSeq"
                   onChange={(e) =>
@@ -1652,7 +1652,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.performInvoice?.prefix}
                   name="performInvoicePrefix"
                   onChange={(e) =>
@@ -1671,7 +1671,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.performInvoice?.seq}
                   name="performInvoiceSeq"
                   onChange={(e) =>
@@ -1695,7 +1695,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.invoice?.prefix}
                   name="invoicePrefix"
                   onChange={(e) =>
@@ -1711,7 +1711,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.invoice?.seq}
                   name="invoiceSeq"
                   onChange={(e) =>
@@ -1735,7 +1735,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.gatePass?.prefix}
                   name="gatePassPrefix"
                   onChange={(e) =>
@@ -1751,7 +1751,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.gatePass?.seq}
                   name="gatePassSeq"
                   onChange={(e) =>
@@ -1775,7 +1775,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Prefix</label>
                 <input
-                  required
+                  
                   value={data?.deliveryChallan?.prefix}
                   name="deliveryChallanPrefix"
                   onChange={(e) =>
@@ -1794,7 +1794,7 @@ console.log("dd ",dropDowns)
               <div className="flex gap-3 items-center">
                 <label>Sequence</label>
                 <input
-                  required
+                  
                   value={data?.deliveryChallan?.seq}
                   name="deliveryChallanSeq"
                   onChange={(e) =>
