@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { getAllQCPO, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
-import styles from "./FinishedGoodsOutwardList.module.scss";
+import styles from "./StockCheckList.module.scss";
 
-function FinishedGoodsOutwardList() {
+function StockCheckList() {
   const [data, setData] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const dispatch: any = useDispatch();
@@ -128,10 +128,10 @@ function FinishedGoodsOutwardList() {
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
-        <h1 className="text-xl roboto-bold">Finished Goods Outward </h1>
+        <h1 className="text-xl roboto-bold">Stock Check </h1>
         <div className="bg-[#F1F3FF] shadow-md mt-2 w-full p-4 rounded-lg h-full">
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-0">
-            <h2 className="roboto-bold ms-3 text-[20px] text-center">Finished Goods Outward List</h2>
+            <h2 className="roboto-bold ms-3 text-[20px] text-center">Stock Check List</h2>
             <div className="px-4 flex justify-between">
               <label className="flex px-3 w-2/5 rounded-md py-1 mt-2 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] items-center gap-3" htmlFor="">
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,11 +149,11 @@ function FinishedGoodsOutwardList() {
                 <svg width="11" height="13" viewBox="0 0 11 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6.87481 6.18664V11.6034C6.9023 11.8096 6.83356 12.0296 6.67546 12.1739C6.61187 12.2377 6.53633 12.2882 6.45317 12.3227C6.37001 12.3572 6.28087 12.375 6.19084 12.375C6.10081 12.375 6.01167 12.3572 5.92851 12.3227C5.84535 12.2882 5.76981 12.2377 5.70622 12.1739L4.32454 10.7923C4.24957 10.719 4.19256 10.6293 4.15798 10.5303C4.1234 10.4314 4.11217 10.3257 4.12519 10.2217V6.18664H4.10457L0.145116 1.1136C0.0334875 0.970293 -0.0168817 0.788631 0.005015 0.608305C0.0269117 0.427979 0.119294 0.263652 0.261975 0.151229C0.392582 0.0549924 0.536937 0 0.688166 0H10.3118C10.4631 0 10.6074 0.0549924 10.738 0.151229C10.8807 0.263652 10.9731 0.427979 10.995 0.608305C11.0169 0.788631 10.9665 0.970293 10.8549 1.1136L6.89543 6.18664H6.87481Z" fill="#5970F5" />
                 </svg>
-                <Link to={"/supply-chain/finished-goods-outward/add"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
+                <Link to={"/inventory/stock-check/add"} className="bg-[#5970F5] flex px-3 py-2 rounded-md text-white gap-2 items-center">
                   <svg width="13" height="14" viewBox="0 0 13 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12.0714 7.92857H7.42857V12.5714C7.42857 12.8177 7.33074 13.0539 7.1566 13.228C6.98246 13.4022 6.74627 13.5 6.5 13.5C6.25373 13.5 6.01754 13.4022 5.8434 13.228C5.66926 13.0539 5.57143 12.8177 5.57143 12.5714V7.92857H0.928571C0.682299 7.92857 0.446113 7.83074 0.271972 7.6566C0.0978315 7.48246 0 7.24627 0 7C0 6.75373 0.0978315 6.51754 0.271972 6.3434C0.446113 6.16926 0.682299 6.07143 0.928571 6.07143H5.57143V1.42857C5.57143 1.1823 5.66926 0.946113 5.8434 0.771972C6.01754 0.597831 6.25373 0.5 6.5 0.5C6.74627 0.5 6.98246 0.597831 7.1566 0.771972C7.33074 0.946113 7.42857 1.1823 7.42857 1.42857V6.07143H12.0714C12.3177 6.07143 12.5539 6.16926 12.728 6.3434C12.9022 6.51754 13 6.75373 13 7C13 7.24627 12.9022 7.48246 12.728 7.6566C12.5539 7.83074 12.3177 7.92857 12.0714 7.92857Z" fill="white" />
                   </svg>
-                  Add Order
+                  Add Stock Check
                 </Link>
               </div>
             </div>
@@ -187,17 +187,14 @@ function FinishedGoodsOutwardList() {
               )}
             </th> */}
                     <th>S No</th>
-                    <th>Outward Date</th>
-                    <th>Sender</th>
-                    <th>Transporter</th>
-                    <th>Vehicle Number</th>
-                    <th>DC Number</th>
-                    <th>Supply Type</th>
                     <th>Product Name</th>
-                    <th>GRN Number</th>
-                    <th>Outward Quantity</th>
-                    <th>UOM</th>
-                    <th>Remarks</th>
+                    <th>Batch Number</th>
+                    <th>Product Quantity</th>
+                    <th>Expiry Date</th>
+                    <th>Shortage</th>
+                    <th>Overage</th>
+                    <th>Warehouse Name</th>
+                    <th>Pick Location</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -230,18 +227,16 @@ function FinishedGoodsOutwardList() {
                 )}
               </th> */}
                     {/* <th>{i + 1}</th> */}
-                    <th>Outward Date</th>
-                    <th>Sender</th>
-                    <th>Transporter</th>
-                    <th>Vehicle Number</th>
-                    <th>DC Number</th>
-                    <th>Supply Type</th>
+                    <th>S No</th>
                     <th>Product Name</th>
-                    <th>GRN Number</th>
-                    <th>Outward Quantity</th>
-                    <th>UOM</th>
-                    <th>Remarks</th>
-                    <th>Action</th>
+                    <th>Batch Number</th>
+                    <th>Product Quantity</th>
+                    <th>Expiry Date</th>
+                    <th>Shortage</th>
+                    <th>Overage</th>
+                    <th>Warehouse Name</th>
+                    <th>Pick Location</th>
+                   
 
                     <th className="relative ">
                       <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
@@ -252,14 +247,14 @@ function FinishedGoodsOutwardList() {
                         </svg>
                       </button>
                       <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 " + styles.option}>
-                        <button onClick={() => navigate("/supply-chain/finished-goods-outward/view")} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
+                        <button onClick={() => navigate("/inventory/stock-check/view")} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
                           <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.0039 7.49999C8.32636 7.49999 9.39843 6.42792 9.39843 5.10546C9.39843 3.783 8.32636 2.71094 7.0039 2.71094C5.68144 2.71094 4.60938 3.783 4.60938 5.10546C4.60938 6.42792 5.68144 7.49999 7.0039 7.49999Z" stroke="black" />
                             <path d="M12.6018 4.3756C12.8673 4.69852 13 4.85929 13 5.1049C13 5.35051 12.8673 5.51129 12.6018 5.83421C11.6303 7.01368 9.48757 9.2098 7 9.2098C4.51243 9.2098 2.36967 7.01368 1.39818 5.83421C1.13273 5.51129 1 5.35051 1 5.1049C1 4.85929 1.13273 4.69852 1.39818 4.3756C2.36967 3.19612 4.51243 1 7 1C9.48757 1 11.6303 3.19612 12.6018 4.3756Z" stroke="black" />
                           </svg>
                           View
                         </button>
-                        <button onClick={() => navigate("/supply-chain/finished-goods-outward/view")} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
+                        <button onClick={() => navigate("")} className="bg-[#E0E4FF] rounded-md shadow-md shadow-[#00000040] gap-2 items-center text-black flex px-2 py-1">
                           <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7.0039 7.49999C8.32636 7.49999 9.39843 6.42792 9.39843 5.10546C9.39843 3.783 8.32636 2.71094 7.0039 2.71094C5.68144 2.71094 4.60938 3.783 4.60938 5.10546C4.60938 6.42792 5.68144 7.49999 7.0039 7.49999Z" stroke="black" />
                             <path d="M12.6018 4.3756C12.8673 4.69852 13 4.85929 13 5.1049C13 5.35051 12.8673 5.51129 12.6018 5.83421C11.6303 7.01368 9.48757 9.2098 7 9.2098C4.51243 9.2098 2.36967 7.01368 1.39818 5.83421C1.13273 5.51129 1 5.35051 1 5.1049C1 4.85929 1.13273 4.69852 1.39818 4.3756C2.36967 3.19612 4.51243 1 7 1C9.48757 1 11.6303 3.19612 12.6018 4.3756Z" stroke="black" />
@@ -280,4 +275,4 @@ function FinishedGoodsOutwardList() {
   );
 }
 
-export default FinishedGoodsOutwardList;
+export default StockCheckList;

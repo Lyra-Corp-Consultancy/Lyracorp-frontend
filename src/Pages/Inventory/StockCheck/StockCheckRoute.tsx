@@ -1,14 +1,20 @@
 
 import NavigationBar from '../../../components/NavigationBar'
-import {  Routes } from 'react-router-dom'
+import {  Routes,Route } from 'react-router-dom'
+import StockCheckList from './StockCheckList'
+import AddStockCheck from './AddStockCheck/AddStockChange'
+import ViewStockCheck from './ViewStockCheck/ViewStockCheck'
 
 function StockCheckRoute() {
   return (
-    <div className='overflow-x-hidden'>
-    <NavigationBar/>
+    <div>
+    <NavigationBar />
     <Routes>
-      </Routes>
-    </div>
+      <Route path="/" index element={<StockCheckList />} />
+      <Route path="/add" element={<AddStockCheck />} />
+      <Route path="/view" element={<ViewStockCheck />} />
+    </Routes>
+  </div>
   )
 }
 
