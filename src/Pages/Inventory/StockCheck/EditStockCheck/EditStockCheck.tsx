@@ -15,7 +15,7 @@ import { RawMaterialOutward } from "../../../../utils/Type/types";
 // import { formatDate } from "../../../../utils/functions/formats";
 // import styles from "../PurchaseOrder.module.scss"
 
-function AddStockCheck() {
+function EditStockCheck() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
@@ -236,7 +236,7 @@ function AddStockCheck() {
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Stock Check</h1>
+      <h1 className="roboto-bold text-lg">Edit Stock Check</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <form
@@ -278,14 +278,14 @@ function AddStockCheck() {
             </div>
 
             <div className="flex items-center gap-3 justify-between">
-              <label>Remarks</label>
+              <label>Product Name</label>
               <input required value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Batch Number</label>
               <input required value={data.billOfLading} onChange={(e) => setData({ ...data, billOfLading: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
-            <button type="submit">
+            {/* <button type="submit">
               <svg width="71" height="35" viewBox="0 0 71 35" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="71" height="35" rx="5" fill="#5970F5" />
                 <path d="M21.6667 21.6667L25 25M10 16.6667C10 18.4348 10.7024 20.1305 11.9526 21.3807C13.2029 22.631 14.8986 23.3333 16.6667 23.3333C18.4348 23.3333 20.1305 22.631 21.3807 21.3807C22.631 20.1305 23.3333 18.4348 23.3333 16.6667C23.3333 14.8986 22.631 13.2029 21.3807 11.9526C20.1305 10.7024 18.4348 10 16.6667 10C14.8986 10 13.2029 10.7024 11.9526 11.9526C10.7024 13.2029 10 14.8986 10 16.6667Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -294,7 +294,7 @@ function AddStockCheck() {
                   fill="white"
                 />
               </svg>
-            </button>
+            </button> */}
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>
@@ -393,4 +393,4 @@ function AddStockCheck() {
   );
 }
 
-export default AddStockCheck;
+export default EditStockCheck;

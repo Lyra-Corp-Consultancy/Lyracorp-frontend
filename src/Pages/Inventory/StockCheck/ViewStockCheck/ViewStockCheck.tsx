@@ -278,7 +278,7 @@ function ViewStockCheck() {
             </div>
 
             <div className="flex items-center gap-3 justify-between">
-              <label>Remarks</label>
+              <label>Product Name</label>
               <input required value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3 justify-between">
@@ -378,6 +378,9 @@ function ViewStockCheck() {
           <div className="w-full absolute bottom-4 justify-center items-center  gap-3 flex mt-5">
             <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
+            </button>
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate("/inventory/stock-check/edit")}>
+              Edit
             </button>
             <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
               Print
