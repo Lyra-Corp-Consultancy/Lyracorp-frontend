@@ -61,12 +61,12 @@ function ActiveUsers({ data, dropDowns, inActiveCustomer,selected,setSelected }:
             <th>RM Desctiption</th>
             <th>Discounts</th>
             <th>UOM</th>
-            <th>Pricing MRP</th>
+            <th>Pricing</th>
             <th>Pricing Date</th>
-            <th>Net Price</th>
+            {/* <th>Net Price</th> */}
             <th>ECCN</th>
             <th>EAN Number</th>
-            <th>Weight</th>
+            {/* <th>Weight</th> */}
             <th>Action</th>
           </tr>
         </thead>
@@ -106,10 +106,10 @@ function ActiveUsers({ data, dropDowns, inActiveCustomer,selected,setSelected }:
               <th>{dropDowns?.uom?.filter((y)=>y?._id===x?.uomType)[0]?.value?.name}</th>
               <th className="truncate">{x?.mrp}</th>
               <th className="truncate">{x?.pricingDate}</th>
-              <th>{x?.netPrice}</th>
+              {/* <th>{x?.netPrice}</th> */}
               <th>{x?.eccn}</th>
               <th>{x?.eanNumber}</th>
-              <th>{x?.weight}</th>
+              {/* <th>{x?.weight}</th> */}
               <th className="relative ">
                 <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                   <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">

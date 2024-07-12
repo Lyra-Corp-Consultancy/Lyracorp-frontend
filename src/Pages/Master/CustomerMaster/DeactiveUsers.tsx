@@ -57,7 +57,7 @@ function DeactiveUsers({ data, dropDowns, ActiveCustomer, selected, setSelected 
               )}
             </th>
             <th>S No</th>
-            <th>Customer Acc No</th>
+            <th>Customer Code</th>
             <th>Customer Name</th>
             <th>Customer Type</th>
             <th>Account Type</th>

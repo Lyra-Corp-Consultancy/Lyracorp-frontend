@@ -245,14 +245,8 @@ function ViewProductRawMaterial() {
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
-              <label htmlFor="" className="flex flex-col items-center justify-center">
-                L<label className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.dimenL}</label>
-              </label>
-              <label htmlFor="" className="flex flex-col items-center">
-                W<label className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.dimenW}</label>
-              </label>
-              <label htmlFor="" className="flex flex-col items-center">
-                H<label className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{data.dimenH}</label>
+              <label htmlFor="" className="flex w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md flex-col items-center justify-center">
+               {data?.proPhysicalDes}
               </label>
             </div>
           </div>

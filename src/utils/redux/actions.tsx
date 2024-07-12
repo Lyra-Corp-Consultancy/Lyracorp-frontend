@@ -211,7 +211,7 @@ export const addProductRawMaterial = createAsyncThunk("user/addProductRawMateria
   }
 });
 
-export const addProductFinishedGoods = createAsyncThunk("user/addProductFinishedGoods", async (data: VendorMasterData, { rejectWithValue }) => {
+export const addProductFinishedGoods = createAsyncThunk("user/addProductFinishedGoods", async (data: any, { rejectWithValue }) => {
   try {
     console.log(data);
     const res = await instance.post("/master/product-master/finished-goods", { data });

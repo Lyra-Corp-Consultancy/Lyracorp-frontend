@@ -424,18 +424,7 @@ console.log(dropDowns.uom)
 
             <div className="flex gap-5 items-end">
               <label>Dimensions</label>
-              <label htmlFor="" className="flex flex-col items-center justify-center">
-                L
-                <input  value={data.dimenL} name="dimenL" onChange={(e) => setData({ ...data, dimenL: e.target.value })} type="number" className="px-2  py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-              </label>
-              <label htmlFor="" className="flex flex-col items-center">
-                W
-                <input  value={data.dimenW} name="dimenW" onChange={(e) => setData({ ...data, dimenW: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-              </label>
-              <label htmlFor="" className="flex flex-col items-center">
-                H
-                <input  value={data.dimenH} name="dimenH" onChange={(e) => setData({ ...data, dimenH: e.target.value })} type="number" className="px-2 py-1 w-[50px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" />
-              </label>
+              <textarea value={data.proPhysicalDes} cols={80} onChange={(e)=>setData({...data,proPhysicalDes:e.target.value})} className="px-2 py-1 remove-spin-wheel shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md" id=""></textarea>
             </div>
           </div>
 
