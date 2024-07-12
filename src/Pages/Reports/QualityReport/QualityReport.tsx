@@ -1,17 +1,25 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import  { useEffect, useState } from "react";
-import Select from "../../../components/Select";
+
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getFGReports } from "../../../utils/redux/actions";
+import Select from "../../../components/Select";
 import { makeToast } from "../../../utils/redux/slice";
+import { Navigate, useNavigate } from "react-router-dom";
 
-function FGReports() {
+
+
+
+
+function QualityReport()
+ {
   const [report, setReports] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const dispatch: any = useDispatch();
   const [search, setSearch] = useState<{ rmName: string; warehouse: string; batchNum: string }>({ rmName: "", warehouse: "", batchNum: "" });
   const [dropDown, setDropDown] = useState<{ finishedGoods: string[]; warehouse: string[]; batchNum: string[] }>({ batchNum: [], warehouse: [], finishedGoods: [] });
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getFGReports()).then((res: any) => {
       console.log(res.payload);
@@ -28,34 +36,13 @@ function FGReports() {
   }, []);
   return (
     <div className="px-10 py-3">
-      <h1 className="font-semibold text-[20px]">Inventory Report</h1>
+      <h1 className="font-semibold text-[20px]">Quality Report</h1>
       <div className="w-full min-h-[80vh] bg-[#F1F3FF] rounded-2xl shadow-[#00000080] shadow-md px-3">
-        <h2>Finished Goods Report</h2>
+        <h2>Quality Check Report</h2>
         <div className="bg-white p-3 rounded-2xl">
           <div className="grid grid-cols-4 w-full gap-4">
             <div className="flex gap-3 items-center">
-              <label className="text-[14px] w-[200px]">Finished Goods Name</label>
-              <Select value={search.rmName || ""} onChange={(e) => setSearch({ ...search, rmName: e.target.value })}>
-                {dropDown.finishedGoods
-                  .filter((x) => x?.toLocaleLowerCase()?.includes(search.rmName))
-                  .map((x) => (
-                    <li
-                      onClick={() => {
-                        setSearch({ ...search, rmName: x });
-                        const warehouse = report.filter((y) => y?.products?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.warehouse?.warehouseName);
-                        const batchNum = report.filter((y) => y?.producs?.productName?.toLocaleLowerCase() === x.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
-                        console.log(warehouse, batchNum);
-                        setDropDown({ ...dropDown, warehouse, batchNum });
-                      }}
-                      className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
-                    >
-                      {x}
-                    </li>
-                  ))}
-              </Select>
-            </div>
-            <div className="flex gap-3 items-center">
-              <label className="text-[14px]">Warehouse Name</label>
+              <label className="text-[14px] w-[200px]">Vendor Name</label>
               <Select value={search.warehouse || ""} onChange={(e) => setSearch({ ...search, warehouse: e.target.value })}>
                 {dropDown.warehouse
                   .filter((x) => x?.toLocaleLowerCase()?.includes(search.warehouse))
@@ -74,7 +61,27 @@ function FGReports() {
               </Select>
             </div>
             <div className="flex gap-3 items-center">
-              <label className="text-[14px]">Batch Number</label>
+              <label className="text-[14px]">Raw Material Name</label>
+             
+              <Select value={search.warehouse || ""} onChange={(e) => setSearch({ ...search, warehouse: e.target.value })}>
+                {dropDown.warehouse
+                  .filter((x) => x?.toLocaleLowerCase()?.includes(search.warehouse))
+                  .map((x) => (
+                    <li
+                      onClick={() => {
+                        setSearch({ ...search, warehouse: x });
+                        const batchNum = filtered.filter((y) => y?.warehouse?.warehouseName?.toLocaleLowerCase() === x.toLocaleLowerCase() && y?.products?.productName?.toLocaleLowerCase() === search.rmName.toLocaleLowerCase()).map((x: any) => x?.batchNumbers);
+                        setDropDown({ ...dropDown, batchNum });
+                      }}
+                      className="px-1 truncate py-1 hover:bg-slate-300 transition-all duration-150"
+                    >
+                      {x}
+                    </li>
+                  ))}
+              </Select>
+            </div>
+            <div className="flex gap-3 items-center">
+              <label className="text-[14px]">GRN Number</label>
               <Select value={search.batchNum || ""} onChange={(e) => setSearch({ ...search, batchNum: e.target.value })}>
                 {dropDown.batchNum
                   .filter((x) => x?.toLocaleLowerCase()?.includes(search.batchNum))
@@ -133,31 +140,54 @@ function FGReports() {
           <table className="w-full mt-5">
             <thead>
               <tr className="bg-[#C3CBFF]">
-                <th>S No</th>
-                <th>Product Name</th>
-                <th>Description</th>
-                <th>Batch Name</th>
-                <th>Quantity</th>
-                <th>Warehouse</th>
+              <th className="border-r w-1/8">S No</th>
+                <th className="border-r w-1/8">Vendor Name</th>
+                <th className="border-r w-1/8">Product Name</th>
+                <th className="border-r w-1/8">GRN Number</th>
+                <th className="border-r w-1/8">Received Quantity</th>
+                <th className="border-r w-1/8">Billed Quantity</th>
+                <th className="border-r w-1/8">Rejected Quantity</th>
+                <th className="border-r w-1/8">UOM</th>
               </tr>
             </thead>
             <tbody>
-              {filtered.map((x, i) => (
+              {/* {filtered.map((x, i) => ( */}
                 <tr>
-                  <td className="text-center">{i + 1}</td>
-                  <td className="text-center">{x?.products?.productName || "No Name"}</td>
+                  <td className="text-center">
+                    {/* {i + 1} */} 1
+                    </td>
+                  <td className="text-center">2</td>
+                  <td className="text-center">3</td>
+                  <td className="text-center">4</td>
+                  <td className="text-center">5</td>
+                  <td className="text-center">6</td>
+                  <td className="text-center">7</td>
+                  <td className="text-center">8</td>
+                  {/* <td className="text-center">{x?.products?.productName || "No Name"}</td>
                   <td className="text-center">{x?.products?.productDes || "No Description"}</td>
                   <td className="text-center">{x?.batchNumbers || "No Batch Number"}</td>
                   <td className="text-center">{x?.quantity || "No value Found"}</td>
-                  <td className="text-center">{x?.warehouse?.warehouseName || "No Address Found"}</td>
+                  <td className="text-center">{x?.warehouse?.warehouseName || "No Address Found"}</td> */}
                 </tr>
-              ))}
+              {/* ))} */}
             </tbody>
           </table>
+          <div className="w-full absolute bottom-4 justify-center items-center  gap-3 flex mt-5">
+            
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
+              Cancel
+            </button>
+            <button type="submit" className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white">
+              Print
+            </button>
+          </div>
         </div>
       </div>
     </div>
   );
+
+
 }
 
-export default FGReports;
+
+export default QualityReport;

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
-import Select from "../../../components/Select";
+import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { getRMReports } from "../../../utils/redux/actions";
-import { makeToast } from "../../../utils/redux/slice";
+import { getRMReports } from "../../../../utils/redux/actions";
+import { makeToast } from "../../../../utils/redux/slice";
 
 function RMReports() {
   const [report, setReports] = useState<any[]>([]);
@@ -28,6 +28,7 @@ function RMReports() {
   }, []);
   return (
     <div className="px-10 py-3">
+
       <h1 className="font-semibold text-[20px]">Inventory Report</h1>
       <div className="w-full min-h-[80vh] bg-[#F1F3FF] rounded-2xl shadow-[#00000080] shadow-md px-3">
         <h2>Raw Material Report</h2>

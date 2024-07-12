@@ -14,10 +14,11 @@ import SelectCompany from "./Pages/SelectCompany/SelectCompany";
 import QCRoute from "./Pages/QC/QCRoute";
 import ProductionRoute from "./Pages/Production/ProductionRoute";
 import ErrorPage from "./Error404Page";
-import ReportsRoute from "./Pages/Reports/ReportsRoute";
+
 import OrderManagementRoute from "./Pages/OrderManagement/OrderManagementRoute";
 
 import SupplyChainManagementRoute from "./Pages/SupplyChainManagement/SupplyChainManagementRoute";
+import ReportsRoute from "./Pages/Reports/ReportsRoute";
 
 function App() {
   const data = useSelector((state: any) => state.data);

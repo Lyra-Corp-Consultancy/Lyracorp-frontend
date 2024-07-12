@@ -382,17 +382,17 @@ function NavigationBar() {
                       Inventory Report <span>-</span>
                     </dl>
                     {permissions?.view?.includes("rm report") && (
-                      <li className="text-start ms-5" onClick={() => navigate("/reports/rm-reports")}>
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/rm-reports")}>
                         RM Report
                       </li>
                     )}
                     {permissions?.view?.includes("fg report") && (
-                      <li className="text-start ms-5" onClick={() => navigate("/reports/fg-reports")}>
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/fg-reports")}>
                         FG Report
                       </li>
                     )}
                     {permissions?.view?.includes("pm report") && (
-                      <li className="text-start ms-5" onClick={() => navigate("/reports/pm-reports")}>
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/pm-reports")}>
                         PM Report
                       </li>
                     )}
@@ -402,6 +402,13 @@ function NavigationBar() {
                     Inventory Report <span>+</span>
                   </button>
                 )}
+                {
+                permissions?.view?.includes("quality report") && (
+                  <button className="text-start" onClick={() => navigate("/reports/quality-report")}>
+                    Quality Report
+                  </button>
+                )}
+                 
               </div>
             )}
           </button>
