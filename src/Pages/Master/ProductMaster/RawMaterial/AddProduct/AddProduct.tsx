@@ -199,7 +199,7 @@ function AddProductRawMaterial() {
               <label>Margin Setting</label>
 
               <Select
-                
+                className="z-[999]"
                 pattern={
                   dropDowns?.margin?.filter(
                     (a) => a?.value === searchValue?.margin
@@ -282,7 +282,7 @@ function AddProductRawMaterial() {
               <label>%</label>
             </div>
 
-            <div className="flex gap-3 z-[999] items-center">
+            <div className="flex gap-3 z-[999Y] items-center">
               <label>UOM</label>
 
               <Select
@@ -320,7 +320,7 @@ function AddProductRawMaterial() {
               </Select>
             </div>
 
-            <div className="flex gap-3 z-[999] items-center">
+            <div className="flex gap-3 z-[995] items-center">
               <label>UOM Description</label>
               <label
                 htmlFor=""
@@ -348,7 +348,9 @@ function AddProductRawMaterial() {
           <h1 className="roboto-medium mt-1">Price Details</h1>
           <div className="grid grid-cols-4 items-center justify-between roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)]  w-full rounded-lg px-3 py-2">
             <div className="flex gap-3 items-center">
-              <label>Pricing MRP</label>
+              <label>Pricing 
+                {/* MRP */}
+                </label>
               <input
                 
                 value={data.mrp}
@@ -396,7 +398,7 @@ function AddProductRawMaterial() {
               </label>
             </div>
 
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <label>Net Price</label>
               <input
                 
@@ -406,7 +408,7 @@ function AddProductRawMaterial() {
                 type="number"
                 className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
               />
-            </div>
+            </div> */}
 
             <div className="flex gap-5 items-end">
               <label>Tax</label>
@@ -448,7 +450,7 @@ function AddProductRawMaterial() {
               </label>
             </div>
 
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <label>Cost Price</label>
               <input
                 
@@ -460,8 +462,8 @@ function AddProductRawMaterial() {
                 type="number"
                 className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
               />
-            </div>
-
+            </div> */}
+{/* 
             <div className="flex gap-3 items-center">
               <label>Target Price</label>
               <input
@@ -474,9 +476,9 @@ function AddProductRawMaterial() {
                 type="number"
                 className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
               />
-            </div>
+            </div> */}
 
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <label>Floor Price</label>
               <input
                 
@@ -488,7 +490,7 @@ function AddProductRawMaterial() {
                 type="number"
                 className="px-2 remove-spin-wheel py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md"
               />
-            </div>
+            </div> */}
 
             <div className="flex gap-3 items-center mt-3">
               <label>HSN</label>

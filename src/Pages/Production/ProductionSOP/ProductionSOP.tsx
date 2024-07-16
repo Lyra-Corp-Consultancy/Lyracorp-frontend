@@ -23,7 +23,7 @@ function ProductionSOP() {
   const [departments, setDepartments] = useState<any[]>([]);
   // const [confirmation, setConfirm] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<any>();
-
+  const [isStartDisabled, setIsStartDisabled] = useState(true);
   const dispatch: any = useDispatch();
   //   const params = useParams();
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function ProductionSOP() {
       setUsers(res.payload.active);
     });
   }, []);
-
+console.log("pp",productProcess)
   return (
     <div>
       <NavigationBar />
@@ -166,55 +166,56 @@ function ProductionSOP() {
                                 <td className="p-2 border">
                                   {y.start ? (
                                     y.start.toLocaleTimeString()
-                                  ) : (
-                                    <button
-                                      onClick={() => {
-                                        const temp = y;
-                                        temp.start = new Date();
-                                        const procc = [...productProcess];
-                                        procc[pi].submodule[i] = temp;
-                                        const duration = (y.timeDuration || 0) * 60;
-                                        const hours = Math.floor(duration / 3600);
-                                        console.log(duration / 3600);
-                                        const min = Math.floor((duration - hours * 3600) / 60);
-                                        const sec = duration - (hours * 3600 + min * 60);
-                                        const counter = { hours, min, sec, totalSec: duration };
-                                        console.log(hours, min, sec, duration, counter);
-                                        const interval = setInterval(() => {
-                                          if (counter.totalSec > 0) {
-                                            if (counter.min <= 0 && counter.hours > 0) {
-                                              counter.hours--;
-                                              counter.min = 59;
-                                            }
-                                            if (counter.sec <= 0 && counter.min > 0) {
-                                              counter.min--;
-                                              counter.sec = 59;
-                                            }
-                                            counter.sec--;
-                                            counter.totalSec--;
-                                          } else {
-                                            counter.sec--;
-                                            counter.totalSec--;
-                                            if (counter.sec <= -60) {
-                                              counter.min--;
-                                              counter.sec = 0;
-                                            }
-                                            if (counter.min <= -60) {
-                                              counter.hours--;
-                                              counter.min = 0;
-                                            }
+                                  ) : ( isStartDisabled ? ( <button
+                                    onClick={() => {
+                                      setIsStartDisabled(false)
+                                      const temp = y;
+                                      temp.start = new Date();
+                                      const procc = [...productProcess];
+                                      procc[pi].submodule[i] = temp;
+                                      const duration = (y.timeDuration || 0) * 60;
+                                      const hours = Math.floor(duration / 3600);
+                                      console.log(duration / 3600);
+                                      const min = Math.floor((duration - hours * 3600) / 60);
+                                      const sec = duration - (hours * 3600 + min * 60);
+                                      const counter = { hours, min, sec, totalSec: duration };
+                                      console.log(hours, min, sec, duration, counter);
+                                      const interval = setInterval(() => {
+                                        if (counter.totalSec > 0) {
+                                          if (counter.min <= 0 && counter.hours > 0) {
+                                            counter.hours--;
+                                            counter.min = 59;
                                           }
+                                          if (counter.sec <= 0 && counter.min > 0) {
+                                            counter.min--;
+                                            counter.sec = 59;
+                                          }
+                                          counter.sec--;
+                                          counter.totalSec--;
+                                        } else {
+                                          counter.sec--;
+                                          counter.totalSec--;
+                                          if (counter.sec <= -60) {
+                                            counter.min--;
+                                            counter.sec = 0;
+                                          }
+                                          if (counter.min <= -60) {
+                                            counter.hours--;
+                                            counter.min = 0;
+                                          }
+                                        }
 
-                                          setTimer({ ...counter });
-                                        }, 1000);
-                                        setRunningInterval(interval);
-                                        setProcess([...procc]);
-                                      }}
-                                      type="button"
-                                      className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white " + ((!y?.start && i + pi === 0) || (i > 0 && !y?.start && x.submodule[i - 1]?.end) || (pi > 0 && !y?.start && i === 0 && productProcess[pi - 1].submodule[productProcess[pi - 1]?.submodule.length - 1]?.end) ? "opacity-100" : "opacity-75")}
-                                    >
-                                      Start
-                                    </button>
+                                        setTimer({ ...counter });
+                                      }, 1000);
+                                      setRunningInterval(interval);
+                                      setProcess([...procc]);
+                                    }}
+                                    type="button"
+                                    className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white " + ((!y?.start && i + pi === 0) || (i > 0 && !y?.start && x.submodule[i - 1]?.end) || (pi > 0 && !y?.start && i === 0 && productProcess[pi - 1].submodule[productProcess[pi - 1]?.submodule.length - 1]?.end) ? "opacity-100" : "opacity-75")}
+                                  >
+                                    Start
+                                  </button>) : <button className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white "}>Start</button>
+                                   
                                   )}
                                 </td>
                                 <td className="p-2 border">
@@ -224,6 +225,7 @@ function ProductionSOP() {
                                     <button
                                       onClick={() => {
                                         if(!(!y?.start || y?.end)){
+                                          setIsStartDisabled(true)
                                           const temp = y;
                                           temp.end = new Date();
                                           temp.workedTime = timer.totalSec / 60;
@@ -276,7 +278,7 @@ function ProductionSOP() {
                     >
                       Reset
                     </button>
-                    <button type="submit" className="bg-[#5970F5] px-3 py-2 rounded-md text-white">
+                    <button type="submit" className="bg-[#5970F5] px-3 py-2 rounded-md text-white"  onClick={() => setTimer({ hours: 0, min: 0, sec: 0, totalSec: 0 })}>
                       Save
                     </button>
                   </div>

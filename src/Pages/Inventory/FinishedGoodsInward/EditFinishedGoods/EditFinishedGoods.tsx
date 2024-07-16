@@ -163,8 +163,8 @@ function EditFinishedGoods() {
                       ))}
                     </Select>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <Select value={x?.pick?.address || ""}>
+                  <td className="px-3 py-1 border"> 
+                    <Select value={x?.pick?.warehouseName || ""}> 
                       {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse || []).map((y: any) => (
                         <li
                           onClick={() => {
