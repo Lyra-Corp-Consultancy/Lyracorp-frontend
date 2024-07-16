@@ -28,7 +28,7 @@ function ProductionSOP() {
   //   const params = useParams();
   const navigate = useNavigate();
   const [productProcess, setProcess] = useState<ProductionSOPTypes[]>([]);
-
+  const [TrackStartByIndex,setTrackByIndex] = useState<number>(0)
   useEffect(() => {
     dispatch(getAllProductFinishedGoods()).then((res: any) => {
       console.log(res.payload.active);
@@ -166,8 +166,9 @@ console.log("pp",productProcess)
                                 <td className="p-2 border">
                                   {y.start ? (
                                     y.start.toLocaleTimeString()
-                                  ) : ( isStartDisabled ? ( <button
+                                  ) : ( isStartDisabled && (TrackStartByIndex===pi) ? ( <button
                                     onClick={() => {
+                                      setTrackByIndex(TrackStartByIndex+1)
                                       setIsStartDisabled(false)
                                       const temp = y;
                                       temp.start = new Date();
@@ -214,7 +215,7 @@ console.log("pp",productProcess)
                                     className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white " + ((!y?.start && i + pi === 0) || (i > 0 && !y?.start && x.submodule[i - 1]?.end) || (pi > 0 && !y?.start && i === 0 && productProcess[pi - 1].submodule[productProcess[pi - 1]?.submodule.length - 1]?.end) ? "opacity-100" : "opacity-75")}
                                   >
                                     Start
-                                  </button>) : <button className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white "}>Start</button>
+                                  </button>) : <button className={"bg-[#5970F5] px-2 py-1 text-[12px] rounded-md text-white opacity-70 "}>Start</button>
                                    
                                   )}
                                 </td>
