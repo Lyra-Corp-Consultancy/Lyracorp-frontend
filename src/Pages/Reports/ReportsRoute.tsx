@@ -11,8 +11,7 @@ function ReportsRoute() {
     return (
         <>
         <NavigationBar/>
-            <Routes>
-              
+            <Routes> 
                 <Route path='/inventory-report/*' element={<InventoryReportsRoute/>}/>
                 <Route path='/quality-report/' element={<QualityReport/>}/>
             </Routes>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, FinishedGoodsInwards, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, FinishedGoodsInwards, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, RawMaterialUtilizationTypes, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { [des: string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -693,6 +693,55 @@ export const updateFinishedGoodsInwardIndividual = createAsyncThunk("user/getPro
     // }
     await instance.patch("/inventory/finished-goods-inwards/" + inwardId, { data });
     return;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getGrnNumberByProduct = createAsyncThunk("user/getProductsFinishedGoods", async (productId: string|string[], { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.get("/production/raw-material-utilization/get-grn-by-products", { params:{productId} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+
+export const postRawMaterialUtilization = createAsyncThunk("user/raw-material-utilization", async (rawMaterialUtilization: RawMaterialUtilizationTypes, { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.post("/production/raw-material-utilization", { rawMaterialUtilization });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getProductionSOPByBatchNumber = createAsyncThunk("user/getProductionSOPByBatchNumber", async (batchNumber: string, { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.get("/production/sop/byBatchNumber", { params:{batchNumber} });
+    return res.data
   } catch (err) {
     rejectWithValue(err);
   }
