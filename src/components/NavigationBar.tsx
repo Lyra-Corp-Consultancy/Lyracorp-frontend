@@ -399,7 +399,7 @@ function NavigationBar() {
                       </li>
                     )}
                     {permissions?.view?.includes("production sop report") && (
-                      <li className="text-start ms-5" onClick={() => navigate("/reports/production-sop-reports")}>
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/production-sop-reports")}>
                         Production SOP Report
                       </li>
                     )}

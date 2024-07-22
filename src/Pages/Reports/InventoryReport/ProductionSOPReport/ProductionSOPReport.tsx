@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 // import { useParams } from "react-router-dom";
 // import Select from "../../../components/Select";
-import { getAllProductFinishedGoods, getAllUserManagement, getProductionSOPByBatchNumber, getType } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllUserManagement, getProductionSOPByBatchNumber, getType } from "../../../../utils/redux/actions";
 // import { makeToast } from "../../../utils/redux/slice";
 // import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 
