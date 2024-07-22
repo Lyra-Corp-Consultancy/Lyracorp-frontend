@@ -730,3 +730,19 @@ export const postRawMaterialUtilization = createAsyncThunk("user/raw-material-ut
     rejectWithValue(err);
   }
 });
+
+export const getProductionSOPByBatchNumber = createAsyncThunk("user/getProductionSOPByBatchNumber", async (batchNumber: string, { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.get("/production/sop/byBatchNumber", { params:{batchNumber} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
