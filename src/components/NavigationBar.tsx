@@ -319,7 +319,7 @@ function NavigationBar() {
           </button>
         )}
         {getAllChildrens(createdModules[4]).some((child) => permissions?.view?.includes(child)) && (
-          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname?.includes("/production") ? " bg-white" : " bg-[#C3CBFF]")}>
+          <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname?.includes("/production/") ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "production" ? "" : "production")}>Production Management</p>
             {dropDown === "production" && (
               <div className={"flex bg-white p-1 flex-col absolute shadow-md left-0 w-full bottom-0 translate-y-[100%] justify-start shadow-[#00000034] text-sm font-normal "}>
@@ -381,6 +381,11 @@ function NavigationBar() {
                     {permissions?.view?.includes("pm report") && (
                       <li className="text-start ms-5" onClick={() => navigate("/reports/pm-reports")}>
                         PM Report
+                      </li>
+                    )}
+                    {permissions?.view?.includes("production sop report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/production-sop-reports")}>
+                        Production SOP Report
                       </li>
                     )}
                   </ul>
