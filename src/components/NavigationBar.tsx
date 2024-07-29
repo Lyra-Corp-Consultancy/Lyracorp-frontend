@@ -13,7 +13,7 @@ function NavigationBar() {
   const location = useLocation();
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const [dropDown, setDropDown] = useState("");
-  const [typeMaster, setTypeMaster] = useState<null | "type" | "product" | "inventory report">();
+  const [typeMaster, setTypeMaster] = useState<null | "type" | "product" | "inventory report" | "quality report">();
   const navigate = useNavigate();
   const dispatch: any = useDispatch();
   const permissions = useSelector((state: any) => state.data?.user?.permissions);
@@ -409,10 +409,25 @@ function NavigationBar() {
                     Inventory Report <span>+</span>
                   </button>
                 )}
-                {
-                permissions?.view?.includes("quality report") && (
-                  <button className="text-start" onClick={() => navigate("/reports/quality-report")}>
-                    Quality Report
+                {typeMaster === "quality report" ? (
+                  <ul className="list-item">
+                    <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">
+                      Quality Report <span>-</span>
+                    </dl>
+                    {permissions?.view?.includes("quality fg report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/fg-reports")}>
+                        Quality FG Report
+                      </li>
+                    )}
+                    {permissions?.view?.includes("quality rm report") && (
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/pm-reports")}>
+                        Quality RM Report
+                      </li>
+                    )}
+                  </ul>
+                ) : (
+                  <button onClick={() => setTypeMaster("quality report")} className="flex justify-between text-[#5970F5]">
+                    Quality Report <span>+</span>
                   </button>
                 )}
                  
