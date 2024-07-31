@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
+<<<<<<< HEAD
 import { CustomerMasterData, FinishedGoodsInwards, OrderManagementTypes, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
+=======
+import { CustomerMasterData, FinishedGoodsInwards, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, RawMaterialUtilizationTypes, Type, UserData, VendorMasterData } from "../Type/types";
+>>>>>>> aeef0228f2b5c5e3fa2096e5c828d5b277115f86
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { [des: string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -714,6 +718,7 @@ export const updateFinishedGoodsInwardIndividual = createAsyncThunk("user/getPro
   }
 });
 
+<<<<<<< HEAD
 export const postOrderManagement = createAsyncThunk("user/postOrderManagament", async (data: OrderManagementTypes, { rejectWithValue, getState }) => {
   try {
     const state: any = getState();
@@ -725,11 +730,25 @@ export const postOrderManagement = createAsyncThunk("user/postOrderManagament", 
     }
     await instance.post("/order-management", { data, companyId });
     return;
+=======
+export const getGrnNumberByProduct = createAsyncThunk("user/getProductsFinishedGoods", async (productId: string|string[], { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.get("/production/raw-material-utilization/get-grn-by-products", { params:{productId} });
+    return res.data
+>>>>>>> aeef0228f2b5c5e3fa2096e5c828d5b277115f86
   } catch (err) {
     rejectWithValue(err);
   }
 });
 
+<<<<<<< HEAD
 export const getOrderManagement = createAsyncThunk("user/getOrderManagament", async (_, { rejectWithValue, getState }) => {
   try {
     const state: any = getState();
@@ -774,3 +793,37 @@ export const getOrderManagement = createAsyncThunk("user/getOrderManagament", as
     
   });
   
+=======
+
+export const postRawMaterialUtilization = createAsyncThunk("user/raw-material-utilization", async (rawMaterialUtilization: RawMaterialUtilizationTypes, { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.post("/production/raw-material-utilization", { rawMaterialUtilization });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getProductionSOPByBatchNumber = createAsyncThunk("user/getProductionSOPByBatchNumber", async (batchNumber: string, { rejectWithValue }) => {
+  try {
+    // const state:any = getState()
+    // let lineOfBusiness:string | null
+    // if(state?.data?.user?.superAdmin){
+    //   lineOfBusiness = state.data?.superAdminCompany?._id
+    // }else{
+    //   lineOfBusiness = state.data?.user?.company
+    // }
+   const res = await instance.get("/production/sop/byBatchNumber", { params:{batchNumber} });
+    return res.data
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+>>>>>>> aeef0228f2b5c5e3fa2096e5c828d5b277115f86

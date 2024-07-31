@@ -19,6 +19,7 @@ import OrderManagementRoute from "./Pages/OrderManagement/OrderManagementRoute";
 
 import SupplyChainManagementRoute from "./Pages/SupplyChainManagement/SupplyChainManagementRoute";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
+// import SupplyChainRoute from "./Pages/SupplyChain/SupplyChainRoute";
 
 function App() {
   const data = useSelector((state: any) => state.data);
@@ -94,7 +95,9 @@ function App() {
         <Route path="/supply-chain/*" element={<SupplyChainManagementRoute />} />
         <Route path="/order-management/*" element={<OrderManagementRoute />} />
         <Route path="/reports/*" element={<ReportsRoute />} />
-        <Route path="*" element={<ErrorPage />} />
+        {/* <Route path="/supply-chain/*" element={<SupplyChainRoute />} /> */}
+        <Route path="*" element={<ErrorPage/>} />
+        
       </Routes>
     </div>
   );

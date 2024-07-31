@@ -51,7 +51,8 @@ export const createdModules = [
                                 ["product management",
                                     [
                                         ["production management master"],
-                                        ["production sop"]
+                                        ["production sop"],
+                                        ["raw material utilization"]
                                     ]
                                 ],
                                 ["supply chain management",
@@ -67,10 +68,16 @@ export const createdModules = [
                                             [
                                                 ["rm report"],
                                                 ["fg report"],
-                                                ["pm report"]
+                                                ["pm report"],
+                                                ["production sop report"]
                                             ]
                                         ],
-                                        ["quality report"]
+                                        ["quality report",
+                                            [
+                                                ["quality rm report"],
+                                                ["quality fg report"],
+                                            ]
+                                        ]
                                     ]
                                 ]
                             ];
