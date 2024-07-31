@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getOrderManagementById, getProductFinishedGoodsBatchNumberByProductId, getProductFromPurchaseOrderByGRNAndQuantity, getType, postOrderManagement, updateOrderManagementById } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getOrderManagementById, getProductFinishedGoodsBatchNumberByProductId, getType, updateOrderManagementById } from "../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
@@ -651,7 +651,7 @@ function EditOrderManagement() {
             </tbody>
           </table>
           <div className="flex mt-3 w-full items-end justify-end">
-            <button type="button" onClick={() => setData({ ...data, products: [...data.products, {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
+            <button type="button" onClick={() => setData({ ...data, products: [...(data.products||[]), {}] })} className="bg-[#5970F5] text-white px-4 py-2 rounded-md">
               + Add{" "}
             </button>
           </div>

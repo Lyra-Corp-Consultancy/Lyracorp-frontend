@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { getFGReports } from "../../../utils/redux/actions";
 import Select from "../../../components/Select";
 import { makeToast } from "../../../utils/redux/slice";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 
 

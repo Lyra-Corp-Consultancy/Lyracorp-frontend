@@ -17,7 +17,7 @@ interface Prop {
   setSelected: (val: any) => void;
 }
 
-function ActiveOrder({ data, dropDowns, inActiveUser, selected, setSelected }: Prop) {
+function ActiveOrder({ data, inActiveUser, selected, setSelected }: Prop) {
   const [inactive, setInactive] = useState("");
   const dispatch: any = useDispatch();
   const navigate = useNavigate();

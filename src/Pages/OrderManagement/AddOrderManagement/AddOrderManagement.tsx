@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { addRawMaterialOutward, getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getFinishedGoodsBatchNumberByProductId, getProductFinishedGoodsBatchNumberByProductId, getProductFromPurchaseOrderByGRNAndQuantity, getProductsFinishedGoods, getType, postOrderManagement } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFinishedGoodsBatchNumberByProductId,  getType, postOrderManagement } from "../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
@@ -13,7 +13,7 @@ import styles from "./AddOrderManagement.module.scss";
 import { formatDate } from "../../../utils/functions/formats";
 import Select from "../../../components/Select";
 import DeleteConfirmationBox from "../../../components/DeleteConfirmationBox";
-import { OrderManagementTypes, RawMaterialOutward } from "../../../utils/Type/types";
+import { OrderManagementTypes } from "../../../utils/Type/types";
 
 function AddOrderManagement() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

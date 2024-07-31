@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { getAllQCPO, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+import {  getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
 import styles from "./FinishedGoodsOutwardList.module.scss";
 
 function FinishedGoodsOutwardList() {
-  const [data, setData] = useState<any[]>([]);
-  const [filtered, setFiltered] = useState<any[]>([]);
+  // const [data, setData] = useState<any[]>([]);
+  // const [filtered, setFiltered] = useState<any[]>([]);
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
   const [dropDowns, setDropDown] = useState<{
@@ -32,21 +32,21 @@ function FinishedGoodsOutwardList() {
 
     console.log(vendor);
 
-    const active = data.filter((x) => {
-      console.log(x);
-      if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
-        return x;
-      }
-    });
+    // const active = data.filter((x) => {
+    //   console.log(x);
+    //   if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
+    //     return x;
+    //   }
+    // });
 
-    setFiltered(active);
+    // setFiltered(active);
   };
 
   useEffect(() => {
-    dispatch(getAllQCPO()).then((res: any) => {
-      setData(res.payload);
-      setFiltered(res.payload);
-    });
+    // dispatch(getAllQCPO()).then((res: any) => {
+    //   setData(res.payload);
+    //   // setFiltered(res.payload);
+    // });
 
     const res1 = dispatch(getType("vendor"));
 

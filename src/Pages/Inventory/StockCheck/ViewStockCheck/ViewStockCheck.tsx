@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { addRawMaterialOutward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getType } from "../../../../utils/redux/actions";
+import { addRawMaterialOutward, } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 // import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import styles from "./AddStockCheck.module.scss";
+// import styles from "./AddStockCheck.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { RawMaterialOutward } from "../../../../utils/Type/types";
 // import { formatDate } from "../../../../utils/functions/formats";
@@ -17,27 +17,27 @@ import { RawMaterialOutward } from "../../../../utils/Type/types";
 
 function ViewStockCheck() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
-  const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  // const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
+  // const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const [products, setProducts] = useState<any[]>();
+  const [products] = useState<any[]>();
   const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
   const user = useSelector((state: any) => state?.data?.user);
-  const [dropDowns, setDropDown] = useState<{
-    margin: any[];
-    account: any[];
-    discount: any[];
-    payment: any[];
-    uom: any[];
-    document: any[];
-    certificate: any[];
-    products: any[];
-    users: any[];
-    vendor: any[];
-    transporter: any[];
-    packing: any[];
-    shipping: any[];
-  }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
+  // const [dropDowns, setDropDown] = useState<{
+  //   margin: any[];
+  //   account: any[];
+  //   discount: any[];
+  //   payment: any[];
+  //   uom: any[];
+  //   document: any[];
+  //   certificate: any[];
+  //   products: any[];
+  //   users: any[];
+  //   vendor: any[];
+  //   transporter: any[];
+  //   packing: any[];
+  //   shipping: any[];
+  // }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
   const [data, setData] = useState<RawMaterialOutward>({
@@ -88,144 +88,144 @@ function ViewStockCheck() {
 
   //     setFiles([...files, ...selectedFiles]);
   //   };
-  useEffect(() => {
-    const res1 = dispatch(getType("marginSetting"));
+  // useEffect(() => {
+  //   const res1 = dispatch(getType("marginSetting"));
 
-    res1.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          margin: res?.payload?.[0]?.marginSettingType,
-        };
-      });
-    });
-    dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
-      setProducts(res?.payload);
-      console.log("res ", res);
-    });
-    const res2 = dispatch(getType("uom"));
+  //   res1.then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         margin: res?.payload?.[0]?.marginSettingType,
+  //       };
+  //     });
+  //   });
+  //   dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
+  //     setProducts(res?.payload);
+  //     console.log("res ", res);
+  //   });
+  //   const res2 = dispatch(getType("uom"));
 
-    res2.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          uom: res?.payload?.[0]?.uomType,
-        };
-      });
-    });
+  //   res2.then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         uom: res?.payload?.[0]?.uomType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("transport")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          transporter: res?.payload?.[0]?.transportType,
-        };
-      });
-    });
+  //   dispatch(getType("transport")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         transporter: res?.payload?.[0]?.transportType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getAllUserManagement()).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          users: res?.payload?.active,
-        };
-      });
-      console.log(res.payload);
-    });
+  //   dispatch(getAllUserManagement()).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         users: res?.payload?.active,
+  //       };
+  //     });
+  //     console.log(res.payload);
+  //   });
 
-    dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendor: res?.payload?.active,
-        };
-      });
-    });
+  //   dispatch(getAllVendorMaster()).then((res: any) => {
+  //     console.log(res?.payload?.active);
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         vendor: res?.payload?.active,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("discount")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          discount: res?.payload?.[0]?.discountType,
-        };
-      });
-    });
+  //   dispatch(getType("discount")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         discount: res?.payload?.[0]?.discountType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("packing")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          packing: res?.payload?.[0]?.packingType,
-        };
-      });
-    });
+  //   dispatch(getType("packing")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         packing: res?.payload?.[0]?.packingType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendor: res?.payload?.active,
-        };
-      });
-    });
-    dispatch(getType("certification")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          certificate: res?.payload?.[0]?.certificationType,
-        };
-      });
-      console.log(res.payload);
-    });
+  //   dispatch(getAllVendorMaster()).then((res: any) => {
+  //     console.log(res?.payload?.active);
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         vendor: res?.payload?.active,
+  //       };
+  //     });
+  //   });
+  //   dispatch(getType("certification")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         certificate: res?.payload?.[0]?.certificationType,
+  //       };
+  //     });
+  //     console.log(res.payload);
+  //   });
 
-    dispatch(getType("shipping")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          shipping: res?.payload?.[0]?.shippingType,
-        };
-      });
-      console.log(res.payload);
-    });
+  //   dispatch(getType("shipping")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         shipping: res?.payload?.[0]?.shippingType,
+  //       };
+  //     });
+  //     console.log(res.payload);
+  //   });
 
-    dispatch(getAllProductRawMaterial()).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          products: res?.payload?.active,
-        };
-      });
-    });
+  //   dispatch(getAllProductRawMaterial()).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         products: res?.payload?.active,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("payment")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          payment: res?.payload?.[0]?.paymentType,
-        };
-      });
-    });
+  //   dispatch(getType("payment")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         payment: res?.payload?.[0]?.paymentType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("document")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          document: res?.payload?.[0]?.documentType,
-        };
-      });
-    });
+  //   dispatch(getType("document")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         document: res?.payload?.[0]?.documentType,
+  //       };
+  //     });
+  //   });
 
-    axios.get("https://api.first.org/data/v1/countries").then((res) => {
-      const val = [];
-      for (const i in res.data.data) {
-        val.push(res.data.data[i]);
-      }
-      setPlaces({ ...places, country: val });
-      setSearch({ ...search, country: val });
-    });
-  }, []);
+  //   axios.get("https://api.first.org/data/v1/countries").then((res) => {
+  //     const val = [];
+  //     for (const i in res.data.data) {
+  //       val.push(res.data.data[i]);
+  //     }
+  //     setPlaces({ ...places, country: val });
+  //     setSearch({ ...search, country: val });
+  //   });
+  // }, []);
 
   //   const handleDrop = (e: any) => {
   //     e.preventDefault();
@@ -313,7 +313,7 @@ function ViewStockCheck() {
               </tr>
             </thead>
             <tbody>
-              {data?.products?.map((x: any, i: number) => (
+              {data?.products?.map((_: any, i: number) => (
                 <tr className={`text-center relative `} style={{ zIndex: 500 - i }}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">

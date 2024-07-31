@@ -1,130 +1,130 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+// import { useEffect, useState } from "react";
+// import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { getAllQCPO, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+// import { Link } from "react-router-dom";
+// import { getAllQCPO, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
 import styles from "./StockCheckList.module.scss";
 
 function StockCheckList() {
-  const [data, setData] = useState<any[]>([]);
-  const [filtered, setFiltered] = useState<any[]>([]);
-  const dispatch: any = useDispatch();
+  // const [data, setData] = useState<any[]>([]);
+  // const [filtered, setFiltered] = useState<any[]>([]);
+  // const dispatch: any = useDispatch();
   const navigate = useNavigate();
-  const [dropDowns, setDropDown] = useState<{
-    vendor: any[];
-    vendorType: any[];
-    account: any[];
-    users: any[];
-    discount: any[];
-    payment: any[];
-    document: any[];
-    shippingMethods: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
+  // const [dropDowns, setDropDown] = useState<{
+  //   vendor: any[];
+  //   vendorType: any[];
+  //   account: any[];
+  //   users: any[];
+  //   discount: any[];
+  //   payment: any[];
+  //   document: any[];
+  //   shippingMethods: any[];
+  // }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
 
-  const search = (val: string) => {
-    const lowerVal = val.toLowerCase();
-    const vendor = dropDowns.vendor
-      .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
-      .map((x) => {
-        return x?._id;
-      });
+  // const search = (val: string) => {
+  //   const lowerVal = val.toLowerCase();
+  //   const vendor = dropDowns.vendor
+  //     .filter((x) => x?.VendorName?.toLowerCase()?.includes(lowerVal))
+  //     .map((x) => {
+  //       return x?._id;
+  //     });
 
-    console.log(vendor);
+  //   console.log(vendor);
 
-    const active = data.filter((x) => {
-      console.log(x);
-      if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
-        return x;
-      }
-    });
+  //   const active = data.filter((x) => {
+  //     console.log(x);
+  //     if (vendor.includes(x?.vendor) || x?.seq?.toLowerCase()?.includes(lowerVal)) {
+  //       return x;
+  //     }
+  //   });
 
-    setFiltered(active);
-  };
+  //   // setFiltered(active);
+  // };
 
-  useEffect(() => {
-    dispatch(getAllQCPO()).then((res: any) => {
-      setData(res.payload);
-      setFiltered(res.payload);
-    });
+  // useEffect(() => {
+  //   dispatch(getAllQCPO()).then((res: any) => {
+  //     setData(res.payload);
+  //     // setFiltered(res.payload);
+  //   });
 
-    const res1 = dispatch(getType("vendor"));
+  //   const res1 = dispatch(getType("vendor"));
 
-    res1.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendorType: res?.payload[0]?.vendorType,
-        };
-      });
-    });
+  //   res1.then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         vendorType: res?.payload[0]?.vendorType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getAllUserManagement()).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          users: res?.payload?.active,
-        };
-      });
-      console.log(res.payload);
-    });
-    const res2 = dispatch(getType("account"));
+  //   dispatch(getAllUserManagement()).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         users: res?.payload?.active,
+  //       };
+  //     });
+  //     console.log(res.payload);
+  //   });
+  //   const res2 = dispatch(getType("account"));
 
-    res2.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          account: res?.payload[0]?.accountType,
-        };
-      });
-    });
+  //   res2.then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         account: res?.payload[0]?.accountType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendor: res?.payload?.active,
-        };
-      });
-    });
+  //   dispatch(getAllVendorMaster()).then((res: any) => {
+  //     console.log(res?.payload?.active);
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         vendor: res?.payload?.active,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("discount")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          discount: res?.payload[0]?.discountType,
-        };
-      });
-    });
+  //   dispatch(getType("discount")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         discount: res?.payload[0]?.discountType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("shipping")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          shippingMethods: res?.payload[0]?.shippingType,
-        };
-      });
-    });
+  //   dispatch(getType("shipping")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         shippingMethods: res?.payload[0]?.shippingType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("payment")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          payment: res?.payload[0]?.paymentType,
-        };
-      });
-    });
+  //   dispatch(getType("payment")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         payment: res?.payload[0]?.paymentType,
+  //       };
+  //     });
+  //   });
 
-    dispatch(getType("document")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          document: res?.payload[0]?.documentType,
-        };
-      });
-    });
-  }, []);
+  //   dispatch(getType("document")).then((res: any) => {
+  //     setDropDown((prev) => {
+  //       return {
+  //         ...prev,
+  //         document: res?.payload[0]?.documentType,
+  //       };
+  //     });
+  //   });
+  // }, []);
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">

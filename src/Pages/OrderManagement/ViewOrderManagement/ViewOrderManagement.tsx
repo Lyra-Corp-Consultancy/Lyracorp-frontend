@@ -4,14 +4,10 @@
 import { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getOrderManagementById, getProductFinishedGoodsBatchNumberByProductId, getType } from "../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getOrderManagementById, getType } from "../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import styles from "../EditOrderManagement/EditOrderManagement.module.scss";
-import { formatDate } from "../../../utils/functions/formats";
-import Select from "../../../components/Select";
 
 import { OrderManagementTypes } from "../../../utils/Type/types";
 
@@ -25,9 +21,6 @@ function ViewOrderManagement() {
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
 
   const [products, setProducts] = useState<any[]>();
-  const [batch, setBatch] = useState<any[]>([]);
-  const superAdminCompany = useSelector((state: any) => state?.data?.superAdminCompany);
-  const user = useSelector((state: any) => state?.data?.user);
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
     account: any[];
@@ -75,7 +68,6 @@ function ViewOrderManagement() {
     paymentTerm: "",
   });
 
-  const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
 
   const navigate = useNavigate();
   useEffect(() => {
