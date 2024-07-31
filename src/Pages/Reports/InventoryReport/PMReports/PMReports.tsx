@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllProductFinishedGoods, getAllProductRawMaterial, getRMReports, getType } from "../../../utils/redux/actions";
-import Select from "../../../components/Select";
+import { getAllProductFinishedGoods, getAllProductRawMaterial, getRMReports, getType } from "../../../../utils/redux/actions";
+import Select from "../../../../components/Select";
 
 function PMReports() {
   const [products, setProducts] = useState<any[]>([]);

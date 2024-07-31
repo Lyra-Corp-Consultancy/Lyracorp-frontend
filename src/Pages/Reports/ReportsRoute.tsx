@@ -1,22 +1,22 @@
-import { Route, Routes } from "react-router-dom";
-import RMReports from "./RMReports/RMReports";
-import NavigationBar from "../../components/NavigationBar";
-import FGReports from "./FGReports/FGReports";
-import PMReports from "./PMReports/PMReports";
-import ProductionSOPReport from "./ProductionSOPReport/ProductionSOPReport";
+
+import { Route, Routes } from 'react-router-dom'
+import InventoryReportsRoute from './InventoryReport/InventoryReportsRoute'
+import QualityReport from './QualityReport/QualityReport'
+import NavigationBar from '../../components/NavigationBar'
+
+
+
 
 function ReportsRoute() {
-  return (
-    <div  className="overflow-x-hidden">
-      <NavigationBar />
-      <Routes>
-        <Route path="/rm-reports" element={<RMReports />} />
-        <Route path="/fg-reports" element={<FGReports />} />
-        <Route path="/pm-reports" element={<PMReports />} />
-        <Route path="/production-sop-reports" element={<ProductionSOPReport />} />
-      </Routes>
-    </div>
-  );
+    return (
+        <>
+        <NavigationBar/>
+            <Routes> 
+                <Route path='/inventory-report/*' element={<InventoryReportsRoute/>}/>
+                <Route path='/quality-report/' element={<QualityReport/>}/>
+            </Routes>
+        </>
+    )
 }
 
-export default ReportsRoute;
+export default ReportsRoute

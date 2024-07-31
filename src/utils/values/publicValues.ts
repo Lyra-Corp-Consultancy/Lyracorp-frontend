@@ -71,6 +71,12 @@ export const createdModules = [
                                                 ["pm report"],
                                                 ["production sop report"]
                                             ]
+                                        ],
+                                        ["quality report",
+                                            [
+                                                ["quality rm report"],
+                                                ["quality fg report"],
+                                            ]
                                         ]
                                     ]
                                 ]

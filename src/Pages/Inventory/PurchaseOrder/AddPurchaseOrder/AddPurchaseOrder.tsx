@@ -282,8 +282,10 @@ function AddPurchaseOrder() {
 
   
   console.log("data ", data);
-  console.log("da ", dropDowns);
+  console.log("dd ", dropDowns);
   console.log("sear ", searchValue);
+
+
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
@@ -603,7 +605,7 @@ function AddPurchaseOrder() {
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Bussiness Document</label>
+            <label>Business Document</label>
             <Select
               pattern={dropDowns?.document?.filter((a) => a?.value === searchValue.document)?.[0] ? undefined : ""}
               title="Please Select values from drop down"
@@ -725,7 +727,7 @@ function AddPurchaseOrder() {
                         };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[60%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[60%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -733,7 +735,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94 - i }}
                         
-                        className="w-[50%] z-10 shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] z-10 shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -769,7 +771,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94- i }}
                         
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.packing?.filter((x) => x?.value === searchValue.packing[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -807,7 +809,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94 - i }}
                         
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {

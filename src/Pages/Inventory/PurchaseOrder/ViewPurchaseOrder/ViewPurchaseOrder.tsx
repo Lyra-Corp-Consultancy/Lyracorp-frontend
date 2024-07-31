@@ -265,7 +265,7 @@ function ViewPurchaseOrder() {
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Bussiness Document</label>
+            <label>Business Document</label>
             <label className="h-[30px] w-[200px] shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value}</label>
             <label htmlFor="file" className="flex items-center gap-3 justify-center shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[50px] w-[150px] px-3 py-2 rounded-md" onDrop={handleDrop} onDragOver={(e) => e.preventDefault()} onDragEnter={(e) => e.preventDefault()}>
               <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

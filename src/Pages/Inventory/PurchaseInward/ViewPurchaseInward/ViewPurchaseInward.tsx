@@ -229,10 +229,10 @@ function ViewPurchaseInward() {
               <label>Vehicle Number</label>
               <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.vehicleNumber}</label>
             </div>
-            <div className="flex gap-3 items-center">
+            {/* <div className="flex gap-3 items-center">
               <label>Warehouse</label>
               <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.warehouse?.warehouseName}</label>
-            </div>
+            </div> */}
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>

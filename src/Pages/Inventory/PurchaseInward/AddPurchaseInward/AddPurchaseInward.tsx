@@ -269,14 +269,19 @@ function AddPurchaseInward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-  return (
+    console.log("data ",data)
+    console.log("dd ",dropDowns)
+    console.log("user ",user)
+    console.log("com ",superAdminCompany)
+
+    return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
           <label className="font-bold">Purchase Order Serial No</label>
-          <input onChange={(e) => setSerialNumber(e.target.value)} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+          <input onChange={(e) => setSerialNumber(e.target.value.toUpperCase()||e.target.value.toLowerCase())} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
           <button
             type="button"
             onClick={() => {
@@ -352,7 +357,12 @@ function AddPurchaseInward() {
                 />
               </label>
             </div>
-           
+                  
+            <div className="flex items-center gap-3">
+              <label>Invoice Number</label>
+              <input required value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+            </div>
+                  
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
@@ -385,8 +395,8 @@ function AddPurchaseInward() {
               <label>Vehicle Number</label>
               <input  value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
-            <div className="flex gap-3 items-center">
-              <label>Warehouse</label>
+            {/* <div className="flex gap-3 items-center">
+              <label>Warehouse Name</label>
 
               <Select
                 
@@ -403,7 +413,7 @@ function AddPurchaseInward() {
                       onClick={() => {
                         setSearchValue({
                           ...searchValue,
-                          warehouse: x?.address,
+                          warehouse: x?.warehouseName,
                         });
                         setData({ ...data, warehouse: x });
                       }}
@@ -413,7 +423,7 @@ function AddPurchaseInward() {
                     </li>
                   ))}
               </Select>
-            </div>
+            </div> */}
           </div>
 
           <h1 className="roboto-medium mt-1">Product Details</h1>
@@ -421,18 +431,19 @@ function AddPurchaseInward() {
           <table className="w-full text-[14px] border-collapse rounded border">
             <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className=" border-r w-1/12">Product Name</th>
-                <th className="border-r w-1/12">Received Quantity</th>
-                <th className="border-r w-1/12">Billed Quantity</th>
-                <th className="border-r w-1/12">UOM</th>
-                <th className="border-r w-1/12">Batch Number</th>
-                <th className="border-r w-1/12">Expire Date</th>
-                <th className="border-r w-1/12">Shortage</th>
-                <th className="border-r w-1/12">Unit Price</th>
-                <th className="border-r w-1/12">Total Value</th>
-                <th className="border-r w-1/12">Remarks</th>
-                <th className="border-r w-1/12">Certification</th>
-                <th className="w-1/12">Upload</th>
+                <th className=" border-r w-1/13">Product Name</th>
+                <th className="border-r w-1/13">Received Quantity</th>
+                <th className="border-r w-1/13">Billed Quantity</th>
+                <th className="border-r w-1/13">UOM</th>
+                <th className="border-r w-1/13">Batch Number</th>
+                <th className="border-r w-1/13">Expire Date</th>
+                <th className="border-r w-1/13">Shortage</th>
+                <th className="border-r w-1/13">Unit Price</th>
+                <th className="border-r w-1/13">Tax</th>
+                <th className="border-r w-1/13">Total Value</th>
+                <th className="border-r w-1/13">Remarks</th>
+                <th className="border-r w-1/13">Certification</th>
+                <th className="w-1/13">Upload</th>
               </tr>
             </thead>
             <tbody>
@@ -442,7 +453,7 @@ function AddPurchaseInward() {
                     <div className="flex justify-center items-center">
                       <Select
                         
-                        className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -491,7 +502,7 @@ function AddPurchaseInward() {
                         product[i] = { ...x, recievedQuantity: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -505,13 +516,13 @@ function AddPurchaseInward() {
                         product[i] = { ...x, orderQuantity: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
                       
-                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                      className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
                       onChange={(e) => {
@@ -551,10 +562,10 @@ function AddPurchaseInward() {
                         product[i] = { ...x, batchNumber: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
-                  <td className="text-center border justify-center py-2 items-center ">
+                  <td className="text-center border justify-center py-2 items-center "> 
                     <input
                       
                       type="date"
@@ -565,21 +576,26 @@ function AddPurchaseInward() {
                         product[i] = { ...x, expDate: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
+                      {/* <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span> */}
+                    </div>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
                     </div>
                   </td>
@@ -594,7 +610,7 @@ function AddPurchaseInward() {
                           product[i] = { ...x, remarks: e.target.value };
                           setData({ ...data, products: product });
                         }}
-                        className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                        className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                       />
                     </div>
                   </td>
@@ -602,7 +618,7 @@ function AddPurchaseInward() {
                     <div className="flex justify-center items-center">
                       <Select
                         
-                        className="w-[90%] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {

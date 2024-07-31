@@ -14,6 +14,10 @@ import SelectCompany from "./Pages/SelectCompany/SelectCompany";
 import QCRoute from "./Pages/QC/QCRoute";
 import ProductionRoute from "./Pages/Production/ProductionRoute";
 import ErrorPage from "./Error404Page";
+
+import OrderManagementRoute from "./Pages/OrderManagement/OrderManagementRoute";
+
+import SupplyChainManagementRoute from "./Pages/SupplyChainManagement/SupplyChainManagementRoute";
 import ReportsRoute from "./Pages/Reports/ReportsRoute";
 // import SupplyChainRoute from "./Pages/SupplyChain/SupplyChainRoute";
 
@@ -25,7 +29,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if(location.pathname!=="/"){
+    if (location.pathname !== "/") {
       const token = Cookies.get("token");
       if (!token) {
         dispatch(addPathToGo(location.pathname));
@@ -34,14 +38,14 @@ function App() {
     }
   }, [data]);
 
-  useEffect(()=>{
-    if(user?.superAdmin && location.pathname!=="/" && !location.pathname.includes("/master")){
-      if(!data?.superAdminCompany){
+  useEffect(() => {
+    if (user?.superAdmin && location.pathname !== "/" && !location.pathname.includes("/master")) {
+      if (!data?.superAdminCompany) {
         dispatch(addPathToGo(location.pathname));
         navigate("/select-company");
       }
     }
-  },[user])
+  }, [user]);
 
   useEffect(() => {
     if (data?.toaster) {
@@ -57,19 +61,23 @@ function App() {
   }, [data]);
   return (
     <div>
-      {loader && <div className="fixed top-0 left-0 h-screen w-screen bg-[#00000050] z-[999] flex justify-center items-center">
+      {loader && (
+        <div className="fixed top-0 left-0 h-screen w-screen bg-[#00000050] z-[999] flex justify-center items-center">
           <span className="loader"></span>
-      </div>}
+        </div>
+      )}
       <div id="toaster" className="w-[360px] flex p-5 gap-3 transition-all duration-500 ease-in-out translate-x-[100%] bg-[#E0E4FF] rounded-[20px_0_0_0] absolute z-[999] right-0 top-24 shadow-md shadow-[#00000040]">
-       {data?.msg!=="Error" &&  <svg width={29} height={31} viewBox="0 0 29 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <mask id="mask0_631_40936" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x={0} y={0} width={29} height={31}>
-            <path d="M14.5 2L17.9521 4.51827L22.2257 4.51038L23.538 8.57694L27 11.0821L25.6719 15.1434L27 19.2047L23.538 21.7098L22.2257 25.7764L17.9521 25.7685L14.5 28.2867L11.0479 25.7685L6.77433 25.7764L5.46196 21.7098L2 19.2047L3.32814 15.1434L2 11.0821L5.46196 8.57694L6.77433 4.51038L11.0479 4.51827L14.5 2Z" fill="white" stroke="white" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M9.89844 15.1452L13.1843 18.4311L19.756 11.8594" stroke="black" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
-          </mask>
-          <g mask="url(#mask0_631_40936)">
-            <path d="M-1.26953 -0.628906H30.2746V30.9152H-1.26953V-0.628906Z" fill="#196000" />
-          </g>
-        </svg>}
+        {data?.msg !== "Error" && (
+          <svg width={29} height={31} viewBox="0 0 29 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <mask id="mask0_631_40936" style={{ maskType: "luminance" }} maskUnits="userSpaceOnUse" x={0} y={0} width={29} height={31}>
+              <path d="M14.5 2L17.9521 4.51827L22.2257 4.51038L23.538 8.57694L27 11.0821L25.6719 15.1434L27 19.2047L23.538 21.7098L22.2257 25.7764L17.9521 25.7685L14.5 28.2867L11.0479 25.7685L6.77433 25.7764L5.46196 21.7098L2 19.2047L3.32814 15.1434L2 11.0821L5.46196 8.57694L6.77433 4.51038L11.0479 4.51827L14.5 2Z" fill="white" stroke="white" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M9.89844 15.1452L13.1843 18.4311L19.756 11.8594" stroke="black" strokeWidth={4} strokeLinecap="round" strokeLinejoin="round" />
+            </mask>
+            <g mask="url(#mask0_631_40936)">
+              <path d="M-1.26953 -0.628906H30.2746V30.9152H-1.26953V-0.628906Z" fill="#196000" />
+            </g>
+          </svg>
+        )}
         <div>
           <p className="text-[14px]">{data?.submsg}</p>
           <p className="text-[16px] roboto-medium">{data?.msg}</p>
@@ -84,6 +92,8 @@ function App() {
         <Route path="/user-management/*" element={<UserManagementRoute />} />
         <Route path="/qc/*" element={<QCRoute />} />
         <Route path="/production/*" element={<ProductionRoute />} />
+        <Route path="/supply-chain/*" element={<SupplyChainManagementRoute />} />
+        <Route path="/order-management/*" element={<OrderManagementRoute />} />
         <Route path="/reports/*" element={<ReportsRoute />} />
         {/* <Route path="/supply-chain/*" element={<SupplyChainRoute />} /> */}
         <Route path="*" element={<ErrorPage/>} />

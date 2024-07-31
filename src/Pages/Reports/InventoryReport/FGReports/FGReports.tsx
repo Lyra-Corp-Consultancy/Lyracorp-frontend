@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
-import Select from "../../../components/Select";
+import Select from "../../../../components/Select";
 import { useDispatch } from "react-redux";
-import { getFGReports } from "../../../utils/redux/actions";
-import { makeToast } from "../../../utils/redux/slice";
+import { getFGReports } from "../../../../utils/redux/actions";
+import { makeToast } from "../../../../utils/redux/slice";
 
 function FGReports() {
   const [report, setReports] = useState<any[]>([]);
@@ -17,7 +17,7 @@ function FGReports() {
       console.log(res.payload);
       setReports(res.payload);
       setFiltered(res.payload);
-      let finishedGoods = res.payload.map((x: any) => x?.products?.productName);
+      let finishedGoods = res?.payload?.map((x: any) => x?.products?.productName);
       let warehouse = res.payload.map((x: any) => x?.warehouse?.warehouseName);
       let batchNum = res.payload.map((x: any) => x?.batchNumbers);
       finishedGoods = [...new Set(finishedGoods)];
@@ -26,6 +26,7 @@ function FGReports() {
       setDropDown({ finishedGoods, warehouse, batchNum });
     });
   }, []);
+  console.log(dropDown)
   return (
     <div className="px-10 py-3">
       <h1 className="font-semibold text-[20px]">Inventory Report</h1>
@@ -142,7 +143,7 @@ function FGReports() {
               </tr>
             </thead>
             <tbody>
-              {filtered.map((x, i) => (
+              {filtered?.map((x, i) => (
                 <tr>
                   <td className="text-center">{i + 1}</td>
                   <td className="text-center">{x?.products?.productName || "No Name"}</td>

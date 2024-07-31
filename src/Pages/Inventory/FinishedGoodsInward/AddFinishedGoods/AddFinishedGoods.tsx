@@ -40,6 +40,7 @@ function AddFinishedGoods() {
       setDropDowns({ ...dropDowns, uom: res.payload?.[0]?.uomType });
     });
   }, []);
+  console.log(data)
   return (
     <div className="px-4 py-4">
       <h1 className="font-semibold text-[18px]">Finished Goods Inward</h1>
@@ -104,7 +105,16 @@ function AddFinishedGoods() {
                     </Select>
                   </td>
                   <td className="px-3 py-1 border">
-                    <input type="number"  value={x?.productionQuantity} className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"/>
+                  <input
+                      type="number"
+                      value={x.productionQuantity}
+                      onChange={(e) => {
+                        const temp = [...data];
+                        temp[i].productionQuantity = parseInt(e.target.value);
+                        setData([...temp]);
+                      }}
+                      className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] remove-spin-wheel rounded-md"
+                    />
                   </td>
                   <td className="px-3 py-1 border">
                     <Select value={dropDowns?.uom?.find((y) => y?._id === x?.uom)?.value?.name || ""}>
@@ -135,7 +145,7 @@ function AddFinishedGoods() {
                     />
                   </td>
                   <td className="px-3 py-1 border">
-                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</h6>
+                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) + (x?.rejected || 0)}</h6>
                   </td>
                   <td className="px-3 py-1 border">
                     <Select value={x?.warehouse?.warehouseName || ""}>
@@ -154,7 +164,7 @@ function AddFinishedGoods() {
                     </Select>
                   </td>
                   <td className="px-3 py-1 border">
-                    <Select value={x?.pick?.address || ""}>
+                    <Select value={x?.pick?.warehouseName || ""}>
                       {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse || []).map((y: any) => (
                         <li
                           onClick={() => {

@@ -37,6 +37,7 @@ function AddRawMaterialOutward() {
     transporter: any[];
     packing: any[];
     shipping: any[];
+    
   }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
@@ -101,6 +102,7 @@ function AddRawMaterialOutward() {
     });
     dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
       setProducts(res?.payload);
+      console.log("res ",res)
     });
     const res2 = dispatch(getType("uom"));
 
@@ -233,14 +235,16 @@ function AddRawMaterialOutward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
-   console.log("data ",data)
-   console.log("drop ",dropDowns)
-   console.log("ser ",searchValue)
-   console.log("pro ",products)
+   console.log("data add ",data)
+   console.log("drop add ",dropDowns)
+   console.log("ser  add",searchValue)
+   console.log("pro  add",products)
+   console.log("user add ",user)
+   console.log("super add ",superAdminCompany)
 
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-      <h1 className="roboto-bold text-lg">Add Raw Material Outward</h1>
+      <h1 className="roboto-bold text-lg">Add Raw Material Outward </h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <form
@@ -290,7 +294,7 @@ function AddRawMaterialOutward() {
 
               <Select
                 
-                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.address === searchValue?.sender || "")?.[0]?.address ? undefined : ""}
+                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.warehouseName === searchValue?.sender || "")?.[0]?.warehouseName ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, sender: e.target.value });
@@ -302,7 +306,7 @@ function AddRawMaterialOutward() {
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
-                        setSearchValue({ ...searchValue, sender: x?.address });
+                        setSearchValue({ ...searchValue, sender: x?.warehouseName });
                         setData({ ...data, sender: x });
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
@@ -348,7 +352,7 @@ function AddRawMaterialOutward() {
                   ?.map((x: any) => (
                     <li
                       onClick={() => {
-                        setSearchValue({ ...searchValue, Receiver: x?.address });
+                        setSearchValue({ ...searchValue, Receiver: x?.warehouseName || x?.VendorName });
                         setData({ ...data, receiver: x });
                       }}
                       className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
@@ -479,7 +483,7 @@ function AddRawMaterialOutward() {
                 <tr className={`text-center relative `} style={{ zIndex: 500 - i }}>
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
-                      {/* <Select  className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={products?.filter((y) => y?._id === x?.productId)?.[0]?.name}>
+                      {/* <Select  className="w-[90%] z-[99] shadow-none bg-[#e2e2e2]" value={products?.filter((y) => y?._id === x?.productId)?.[0]?.name}>
                         {products?.map((x: any) => (
                           <li
                             onClick={() => {
@@ -499,7 +503,7 @@ function AddRawMaterialOutward() {
 
                       <Select
                         
-                        className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                         pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -539,7 +543,7 @@ function AddRawMaterialOutward() {
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    {/* <Select  className="w-[90%] z-[99] shadow-none bg-[#F6F4F4]" value={x?.grn}>
+                    {/* <Select  className="w-[90%] z-[99] shadow-none bg-[#e2e2e2]" value={x?.grn}>
                       {selectedProduct[i]?.qnGrn?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -556,7 +560,7 @@ function AddRawMaterialOutward() {
 
                     <Select
                       
-                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                      className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                        pattern={selectedProduct[i]?.qnGrn?.filter((a:any) => a?.grn === searchValue.grnNumber[i])?.[0]?.grn ? undefined : ""}
                         title="Please Select values from drop down"
                       onChange={(e) => {
@@ -592,7 +596,7 @@ function AddRawMaterialOutward() {
                       
                             pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
                         title="Please Select values from drop down" 
-                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                      className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                       onChange={(e) => {
                         const updatedGrnNumbers = [...(searchValue.grnNumber || [])];
                       
@@ -640,13 +644,13 @@ function AddRawMaterialOutward() {
                             setData({ ...data, products: product });
                           }
                         }}
-                        className="px-2 py-1 w-[73%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                        className="px-2 py-1 w-[73%] bg-[#e2e2e2]  h-[25px] rounded-md"
                       />
-                      <label className="px-2 py-1 w-[15%] ms-1 bg-[#F6F4F4]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0]?.qn}</label>
+                      <label className="px-2 py-1 w-[15%] ms-1 bg-[#e2e2e2]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0]?.qn}</label>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    {/* <Select  className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
+                    {/* <Select  className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]" value={dropDowns?.uom?.filter((y) => y?._id === x?.uom)?.[0]?.value?.name}>
                       {dropDowns?.uom?.map((x: any) => (
                         <li
                           onClick={() => {
@@ -663,7 +667,7 @@ function AddRawMaterialOutward() {
                     <Select
                       style={{ zIndex: 997 - i }}
                       
-                      className="w-[90%] shadow-none bg-[#F6F4F4]"
+                      className="w-[90%] shadow-none bg-[#e2e2e2]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
                       onChange={(e) => {
@@ -703,7 +707,7 @@ function AddRawMaterialOutward() {
                         product[i] = { ...x, remark: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
 

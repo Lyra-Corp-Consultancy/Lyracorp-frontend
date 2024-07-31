@@ -442,7 +442,7 @@ console.log(dropDowns.uom)
           <h1 className="roboto-medium mt-1">Document Details</h1>
 
           <div className="flex items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
-            <label>Bussiness Document</label>
+            <label>Business Document</label>
             <Select
               pattern={
                 dropDowns?.document?.filter(

@@ -113,7 +113,6 @@ interface PrefixSeq {
 }
 
 export interface ProfileMaster {
-  
   fileUrls: string[];
   logo?: string;
   companyName?: string;
@@ -209,6 +208,31 @@ export interface FinishedGoodsInwards {
   pick?: any;
   doc?: string;
   link?: any;
+}
+
+interface OrderManagementProductDetails {
+  productId?: string;
+  productDescription?: string;
+  orderQuantity?: string;
+  uom?: string;
+  shippingMethod?: string;
+  deliveryDate?: string;
+  itemValue?: string;
+  price?:number;
+  batchNumbers?:string
+}
+
+export interface OrderManagementTypes {
+  orderNum?: string;
+  orderVal?: string;
+  delivery?: string;
+  billing?: any;
+  shipping?: any;
+  poNum?: string;
+  contactName?: string;
+  contactNum?: string;
+  paymentTerm?: string;
+  products?: OrderManagementProductDetails[];
 }
 
 export interface RawMaterialUtilizationTypes {

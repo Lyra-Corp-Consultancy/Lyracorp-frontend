@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import {  getFinishedGoodsInwardIndividual, getProductsFinishedGoods, getType } from "../../../../utils/redux/actions";
+import { getFinishedGoodsInwardIndividual, getProductsFinishedGoods, getType } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ViewFinishedGoods() {
@@ -17,7 +17,7 @@ function ViewFinishedGoods() {
       setData([res.payload]);
     });
   }, []);
- 
+
   const [dropDowns, setDropDowns] = useState<{ uom: any[] }>({ uom: [] });
   useEffect(() => {
     dispatch(getProductsFinishedGoods()).then((res: any) => {
@@ -27,59 +27,63 @@ function ViewFinishedGoods() {
       setDropDowns({ ...dropDowns, uom: res.payload?.[0]?.uomType });
     });
   }, []);
+  
   return (
-    <div className="px-4 py-4">
-      <h1 className="font-semibold text-[18px]">Finished Goods Inward</h1>
-      <div className="bg-[#F1F3FF] min-h-[80vh] w-full p-2 rounded-3xl">
-        <div className="bg-white w-full min-h-[70vh] rounded-3xl p-5">
-          <h1 className="font-semibold text-[17px]">View Product Details</h1>
-          <table className="w-full mt-5">
-            <thead className="text-center border border-white">
-              <tr className="bg-[#5970F5] text-white">
-                <th className="text-center border border-white">Product Name</th>
-                <th className="text-center border border-white">Batch Number</th>
-                <th className="text-center border border-white">Production Quantity</th>
-                <th className="text-center border border-white">UOM</th>
-                <th className="text-center border border-white">Rejected Quantity</th>
-                <th className="text-center border border-white">Total</th>
-                <th className="text-center border border-white">Warehouse Name</th>
-                <th className="text-center border border-white">Pick Location</th>
-                <th className="text-center border border-white">Inward Documents</th>
-                <th className="text-center border border-white">Upload</th>
+    <div className=" w-screen px-4 pt-3 shadow-md">
+      <h1 className="roboto-bold text-lg">Finished Goods Inward</h1>
+      <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
+        <div className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
+          <h1 className="roboto-medium mt-1">View Product Details</h1>
+          <table className="w-full text-[14px] border-collapse rounded border">
+            <thead className="bg-[#5970F5]">
+              <tr className=" text-white">
+                <th className=" border-r w-1/10">Product Name</th>
+                <th className=" border-r w-1/10">Batch Number</th>
+                <th className=" border-r w-1/10">Production Quantity</th>
+                <th className=" border-r w-1/10">UOM</th>
+                <th className=" border-r w-1/10">Rejected Quantity</th>
+                <th className=" border-r w-1/10">Total</th>
+                <th className=" border-r w-1/10">Warehouse Name</th>
+                <th className=" border-r w-1/10">Pick Location</th>
+                <th className=" border-r w-1/10">Inward Documents</th>
+                <th className=" border-r w-1/10">Upload</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((x, i) => (
-                <tr>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{products.find((y) => y._id === x?.product)?.productName}</label>
+              {data.map((x: any,i ) => (
+                <tr className="text-center">
+                  <td className="text-center  border  justify-center py-2 items-center ">
+                    <div className="flex justify-center items-center">
+                      <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{products.find((y) => y._id === x?.product)?.productName}</label>
+                    </div>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.batchNumber}</label>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-1 py-1 rounded-md">{x?.batchNumber} </label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md">{x?.productionQuantity}</h6>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x?.productionQuantity} </label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{dropDowns?.uom?.find((y) => y?._id === x?.uom)?.value?.name}</label>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.uom?.find((y) => y?._id === x?.uom)?.value?.name}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.rejected}</label>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x?.rejected}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</h6>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.warehouse?.warehouseName}</label>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x?.warehouse?.warehouseName}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x?.pick?.warehouseName}</label>
+                  <td className="text-center border w-[100px] justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x?.pick?.warehouseName}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[100px] truncate rounded-md">{x.doc}</label>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x.doc}</label>
                   </td>
-                  <td className="px-3 py-1 border">
-                    <p
+
+                  <td className="text-center border justify-center py-2 items-center ">
+                  <p
                       onClick={() => {
                         let url = "";
                         if (x.link.includes("https://fileserver.lyracorp.in")) {
@@ -92,18 +96,17 @@ function ViewFinishedGoods() {
                       className="text-[9px] cursor-pointer text-[#5970F5] underline"
                     >
                       Preview {i + 1}
-                    </p>
-                  </td>
+                    </p>  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <div className="flex items-center justify-end mt-5"></div>
-          <div className="flex gap-5 items-center justify-center mt-5">
-            <button onClick={() => navigate(-1)} className="px-3 py-1 rounded-lg border border-[#5970F5] text-[#5970F5]">
+
+          <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
+            <button type="button" className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
               Cancel
             </button>
-            <button onClick={()=>navigate("/inventory/finished-goods-inward/edit/"+params.id)} className="px-3 py-1 rounded-lg bg-[#5970F5] text-white">
+            <button className=" rounded-md py-2 px-4 font-semibold bg-[#5970F5] text-white" onClick={() => navigate("/inventory/purchase-inward/edit/" + params.id)}>
               Edit
             </button>
           </div>

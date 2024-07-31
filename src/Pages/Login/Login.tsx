@@ -8,10 +8,11 @@ import { useSelector } from 'react-redux'
 function Login() {
     const [data,setData] = useState({username:"",password:""})
     const navigate = useNavigate()
+    
     const pathToGo = useSelector((state:any)=>state.data.pathToGo)
     return (
         <div className='w-screen'>
-            {/* <a href="https://accounts.zoho.com/oauth/v2/auth?scope=ZohoBooks.fullaccess.all&client_id=1000.D453MLS1XLTLAN66HUDCNLJNEV0MAR&state=testing&response_type=code&redirect_uri=http://localhost:5173">login</a> */}
+            {/* <a href="https://accounts.zoho.com/oauth/v2/auth?client_id=1000.7W7P67QH76LHT3HX5ALF4LI69JG0DN&response_type=code&scope=ZohoBooks.fullaccess.all&redirect_uri=https://google.com">login</a> */}
             <section className="bg-gray-50 dark:bg-gray-900">
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                  

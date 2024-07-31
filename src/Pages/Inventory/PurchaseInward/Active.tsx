@@ -28,7 +28,7 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
   const [inactive, setInactive] = useState("");
   const dispatch: any = useDispatch();
     const navigate = useNavigate()
-
+  console.log("aa ",data)
   return (
     <div className="h-[80%]  w-full">
       <table className="w-full mt-3 ">
@@ -98,7 +98,7 @@ function Active({ data, dropDowns, inActiveCustomer,selected,setSelected }: Prop
                   ></div>
                 )}
               </th>
-              <th>{i + 1}</th>
+              <th>{i + 1} </th>
               <th>{x?.seq}</th>
               <th>{dropDowns?.vendor?.filter((y) => y?._id === x?.vendor)[0]?.VendorName  }</th>
               <th>{x?.inwardDate}</th>
