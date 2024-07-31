@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useState } from "react";
-
+import styles from "./OrderManagement.module.scss";
 import DeleteConfirmationBox from "../../components/DeleteConfirmationBox";
 import { useDispatch } from "react-redux";
-import { activeAndDeactiveUser } from "../../utils/redux/actions";
+import { activeAndInactiveOrderManagement } from "../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 
 interface Prop {
@@ -59,16 +59,6 @@ function DeactiveOrder({ data, dropDowns, ActiveUser, selected, setSelected }: P
             <th>Billing Address</th>
             <th>Shipping Address</th>
             <th>Contact Person</th>
-            <th>Product Name</th>
-            <th>Product Description</th>
-            <th>Order Quantity</th>
-            <th>UOM</th>
-            <th>Delivery Date</th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
             <th>Action</th>
           </tr>
         </thead>
@@ -101,21 +91,21 @@ function DeactiveOrder({ data, dropDowns, ActiveUser, selected, setSelected }: P
                 )}
               </th>
               <th>{i + 1}</th>
-              <th>{x?.username}</th>
-              <th>{x?.phoneNumber}</th>
-              <th>{x?.email}</th>
-              <th>{x?.employeeId}</th>
-              <th>{dropDowns?.department?.filter((y) => y?._id === x?.department)[0]?.value}</th>
-              <th>{dropDowns?.role?.filter((y) => y?._id === x?.role)[0]?.value?.value}</th>
+              <th>{x?.orderNum}</th>
+              <th>{x?.orderVal}</th>
+              <th>{x?.delivery}</th>
+              <th className="truncate w-[10px]">{x?.billing?.address}</th>
+              <th>{x?.shipping?.address}</th>
+              <th> {x?.contactName}</th>
               <th className="relative ">
-                <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " }>
+                <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 "+ styles.more }>
                   <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.80618 8.18484C1.80618 7.73465 1.4412 7.36969 0.99098 7.36969C0.540758 7.36969 0.175781 7.73465 0.175781 8.18484C0.175781 8.63504 0.540758 9 0.99098 9C1.4412 9 1.80618 8.63504 1.80618 8.18484Z" fill="#5970F5" />
                     <path d="M1.80618 4.92313C1.80618 4.47293 1.4412 4.10797 0.99098 4.10797C0.540758 4.10797 0.175781 4.47293 0.175781 4.92313C0.175781 5.37332 0.540758 5.73828 0.99098 5.73828C1.4412 5.73828 1.80618 5.37332 1.80618 4.92313Z" fill="#5970F5" />
                     <path d="M1.80618 1.66531C1.80618 1.21512 1.4412 0.850159 0.99098 0.850159C0.540758 0.850159 0.175781 1.21512 0.175781 1.66531C0.175781 2.11551 0.540758 2.48047 0.99098 2.48047C1.4412 2.48047 1.80618 2.11551 1.80618 1.66531Z" fill="#5970F5" />
                   </svg>
                 </button>
-                <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 " }>
+                <div className={"hidden hover:flex flex-col gap-[1px] absolute right-0 z-20 "+styles.option }>
                   <button
                     onClick={() => {
                       setInactive(x?._id);
@@ -157,7 +147,7 @@ function DeactiveOrder({ data, dropDowns, ActiveUser, selected, setSelected }: P
           posColor="bg-[#196000]"
           RejectFunction={() => setInactive("")}
           ResolveFunction={() => {
-            dispatch(activeAndDeactiveUser([inactive])).then(() => {
+            dispatch(activeAndInactiveOrderManagement([inactive])).then(() => {
               ActiveUser();
               setInactive("");
             });

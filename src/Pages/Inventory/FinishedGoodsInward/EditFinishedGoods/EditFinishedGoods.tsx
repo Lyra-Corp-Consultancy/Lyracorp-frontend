@@ -28,16 +28,16 @@ function EditFinishedGoods() {
     dispatch(startLoading());
     const temp = [...data];
     for (let i = 0; i < temp.length; i++) {
-        if(!temp[i].link.includes("https://fileserver.lyracorp.in")){
-            const x = temp[i].link;
-            const file = new FormData();
-            file.append("file", x);
-            const res = await axios.post(fileServer, file);
-            temp[i].link = res.data;
-        }
+      if (!temp[i].link.includes("https://fileserver.lyracorp.in")) {
+        const x = temp[i].link;
+        const file = new FormData();
+        file.append("file", x);
+        const res = await axios.post(fileServer, file);
+        temp[i].link = res.data;
+      }
     }
     console.log(temp);
-    dispatch(updateFinishedGoodsInwardIndividual({data:temp[0],inwardId:params.id})).then(() => {
+    dispatch(updateFinishedGoodsInwardIndividual({ data: temp[0], inwardId: params.id })).then(() => {
       navigate(-1);
     });
   };
@@ -114,7 +114,16 @@ function EditFinishedGoods() {
                     </Select>
                   </td>
                   <td className="px-3 py-1 border">
-                  <input type="number"  value={x?.productionQuantity} className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"/>
+                    <input
+                      type="number"
+                      value={x?.productionQuantity}
+                      onChange={(e) => {
+                        const temp = [...data];
+                        temp[i].productionQuantity = parseInt(e.target.value);
+                        setData([...temp]);
+                      }}
+                      className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] rounded-md"
+                    />
                   </td>
                   <td className="px-3 py-1 border">
                     <Select value={dropDowns?.uom?.find((y) => y?._id === x?.uom)?.value?.name || ""}>
@@ -163,8 +172,8 @@ function EditFinishedGoods() {
                       ))}
                     </Select>
                   </td>
-                  <td className="px-3 py-1 border"> 
-                    <Select value={x?.pick?.warehouseName || ""}> 
+                  <td className="px-3 py-1 border">
+                    <Select value={x?.pick?.warehouseName || ""}>
                       {(user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse || []).map((y: any) => (
                         <li
                           onClick={() => {
@@ -210,9 +219,14 @@ function EditFinishedGoods() {
                       </label>
                     ) : (
                       <div>
-                        <p className="text-red-500 cursor-pointer" onClick={()=>{
-                            setData([{...x,link:null}])
-                        }}>X</p>
+                        <p
+                          className="text-red-500 cursor-pointer"
+                          onClick={() => {
+                            setData([{ ...x, link: null }]);
+                          }}
+                        >
+                          X
+                        </p>
                         <p
                           onClick={() => {
                             let url = "";

@@ -13,7 +13,7 @@
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { activeAndDeactiveUser, getAllUserManagement, getType } from "../../utils/redux/actions";
+import { activeAndInactiveOrderManagement,  getOrderManagement, getType } from "../../utils/redux/actions";
 import DeleteConfirmationBox from "../../components/DeleteConfirmationBox";
 import ActiveOrder from "./ActiveOrder";
 import DeactiveOrder from "./DeactiveOrder";
@@ -67,10 +67,10 @@ function OrderManagement() {
   const [active, setActive] = useState(true);
 
   useEffect(() => {
-    dispatch(getAllUserManagement()).then((res: any) => {
-      setData(res.payload);
-      setFiltered(res.payload);
-    });
+    // dispatch(getOrderManagement()).then((res: any) => {
+    //   setData(res.payload);
+    //   setFiltered(res.payload);
+    // });
 
     const res1 = dispatch(getType("customer"));
 
@@ -83,6 +83,14 @@ function OrderManagement() {
       });
     });
 
+
+
+    dispatch(getOrderManagement()).then((res:any)=>{
+      console.log( "get   ",res.payload);
+      setData(res.payload);
+      setFiltered(res.payload);
+      
+    })
     const res2 = dispatch(getType("account"));
 
     res2.then((res: any) => {
@@ -228,7 +236,7 @@ function OrderManagement() {
                 setSelected={setActiveSelectedUsers}
                 selected={ActiveSelectUsers}
                 inActiveUser={() => {
-                  dispatch(getAllUserManagement()).then((res: any) => {
+                  dispatch(getOrderManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -243,7 +251,7 @@ function OrderManagement() {
                 data={filtered?.deactive}
                 dropDowns={dropDowns}
                 ActiveUser={() => {
-                  dispatch(getAllUserManagement()).then((res: any) => {
+                  dispatch(getOrderManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -262,8 +270,8 @@ function OrderManagement() {
           ResolveFunction={() => {
             if (active) {
               if (ActiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveUser(ActiveSelectUsers)).then(() => {
-                  dispatch(getAllUserManagement()).then((res: any) => {
+                dispatch(activeAndInactiveOrderManagement(ActiveSelectUsers)).then(() => {
+                  dispatch(getOrderManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });
@@ -272,8 +280,8 @@ function OrderManagement() {
               setActiveSelectedUsers([]);
             } else {
               if (InactiveSelectUsers?.length > 0) {
-                dispatch(activeAndDeactiveUser(InactiveSelectUsers)).then(() => {
-                  dispatch(getAllUserManagement()).then((res: any) => {
+                dispatch(activeAndInactiveOrderManagement(InactiveSelectUsers)).then(() => {
+                  dispatch(getOrderManagement()).then((res: any) => {
                     setData(res.payload);
                     setFiltered(res.payload);
                   });

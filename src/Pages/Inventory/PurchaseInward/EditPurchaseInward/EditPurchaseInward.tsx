@@ -453,7 +453,7 @@ function EditPurchaseInward() {
                     <div className="flex justify-center items-center">
                       <Select
                         
-                        className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue?.products[i])[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -499,7 +499,7 @@ function EditPurchaseInward() {
                         product[i] = { ...x, recievedQuantity: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -512,13 +512,13 @@ function EditPurchaseInward() {
                         product[i] = { ...x, orderQuantity: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
                       
-                      className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                      className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue?.uom[i])[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
                       onChange={(e) => {
@@ -558,7 +558,7 @@ function EditPurchaseInward() {
                         product[i] = { ...x, batchNumber: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -572,21 +572,21 @@ function EditPurchaseInward() {
                         product[i] = { ...x, expDate: e.target.value };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) || 0}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#F6F4F4]  h-[25px] rounded-md">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span> {parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
                     </div>
                   </td>
@@ -601,7 +601,7 @@ function EditPurchaseInward() {
                           product[i] = { ...x, remarks: e.target.value };
                           setData({ ...data, products: product });
                         }}
-                        className="px-2 py-1 w-[90%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                        className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                       />
                     </div>
                   </td>
@@ -609,7 +609,7 @@ function EditPurchaseInward() {
                     <div className="flex justify-center items-center">
                       <Select
                         
-                        className="w-[90%] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue?.certificate[i])[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {

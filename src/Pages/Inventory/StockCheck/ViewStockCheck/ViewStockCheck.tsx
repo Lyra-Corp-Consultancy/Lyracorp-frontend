@@ -319,7 +319,7 @@ function ViewStockCheck() {
                     <div className="flex justify-center items-center">
                       <Select
                         required
-                        className="w-[90%] z-[999] shadow-none bg-[#F6F4F4]"
+                        className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                         pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {

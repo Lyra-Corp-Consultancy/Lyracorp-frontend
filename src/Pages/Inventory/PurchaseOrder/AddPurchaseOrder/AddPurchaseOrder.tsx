@@ -727,7 +727,7 @@ function AddPurchaseOrder() {
                         };
                         setData({ ...data, products: product });
                       }}
-                      className="px-2 py-1 w-[60%] bg-[#F6F4F4]  h-[25px] rounded-md"
+                      className="px-2 py-1 w-[60%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
@@ -735,7 +735,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94 - i }}
                         
-                        className="w-[50%] z-10 shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] z-10 shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -771,7 +771,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94- i }}
                         
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.packing?.filter((x) => x?.value === searchValue.packing[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
@@ -809,7 +809,7 @@ function AddPurchaseOrder() {
                       <Select
                         style={{ zIndex: 94 - i }}
                         
-                        className="w-[50%] shadow-none bg-[#F6F4F4]"
+                        className="w-[50%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])?.[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {

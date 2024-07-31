@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, FinishedGoodsInwards, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, FinishedGoodsInwards, OrderManagementTypes, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { [des: string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -634,6 +634,22 @@ export const getFinishedGoodsBatchNumberByProductId = createAsyncThunk("user/get
   }
 });
 
+export const getProductFinishedGoodsBatchNumberByProductId = createAsyncThunk("user/getProductsFinishedGoods", async (productId: string, { rejectWithValue, getState }) => {
+  try {
+    const state: any = getState();
+    let lineOfBusiness: string | null;
+    if (state?.data?.user?.superAdmin) {
+      lineOfBusiness = state.data?.superAdminCompany?._id;
+    } else {
+      lineOfBusiness = state.data?.user?.company;
+    }
+    const res = await instance.get("/master/product-master/finished-goods/getBatchNumberByProduct", { params: { lineOfBusiness, productId } });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const postFinishedGoodsInward = createAsyncThunk("user/getProductsFinishedGoods", async (data: FinishedGoodsInwards[], { rejectWithValue, getState }) => {
   try {
     const state: any = getState();
@@ -697,3 +713,64 @@ export const updateFinishedGoodsInwardIndividual = createAsyncThunk("user/getPro
     rejectWithValue(err);
   }
 });
+
+export const postOrderManagement = createAsyncThunk("user/postOrderManagament", async (data: OrderManagementTypes, { rejectWithValue, getState }) => {
+  try {
+    const state: any = getState();
+    let companyId: string | null;
+    if (state?.data?.user?.superAdmin) {
+      companyId = state.data?.superAdminCompany?._id;
+    } else {
+      companyId = state.data?.user?.company;
+    }
+    await instance.post("/order-management", { data, companyId });
+    return;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getOrderManagement = createAsyncThunk("user/getOrderManagament", async (_, { rejectWithValue, getState }) => {
+  try {
+    const state: any = getState();
+    let companyId: string | null;
+    if (state?.data?.user?.superAdmin) {
+      companyId = state.data?.superAdminCompany?._id;
+    } else {
+      companyId = state.data?.user?.company;
+    }
+    const res = await instance.get("/order-management", { params: { companyId } });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+
+
+});
+  export const activeAndInactiveOrderManagement = createAsyncThunk("user/inactiveOrderManagement", async (id: string[], { rejectWithValue }) => {
+    try {
+      await instance.delete("/order-management", { params: { id } });
+      return;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+  export const getOrderManagementById = createAsyncThunk("user/getOrderManagementById", async (id: string, { rejectWithValue }) => {
+    try {
+      const res = await instance.get("/order-management/individual", { params: { id } });
+      return res.data;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+    
+  });
+  export const updateOrderManagementById = createAsyncThunk("user/updateOrderManagementById", async (val:{id: string,data:OrderManagementTypes}, { rejectWithValue }) => {
+    try {
+      const res = await instance.patch("/order-management/"+val.id, {...val.data });
+      return res.data;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+    
+  });
+  

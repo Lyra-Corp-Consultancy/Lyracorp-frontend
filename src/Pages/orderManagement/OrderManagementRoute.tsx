@@ -14,8 +14,8 @@ function OrderManagementRoute() {
        <Routes>
         <Route path="/" index element={< OrderManagement/>} />
         <Route path="/add"  element={<AddOrderManagement />} />
-        <Route path="/edit"  element={<EditOrderManagement />} />
-        <Route path="/view"  element={<ViewOrderManagement />} />
+        <Route path="/edit/:id"  element={<EditOrderManagement />} />
+        <Route path="/view/:id"  element={<ViewOrderManagement />} />
        
       </Routes>  
     </div>
