@@ -86,6 +86,8 @@ export interface PurchaseOrder {
 
 export interface PurchaseInward {
   vendor?: string;
+  poSerialNum?:string;
+  shippingAddress:any;
   products?: {
     productId?: string;
     productDetails?: any;

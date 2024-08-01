@@ -10,6 +10,7 @@ import {
   getAllUserManagement,
   getAllVendorMaster,
   getPurchaseInwardById,
+  getPurchaseOrdeBySerialNumber,
   // getPurchaseOrdeBySerialNumber,
   getType,
 } from "../../../../utils/redux/actions";
@@ -73,7 +74,7 @@ function EditPurchaseInward() {
     fileUrls: [],
     products: [{}],
   });
-
+  const [stateCheckForTax, SetstateCheckForTax] = useState(true);
   const [searchValue, setSearchValue] = useState<{
     uom: any[];
     document: string;
@@ -81,6 +82,8 @@ function EditPurchaseInward() {
     products: any[];
     warehouse: string;
     vendor: string;
+    vendorState: string;
+    shippingAddress: string;
   }>({
     document: "",
     uom: [],
@@ -88,6 +91,8 @@ function EditPurchaseInward() {
     vendor: "",
     certificate: [],
     warehouse: "",
+    vendorState: "",
+    shippingAddress: "",
   });
 
   const navigate = useNavigate();
@@ -123,26 +128,27 @@ function EditPurchaseInward() {
   //   };
 
   useEffect(() => {
-    setSearchValue({
-      ...searchValue,
-      vendor: dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName,
+    const vendorDetails = dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0];
+    console.log(vendorDetails),
+      setSearchValue({
+        ...searchValue,
+        vendor: vendorDetails?.VendorName,
+        vendorState: vendorDetails?.state,
+        document: dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
 
-      document: dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+        uom: data?.products?.map((e: any) => {
+          return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value?.name;
+        }),
 
-      uom: data?.products?.map((e: any) => {
-        return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value?.name;
-      }),
+        certificate: data?.products?.map((e: any) => {
+          return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value;
+        }),
 
-      warehouse: (user?.companyDetails?.[0]?.warehouse || superAdminCompany?.warehouse)?.filter((a: any) => a?.warehouseName === data?.warehouse?.warehouseName)[0]?.warehouseName,
-
-      certificate: data?.products?.map((e: any) => {
-        return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value;
-      }),
-
-      products: data?.products?.map((e: any) => {
-        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName;
-      }),
-    });
+        products: data?.products?.map((e: any) => {
+          return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName;
+        }),
+      });
+      if (searchValue.vendorState === data?.shippingAddress?.state) SetstateCheckForTax(true);
   }, [dropDowns, data]);
 
   useEffect(() => {
@@ -159,6 +165,7 @@ function EditPurchaseInward() {
 
     dispatch(getPurchaseInwardById(params.id)).then((res: any) => {
       setData(res.payload);
+      console.log("payy ",res.payload)
     });
 
     const res2 = dispatch(getType("uom"));
@@ -265,7 +272,7 @@ function EditPurchaseInward() {
         };
       });
     });
-
+   
     axios.get("https://api.first.org/data/v1/countries").then((res) => {
       const val = [];
       for (const i in res.data.data) {
@@ -274,7 +281,9 @@ function EditPurchaseInward() {
       setPlaces({ ...places, country: val });
       setSearch({ ...search, country: val });
     });
+    
   }, []);
+ 
 
   //   const handleDrop = (e: any) => {
   //     e.preventDefault();
@@ -282,11 +291,63 @@ function EditPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
-  console.log("data e ",data)
-    console.log("dd e ",dropDowns)
-    console.log("user  e ",user)
-    console.log("com  e ",superAdminCompany)
 
+  
+  function taxPercentage(productId:any) {
+    const prod = dropDowns?.products?.filter((y) => y?._id === productId);
+    
+    if (prod && prod.length > 0) {
+      return stateCheckForTax 
+        ? prod[0]?.igst 
+        : (parseInt(prod[0]?.productDetails?.cgst) + parseInt(prod[0]?.productDetails?.sgst)) || 0;
+    }
+    return 0; 
+  }
+  function taxvalue(productId:any, recievedQuantity:string) {
+   const product =dropDowns?.products?.filter((y) => y?._id === productId)
+   console.log("ppp",product)
+   if (product && product.length > 0) {
+    const basePrice = parseInt(product[0].mrp)
+    const quantity = parseInt(recievedQuantity) || 0;
+    
+    if (stateCheckForTax) {
+      const igst = parseInt(product[0]?.igst) || 0;
+      return (igst / 100) * basePrice * quantity;
+    } else {
+      const cgst = parseInt(product[0]?.productDetails?.cgst) || 0;
+      const sgst = parseInt(product[0]?.productDetails?.sgst) || 0;
+      return ((cgst + sgst) / 100) * basePrice * quantity;
+    }
+  }
+
+  return 0;
+   
+  }
+
+  function totalValue(productId,recievedQuantity){
+    const product =dropDowns?.products?.filter((y) => y?._id === productId)
+    console.log("ppp",product)
+    if (product && product.length > 0) {
+     const basePrice = parseInt(product[0].mrp)
+     const quantity = parseInt(recievedQuantity) || 0;
+     let finaltotalValue 
+     if (stateCheckForTax) {
+       const igst = parseInt(product[0]?.igst) || 0;
+      finaltotalValue= ((igst / 100) * basePrice * quantity)+basePrice * quantity ;
+     } else {
+       const cgst = parseInt(product[0]?.productDetails?.cgst) || 0;
+       const sgst = parseInt(product[0]?.productDetails?.sgst) || 0;
+       finaltotalValue= (((cgst + sgst) / 100) * basePrice * quantity)+ basePrice * quantity;
+     }
+     return finaltotalValue
+   }
+ 
+   return 0;
+
+  }
+  
+  console.log("data",data)
+  console.log("dd", dropDowns)
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Edit Purchase Inward</h1>
@@ -430,31 +491,33 @@ function EditPurchaseInward() {
           <h1 className="roboto-medium mt-1">Product Details</h1>
 
           <table className="w-full text-[14px] border-collapse rounded border">
-            <thead className="bg-[#5970F5]">
+          <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className=" border-r w-1/12">Product Name</th>
-                <th className="border-r w-1/12">Received Quantity</th>
-                <th className="border-r w-1/12">Billed Quantity</th>
-                <th className="border-r w-1/12">UOM</th>
-                <th className="border-r w-1/12">Batch Number</th>
-                <th className="border-r w-1/12">Expire Date</th>
-                <th className="border-r w-1/12">Shortage</th>
-                <th className="border-r w-1/12">Unit Price</th>
-                <th className="border-r w-1/12">Total Value</th>
-                <th className="border-r w-1/12">Remarks</th>
-                <th className="border-r w-1/12">Certification</th>
-                <th className="w-1/12">Upload</th>
+                <th className=" border-r w-1/13">Product Name</th>
+                <th className="border-r w-1/13">Received Quantity</th>
+                <th className="border-r w-1/13">Billed Quantity</th>
+                <th className="border-r w-1/13">UOM</th>
+                <th className="border-r w-1/13">Batch Number</th>
+                <th className="border-r w-1/13">Expire Date</th>
+                <th className="border-r w-1/13">Shortage</th>
+                <th className="border-r w-1/13">Unit Price</th>
+                <th className="border-r w-1/13">Tax %</th>
+                <th className="border-r w-1/13">Tax Value</th>
+                <th className="border-r w-1/13">Total Value</th>
+                <th className="border-r w-1/13">Remarks</th>
+                <th className="border-r w-1/13">Certification</th>
+                <th className="w-1/13">Upload</th>
               </tr>
             </thead>
             <tbody>
               {data?.products?.map((x: any, i: number) => (
                 <tr className="text-center">
+                  {/* product NAme */}
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        
                         className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
-                        pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue?.products[i])[0]?.productName ? undefined : ""}
+                        pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.products;
@@ -489,10 +552,13 @@ function EditPurchaseInward() {
                       </Select>
                     </div>
                   </td>
+                  {/* recives Quantity */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="number"
+                      max={parseInt(x?.orderQuantity)}
+                      title="Received Quantity should be less than orderQuantity"
+                      min={0}
                       value={x.recievedQuantity}
                       onChange={(e) => {
                         const product = data?.products;
@@ -502,11 +568,12 @@ function EditPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* billed Quantity */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
-                      type="text"
+                      type="number"
                       value={x.orderQuantity}
+                      min={0}
                       onChange={(e) => {
                         const product = data?.products;
                         product[i] = { ...x, orderQuantity: e.target.value };
@@ -515,11 +582,11 @@ function EditPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* UOM */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
-                      
                       className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
-                      pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue?.uom[i])[0]?.value?.name ? undefined : ""}
+                      pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
                       onChange={(e) => {
                         const temp = searchValue?.uom;
@@ -548,9 +615,10 @@ function EditPurchaseInward() {
                         ))}
                     </Select>
                   </td>
+
+                  {/* batch number */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="text"
                       value={x?.batchNumber}
                       onChange={(e) => {
@@ -561,9 +629,9 @@ function EditPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* DAte */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="date"
                       value={x.expDate}
                       onChange={(e) => {
@@ -575,25 +643,43 @@ function EditPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* 	Shortage */}
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) || 0}</span>
+                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
                     </div>
                   </td>
+                  {/* 	Unit Price*/}
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span>
                     </div>
                   </td>
+                  {/* 	Tax % */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span> {parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
+                    {taxPercentage(x?.productId)}
+                      </div>
+                  </td>
+                  {/* 	Tax VAlue */}
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
+                      {taxvalue(x?.productId,x?.recievedQuantity)}
+                       </div>
+                  </td>
+                {/* totalValye */}
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
+                      <span>
+{
+  totalValue(x?.productId,x?.recievedQuantity)
+}
+                      </span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <input
-                        
                         type="text"
                         value={x.remarks}
                         onChange={(e) => {
@@ -608,9 +694,8 @@ function EditPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        
                         className="w-[90%] shadow-none bg-[#e2e2e2]"
-                        pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue?.certificate[i])[0]?.value ? undefined : ""}
+                        pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
                         onChange={(e) => {
                           const temp = searchValue?.certificate;

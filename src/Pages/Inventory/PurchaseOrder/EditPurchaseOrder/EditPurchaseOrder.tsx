@@ -303,6 +303,7 @@ function EditPurchaseOrder() {
 
     dispatch(getPurchaseOrderById(params.id)).then((res: any) => {
       setData(res.payload);
+      console.log("pay ",res.payload)
     });
 
     dispatch(getType("payment")).then((res: any) => {
