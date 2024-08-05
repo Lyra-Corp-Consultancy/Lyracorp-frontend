@@ -179,6 +179,62 @@ function ViewPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
+  const [stateCheckForTax] = useState(true);
+  function taxPercentage(productId:any) {
+    const prod = dropDowns?.products?.filter((y) => y?._id === productId);
+    
+    if (prod && prod.length > 0) {
+      return stateCheckForTax 
+        ? prod[0]?.igst 
+        : (parseInt(prod[0]?.productDetails?.cgst) + parseInt(prod[0]?.productDetails?.sgst)) || 0;
+    }
+    return 0; 
+  }
+  function taxvalue(productId:any, recievedQuantity:string) {
+   const product =dropDowns?.products?.filter((y) => y?._id === productId)
+   console.log("ppp",product)
+   if (product && product.length > 0) {
+    const basePrice = parseInt(product[0].mrp)
+    const quantity = parseInt(recievedQuantity) || 0;
+    
+    if (stateCheckForTax) {
+      const igst = parseInt(product[0]?.igst) || 0;
+      return (igst / 100) * basePrice * quantity;
+    } else {
+      const cgst = parseInt(product[0]?.productDetails?.cgst) || 0;
+      const sgst = parseInt(product[0]?.productDetails?.sgst) || 0;
+      return ((cgst + sgst) / 100) * basePrice * quantity;
+    }
+  }
+
+  return 0;
+   
+  }
+
+  function totalValue(productId:string,recievedQuantity:string|number){
+    const product =dropDowns?.products?.filter((y) => y?._id === productId)
+    console.log("ppp",product)
+    if (product && product.length > 0) {
+     const basePrice = parseInt(product[0].mrp)
+     const quantity = parseInt(recievedQuantity+"") || 0;
+     let finaltotalValue 
+     if (stateCheckForTax) {
+       const igst = parseInt(product[0]?.igst) || 0;
+      finaltotalValue= ((igst / 100) * basePrice * quantity)+basePrice * quantity ;
+     } else {
+       const cgst = parseInt(product[0]?.productDetails?.cgst) || 0;
+       const sgst = parseInt(product[0]?.productDetails?.sgst) || 0;
+       finaltotalValue= (((cgst + sgst) / 100) * basePrice * quantity)+ basePrice * quantity;
+     }
+     return finaltotalValue
+   }
+ 
+   return 0;
+
+  }
+  console.log("data",data)
+  console.log("pro",dropDowns);
+  
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">View Purchase Inward</h1>
@@ -240,18 +296,20 @@ function ViewPurchaseInward() {
           <table className="w-full text-[14px] border-collapse rounded border">
             <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className=" border-r w-1/12">Product Name</th>
-                <th className="border-r w-1/12">Received Quantity</th>
-                <th className="border-r w-1/12">Billed Quantity</th>
-                <th className="border-r w-1/12">UOM</th>
-                <th className="border-r w-1/12">Batch Number</th>
-                <th className="border-r w-1/12">Expire Date</th>
-                <th className="border-r w-1/12">Shortage</th>
-                <th className="border-r w-1/12">Unit Price</th>
-                <th className="border-r w-1/12">Total Value</th>
-                <th className="border-r w-1/12">Remarks</th>
-                <th className="border-r w-1/12">Certification</th>
-                <th className="w-1/12">Upload</th>
+              <th className=" border-r w-1/13">Product Name</th>
+                <th className="border-r w-1/13">Received Quantity</th>
+                <th className="border-r w-1/13">Billed Quantity</th>
+                <th className="border-r w-1/13">UOM</th>
+                <th className="border-r w-1/13">Batch Number</th>
+                <th className="border-r w-1/13">Expire Date</th>
+                <th className="border-r w-1/13">Shortage</th>
+                <th className="border-r w-1/13">Unit Price</th>
+                <th className="border-r w-1/13">Tax %</th>
+                <th className="border-r w-1/13">Tax Value</th>
+                <th className="border-r w-1/13">Total Value</th>
+                <th className="border-r w-1/13">Remarks</th>
+                <th className="border-r w-1/13">Certification</th>
+                <th className="w-1/13">Upload</th>
               </tr>
             </thead>
             <tbody>
@@ -284,7 +342,25 @@ function ViewPurchaseInward() {
                     <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</label>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
-                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md"> {parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</label>
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md"> 
+                      {/* tax per */}{taxPercentage(x?.productId)}
+                      </label>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md"> 
+                      {/* tax value */
+                      taxvalue(x?.productId,x?.recievedQuantity)
+                      }
+                      
+                      </label>
+                  </td>
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md"> 
+                      {
+                    //     total value
+                    // parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0
+                    totalValue(x?.productId,x?.recievedQuantity)}
+                    </label>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">

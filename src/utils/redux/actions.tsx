@@ -439,6 +439,24 @@ export const getAllQCPO = createAsyncThunk("user/getAllQCPO", async (_, { reject
   }
 });
 
+
+export const getAllQCFG = createAsyncThunk("user/getAllQCFG", async (_, { rejectWithValue, getState }) => {
+  try {
+    const state: any = getState();
+    let lineOfBusiness: string | null;
+    if (state?.data?.user?.superAdmin) {
+      lineOfBusiness = state.data?.superAdminCompany?._id;
+    } else {
+      lineOfBusiness = state.data?.user?.company;
+    }
+    const res = await instance.get("/qc/qc-fg/all", { params: { lineOfBusiness } });
+    console.log(res.data)
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
 export const getAllRawMaterialOutward = createAsyncThunk("user/getAllRawMaterialOutward", async (_, { rejectWithValue, getState }) => {
   try {
     const state: any = getState();
@@ -494,6 +512,15 @@ export const editPurchaseInward = createAsyncThunk("user/editPurchaseInward", as
 export const saveQCPO = createAsyncThunk("user/saveQCPO", async ({ data, id }: { data: { productId: string; rejected: number }[]; id: string }, { rejectWithValue }) => {
   try {
     await instance.patch("/qc/qc-po/" + id, { data });
+    return;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const saveQCFG = createAsyncThunk("user/saveQCFG", async ({ id }: { id: string }, { rejectWithValue }) => {
+  try {
+    await instance.patch("/qc/qc-fg/" + id);
     return;
   } catch (err) {
     rejectWithValue(err);
