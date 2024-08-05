@@ -313,7 +313,7 @@ function NavigationBar() {
                     Quality Check - PO
                   </button>
                 )}
-                {permissions?.view?.includes("quality check - FG") && <button className="text-start">Quality Check - FG</button>}
+                {permissions?.view?.includes("quality check - FG") && <button className="text-start" onClick={() => navigate("/qc/qc-fg")}>Quality Check - FG</button>}
               </div>
             )}
           </button>

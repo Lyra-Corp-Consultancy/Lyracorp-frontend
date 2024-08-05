@@ -2,18 +2,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import  { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getPurchaseInwardById, getType, saveQCPO } from "../../../../utils/redux/actions";
+import { getAllProductFinishedGoods, getAllUserManagement, getAllVendorMaster, getFinishedGoodsInwardIndividual, getType, saveQCFG } from "../../../../utils/redux/actions";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 // import styles from "../PurchaseOrder.module.scss"
 
-function CheckQCPO() {
+function CheckQCFG() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [places, setPlaces] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [search, setSearch] = useState<{ country: any[]; state: any[]; city: any[] }>({ country: [], state: [], city: [] });
   const [confirmation, setConfirmation] = useState(false);
-  const [rejected, setRejected] = useState<{productId:string,rejected:number}[]>([]);
   const params:any = useParams()
   const [dropDowns, setDropDown] = useState<{
     margin: any[];
@@ -40,7 +39,7 @@ function CheckQCPO() {
 
   const handleSave = async () => {
     
-    dispatch(saveQCPO({ data:rejected,id:params.id })).then(() => {
+    dispatch(saveQCFG({id:params.id })).then(() => {
       navigate(-1);
     });
   };
@@ -62,8 +61,9 @@ function CheckQCPO() {
       });
     });
 
-    dispatch(getPurchaseInwardById(params.id)).then((res: any) => {
+    dispatch(getFinishedGoodsInwardIndividual(params.id)).then((res: any) => {
         setData(res.payload);
+        console.log(res.payload);
       });
 
     const res2 = dispatch(getType("uom"));
@@ -144,7 +144,7 @@ function CheckQCPO() {
       console.log(res.payload);
     });
 
-    dispatch(getAllProductRawMaterial()).then((res: any) => {
+    dispatch(getAllProductFinishedGoods()).then((res: any) => {
       setDropDown((prev) => {
         return {
           ...prev,
@@ -189,49 +189,42 @@ function CheckQCPO() {
   //   };
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
-    <h1 className="roboto-bold text-lg">Quality Check FG</h1>
+    <h1 className="roboto-bold text-lg"> Quality Check FG</h1>
 
     <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
       <div className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full">
         <h1 className="roboto-medium mt-1">Quality Check FG</h1>
         <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-full rounded-lg px-3 py-2">
           <div className="flex items-center gap-3">
-            <label>Serial Number</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data.seq}</label>
+            <label>Product Name</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{dropDowns?.products?.filter((x) => x?._id === data?.product)[0]?.productName}</label>
           </div>
           <div className="flex  items-center gap-3">
-            <label>Vendor Name</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName}</label>
+            <label>Batch Number</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data.batchNumber}</label>
           </div>
           <div className="flex  items-center gap-3">
-            <label>Inward Date</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.inwardDate}</label>
+            <label>Production Quantity</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.productionQuantity}</label>
           </div>
           <div className="flex items-center gap-3">
-            <label>Invoice Number</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data.invoiceNumber}</label>
+            <label>Rejected Quantity</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data.rejected}</label>
           </div>
           <div className="flex  items-center gap-3">
-            <label>Invoice Date</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.invoiceDate}</label>
+            <label>Total</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{ +data?.productionQuantity - +data.rejected}</label>
           </div>
           <div className="flex items-center gap-3">
-            <label>DC Number</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.dcNumber}</label>
+            <label>UOM</label>
+            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{dropDowns?.uom?.filter((x) => x?._id === data?.uom)[0]?.value?.name}</label>
           </div>
-          <div className="flex items-center gap-3">
-            <label>Transporter</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.transporter}</label>
-          </div>
-          <div className="flex items-center gap-3">
-            <label>Vehicle Number</label>
-            <label className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md">{data?.vehicleNumber}</label>
-          </div>
+          
         </div>
 
-        <h1 className="roboto-medium mt-1">Product Details</h1>
+        {/* <h1 className="roboto-medium mt-1">Product Details</h1> */}
 
-        <table className="w-full text-[14px] border-collapse rounded border">
+        {/* <table className="w-full text-[14px] border-collapse rounded border">
           <thead className="bg-[#5970F5]">
             <tr className=" text-white">
               <th className=" border-r w-1/12">Product Name</th>
@@ -313,7 +306,7 @@ function CheckQCPO() {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table> */}
 
         <div className="w-full absolute bottom-4 justify-center items-center gap-3 flex mt-5">
           <button type="button"  className="border rounded-md py-2 px-4 font-semibold border-[#5970F5] text-[#5970F5]" onClick={() => navigate(-1)}>
@@ -331,4 +324,4 @@ function CheckQCPO() {
   );
 }
 
-export default CheckQCPO;
+export default CheckQCFG;
