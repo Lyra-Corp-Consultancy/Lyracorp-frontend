@@ -1,0 +1,7 @@
+.more:focus+.option{
+    display: flex;
+}
+
+.date:focus>.calender{
+    display: block;
+}
