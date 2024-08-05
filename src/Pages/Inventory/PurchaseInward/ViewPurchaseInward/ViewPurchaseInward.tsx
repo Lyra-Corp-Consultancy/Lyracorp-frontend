@@ -179,7 +179,7 @@ function ViewPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
-  const [stateCheckForTax, SetstateCheckForTax] = useState(true);
+  const [stateCheckForTax] = useState(true);
   function taxPercentage(productId:any) {
     const prod = dropDowns?.products?.filter((y) => y?._id === productId);
     
