@@ -324,12 +324,12 @@ function EditPurchaseInward() {
    
   }
 
-  function totalValue(productId,recievedQuantity){
+  function totalValue(productId:string,recievedQuantity:string|number){
     const product =dropDowns?.products?.filter((y) => y?._id === productId)
     console.log("ppp",product)
     if (product && product.length > 0) {
      const basePrice = parseInt(product[0].mrp)
-     const quantity = parseInt(recievedQuantity) || 0;
+     const quantity = parseInt(recievedQuantity+"") || 0;
      let finaltotalValue 
      if (stateCheckForTax) {
        const igst = parseInt(product[0]?.igst) || 0;
