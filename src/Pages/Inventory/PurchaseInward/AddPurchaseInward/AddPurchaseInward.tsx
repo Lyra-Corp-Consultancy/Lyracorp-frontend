@@ -13,6 +13,7 @@ import "react-calendar/dist/Calendar.css";
 import styles from "./AddPurchaseInward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { formatDate } from "../../../../utils/functions/formats";
+
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddPurchaseInward() {
@@ -64,7 +65,7 @@ function AddPurchaseInward() {
     fileUrls: [],
     products: [{}],
   });
-
+  const [stateCheckForTax, SetstateCheckForTax] = useState(false);
   const [searchValue, setSearchValue] = useState<{
     uom: any[];
     document: string;
@@ -72,6 +73,8 @@ function AddPurchaseInward() {
     products: any[];
     warehouse: string;
     vendor: string;
+    vendorState: string;
+    shippingAddress: string;
   }>({
     document: "",
     uom: [],
@@ -79,6 +82,8 @@ function AddPurchaseInward() {
     vendor: "",
     certificate: [],
     warehouse: "",
+    vendorState: "",
+    shippingAddress: "",
   });
 
   const navigate = useNavigate();
@@ -114,24 +119,27 @@ function AddPurchaseInward() {
   //   };
 
   useEffect(() => {
-    setSearchValue({
-      ...searchValue,
-      vendor: dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0]?.VendorName,
+    const vendorDetails = dropDowns?.vendor?.filter((x) => x?._id === data?.vendor)[0];
+    console.log(vendorDetails),
+      setSearchValue({
+        ...searchValue,
+        vendor: vendorDetails?.VendorName,
+        vendorState: vendorDetails?.state,
+        document: dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
 
-      document: dropDowns?.document?.filter((x) => x?._id === data?.bussinessDocument)[0]?.value,
+        uom: data?.products?.map((e: any) => {
+          return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value?.name;
+        }),
 
-      uom: data?.products?.map((e: any) => {
-        return dropDowns?.uom?.filter((uom: any) => uom._id === e.uom)[0]?.value?.name;
-      }),
+        certificate: data?.products?.map((e: any) => {
+          return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value;
+        }),
 
-      certificate: data?.products?.map((e: any) => {
-        return dropDowns?.certificate?.filter((u: any) => u._id === e.certificate)[0]?.value;
-      }),
-
-      products: data?.products?.map((e: any) => {
-        return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName;
-      }),
-    });
+        products: data?.products?.map((e: any) => {
+          return dropDowns?.products?.filter((u: any) => u._id === e.productId)[0]?.productName;
+        }),
+      });
+    if (searchValue.vendorState === searchValue.shippingAddress) SetstateCheckForTax(true);
   }, [dropDowns, data]);
 
   useEffect(() => {
@@ -250,7 +258,6 @@ function AddPurchaseInward() {
         };
       });
     });
-    
 
     axios.get("https://api.first.org/data/v1/countries").then((res) => {
       const val = [];
@@ -268,28 +275,30 @@ function AddPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
-
-    console.log("data ",data)
-    console.log("dd ",dropDowns)
-    console.log("user ",user)
-    console.log("com ",superAdminCompany)
-
-    return (
+  console.log(data)
+  console.log("dd", dropDowns)
+  return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
 
       <div className="bg-[#F1F3FF] shadow-md p-3 rounded-lg w-full">
         <div className="flex items-center mb-5 gap-3">
           <label className="font-bold">Purchase Order Serial No</label>
-          <input onChange={(e) => setSerialNumber(e.target.value.toUpperCase()||e.target.value.toLowerCase())} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+          <input onChange={(e) => setSerialNumber(e.target.value.toUpperCase() || e.target.value.toLowerCase())} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
           <button
             type="button"
             onClick={() => {
               dispatch(getPurchaseOrdeBySerialNumber(serialNumber)).then((res: any) => {
                 console.log(" payload ", res.payload);
+                setSearchValue({
+                  ...searchValue,
+                  shippingAddress: res.payload?.shippingAddress?.state,
+                });
                 setData({
                   vendor: res.payload.vendor,
                   products: res.payload.products,
+                  poSerialNum:serialNumber,
+                  shippingAddress: res.payload?.shippingAddress
                 });
               });
             }}
@@ -311,7 +320,6 @@ function AddPurchaseInward() {
               <label>Vendor Name</label>
               <Select
                 className="bg-white z-[990]"
-                
                 pattern={dropDowns?.vendor?.filter((x) => x?.VendorName === searchValue.vendor)[0]?.VendorName ? undefined : " "}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -357,12 +365,12 @@ function AddPurchaseInward() {
                 />
               </label>
             </div>
-                  
+
             <div className="flex items-center gap-3">
               <label>Invoice Number</label>
               <input required value={data.invoiceNumber} onChange={(e) => setData({ ...data, invoiceNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
-                  
+
             <div className="flex  items-center gap-3">
               <label>Invoice Date</label>
               <label htmlFor="date" className="w-[200px] flex items-center relative h-[25px] z-[900] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">
@@ -376,7 +384,7 @@ function AddPurchaseInward() {
                   value={data?.invoiceDate}
                   onChange={(e) => {
                     const date = new Date(e?.toString() || "");
-                    const formattedDate = formatDate(date);// Extract the date in yyyy-mm-dd format
+                    const formattedDate = formatDate(date); // Extract the date in yyyy-mm-dd format
                     setData({ ...data, invoiceDate: formattedDate });
                   }}
                   className={["bg-white absolute bottom-0 z-[909] translate-y-[100%] hidden   items-center  flex-col max-w-[277px_!important] " + styles.enableCalender]}
@@ -385,15 +393,15 @@ function AddPurchaseInward() {
             </div>
             <div className="flex items-center gap-3">
               <label>DC Number</label>
-              <input  value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input value={data.dcNumber} onChange={(e) => setData({ ...data, dcNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Transporter</label>
-              <input  value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input value={data.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3">
               <label>Vehicle Number</label>
-              <input  value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             {/* <div className="flex gap-3 items-center">
               <label>Warehouse Name</label>
@@ -439,7 +447,8 @@ function AddPurchaseInward() {
                 <th className="border-r w-1/13">Expire Date</th>
                 <th className="border-r w-1/13">Shortage</th>
                 <th className="border-r w-1/13">Unit Price</th>
-                <th className="border-r w-1/13">Tax</th>
+                <th className="border-r w-1/13">Tax %</th>
+                <th className="border-r w-1/13">Tax Value</th>
                 <th className="border-r w-1/13">Total Value</th>
                 <th className="border-r w-1/13">Remarks</th>
                 <th className="border-r w-1/13">Certification</th>
@@ -449,10 +458,10 @@ function AddPurchaseInward() {
             <tbody>
               {data?.products?.map((x: any, i: number) => (
                 <tr className="text-center">
+                  {/* product NAme */}
                   <td className="text-center  border  justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        
                         className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.products?.filter((x) => x?.productName === searchValue.products[i])[0]?.productName ? undefined : ""}
                         title="Please Select values from drop down"
@@ -489,9 +498,9 @@ function AddPurchaseInward() {
                       </Select>
                     </div>
                   </td>
+                  {/* recives Quantity */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="number"
                       max={parseInt(x?.orderQuantity)}
                       title="Received Quantity should be less than orderQuantity"
@@ -505,9 +514,9 @@ function AddPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* billed Quantity */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="number"
                       value={x.orderQuantity}
                       min={0}
@@ -519,9 +528,9 @@ function AddPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* UOM */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
-                      
                       className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
@@ -552,9 +561,10 @@ function AddPurchaseInward() {
                         ))}
                     </Select>
                   </td>
+
+                  {/* batch number */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="text"
                       value={x?.batchNumber}
                       onChange={(e) => {
@@ -565,9 +575,9 @@ function AddPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
-                  <td className="text-center border justify-center py-2 items-center "> 
+                  {/* DAte */}
+                  <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      
                       type="date"
                       value={x.expDate}
                       onChange={(e) => {
@@ -579,30 +589,42 @@ function AddPurchaseInward() {
                       className="px-2 py-1 w-[90%] bg-[#e2e2e2]  h-[25px] rounded-md"
                     />
                   </td>
+                  {/* 	Shortage */}
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
                     </div>
                   </td>
+                  {/* 	Unit Price*/}
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
                       <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span>
                     </div>
                   </td>
+                  {/* 	Tax % */}
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      {/* <span>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</span> */}
-                    </div>
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">{stateCheckForTax ? x?.productDetails?.igst : parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) || 0}</div>
                   </td>
+                  {/* 	Tax VAlue */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span>{parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</span>
+                      {stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}
+                      </div>
+                  </td>
+                {/* totalValye */}
+                  <td className="text-center border justify-center py-2 items-center ">
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
+                      <span>
+{
+  ( stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0
+) +(parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0)
+}
+                      </span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <input
-                        
                         type="text"
                         value={x.remarks}
                         onChange={(e) => {
@@ -617,7 +639,6 @@ function AddPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="flex justify-center items-center">
                       <Select
-                        
                         className="w-[90%] shadow-none bg-[#e2e2e2]"
                         pattern={dropDowns?.certificate?.filter((x) => x?.value === searchValue.certificate[i])[0]?.value ? undefined : ""}
                         title="Please Select values from drop down"
