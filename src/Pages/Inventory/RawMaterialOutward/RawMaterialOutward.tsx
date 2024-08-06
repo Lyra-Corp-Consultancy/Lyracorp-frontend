@@ -4,23 +4,23 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./RawMaterialOutward.module.scss";
-import { getAllRawMaterialOutward, getAllUserManagement, getAllVendorMaster, getType } from "../../../utils/redux/actions";
+import { getAllRawMaterialOutward } from "../../../utils/redux/actions";
 
 function RawMaterialOutward() {
   const [data, setData] = useState<any[]>([]);
   const [filtered, setFiltered] = useState<any[]>([]);
   const dispatch: any = useDispatch();
   const navigate = useNavigate();
-  const [dropDowns, setDropDown] = useState<{
-    vendor: any[];
-    vendorType: any[];
-    account: any[];
-    users: any[];
-    discount: any[];
-    payment: any[];
-    document: any[];
-    shippingMethods: any[];
-  }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
+  // const [dropDowns, setDropDown] = useState<{
+  //   vendor: any[];
+  //   vendorType: any[];
+  //   account: any[];
+  //   users: any[];
+  //   discount: any[];
+  //   payment: any[];
+  //   document: any[];
+  //   shippingMethods: any[];
+  // }>({ vendor: [], account: [], discount: [], payment: [], document: [], vendorType: [], users: [], shippingMethods: [] });
 
   const search = (val: string) => {
     const lowerVal = val.toLowerCase();
@@ -39,88 +39,7 @@ function RawMaterialOutward() {
       setData(res.payload);
       setFiltered(res.payload);
     });
-
-    const res1 = dispatch(getType("vendor"));
-
-    res1.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendorType: res?.payload[0]?.vendorType,
-        };
-      });
-    });
-
-    dispatch(getAllUserManagement()).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          users: res?.payload?.active,
-        };
-      });
-      console.log(res.payload);
-    });
-    const res2 = dispatch(getType("account"));
-
-    res2.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          account: res?.payload[0]?.accountType,
-        };
-      });
-    });
-
-    dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          vendor: res?.payload?.active,
-        };
-      });
-    });
-
-    dispatch(getType("discount")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          discount: res?.payload[0]?.discountType,
-        };
-      });
-    });
-
-    dispatch(getType("shipping")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          shippingMethods: res?.payload[0]?.shippingType,
-        };
-      });
-    });
-
-    dispatch(getType("payment")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          payment: res?.payload[0]?.paymentType,
-        };
-      });
-    });
-
-    dispatch(getType("document")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          document: res?.payload[0]?.documentType,
-        };
-      });
-    });
   }, []);
-
-  console.log("dd ", dropDowns);
-  console.log("data ", data);
-
   return (
     <div className="min-h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">

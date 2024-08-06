@@ -349,7 +349,7 @@ function NavigationBar() {
           </button>
         )} */}
 
-{/* {getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
+{getAllChildrens(createdModules[5]).some((child) => permissions?.view?.includes(child)) && (
           <button className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] relative " + (location.pathname?.includes("/supply-chain") ? " bg-white" : " bg-[#C3CBFF]")}>
             <p onClick={() => setDropDown(dropDown === "supply-chain" ? "" : "supply-chain")}>Supply chain Management</p>
             {dropDown === "supply-chain" && (
@@ -362,7 +362,7 @@ function NavigationBar() {
                 </div>
             )}
           </button>
-        )} */}
+        )}
         {permissions?.view?.includes("order management") && (
           <button onClick={() => navigate("/order-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/order-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             Order Management

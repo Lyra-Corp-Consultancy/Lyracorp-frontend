@@ -603,7 +603,7 @@ function AddPurchaseInward() {
                   </td>
                   {/* 	Tax % */}
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">{stateCheckForTax ? x?.productDetails?.igst : parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) || 0}</div>
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">{!stateCheckForTax ? x?.productDetails?.igst : parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) || 0}</div>
                   </td>
                   {/* 	Tax VAlue */}
                   <td className="text-center border justify-center py-2 items-center ">

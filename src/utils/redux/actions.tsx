@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instance from "../axios/instance";
-import { CustomerMasterData, FinishedGoodsInwards, OrderManagementTypes, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, RawMaterialUtilizationTypes, Type, UserData, VendorMasterData } from "../Type/types";
+import { CustomerMasterData, FinishedGoodsInwards, FinishedGoodsOutwardsTypes, OrderManagementTypes, ProductProcess, ProductionSOPTypes, ProfileMaster, PurchaseInward, PurchaseOrder, RawMaterialOutward, RawMaterialUtilizationTypes, Type, UserData, VendorMasterData } from "../Type/types";
 
 export const postType = createAsyncThunk("user/postType", async ({ value, type }: { value: string | { [des: string]: string }; type: Type }, { rejectWithValue }) => {
   try {
@@ -848,5 +848,60 @@ export const getOrderManagement = createAsyncThunk("user/getOrderManagament", as
       rejectWithValue(err);
     }
   });
-   
+
+  export const getfinshedGoodsGetProductAll = createAsyncThunk("user/supply-chain-finished-goods-outward", async (_, { rejectWithValue, getState }) => {
+    try {
+      const state: any = getState();
+      let companyId: string | null;
+      if (state?.data?.user?.superAdmin) {
+        companyId = state.data?.superAdminCompany?._id;
+      } else {
+        companyId = state.data?.user?.company;
+      }
+      const res = await instance.get("/supplychain/finished-goods-outward/get-product", { params: {lineOfBusiness:companyId } });
+      return res.data;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+  export const postFinshedGoodsProduct = createAsyncThunk("user/supply-chain-finished-goods-outward", async (data: FinishedGoodsOutwardsTypes, { rejectWithValue, getState }) => {
+    try {
+      const state: any = getState();
+      let companyId: string | null;
+      if (state?.data?.user?.superAdmin) {
+        companyId = state.data?.superAdminCompany?._id;
+      } else {
+        companyId = state.data?.user?.company;
+      }
+      await instance.post("/supplychain/finished-goods-outward", { data, companyId });
+      return;
+    } catch (err) {
+      rejectWithValue(err);
+    }
+  });
+
   
+export const getAllFinishedGoodsOutward = createAsyncThunk("user/supply-chain-finished-goods-outward", async (_, { rejectWithValue, getState }) => {
+  try {
+    const state: any = getState();
+    let lineOfBusiness: string | null;
+    if (state?.data?.user?.superAdmin) {
+      lineOfBusiness = state.data?.superAdminCompany?._id;
+    } else {
+      lineOfBusiness = state.data?.user?.company;
+    }
+    const res = await instance.get("/supplychain/finished-goods-outward", { params: { lineOfBusiness } });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
+
+export const getAllFinishedGoodsOutwardById = createAsyncThunk("user/supplychain/finished-goods-individual", async (id: string, { rejectWithValue }) => {
+  try {
+    const res = await instance.get("/supplychain/finished-goods-outward/individual", { params: { id } });
+    return res.data;
+  } catch (err) {
+    rejectWithValue(err);
+  }
+});
