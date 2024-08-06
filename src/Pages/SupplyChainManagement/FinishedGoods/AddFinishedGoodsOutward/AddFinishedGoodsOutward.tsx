@@ -4,15 +4,17 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { addRawMaterialOutward, getAllProductRawMaterial, getAllUserManagement, getAllVendorMaster, getProductFromPurchaseOrderByGRNAndQuantity, getType } from "../../../../utils/redux/actions";
+import { addRawMaterialOutward, getAllUserManagement, getAllVendorMaster, getfinshedGoodsGetProductAll, getProductsFinishedGoods, getType, postFinshedGoodsProduct } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styles from "./AddFinishedGoodsOutward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
-import { RawMaterialOutward } from "../../../../utils/Type/types";
+import { FinishedGoodsOutwardsTypes } from "../../../../utils/Type/types";
 import { formatDate } from "../../../../utils/functions/formats";
+import { startLoading } from "../../../../utils/redux/slice";
+import { dir, log } from "console";
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddFinishedGoodsOutward() {
@@ -40,7 +42,7 @@ function AddFinishedGoodsOutward() {
   }>({ margin: [], account: [], discount: [], payment: [], transporter: [], document: [], uom: [], products: [], vendor: [], certificate: [], users: [], packing: [], shipping: [] });
   const dispatch: any = useDispatch();
   // const [dragging, setDragging] = useState(false);
-  const [data, setData] = useState<RawMaterialOutward>({
+  const [data, setData] = useState<FinishedGoodsOutwardsTypes>({
     products: [{}],
   });
 
@@ -53,6 +55,8 @@ function AddFinishedGoodsOutward() {
     TransportationMode: string;
     transportationDistance: string;
     shippingAddress: string;
+    productName: any[];
+    batchNumber: any[];
   }>({
     uom: [],
     Receiver: "",
@@ -62,6 +66,8 @@ function AddFinishedGoodsOutward() {
     TransportationMode: "",
     transportationDistance: "",
     shippingAddress: "",
+    productName: [],
+    batchNumber: [],
   });
 
   const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
@@ -78,7 +84,7 @@ function AddFinishedGoodsOutward() {
       lineOfBusiness = user?.company;
     }
 
-    dispatch(addRawMaterialOutward({ ...val, lineOfBusiness })).then(() => {
+    dispatch(postFinshedGoodsProduct({ ...val, lineOfBusiness })).then(() => {
       navigate(-1);
     });
   };
@@ -89,20 +95,11 @@ function AddFinishedGoodsOutward() {
   //     setFiles([...files, ...selectedFiles]);
   //   };
   useEffect(() => {
-    const res1 = dispatch(getType("marginSetting"));
+    dispatch(getfinshedGoodsGetProductAll()).then((res: any) => {
+      console.log(res);
+      setDropDown((prev) => ({ ...prev, products: res.payload }));
+    });
 
-    res1.then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          margin: res?.payload?.[0]?.marginSettingType,
-        };
-      });
-    });
-    dispatch(getProductFromPurchaseOrderByGRNAndQuantity()).then((res: any) => {
-      setProducts(res?.payload);
-      console.log("res ", res);
-    });
     const res2 = dispatch(getType("uom"));
 
     res2.then((res: any) => {
@@ -130,11 +127,9 @@ function AddFinishedGoodsOutward() {
           users: res?.payload?.active,
         };
       });
-      console.log(res.payload);
     });
 
     dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
       setDropDown((prev) => {
         return {
           ...prev,
@@ -143,76 +138,15 @@ function AddFinishedGoodsOutward() {
       });
     });
 
-    dispatch(getType("discount")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          discount: res?.payload?.[0]?.discountType,
-        };
-      });
-    });
-
-    dispatch(getType("packing")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          packing: res?.payload?.[0]?.packingType,
-        };
-      });
+    dispatch(getProductsFinishedGoods()).then((res: any) => {
+      setProducts(res.payload);
     });
 
     dispatch(getAllVendorMaster()).then((res: any) => {
-      console.log(res?.payload?.active);
       setDropDown((prev) => {
         return {
           ...prev,
           vendor: res?.payload?.active,
-        };
-      });
-    });
-    dispatch(getType("certification")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          certificate: res?.payload?.[0]?.certificationType,
-        };
-      });
-      console.log(res.payload);
-    });
-
-    dispatch(getType("shipping")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          shipping: res?.payload?.[0]?.shippingType,
-        };
-      });
-      console.log(res.payload);
-    });
-
-    dispatch(getAllProductRawMaterial()).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          products: res?.payload?.active,
-        };
-      });
-    });
-
-    dispatch(getType("payment")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          payment: res?.payload?.[0]?.paymentType,
-        };
-      });
-    });
-
-    dispatch(getType("document")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          document: res?.payload?.[0]?.documentType,
         };
       });
     });
@@ -234,6 +168,12 @@ function AddFinishedGoodsOutward() {
   //     setFiles([...files, ...droppedFiles]);
   //   };
 
+  const productIDs = dropDowns.products.map((a: any) => a.product);
+  const finalProductNamesWithID = products?.filter((product: any) => productIDs.includes(product._id));
+  console.log("data", data);
+  console.log("ss", searchValue);
+  console.log("dd", dropDowns);
+
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Finished Goods Outward</h1>
@@ -242,7 +182,6 @@ function AddFinishedGoodsOutward() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log(data);
             setConfirmation(true);
           }}
           className="shadow-md bg-white pb-[100px] px-4 h-full z-[0] relative rounded-lg pt-1 w-full"
@@ -273,9 +212,9 @@ function AddFinishedGoodsOutward() {
               <label>Sender</label>
 
               <Select
-                required
-                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.warehouseName === searchValue?.sender || "")?.[0]?.warehouseName ? undefined : ""}
-                title="Please Select values from drop down"
+                // 
+                // pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.warehouseName === searchValue?.sender || "")?.[0]?.warehouseName ? undefined : ""}
+                // title="Please Select values from drop down"
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, sender: e.target.value });
                 }}
@@ -296,13 +235,21 @@ function AddFinishedGoodsOutward() {
                   ))}
               </Select>
             </div>
-
+            <div className="flex  items-center gap-3 justify-between">
+              <label>Supply Chain</label>
+              <label className="w-[200px] flex items-center">
+                <input type="radio" name="supplyChain" id="" onChange={() => setData({ ...data, supplyChain: "own" })} />
+                <label className="ms-1">Own</label>
+                <input type="radio" className="ms-3" name="supplyChain" onChange={() => setData({ ...data, supplyChain: "job work" })} id="" />
+                <label className="ms-1">Job Work</label>
+              </label>
+            </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Receiver</label>
 
               <Select
                 className="bg-white w-[200px] z-[990]"
-                required
+                // 
                 onChange={(e) => {
                   setSearchValue({ ...searchValue, Receiver: e.target.value });
                 }}
@@ -325,17 +272,20 @@ function AddFinishedGoodsOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transporter</label>
-              <input required type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} />
+              <input
+                
+               type="text" className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" value={data?.transporter} onChange={(e) => setData({ ...data, transporter: e.target.value })} />
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Vehicle Number</label>
-              <input required value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input 
+               value={data.vehicleNumber} onChange={(e) => setData({ ...data, vehicleNumber: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Mode</label>
 
               <Select
-                required
+                
                 pattern={dropDowns?.transporter?.filter((x) => x?.value === searchValue?.TransportationMode)?.[0]?.value ? undefined : ""}
                 title="Please Select values from drop down"
                 onChange={(e) => {
@@ -380,8 +330,8 @@ function AddFinishedGoodsOutward() {
             </div>
             <div className="flex  items-center gap-3 justify-between">
               <label>Transportation Distance</label>
-              <input required type="text" value={data.transportationDistance} onChange={(e) => setData({ ...data, transportationDistance: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md" />
-              <Select required className="bg-white w-[70px] z-[509]" value={data?.transportationDistanceUnit}>
+              <input  type="text" value={data.transportationDistance} onChange={(e) => setData({ ...data, transportationDistance: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[140px] rounded-md" />
+              <Select  className="bg-white w-[70px] z-[509]" value={data?.transportationDistanceUnit}>
                 {["Km", "Miles"].map((x) => (
                   <li
                     onClick={() => {
@@ -394,39 +344,14 @@ function AddFinishedGoodsOutward() {
                 ))}
               </Select>
             </div>
-            <div className="flex  items-center gap-3 justify-between">
-              <label>Supply Type</label>
 
-              <Select
-                className="bg-white w-[200px] z-[990]"
-                required
-                onChange={(e) => {
-                  setSearchValue({ ...searchValue, Receiver: e.target.value });
-                }}
-                value={searchValue?.Receiver || ""}
-              >
-                {(data?.supplyChain === "own" ? (user?.superAdmin ? superAdminCompany?.warehouse : user?.company) : dropDowns?.vendor)
-                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.Receiver?.toLowerCase() || ""))
-                  ?.map((x: any) => (
-                    <li
-                      onClick={() => {
-                        setSearchValue({ ...searchValue, Receiver: x?.warehouseName || x?.VendorName });
-                        setData({ ...data, receiver: x });
-                      }}
-                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
-                    >
-                      {data?.supplyChain === "own" ? x?.warehouseName : x?.VendorName}
-                    </li>
-                  ))}
-              </Select>
-            </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Remarks</label>
-              <input required value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input  value={data.remarks} onChange={(e) => setData({ ...data, remarks: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
             <div className="flex items-center gap-3 justify-between">
               <label>Bill of Lading</label>
-              <input required value={data.billOfLading} onChange={(e) => setData({ ...data, billOfLading: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+              <input  value={data.billOfLading} onChange={(e) => setData({ ...data, billOfLading: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
             </div>
           </div>
 
@@ -446,80 +371,83 @@ function AddFinishedGoodsOutward() {
             <tbody>
               {data?.products?.map((x: any, i: number) => (
                 <tr className={`text-center relative `} style={{ zIndex: 500 - i }}>
-                  <td className="text-center  border  justify-center py-2 items-center ">
-                    <div className="flex justify-center items-center">
-                      <Select
-                        required
-                        className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
-                        pattern={products?.filter((x) => x?.name === searchValue.products[i])[0]?.name ? undefined : ""}
-                        title="Please Select values from drop down"
-                        onChange={(e) => {
-                          const temp = searchValue?.products;
-                          temp[i] = e.target.value;
-                          setSearchValue({ ...searchValue, products: temp });
+                  <td className="px-3 py-1 border">
+                    {/* <Select  onChange={(e) => {
+                const temp = searchValue?.productName;
+                temp[i] = e.target.value;
+                setSearchValue({ ...searchValue, productName: temp });
+              }}
+              value={searchValue?.productName[i] || ""}
+                  >
+                      {
+                       products?.filter((a:any) => a?.productName?.toLowerCase()?.includes(searchValue?.productName[i]?.toLowerCase() || ""))?.map((y)=>(<li 
+                        onClick={()=>{
+                          const temp =[...(data?.products||[])];
+                          temp[i].productId = y._id;
+                          setData({...data,products:[...temp]})  
+                          // setSearchValue({ ...searchValue, productName: temp.map((x)=>x?.batchNumber) });
                         }}
-                        value={searchValue?.products[i] || ""}
-                      >
-                        {products
-                          ?.filter((a) => a?.name?.toLowerCase()?.includes(searchValue?.products[i]?.toLowerCase() || ""))
-                          ?.map((x) => (
-                            <li
-                              onClick={() => {
-                                const temp = searchValue?.products;
-                                temp[i] = x?.name;
-                                setSearchValue({
-                                  ...searchValue,
-                                  products: temp,
-                                });
-                                const product = data?.products;
-                                product[i] = {
-                                  ...product[i],
-                                  productId: x?._id,
-                                };
-                                setData({ ...data, products: product });
-                                const temp1 = selectedProduct;
-                                temp1[i] = x;
-                                setSelectedProduct(temp1);
-                              }}
-                              className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
-                            >
-                              {x?.name || "No Name"}
-                            </li>
-                          ))}
-                      </Select>
-                    </div>
-                  </td>
-                  <td className="text-center border justify-center py-2 items-center ">
+                        className="px-3 hover:bg-slate-200 py-1 transition-all duration-100">
+                            {y.productName}
+                        </li>))
+                      }
+                    </Select> */}
+
                     <Select
-                      required
-                      className="w-[90%] z-[999] shadow-none bg-[#e2e2e2]"
-                      pattern={selectedProduct[i]?.qnGrn?.filter((a: any) => a?.grn === searchValue.grnNumber[i])?.[0]?.grn ? undefined : ""}
-                      title="Please Select values from drop down"
+                      style={{ zIndex: 997 - i }}
+                      
+                      className="w-[90%] shadow-none bg-[#e2e2e2]"
                       onChange={(e) => {
-                        const temp = searchValue?.grnNumber;
+                        const temp = searchValue?.productName;
                         temp[i] = e.target.value;
-                        setSearchValue({ ...searchValue, grnNumber: temp });
+                        setSearchValue({ ...searchValue, productName: temp });
                       }}
-                      value={searchValue?.grnNumber[i] || ""}
+                      value={searchValue?.productName[i] || ""}
                     >
-                      {selectedProduct[i]?.qnGrn
-                        ?.filter((a: any) => a?.grn?.toLowerCase()?.includes(searchValue?.grnNumber[i]?.toLowerCase() || ""))
-                        ?.map((x: any) => (
+                      {finalProductNamesWithID
+                        ?.filter((a) => a?.productName?.toLowerCase()?.includes(searchValue?.productName[i]?.toLowerCase() || ""))
+                        ?.map((x) => (
                           <li
                             onClick={() => {
-                              const temp = searchValue?.grnNumber;
-                              temp[i] = x?.grn;
-                              setSearchValue({
-                                ...searchValue,
-                                grnNumber: temp,
-                              });
+                              const temp = searchValue?.productName;
+                              temp[i] = x?.productName;
+                              setSearchValue({ ...searchValue, productName: temp });
+
                               const product = data?.products;
-                              product[i] = { ...product[i], grn: x?.grn };
+                              product[i] = { ...product[i], productId: x?._id };
                               setData({ ...data, products: product });
                             }}
                             className="px-3 hover:bg-slate-200 py-1 truncate transition-all duration-100"
                           >
-                            {x?.grn || "No Name"}
+                            {x?.productName}
+                          </li>
+                        ))}
+                    </Select>
+                  </td>
+                  <td className="px-3 py-1 border">
+                    <Select
+                      onChange={(e) => {
+                        const temp = searchValue?.batchNumber;
+                        temp[i] = e.target.value;
+                        setSearchValue({ ...searchValue, batchNumber: temp });
+                      }}
+                      value={searchValue?.batchNumber[i] || ""}
+                    >
+                      {dropDowns?.products
+                        ?.filter((p) => p.product === x.productId)
+                        ?.filter((a: any) => a?.batchNumber?.toLowerCase()?.includes(searchValue?.batchNumber[i]?.toLowerCase() || ""))
+                        .map((y: any) => (
+                          <li
+                            onClick={() => {
+                              const temp = [...(data?.products || [])];
+                              temp[i].batchNumber = y.batchNumber;
+                              console.log("y", y);
+                              setData({ ...data, products: [...temp] });
+                              setSearchValue({ ...searchValue, batchNumber: temp.map((x) => x?.batchNumber) });
+                            }}
+                            className="px-3 hover:bg-slate-200 py-1 transition-all duration-100"
+                          >
+                            {y.batchNumber}
                           </li>
                         ))}
                     </Select>
@@ -527,13 +455,21 @@ function AddFinishedGoodsOutward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="w-full flex">
                       <input
-                        required
+                        
                         type="number"
                         value={x.recievedQuantity}
                         onChange={(e) => {
-                          console.log(`z-[${990 - i}]`);
-                          console.log(selectedProduct[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0].qn, x?.grn);
-                          if (parseInt(e.target.value || "0") <= parseInt(selectedProduct[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0].qn)) {
+                          if (
+                            parseInt(e.target.value || "0") <=
+                            parseInt(
+                              dropDowns?.products?.filter((a) => {
+                                if (a?.product === x?.productId && a?.batchNumber === x?.batchNumber) {
+                                  return true;
+                                }
+                                return false;
+                              })?.[0]?.productionQuantity
+                            )
+                          ) {
                             const product = data?.products;
                             product[i] = { ...x, recievedQuantity: parseInt(e.target.value) };
                             setData({ ...data, products: product });
@@ -541,13 +477,23 @@ function AddFinishedGoodsOutward() {
                         }}
                         className="px-2 py-1 w-[73%] bg-[#e2e2e2]  h-[25px] rounded-md"
                       />
-                      <label className="px-2 py-1 w-[15%] ms-1 bg-[#e2e2e2]  h-[25px] rounded-md">{selectedProduct?.[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0]?.qn}</label>
+                      <label className="px-2 py-1 w-[15%] ms-1 bg-[#e2e2e2]  h-[25px] rounded-md">
+                        {/* // selectedProduct?.[i]?.qnGrn?.filter((y: any) => y?.grn === x?.grn)?.[0]?.qn */}
+                        {
+                          dropDowns?.products?.filter((a) => {
+                            if (a?.product === x?.productId && a?.batchNumber === x?.batchNumber) {
+                              return true;
+                            }
+                            return false;
+                          })?.[0]?.productionQuantity
+                        }
+                      </label>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <Select
                       style={{ zIndex: 997 - i }}
-                      required
+                      
                       className="w-[90%] shadow-none bg-[#e2e2e2]"
                       pattern={dropDowns?.uom?.filter((x) => x?.value?.name === searchValue.uom[i])?.[0]?.value?.name ? undefined : ""}
                       title="Please Select values from drop down"
@@ -580,7 +526,7 @@ function AddFinishedGoodsOutward() {
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
-                      required
+                      
                       type="text"
                       value={x?.remark}
                       onChange={(e) => {

@@ -242,3 +242,30 @@ export interface RawMaterialUtilizationTypes {
   batchNumber: string;
   used: { product: string; quantity: string,grnNumber:string,usedQuantity:number }[];
 }
+
+
+export interface FinishedGoodsOutwardsTypes {
+  transportationDistance?:string;
+  outwardDate?: string;
+  sender?: any;
+  supplyChain?: string;
+  receiver?: any
+  transporter?: string;
+  vehicleNumber?: string;
+  transporterMode?: string;
+  transpotationDate?: string;
+  transportationDistanceUnit?: string;
+  remarks?: string;
+  billOfLading?: string;
+  products: FinishedGoodsOutwardsProductDetails[];
+  lineOfBusiness?:string
+}
+
+interface FinishedGoodsOutwardsProductDetails {
+  productId?: string;
+  batchNumber?: string;
+  outWardQuantity?: string;
+  uom?: string;
+  remarks?: string;
+  link?: any;
+}

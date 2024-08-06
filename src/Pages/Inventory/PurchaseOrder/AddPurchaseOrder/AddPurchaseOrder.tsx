@@ -466,7 +466,6 @@ function AddPurchaseOrder() {
                     shippingAddress: e.target.value,
                   });
                 }}
-                pattern={superAdminCompany?.shippingAddress?.filter((a: any) => a?.address === searchValue?.shippingAddress || "")?.[0]?.address ? undefined : ""}
                 title="Please Select values from drop down"
               >
                 {(user?.companyDetails?.[0]?.shippingAddress || superAdminCompany?.shippingAddress)

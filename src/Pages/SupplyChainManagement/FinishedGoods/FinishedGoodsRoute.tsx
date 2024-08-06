@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import NavigationBar from "../../../components/NavigationBar";
-import FinishedGoodsOutwardList from "./FinishedGoodsOutwardList";
+import FinishedGoodsOutwardList from "./FinishedGoodsOutward";
 import AddFinishedGoodsOutward from "./AddFinishedGoodsOutward/AddFinishedGoodsOutward";
 import ViewFinishedGoodsOutward from "./ViewFinishedGoodsOutward/ViewFinishedGoodsOutward";
 
@@ -11,7 +11,7 @@ function FinishedGoodsRoute() {
       <Routes>
         <Route path="/" index element={<FinishedGoodsOutwardList />} />
         <Route path="/add" element={<AddFinishedGoodsOutward />} />
-        <Route path="/view" element={<ViewFinishedGoodsOutward />} />
+        <Route path="/view/:id" element={<ViewFinishedGoodsOutward />} />
       </Routes>
     </div>
   );

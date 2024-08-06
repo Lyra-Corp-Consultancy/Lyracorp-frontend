@@ -7,6 +7,7 @@ import { startLoading } from "../../../../utils/redux/slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
+import { log } from "console";
 
 function AddFinishedGoods() {
   const dispatch: any = useDispatch();
@@ -41,6 +42,8 @@ function AddFinishedGoods() {
     });
   }, []);
   console.log(data)
+  console.log("dd",dropDowns);
+  
   return (
     <div className="px-4 py-4">
       <h1 className="font-semibold text-[18px]">Finished Goods Inward</h1>
