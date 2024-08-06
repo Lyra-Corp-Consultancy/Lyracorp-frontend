@@ -7,7 +7,6 @@ import { startLoading } from "../../../../utils/redux/slice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { fileServer } from "../../../../utils/values/publicValues";
-import { log } from "console";
 
 function AddFinishedGoods() {
   const dispatch: any = useDispatch();

@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react";
 import Select from "../../../../components/Select";
 import { useDispatch, useSelector } from "react-redux";
-import { addRawMaterialOutward, getAllUserManagement, getAllVendorMaster, getfinshedGoodsGetProductAll, getProductsFinishedGoods, getType, postFinshedGoodsProduct } from "../../../../utils/redux/actions";
+import {  getAllUserManagement, getAllVendorMaster, getfinshedGoodsGetProductAll, getProductsFinishedGoods, getType, postFinshedGoodsProduct } from "../../../../utils/redux/actions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Calendar from "react-calendar";
@@ -13,8 +13,6 @@ import styles from "./AddFinishedGoodsOutward.module.scss";
 import DeleteConfirmationBox from "../../../../components/DeleteConfirmationBox";
 import { FinishedGoodsOutwardsTypes } from "../../../../utils/Type/types";
 import { formatDate } from "../../../../utils/functions/formats";
-import { startLoading } from "../../../../utils/redux/slice";
-import { dir, log } from "console";
 // import styles from "../PurchaseOrder.module.scss"
 
 function AddFinishedGoodsOutward() {
@@ -70,7 +68,7 @@ function AddFinishedGoodsOutward() {
     batchNumber: [],
   });
 
-  const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
+  // const [selectedProduct, setSelectedProduct] = useState<any[]>([]);
 
   const navigate = useNavigate();
 
