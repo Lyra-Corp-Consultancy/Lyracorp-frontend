@@ -415,7 +415,7 @@ function NavigationBar() {
                       Quality Report <span>-</span>
                     </dl>
                     {permissions?.view?.includes("quality fg report") && (
-                      <li className="text-start ms-5" onClick={() => navigate("/reports/inventory-report/fg-reports")}>
+                      <li className="text-start ms-5" onClick={() => navigate("/reports/quality-report/fg-reports")}>
                         Quality FG Report
                       </li>
                     )}
