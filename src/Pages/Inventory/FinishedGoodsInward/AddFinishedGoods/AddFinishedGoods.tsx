@@ -145,7 +145,7 @@ function AddFinishedGoods() {
                     />
                   </td>
                   <td className="px-3 py-1 border">
-                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) + (x?.rejected || 0)}</h6>
+                    <h6 className="shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md h-[25px] w-[100px]">{(x?.productionQuantity || 0) - (x?.rejected || 0)}</h6>
                   </td>
                   <td className="px-3 py-1 border">
                     <Select value={x?.warehouse?.warehouseName || ""}>
