@@ -1,7 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom'
 import InventoryReportsRoute from './InventoryReport/InventoryReportsRoute'
-import QualityReport from './QualityReport/QualityReport'
+import QualityReport from './QualityReport/QualityRoutes'
 import NavigationBar from '../../components/NavigationBar'
 
 
@@ -13,7 +13,7 @@ function ReportsRoute() {
         <NavigationBar/>
             <Routes> 
                 <Route path='/inventory-report/*' element={<InventoryReportsRoute/>}/>
-                <Route path='/quality-report/' element={<QualityReport/>}/>
+                <Route path='/quality-report/*' element={<QualityReport/>}/>
             </Routes>
         </>
     )
