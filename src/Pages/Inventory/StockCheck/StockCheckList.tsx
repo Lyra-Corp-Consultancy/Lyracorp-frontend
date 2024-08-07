@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./StockCheckList.module.scss";
 
 import { getAllProductRawMaterial, getAllPurchaseInward } from "../../../utils/redux/actions";
+import Select from "../../../components/Select";
 
 function StockCheckList() {
   const [data, setData] = useState<any[]>([]);
@@ -26,7 +27,6 @@ function StockCheckList() {
     dispatch(getAllPurchaseInward()).then((res: any) => {
       setData(res.payload.active);
       console.log(res);
-    
     });
     dispatch(getAllProductRawMaterial()).then((res: any) => {
       setDropDown((prev) => {
@@ -37,7 +37,14 @@ function StockCheckList() {
       });
     });
   }, []);
+  // const batchNumber
+  const productName = dropDowns?.products?.map((e: any) => e.productName);
+  const uniqueProductName = [...new Set(productName)];
+  const dropBatchNumber = data?.map((e) => e.products?.map((a) => a.batchNumber)).flat();
+  const uniqueBatchNumbers = [...new Set(dropBatchNumber)];
 
+  console.log("uniNUm", uniqueProductName);
+  console.log("uni", uniqueBatchNumbers);
   return (
     <div className="h-[83vh] w-screen">
       <div className="w-full px-5 h-[90%] pt-2">
@@ -46,41 +53,58 @@ function StockCheckList() {
           <div className="bg-white rounded-lg w-full pt-3 h-[80%] shadow-md mt-0">
             <h2 className="roboto-bold ms-3 text-[20px] text-center">Stock Check List</h2>
             <div className="grid grid-cols-4 items-center gap-4 roboto-medium text-[13px] shadow-[0px_0px_4px_rgba(0,0,0,0.485)] w-[98%] ml-[17px] rounded-lg px-3 py-2">
-              <div className="flex  items-center gap-3 justify-between">
-                {/* <label>Warehouse Name</label> */}
-
-                {/* <Select
-                required
-                pattern={superAdminCompany?.warehouse?.filter((a: any) => a?.warehouseName === searchValue?.sender || "")?.[0]?.warehouseName ? undefined : ""}
-                title="Please Select values from drop down"
-                onChange={(e) => {
-                  setSearchValue({ ...searchValue, sender: e.target.value });
-                }}
-                value={searchValue?.sender || ""}
-              >
-                {(user?.superAdmin ? superAdminCompany?.warehouse : user?.company)
-                  ?.filter((a: any) => a?.address?.toLowerCase()?.includes(searchValue?.sender?.toLowerCase() || ""))
-                  ?.map((x: any) => (
-                    <li
-                      onClick={() => {
-                        setSearchValue({ ...searchValue, sender: x?.warehouseName });
-                        setData({ ...data, sender: x });
-                      }}
-                      className="px-3 truncate hover:bg-slate-200 py-1 transition-all duration-100"
-                    >
-                      {x?.warehouseName}
-                    </li>
-                  ))}
-              </Select> */}
-              </div>
-
               <div className="flex items-center gap-3 justify-between">
                 <label>Product Name</label>
-                <input value={searchValue.productName} onChange={(e) => setSearchValue({ ...searchValue, productName: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+                <Select
+                  className="bg-white z-[990]"
+                  onChange={(e) => {
+                    setSearchValue({ ...searchValue, productName: e.target.value });
+                  }}
+                  value={searchValue?.productName || ""}
+                >
+                  {uniqueProductName
+                    ?.filter((a) => a?.toLowerCase()?.includes(searchValue?.productName?.toLowerCase() || ""))
+                    .map((x) => (
+                      <li
+                        onClick={() => {
+                          setSearchValue({
+                            ...searchValue,
+                            productName: x,
+                          });
+                        }}
+                        className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                      >
+                        {x}
+                      </li>
+                    ))}
+                </Select>
               </div>
               <div className="flex items-center gap-3 justify-between">
                 <label>Batch Number</label>
-                <input value={searchValue.batchNum} onChange={(e) => setSearchValue({ ...searchValue, batchNum: e.target.value })} className="px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] h-[25px] w-[200px] rounded-md" type="text" />
+
+                <Select
+                  className="bg-white z-[990]"
+                  onChange={(e) => {
+                    setSearchValue({ ...searchValue, batchNum: e.target.value });
+                  }}
+                  value={searchValue?.batchNum || ""}
+                >
+                  {uniqueBatchNumbers
+                    ?.filter((a) => a?.toLowerCase()?.includes(searchValue?.batchNum?.toLowerCase() || ""))
+                    .map((x) => (
+                      <li
+                        onClick={() => {
+                          setSearchValue({
+                            ...searchValue,
+                            batchNum: x,
+                          });
+                        }}
+                        className="px-3 truncate bg-white hover:bg-slate-200 py-1 transition-all duration-100"
+                      >
+                        {x}
+                      </li>
+                    ))}
+                </Select>
               </div>
               <button type="submit">
                 <svg width="71" height="35" viewBox="0 0 71 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,39 +120,40 @@ function StockCheckList() {
             <table className="w-full mt-3 ">
               <thead className="border w-full top-0 left-0  text-xs text-center bg-[#5970F5] text-white roboto-thin">
                 <tr className="w-full">
-                  <th className="border-r w-1/9">S No</th>
-                  <th className="border-r w-1/9">Product Name</th>
-                  <th className="border-r w-1/9">Batch Number</th>
-                  <th className="border-r w-1/9">Product Quantity</th>
-                  <th className="border-r w-1/9">Expiry Date</th>
-                  <th className="border-r w-1/9">Shortage</th>
-                  <th className="border-r w-1/9">Overage</th>
-                  <th className="border-r w-1/9">Warehouse Name</th>
-                  <th className="border-r w-1/9">Action</th>
+                  <th className="border-r w-1/8">S No</th>
+                  <th className="border-r w-1/8">Product Name</th>
+                  <th className="border-r w-1/8">Batch Number</th>
+                  <th className="border-r w-1/8">Product Quantity</th>
+                  <th className="border-r w-1/8">Expiry Date</th>
+                  <th className="border-r w-1/8">Shortage</th>
+                  <th className="border-r w-1/8">Overage</th>
+                  {/* <th className="border-r w-1/8">Warehouse Name</th> */}
+                  <th className="border-r w-1/8">Action</th>
                 </tr>
               </thead>
               <tbody className="overflow-auto text-xs text-center  text-[#5970F5] roboto-thin">
-                {data?.map((e,j) =>
+                {data?.map((e, j) =>
                   e?.products
-                  .filter(
+                    .filter(
                       (x: any) =>
-                         x?.batchNumber?.toLowerCase()?.includes(searchValue?.batchNum?.toLowerCase())
-                      &&
-                     ( searchValue?.productName ?  dropDowns?.products
-                          ?.filter((y) => y?._id === x?.productId)[0]
-                          ?.productName?.toLowerCase()
-                          ?.includes(searchValue?.productName?.toLowerCase() ):true)
+                        x?.batchNumber?.toLowerCase()?.includes(searchValue?.batchNum?.toLowerCase()) &&
+                        (searchValue?.productName
+                          ? dropDowns?.products
+                              ?.filter((y) => y?._id === x?.productId)[0]
+                              ?.productName?.toLowerCase()
+                              ?.includes(searchValue?.productName?.toLowerCase())
+                          : true)
                     )
                     .map((x: any, i: number) => (
                       <tr>
-                        <th>{j+i+1}</th>
+                        <th>{j + i + 1}</th>
                         <th>{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.productName}</th>
                         <th>{x?.batchNumber}</th>
                         <th>{x?.rejectedQuantity ? parseInt(x?.recievedQuantity) - parseInt(x?.rejectedQuantity) : x?.recievedQuantity}</th>
                         <th>{x?.expDate}</th>
                         <th>{x?.orderQuantity - x?.recievedQuantity}</th>
                         <th>{parseInt(x?.recievedQuantity) > parseInt(x?.orderQuantity) ? parseInt(x?.recievedQuantity) - parseInt(x?.orderQuantity) : 0}</th>
-                        <th>{x?.vehicleNumber}</th>
+
                         <th className="relative ">
                           <button className={" cursor-pointer h-full w-full flex items-center justify-center pt-1 " + styles.more}>
                             <svg width="2" height="9" viewBox="0 0 2 9" fill="none" xmlns="http://www.w3.org/2000/svg">

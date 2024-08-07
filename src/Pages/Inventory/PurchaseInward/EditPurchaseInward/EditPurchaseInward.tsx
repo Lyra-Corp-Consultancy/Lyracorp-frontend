@@ -555,8 +555,8 @@ function EditPurchaseInward() {
                   <td className="text-center border justify-center py-2 items-center ">
                     <input
                       type="number"
-                      max={parseInt(x?.orderQuantity)}
-                      title="Received Quantity should be less than orderQuantity"
+                      // max={parseInt(x?.orderQuantity)}
+                      // title="Received Quantity should be less than orderQuantity"
                       min={0}
                       value={x.recievedQuantity}
                       onChange={(e) => {
