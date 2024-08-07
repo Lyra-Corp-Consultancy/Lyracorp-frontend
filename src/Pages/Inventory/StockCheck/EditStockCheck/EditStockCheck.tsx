@@ -301,14 +301,15 @@ function EditStockCheck() {
           <table className="w-full text-[14px] border-collapse rounded border">
             <thead className="bg-[#5970F5]">
               <tr className=" text-white">
-                <th className="border-r w-1/8">Product Name</th>
-                <th className="border-r w-1/8">Batch Number</th>
-                <th className="border-r w-1/8">Product Quantity</th>
-                <th className="border-r w-1/8">Expiry Date</th>
-                <th className="border-r w-1/8">Shortage</th>
-                <th className="border-r w-1/8">Overage</th>
-                <th className="border-r w-1/8">Warehouse Name</th>
-                <th className="border-r w-1/8">Pick Location</th>
+              <th className="border-r w-1/9">S No</th>
+                <th className="border-r w-1/9">Product Name</th>
+                <th className="border-r w-1/9">Batch Number</th>
+                <th className="border-r w-1/9">Product Quantity</th>
+                <th className="border-r w-1/9">Expiry Date</th>
+                <th className="border-r w-1/9">Shortage</th>
+                <th className="border-r w-1/9">Overage</th>
+                <th className="border-r w-1/9">Warehouse Name</th>
+                <th className="border-r w-1/9">Pick Location</th>
               </tr>
             </thead>
             <tbody>
