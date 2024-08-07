@@ -287,7 +287,7 @@ function NavigationBar() {
                     Purchase Inward
                   </button>
                 )}
-                {/* {permissions?.view?.includes("stock check") && <button className="text-start"  onClick={() => navigate("/inventory/stock-check")}>Stock Check</button>} */}
+                {permissions?.view?.includes("stock check") && <button className="text-start"  onClick={() => navigate("/inventory/stock-check")}>Stock Check</button>}
                 {permissions?.view?.includes("raw material - outward") && (
                   <button className="text-start" onClick={() => navigate("/inventory/raw-material-outward")}>
                     Raw Material - Outward
