@@ -151,7 +151,8 @@ function StockCheckList() {
                         <th>{x?.batchNumber}</th>
                         <th>{x?.rejectedQuantity ? parseInt(x?.recievedQuantity) - parseInt(x?.rejectedQuantity) : x?.recievedQuantity}</th>
                         <th>{x?.expDate}</th>
-                        <th>{x?.orderQuantity - x?.recievedQuantity}</th>
+                        <th>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</th>
+                        {/* <th>s{x?.orderQuantity - x?.recievedQuantity}</th> */}
                         <th>{parseInt(x?.recievedQuantity) > parseInt(x?.orderQuantity) ? parseInt(x?.recievedQuantity) - parseInt(x?.orderQuantity) : 0}</th>
 
                         <th className="relative ">

@@ -275,8 +275,8 @@ function AddPurchaseInward() {
   //     const droppedFiles = Array.from(e.dataTransfer.files);
   //     setFiles([...files, ...droppedFiles]);
   //   };
-  console.log(data)
-  console.log("dd", dropDowns)
+  console.log(data);
+  console.log("dd", dropDowns);
   return (
     <div className=" w-screen px-4 pt-3 shadow-md">
       <h1 className="roboto-bold text-lg">Add Purchase Inward</h1>
@@ -297,8 +297,8 @@ function AddPurchaseInward() {
                 setData({
                   vendor: res.payload.vendor,
                   products: res.payload.products,
-                  poSerialNum:serialNumber,
-                  shippingAddress: res.payload?.shippingAddress
+                  poSerialNum: serialNumber,
+                  shippingAddress: res.payload?.shippingAddress,
                 });
               });
             }}
@@ -592,7 +592,12 @@ function AddPurchaseInward() {
                   {/* 	Shortage */}
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
+                      <span>
+                        {
+                          parseInt(x?.orderQuantity) > parseInt(x?.recievedQuantity) ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0
+                          // parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0
+                        }
+                      </span>
                     </div>
                   </td>
                   {/* 	Unit Price*/}
@@ -607,19 +612,12 @@ function AddPurchaseInward() {
                   </td>
                   {/* 	Tax VAlue */}
                   <td className="text-center border justify-center py-2 items-center ">
-                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      {stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}
-                      </div>
+                    <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">{stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0}</div>
                   </td>
-                {/* totalValye */}
+                  {/* totalValye */}
                   <td className="text-center border justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span>
-{
-  ( stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0
-) +(parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0)
-}
-                      </span>
+                      <span>{(stateCheckForTax ? (parseInt(x?.productDetails?.igst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0 : (parseInt(x.productDetails?.cgst) + parseInt(x.productDetails?.sgst) / 100) * parseInt(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0) + (parseFloat(dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp) * parseInt(x?.recievedQuantity) || 0)}</span>
                     </div>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">

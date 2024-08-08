@@ -336,7 +336,12 @@ function ViewPurchaseInward() {
                     <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{x?.expDate}</label>
                   </td>
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
-                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) || 0}</label>
+                    <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">
+                      {
+                   parseInt(x?.orderQuantity)>parseInt(x?.recievedQuantity)?
+                   
+                   parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0
+                    }</label>
                   </td>
                   <td className="text-center border justify-center py-2 items-center ">
                     <label className="h-[30px] w-[90%] truncate shadow-[0px_0px_4px_rgba(0,0,0,0.385)] flex items-center justify-between px-2 py-1 rounded-md">{dropDowns?.products?.filter((y) => y?._id === x?.productId)[0]?.mrp}</label>

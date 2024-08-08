@@ -645,7 +645,10 @@ function EditPurchaseInward() {
                   {/* 	Shortage */}
                   <td className="text-center border w-[100px] justify-center py-2 items-center ">
                     <div className="px-2 py-1 w-[90%]  bg-[#e2e2e2]  h-[25px] rounded-md">
-                      <span>{parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}</span>
+                      <span>
+                        
+                        {parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) > 0 ? parseInt(x?.orderQuantity) - parseInt(x?.recievedQuantity) : 0}
+                        </span>
                     </div>
                   </td>
                   {/* 	Unit Price*/}
