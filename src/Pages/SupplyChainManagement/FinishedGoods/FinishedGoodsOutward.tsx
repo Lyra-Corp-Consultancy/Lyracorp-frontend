@@ -90,41 +90,7 @@ function FinishedGoodsOutwardList() {
       });
     });
 
-    dispatch(getType("discount")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          discount: res?.payload[0]?.discountType,
-        };
-      });
-    });
-
-    dispatch(getType("shipping")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          shippingMethods: res?.payload[0]?.shippingType,
-        };
-      });
-    });
-
-    dispatch(getType("payment")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          payment: res?.payload[0]?.paymentType,
-        };
-      });
-    });
-
-    dispatch(getType("document")).then((res: any) => {
-      setDropDown((prev) => {
-        return {
-          ...prev,
-          document: res?.payload[0]?.documentType,
-        };
-      });
-    });
+   
   }, []);
 
   return (

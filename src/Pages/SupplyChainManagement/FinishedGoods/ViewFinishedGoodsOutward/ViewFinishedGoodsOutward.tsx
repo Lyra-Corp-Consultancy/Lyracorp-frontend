@@ -207,7 +207,7 @@ function ViewFinishedGoodsOutward() {
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">
                   <div className="w-full flex">
-                    <label className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{x?.recievedQuantity}</label>
+                    <label className="w-[200px] flex items-center relative h-[25px] z-[980] justify-between px-2 py-1 shadow-[0px_0px_4px_rgba(0,0,0,0.385)] rounded-md">{x?.outWardQuantity}</label>
                   </div>
                 </td>
                 <td className="text-center border justify-center py-2 items-center ">

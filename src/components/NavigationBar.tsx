@@ -363,6 +363,7 @@ function NavigationBar() {
             )}
           </button>
         )}
+        
         {permissions?.view?.includes("order management") && (
           <button onClick={() => navigate("/order-management")} className={" rounded-[20px_0_0_0] px-4 py-1 font-semibold transition-all duration-100 text-[15px] " + (location.pathname === "/order-management" ? " bg-white" : " bg-[#C3CBFF]")}>
             Order Management
@@ -409,6 +410,11 @@ function NavigationBar() {
                     Inventory Report <span>+</span>
                   </button>
                 )}
+               {permissions?.view?.includes("quality fg report") && (
+                      <li className="flex justify-between text-[#5970F5]" onClick={() =>navigate("/reports/fg-outward-report")}>
+                        Fg-OW Report
+                      </li>
+                    )}
                 {typeMaster === "quality report" ? (
                   <ul className="list-item">
                     <dl onClick={() => setTypeMaster(null)} className="flex justify-between text-[#5970F5]">

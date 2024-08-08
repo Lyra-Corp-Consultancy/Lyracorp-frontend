@@ -40,7 +40,7 @@ function StockCheckList() {
   // const batchNumber
   const productName = dropDowns?.products?.map((e: any) => e.productName);
   const uniqueProductName = [...new Set(productName)];
-  const dropBatchNumber = data?.map((e) => e.products?.map((a:any) => a.batchNumber)).flat();
+  const dropBatchNumber = data?.map((e) => e.products?.map((a: any) => a.batchNumber)).flat();
   const uniqueBatchNumbers = [...new Set(dropBatchNumber)];
 
   console.log("uniNUm", uniqueProductName);

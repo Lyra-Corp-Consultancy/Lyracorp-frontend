@@ -14,7 +14,7 @@ function FGReports() {
   const [dropDown, setDropDown] = useState<{ finishedGoods: string[]; warehouse: string[]; batchNum: string[] }>({ batchNum: [], warehouse: [], finishedGoods: [] });
   useEffect(() => {
     dispatch(getFGReports()).then((res: any) => {
-      console.log(res.payload);
+      console.log("re",res.payload);
       setReports(res.payload);
       setFiltered(res.payload);
       let finishedGoods = res?.payload?.map((x: any) => x?.products?.productName);

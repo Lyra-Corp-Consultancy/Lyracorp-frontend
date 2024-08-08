@@ -469,7 +469,7 @@ function AddFinishedGoodsOutward() {
                             )
                           ) {
                             const product = data?.products;
-                            product[i] = { ...x, recievedQuantity: parseInt(e.target.value) };
+                            product[i] = { ...x, outWardQuantity: parseInt(e.target.value) };
                             setData({ ...data, products: product });
                           }
                         }}
